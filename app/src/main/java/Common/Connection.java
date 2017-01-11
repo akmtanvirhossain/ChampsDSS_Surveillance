@@ -976,16 +976,6 @@ public class Connection extends SQLiteOpenHelper {
             //------------------------------------------------------------------------------
             Sync_Download("Baris", UserID, "Cluster='"+ Cluster +"' and Block='"+ Block +"'");
 
-            /*tableList.add("Baris");
-            tableList.add("Household");
-            tableList.add("referralDept");
-            tableList.add("refusalCode");
-            tableList.add("Genus");
-            tableList.add("Species");
-
-            for (int i = 0; i < tableList.size(); i++)
-                Sync_Download(tableList.get(i).toString(), UserId, "");*/
-            //
             //Update status on server
             //--------------------------------------------------------------------------------------
             ExecuteCommandOnServer("Update UserList set Setting='2' where UserId='" + UserID + "'");
@@ -1040,28 +1030,6 @@ public class Connection extends SQLiteOpenHelper {
         cur_H.close();
 
         Res = DownloadJSON(SQLString, TableName, VariableList, UniqueField);
-    }
-
-    public void DataSync_UploadDownload(List<String> tableList, String UserId) {
-
-        //Upload data to server
-        //------------------------------------------------------------------------------
-        Sync_Upload(tableList);
-
-        //Download data from server
-        //------------------------------------------------------------------------------
-        tableList.add("Symptom");
-        tableList.add("Diagnosis");
-        tableList.add("referralDept");
-        tableList.add("refusalCode");
-        tableList.add("Genus");
-        tableList.add("Species");
-
-        for (int i = 0; i < tableList.size(); i++)
-            Sync_Download(tableList.get(i).toString(), UserId, "");
-
-        /*for(int i=0;i<TableList.length;i++)
-            Sync_Download(TableList[i], UserId, "");*/
     }
 
     //done

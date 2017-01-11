@@ -56,7 +56,7 @@ public class MainMenu extends Activity {
                                 public void run() {
                                     try {
 
-                                        List<String> tableList = new ArrayList<String>();
+                                        /*List<String> tableList = new ArrayList<String>();
                                         tableList.add("Screening");
                                         tableList.add("idnHistory");
                                         tableList.add("medRecord");
@@ -69,7 +69,7 @@ public class MainMenu extends Activity {
                                         tableList.add("SampleAnalysis");
                                         tableList.add("LabResult");
 
-                                        C.DataSync_UploadDownload(tableList, USERID);
+                                        C.DataSync_UploadDownload(tableList, USERID);*/
 
                                     } catch (Exception e) {
 

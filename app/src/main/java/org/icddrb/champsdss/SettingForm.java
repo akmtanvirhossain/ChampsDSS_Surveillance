@@ -1,4 +1,4 @@
-package org.icddrb.standard;
+package org.icddrb.champsdss;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -24,6 +24,9 @@ public class SettingForm extends Activity {
     String Site   = "";
     String UserID = "";
 
+    Spinner spnCluster;
+    Spinner spnBlock;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try
@@ -39,6 +42,22 @@ public class SettingForm extends Activity {
 
             final Spinner spnUser = (Spinner)findViewById(R.id.spnUser);
             SpinnerItem(spnUser, "select UserId+'-'+UserName from UserList order by UserId");
+
+            spnCluster = (Spinner)findViewById(R.id.spnCluster);
+            spnBlock = (Spinner)findViewById(R.id.spnBlock);
+            List<String> listCluster = new ArrayList<String>();
+            for(int c=1;c<=17;c++){
+                listCluster.add(Global.Right("00"+String.valueOf(c),2));
+            }
+            ArrayAdapter<String> adptrCluster= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCluster);
+            spnCluster.setAdapter(adptrCluster);
+
+            List<String> listBlock = new ArrayList<String>();
+            for(int b=1;b<=80;b++){
+                listBlock.add(Global.Right("00"+String.valueOf(b),2));
+            }
+            ArrayAdapter<String> adptrBlock= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listBlock);
+            spnBlock.setAdapter(adptrBlock);
 
             Button cmdSave = (Button)findViewById(R.id.cmdSave);
             cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +81,7 @@ public class SettingForm extends Activity {
                         new Thread() {
                             public void run() {
                                 try {
-                                    C.RebuildDatabase(Site, UserID);
+                                    C.RebuildDatabase(UserID,spnCluster.getSelectedItem().toString(),spnBlock.getSelectedItem().toString());
                                 } catch (Exception e) {
 
                                 }

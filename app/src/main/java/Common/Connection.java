@@ -935,7 +935,7 @@ public class Connection extends SQLiteOpenHelper {
 
     //Rebuild Local Database from Server
     //----------------------------------------------------------------------------------------------
-    public void RebuildDatabase(String Site, String UserID) {
+    public void RebuildDatabase(String UserID, String Cluster, String Block) {
         List<String> listItem = new ArrayList<String>();
         listItem = DownloadJSONList("Select TableName+'^'+TableScript from DatabaseTab");
 
@@ -970,28 +970,29 @@ public class Connection extends SQLiteOpenHelper {
 
             //Project Specific Database Sync
             //--------------------------------------------------------------------------------------
-            this.Sync_Download_Rebuild("Country", "");
-            this.Sync_Download_Rebuild("Sites", "SiteCode='" + Site + "'");
-            this.Sync_Download_Rebuild("UserList", "SiteCode='" + Site + "' and UserId='" + UserID + "'");
-            this.Sync_Download_Rebuild("Location", "");
-            this.Sync_Download_Rebuild("UserLocation", "UserId='" + UserID + "'");
-            this.Sync_Download_Rebuild("MedicineType", "");
-            this.Sync_Download_Rebuild("AntibioticType", "");
-            this.Sync_Download_Rebuild("Drug", "");
-            this.Sync_Download_Rebuild("Diagnosis", "");
-            this.Sync_Download_Rebuild("Symptom", "");
-            this.Sync_Download_Rebuild("refusalCode", "");
-            this.Sync_Download_Rebuild("Genus", "");
-            this.Sync_Download_Rebuild("Species", "");
+            this.Sync_Download_Rebuild("Village", "");
 
-            this.Sync_Download_Rebuild("Physician", "SiteCode='" + Site + "'");
+            //Download data from server
+            //------------------------------------------------------------------------------
+            Sync_Download("Baris", UserID, "Cluster='"+ Cluster +"' and Block='"+ Block +"'");
+
+            /*tableList.add("Baris");
+            tableList.add("Household");
+            tableList.add("referralDept");
+            tableList.add("refusalCode");
+            tableList.add("Genus");
+            tableList.add("Species");
+
+            for (int i = 0; i < tableList.size(); i++)
+                Sync_Download(tableList.get(i).toString(), UserId, "");*/
+            //
             //Update status on server
             //--------------------------------------------------------------------------------------
             ExecuteCommandOnServer("Update UserList set Setting='2' where UserId='" + UserID + "'");
 
             //Download data from server
             //------------------------------------------------------------------------------
-            String[] TableList = new String[]{
+            /*String[] TableList = new String[]{
                     "Screening",
                     "idnHistory",
                     "medRecord",
@@ -1005,7 +1006,7 @@ public class Connection extends SQLiteOpenHelper {
             };
 
             for (int i = 0; i < TableList.length; i++)
-                Sync_Download(TableList[i], UserID, "");
+                Sync_Download(TableList[i], UserID, "");*/
 
         } catch (Exception e) {
             e.printStackTrace();

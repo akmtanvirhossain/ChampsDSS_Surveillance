@@ -1,4 +1,4 @@
-package org.icddrb.standard;
+package org.icddrb.champsdss;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -166,7 +166,7 @@ public class LoginActivity extends Activity {
                                     public void run() {
                                         try {
                                             finish();
-                                            Intent f1 = new Intent(getApplicationContext(),MainActivity.class);
+                                            Intent f1 = new Intent(getApplicationContext(),MainMenu.class);
                                             startActivity(f1);
                                         } catch (Exception e) {
 
@@ -184,7 +184,7 @@ public class LoginActivity extends Activity {
                                 public void run() {
                                     try {
                                         finish();
-                                        Intent f1 = new Intent(getApplicationContext(),MainActivity.class);
+                                        Intent f1 = new Intent(getApplicationContext(),MainMenu.class);
                                         startActivity(f1);
                                     } catch (Exception e) {
 

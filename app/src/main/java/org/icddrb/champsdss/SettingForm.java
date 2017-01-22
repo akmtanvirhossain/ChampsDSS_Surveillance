@@ -41,7 +41,7 @@ public class SettingForm extends Activity {
             }
 
             final Spinner spnUser = (Spinner)findViewById(R.id.spnUser);
-            SpinnerItem(spnUser, "select UserId+'-'+UserName from UserList order by UserId");
+            SpinnerItem(spnUser, "select DeviceId+'-'+DeviceName from DeviceList order by DeviceId");
 
             spnCluster = (Spinner)findViewById(R.id.spnCluster);
             spnBlock = (Spinner)findViewById(R.id.spnBlock);
@@ -68,7 +68,7 @@ public class SettingForm extends Activity {
                         String[] User = spnUser.getSelectedItem().toString().split("-");
                         UserID = User[0];
 
-                        String Setting = C.ReturnResult("Existence", "Select UserId from UserList where UserId='"+ Connection.SelectedSpinnerValue(spnUser.getSelectedItem().toString(),"-") +"' and Setting='1'");
+                        String Setting = C.ReturnResult("Existence", "Select DeviceID from DeviceList where DeviceId='"+ Connection.SelectedSpinnerValue(spnUser.getSelectedItem().toString(),"-") +"' and Setting='1'");
                         if (Setting.equals("2")) {
                             Connection.MessageBox(SettingForm.this, "Device ID :"+ spnUser.getSelectedItem().toString() +" is not allowed to configure a mobile device, contact with administrator.");
                             return;

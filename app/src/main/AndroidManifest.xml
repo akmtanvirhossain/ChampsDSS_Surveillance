@@ -56,6 +56,7 @@
             android:name="org.icddrb.champsdss.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/CustomTheme"></activity>
+        <activity android:name=".Household_list" />
     </application>
 
 </manifest>

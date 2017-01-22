@@ -83,7 +83,7 @@ public class LoginActivity extends Activity {
 
 
             //Device Unique ID
-            final String UniqueID = C.ReturnSingleValue("Select UserId from UserList");
+            final String UniqueID = C.ReturnSingleValue("Select DeviceId from DeviceList");
             UniqueUserId.setText("Unique ID :"+ UniqueID);
             g.setDeviceNo(UniqueID);
 

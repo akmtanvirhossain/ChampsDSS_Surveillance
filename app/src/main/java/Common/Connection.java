@@ -935,7 +935,7 @@ public class Connection extends SQLiteOpenHelper {
 
     //Rebuild Local Database from Server
     //----------------------------------------------------------------------------------------------
-    public void RebuildDatabase(String UserID, String Cluster, String Block) {
+    public void RebuildDatabase(String DeviceID, String Cluster, String Block) {
         List<String> listItem = new ArrayList<String>();
         listItem = DownloadJSONList("Select TableName+'^'+TableScript from DatabaseTab");
 
@@ -956,7 +956,7 @@ public class Connection extends SQLiteOpenHelper {
         try {
             //Remove data from Sync_Management
             //--------------------------------------------------------------------------------------
-            ExecuteCommandOnServer("Delete from Sync_Management where UserId='" + UserID + "'");
+            ExecuteCommandOnServer("Delete from Sync_Management where UserId='" + DeviceID + "'");
 
             //Master Database Sync (Required for any database system)
             //--------------------------------------------------------------------------------------
@@ -966,37 +966,34 @@ public class Connection extends SQLiteOpenHelper {
             UniqueField = "TableName";
             Res = DownloadJSON(SQLStr, TableName, VariableList, UniqueField);
 
-            this.Sync_Download_Rebuild("UserList", "UserId='" + UserID + "'");
+            this.Sync_Download_Rebuild("DeviceList", "DeviceId='" + DeviceID + "'");
+            this.Sync_Download_Rebuild("DataCollector", "");
 
             //Project Specific Database Sync
             //--------------------------------------------------------------------------------------
+            this.Sync_Download_Rebuild("Upazila", "");
+            this.Sync_Download_Rebuild("Unions", "");
+            this.Sync_Download_Rebuild("Mouza", "");
             this.Sync_Download_Rebuild("Village", "");
 
             //Download data from server
             //------------------------------------------------------------------------------
-            Sync_Download("Baris", UserID, "Cluster='"+ Cluster +"' and Block='"+ Block +"'");
+            Sync_Download("Baris", DeviceID, "");
+            //for surveillance
+            //Sync_Download("Baris", DeviceID, "Cluster='"+ Cluster +"' and Block='"+ Block +"'");
 
             //Update status on server
             //--------------------------------------------------------------------------------------
-            ExecuteCommandOnServer("Update UserList set Setting='2' where UserId='" + UserID + "'");
+            ExecuteCommandOnServer("Update DeviceList set Setting='2' where DeviceId='" + DeviceID + "'");
 
             //Download data from server
             //------------------------------------------------------------------------------
             /*String[] TableList = new String[]{
                     "Screening",
-                    "idnHistory",
-                    "medRecord",
-                    "Admission",
-                    "Folup",
-                    "Medicine",
-                    "OthInvestig",
-                    "SampleAnalysis",
-                    "LabResult",
-                    "SampleStorage"
             };
 
             for (int i = 0; i < TableList.length; i++)
-                Sync_Download(TableList[i], UserID, "");*/
+                Sync_Download(TableList[i], DeviceID, "");*/
 
         } catch (Exception e) {
             e.printStackTrace();

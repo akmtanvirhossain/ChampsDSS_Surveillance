@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +18,9 @@ import Common.Global;
 public class MainMenu extends Activity {
 
     static String USERID = "";
-    Button cmdDataUpload;
     Button cmdDataSync;
+    Button cmdHHInterview;
+
     Connection C;
     Global g;
 
@@ -32,6 +34,15 @@ public class MainMenu extends Activity {
             g = Global.getInstance();
 
             USERID = g.getUserId();
+
+            cmdHHInterview = (Button) findViewById(R.id.cmdHHInterview);
+            cmdHHInterview.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    finish();
+                    Intent f1 = new Intent(getApplicationContext(), Household_list.class);
+                    startActivity(f1);
+                }
+            });
 
             cmdDataSync = (Button) findViewById(R.id.cmdDataSync);
             cmdDataSync.setOnClickListener(new View.OnClickListener() {

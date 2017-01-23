@@ -159,6 +159,7 @@ package org.icddrb.champsdss;
         */
         //DataSearch(VILL, BARI, HH);
 
+
          spnUnion = (Spinner) findViewById(R.id.spnUnion);
          spnVill = (Spinner) findViewById(R.id.spnVill);
          spnBari = (Spinner) findViewById(R.id.spnBari);

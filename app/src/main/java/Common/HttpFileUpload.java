@@ -126,8 +126,8 @@ public class HttpFileUpload implements Runnable{
                         is = conn.getErrorStream();
                     else
                         is = conn.getInputStream();
-                    
-                    
+
+
                     // retrieve the response from server
                     int ch;
 

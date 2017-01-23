@@ -1317,7 +1317,7 @@
        EditText tpTime;
 
 
-          tpTime.setText(new StringBuilder().append(Global.Right("00"+hour,2)).append(":").append(Global.Right("00"+minute,2)));
+          //tpTime.setText(new StringBuilder().append(Global.Right("00"+hour,2)).append(":").append(Global.Right("00"+minute,2)));
 
     }
   };
@@ -1339,7 +1339,7 @@
      public void onProviderDisabled(String provider) {
      }
    };
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+  //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
  }
 
  void updateLocation(Location location) {

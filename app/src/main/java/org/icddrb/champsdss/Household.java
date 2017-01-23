@@ -243,7 +243,7 @@
          VlblTotMem=(TextView) findViewById(R.id.VlblTotMem);
          txtTotMem=(EditText) findViewById(R.id.txtTotMem);
          secTotRWo=(LinearLayout)findViewById(R.id.secTotRWo);
-         lineTotRWo=(View)findViewById(R.id.lineTotRWo);
+        // lineTotRWo=(View)findViewById(R.id.lineTotRWo);
          VlblTotRWo=(TextView) findViewById(R.id.VlblTotRWo);
          txtTotRWo=(EditText) findViewById(R.id.txtTotRWo);
          secEnType=(LinearLayout)findViewById(R.id.secEnType);
@@ -581,7 +581,7 @@
      public void onProviderDisabled(String provider) {
      }
    };
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+  //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
  }
 
  void updateLocation(Location location) {

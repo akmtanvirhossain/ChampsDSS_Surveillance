@@ -31,8 +31,6 @@ public class Global {
 	public int mDay = c.get(Calendar.DAY_OF_MONTH);
 	//Global Variable
 	//-------------------------------------------------------------------------
-	private String _UserId;
-	//-------------------------------------------------------------------------
 	private String _DeviceNo;
 	//-------------------------------------------------------------------------
 	private String _CountryCode;
@@ -48,6 +46,143 @@ public class Global {
 		}
 		return instance;
 	}
+
+	//Global Variables for Events
+	//...........................................................................................................
+	public static String CurrentRound;
+	public static String ClusterCode;
+	public static String BlockCode;
+	public static String VillageCode;
+	public static String BariCode;
+	public static String HouseholdCode;
+	public static String SNo;
+	public static String PNo;
+
+
+	private String _UserId;
+	private String _userType; public void setuserType(String userType){this._userType = userType;} public String getuserType(){ return this._userType;}
+
+	//-------------------------------------------------------------------------
+	private String _CallFrom;
+	public void setCallFrom(String CallFrom){this._CallFrom = CallFrom;}
+	public String getCallFrom(){ return this._CallFrom;}
+
+
+	//-------------------------------------------------------------------------
+	private String _WeekSDate;
+	public void setWeekStartDate(String WeekSDate){this._WeekSDate = WeekSDate;}
+	public String getWeekStartDate(){ return this._WeekSDate;}
+
+	private String _WeekEDate;
+	public void setWeekEndDate(String WeekEDate){this._WeekEDate = WeekEDate;}
+	public String getWeekEndDate(){ return this._WeekEDate;}
+
+	private String _ChildId;
+	public void setChildId(String ChildId){this._ChildId = ChildId;}
+	public String getChildId(){ return this._ChildId;}
+
+	private String _Name;
+	public void setName(String Name){this._Name = Name;}
+	public String getName(){ return this._Name;}
+
+	private String _Sex;
+	public void setSex(String Sex){this._Sex = Sex;}
+	public String getSex(){ return this._Sex;}
+
+	private String _DOB;
+	public void setDOB(String DOB){this._DOB = DOB;}
+	public String getDOB(){ return this._DOB;}
+
+	private String _Mother;
+	public void setMother(String Mother){this._Mother = Mother;}
+	public String getMother(){ return this._Mother;}
+
+	private String _Father;
+	public void setFather(String Father){this._Father = Father;}
+	public String getFather(){ return this._Father;}
+
+	private String _MotherPNo;
+	public void setMotherPNo(String MotherPNo){this._MotherPNo = MotherPNo;}
+	public String getMotherPNo(){ return this._MotherPNo;}
+
+	private String _ContactNo;
+	public void setContactNo(String ContactNo){this._ContactNo = ContactNo;}
+	public String getContactNo(){ return this._ContactNo;}
+
+	//Declaring Global variables
+	//-----------------------------------------------------------------------------
+
+	private String _clusterCode;
+	public void setClusterCode(String clusterCode){this._clusterCode = clusterCode;}
+	public String getClusterCode(){ return this._clusterCode;}
+
+	private String _blockCode;
+	public void setBlockCode(String blockCode){this._blockCode = blockCode;}
+	public String getBlockCode(){ return this._blockCode;}
+
+	private String _roundNumber;
+	public void setRoundNumber(String roundNumber){this._roundNumber = roundNumber;}
+	public String getRoundNumber(){ return this._roundNumber;}
+
+	private String _villageCode;
+	public void setVillageCode(String villageCode){this._villageCode = villageCode;}
+	public String getVillageCode(){ return this._villageCode;}
+
+	private String _villageName;
+	public void setVillageName(String villageName){this._villageName = villageName;}
+	public String getVillageName(){ return this._villageName;}
+
+	private String _bariCode;
+	public void setBariCode(String bariCode){this._bariCode = bariCode;}
+	public String getBariCode(){ return this._bariCode;}
+
+	private String _hhCode;
+	public void setHouseholdNo(String hhCode){this._hhCode = hhCode;}
+	public String getHouseholdNo(){ return this._hhCode;}
+
+	private String _rsno;
+	public void setRsNo(String rsno){this._rsno = rsno;}
+	public String getRsNo(){ return this._rsno;}
+
+	private String _memSlNo;
+	public void setmemSlNo(String memSlNo){this._memSlNo = memSlNo;}
+	public String getmemSlNo(){ return this._memSlNo;}
+
+	private String _pno;
+	public void setPNo(String pno){this._pno = pno;}
+	public String getPNo(){ return this._pno;}
+
+	private String _evdate;
+	public void setEvDate(String evdate){this._evdate = evdate;}
+	public String getEvDate(){ return this._evdate;}
+
+	private String _prevHousehold;
+	public void setPrevHousehold(String prevHousehold){this._prevHousehold = prevHousehold;}
+	public String getPrevHousehold(){ return this._prevHousehold;}
+
+	public String HouseholdNo(){ return getVillageCode()+getBariCode()+getHouseholdNo();}
+
+
+	private String _SQLforNewRegis;
+	public void setSQLforNewRegis(String SQLforNewRegis){this._SQLforNewRegis = SQLforNewRegis;}
+	public String getSQLforNewRegis(){ return this._SQLforNewRegis;}
+
+	private String _posmig;
+	public void setPosMig(String posmig){this._posmig = posmig;}
+	public String getPosMig(){ return this._posmig;}
+
+	private String _posmigdate;
+	public void setPosMigDate(String posmigdate){this._posmigdate = posmigdate;}
+	public String getPosMigDate(){ return this._posmigdate;}
+
+	private String _migvillage;
+	public void setMigVillage(String migvillage){this._migvillage = migvillage;}
+	public String getMigVillage(){ return this._migvillage;}
+
+	private String _PregOnDeath;
+	public void setPregOnDeath(String PregOnDeath){this._PregOnDeath = PregOnDeath;}
+	public String getPregOnDeath(){ return this._PregOnDeath;}
+
 
 	//String Function
 	//...........................................................................................................

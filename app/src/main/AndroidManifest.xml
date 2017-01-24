@@ -58,6 +58,7 @@
             android:theme="@style/CustomTheme"></activity>
 
         <activity android:name=".Household_list" />
+        <activity android:name=".HouseholdIndex1" />
         <activity android:name=".Household" />
         <activity android:name=".Member" />
         <activity android:name=".Member_list" />
@@ -65,6 +66,8 @@
         <activity android:name=".SES_list" />
         <activity android:name=".PregHis" />
         <activity android:name=".PregHis_list" />
+        <activity android:name=".Baris" />
+        <activity android:name=".Baris_list" />
     </application>
 
 </manifest>

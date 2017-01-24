@@ -103,6 +103,7 @@
          View lineVStatus;
          TextView VlblVStatus;
          Spinner spnVStatus;
+
          LinearLayout secVStatusOth;
          View lineVStatusOth;
          TextView VlblVStatusOth;
@@ -110,7 +111,7 @@
          LinearLayout secResp;
          View lineResp;
          TextView VlblResp;
-         EditText txtResp;
+         Spinner spnResp;
          LinearLayout secRnd;
          View lineRnd;
          TextView VlblRnd;
@@ -233,10 +234,12 @@
          lineVStatusOth=(View)findViewById(R.id.lineVStatusOth);
          VlblVStatusOth=(TextView) findViewById(R.id.VlblVStatusOth);
          txtVStatusOth=(EditText) findViewById(R.id.txtVStatusOth);
+
          secResp=(LinearLayout)findViewById(R.id.secResp);
          lineResp=(View)findViewById(R.id.lineResp);
          VlblResp=(TextView) findViewById(R.id.VlblResp);
-         txtResp=(EditText) findViewById(R.id.txtResp);
+         spnResp=(Spinner) findViewById(R.id.spnResp);
+
          secRnd=(LinearLayout)findViewById(R.id.secRnd);
          lineRnd=(View)findViewById(R.id.lineRnd);
          VlblRnd=(TextView) findViewById(R.id.VlblRnd);
@@ -321,16 +324,10 @@
              txtVStatusOth.requestFocus(); 
              return;	
            }
-         else if(txtResp.getText().toString().length()==0 & secResp.isShown())
+         else if(spnResp.getSelectedItemPosition()==0 & secResp.isShown())
            {
              Connection.MessageBox(Visits.this, "Required field: উত্তরদাতা.");
-             txtResp.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtResp.getText().toString().length()==0 ? "1" : txtResp.getText().toString()) < 1 || Integer.valueOf(txtResp.getText().toString().length()==0 ? "99" : txtResp.getText().toString()) > 99)
-           {
-             Connection.MessageBox(Visits.this, "Value should be between 1 and 99(উত্তরদাতা).");
-             txtResp.requestFocus(); 
+             spnResp.requestFocus();
              return;	
            }
          else if(txtRnd.getText().toString().length()==0 & secRnd.isShown())
@@ -356,7 +353,9 @@
          objSave.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
          objSave.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
          objSave.setVStatusOth(txtVStatusOth.getText().toString());
-         objSave.setResp(txtResp.getText().toString());
+
+         objSave.setVStatus((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
+
          objSave.setRnd(txtRnd.getText().toString());
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
          objSave.setStartTime(STARTTIME);
@@ -402,7 +401,7 @@
              dtpVDate.setText(item.getVDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getVDate()));
              spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item.getVStatus()));
              txtVStatusOth.setText(item.getVStatusOth());
-             txtResp.setText(item.getResp());
+             spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item.getResp()));
              txtRnd.setText(item.getRnd());
            }
         }
@@ -474,7 +473,7 @@
      public void onProviderDisabled(String provider) {
      }
    };
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+  //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
  }
 
  void updateLocation(Location location) {

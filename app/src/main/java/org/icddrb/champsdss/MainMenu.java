@@ -34,13 +34,35 @@ public class MainMenu extends Activity {
             g = Global.getInstance();
 
             USERID = g.getUserId();
-
+            /*
             cmdHHInterview = (Button) findViewById(R.id.cmdHHInterview);
             cmdHHInterview.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     finish();
                     Intent f1 = new Intent(getApplicationContext(), Household_list.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("village", "");
+                    bundle.putString("VCode", "");
+                    //f1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    f1.putExtras(bundle);
                     startActivity(f1);
+                    //startActivity(new Intent(MainMenu.this, Household_list.class));
+                }
+            });
+            */
+            cmdHHInterview = (Button) findViewById(R.id.cmdHHInterview);
+            cmdHHInterview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*Bundle IDbundle = new Bundle();
+                    IDbundle.putString("Village", "");
+                    IDbundle.putString("VCode", "");
+                    finish();
+                    Intent f1;
+                    f1 = new Intent(getApplicationContext(), Household_list.class);
+                    f1.putExtras(IDbundle);
+                    startActivity(f1);*/
+                    startActivity(new Intent(MainMenu.this, HouseholdIndex1.class));
                 }
             });
 
@@ -67,20 +89,14 @@ public class MainMenu extends Activity {
                                 public void run() {
                                     try {
 
-                                        /*List<String> tableList = new ArrayList<String>();
-                                        tableList.add("Screening");
-                                        tableList.add("idnHistory");
-                                        tableList.add("medRecord");
-                                        tableList.add("Admission");
-                                        tableList.add("Folup");
-                                        tableList.add("Medicine");
-                                        tableList.add("OthInvestig");
+                                        List<String> tableList = new ArrayList<String>();
+                                        tableList.add("Baris");
+                                        tableList.add("Household");
+                                        tableList.add("Member");
+                                        tableList.add("SES");
+                                        tableList.add("PregHis");
 
-                                        //Lab
-                                        tableList.add("SampleAnalysis");
-                                        tableList.add("LabResult");
-
-                                        C.DataSync_UploadDownload(tableList, USERID);*/
+                                        //C.DataSync_UploadDownload(tableList, USERID);
 
                                     } catch (Exception e) {
 

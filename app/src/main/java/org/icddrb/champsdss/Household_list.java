@@ -90,12 +90,12 @@ package org.icddrb.champsdss;
          STARTTIME = g.CurrentTime24();
 
          IDbundle       = getIntent().getExtras();
-         CurrentVillage = IDbundle.getString("village");
-         CurrentVCode   = IDbundle.getString("vcode");
+         CurrentVillage = IDbundle.getString("Village");
+         CurrentVCode   = IDbundle.getString("VCode");
 
          TableName = "Household";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
-         lblHeading.setOnTouchListener(new View.OnTouchListener() {
+         /*lblHeading.setOnTouchListener(new View.OnTouchListener() {
              @Override
              public boolean onTouch(View v, MotionEvent event) {
                  final int DRAWABLE_RIGHT  = 2;
@@ -115,7 +115,7 @@ package org.icddrb.champsdss;
                  }
                  return false;
              }
-         });
+         });*/
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
@@ -140,8 +140,7 @@ package org.icddrb.champsdss;
                    DataSearch(VILL, BARI, HH);
 
              }});
-        */
-         /*
+
          btnAdd   = (Button) findViewById(R.id.btnAdd);
          btnAdd.setOnClickListener(new View.OnClickListener() {
 
@@ -234,19 +233,18 @@ package org.icddrb.champsdss;
          });
 
          final Spinner BariList = (Spinner)findViewById(R.id.spnBari);
-         //BariList.setAdapter(C.getArrayAdapter("Select ' ' union Select ' All Bari' union select Bari||', '||BariName from baris b,mdssvill v where b.vill=v.vill and v.cluster='"+ g.getClusterCode() +"' and b.block='"+ g.getBlockCode() +"'"));
-         BariList.setAdapter(C.getArrayAdapter("Select ' ' union Select ' All Bari' union select Bari||', '||BariName from baris b where b.cluster='"+ g.getClusterCode() +"' and b.block='"+ g.getBlockCode() +"'"));
+         BariList.setAdapter(C.getArrayAdapter("Select ' ' union Select ' All Bari' union select Bari||', '||BariName from Baris b where b.cluster='"+ g.getClusterCode() +"' and b.block='"+ g.getBlockCode() +"'"));
          BariList.setSelection(2);
 
-         Button cmdbari = (Button)findViewById(R.id.cmdBari);
-         cmdbari.setOnClickListener(new View.OnClickListener() {
+         Button cmdBari = (Button)findViewById(R.id.cmdBari);
+         cmdBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
                  if (BariList.getSelectedItemPosition() == 0) return;
                  if (BariList.getSelectedItem().toString().trim().equalsIgnoreCase("all bari"))
                      return;
 
                  String CurrentBariNo = Global.Left(BariList.getSelectedItem().toString(), 4);
-                 ShowBariForm(g.getDeviceNo(), CurrentBariNo, "u");
+                 ShowBariForm(g.getVillageCode(), CurrentBariNo, "s");
              }
          });
      }
@@ -256,6 +254,7 @@ package org.icddrb.champsdss;
          return;
      }
  }
+     /*
      public boolean onOptionsItemSelected(MenuItem item) {
          switch (item.getItemId()) {
 
@@ -273,7 +272,7 @@ package org.icddrb.champsdss;
                          CurrentBariNo = Global.Left(LastBariNo, 1) + Global.Right("000" + String.valueOf((Integer.parseInt(Global.Right(LastBariNo,3))+1)),3);
                      }
 
-                     ShowBariForm(g.getDeviceNo(),CurrentBariNo,"s");
+                     ShowBariForm(g.getVillageCode(),CurrentBariNo,"s");
                  }
                  catch(Exception ex)
                  {
@@ -288,6 +287,7 @@ package org.icddrb.champsdss;
          }
          return false;
      }
+     */
      private void ShowBariForm(final String Vill,final String BariNo, final String Status)
      {
          //Status: u-update, s-save (new bari)
@@ -306,7 +306,6 @@ package org.icddrb.champsdss;
          wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
          window.setAttributes(wlp);
 
-
          final Spinner BariList = (Spinner)findViewById(R.id.spnBari);
          final TextView txtCluster = (TextView)dialog.findViewById(R.id.txtCluster);
          final Spinner txtBlock = (Spinner)dialog.findViewById(R.id.spnBlock);
@@ -319,7 +318,7 @@ package org.icddrb.champsdss;
          txtVill.setText(g.getVillageCode()+", "+CurrentVillage);
          txtBari.setText(BariNo);
          txtCluster.setText(g.getClusterCode());
-         txtBlock.setAdapter(C.getArrayAdapter("Select distinct block from baris order by cast(block as int)"));
+         txtBlock.setAdapter(C.getArrayAdapter("Select distinct Block from Baris order by cast(Block as int)"));
          //txtBlock.setText(g.getBlockCode());
          txtBlock.setSelection(Common.Global.SpinnerItemPosition(txtBlock, 2, g.getBlockCode()));
          if(Status.equalsIgnoreCase("u"))
@@ -344,11 +343,11 @@ package org.icddrb.champsdss;
                          int selBari = BariList.getSelectedItemPosition();
                          if(Status.equalsIgnoreCase("s"))
                          {
-                             SQL  = "Insert into Baris (Vill, Bari, Block, BariName,BariLoc,Xdec, Xmin, Xsec, Ydec, Ymin, Ysec,Status, EnDt,Upload)Values(";
+                             SQL  = "Insert into Baris (Vill, Bari, Block, BariName,BariLoc,EnDt,Upload)Values(";
                              SQL += "'"+ Vill +"','"+ txtBari.getText() +"','"+ "','"+ txtBName.getText() +"','"+ txtBLoc.getText() +"',";
 
                              C.Save(SQL);
-                             C.Save("update baris set cluster=(select cluster from mdssvill where vill=baris.vill) where length(cluster)=0 or cluster is null");
+                             C.Save("update Baris set cluster=(select cluster from Village where vill=baris.vill) where length(cluster)=0 or cluster is null");
                          }
                          else if(Status.equalsIgnoreCase("u"))
                          {
@@ -361,7 +360,7 @@ package org.icddrb.champsdss;
 
                          dialog.dismiss();
                          final Spinner BariList = (Spinner)findViewById(R.id.spnBari);
-                         BariList.setAdapter(C.getArrayAdapter("Select ' ' union Select ' All Bari' union select Bari||', '||BariName from baris b,mdssvill v where b.vill=v.vill '"));
+                         BariList.setAdapter(C.getArrayAdapter("Select ' ' union Select ' All Bari' union select Bari||', '||BariName from Baris b,Village v where b.vill=v.vill '"));
 
                          BariList.setSelection(selBari);
                          //BlockList(false, Global.Left(BariList.getSelectedItem().toString(),4));
@@ -384,7 +383,7 @@ package org.icddrb.champsdss;
              //}
          //});
 
-         dialog.show();
+         //dialog.show();
      }
  @Override
  protected void onActivityResult(int requestCode, int resultCode, Intent data) {

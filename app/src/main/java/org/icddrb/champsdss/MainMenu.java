@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class MainMenu extends Activity {
     static String USERID = "";
     Button cmdDataSync;
     Button cmdHHInterview;
+    Button cmdMember;
 
     Connection C;
     Global g;
@@ -60,6 +62,22 @@ public class MainMenu extends Activity {
                     finish();
                     Intent f1;
                     f1 = new Intent(getApplicationContext(), Household_list.class);
+                    f1.putExtras(IDbundle);
+                    startActivity(f1);
+                    //startActivity(new Intent(MainMenu.this, HouseholdIndex1.class));
+                }
+            });
+
+            cmdMember = (Button) findViewById(R.id.cmdMember);
+            cmdMember.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle IDbundle = new Bundle();
+                    IDbundle.putString("Village", "");
+                    IDbundle.putString("VCode", "");
+                    finish();
+                    Intent f1;
+                    f1 = new Intent(getApplicationContext(), Member_list.class);
                     f1.putExtras(IDbundle);
                     startActivity(f1);
                     //startActivity(new Intent(MainMenu.this, HouseholdIndex1.class));

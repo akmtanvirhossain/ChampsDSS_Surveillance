@@ -234,22 +234,22 @@
         // lineTotRWo=(View)findViewById(R.id.lineTotRWo);
          VlblTotRWo=(TextView) findViewById(R.id.VlblTotRWo);
          txtTotRWo=(EditText) findViewById(R.id.txtTotRWo);
-         secEnType=(LinearLayout)findViewById(R.id.secEnType);
-         lineEnType=(View)findViewById(R.id.lineEnType);
-         VlblEnType=(TextView) findViewById(R.id.VlblEnType);
-         txtEnType=(EditText) findViewById(R.id.txtEnType);
-         secEnDate=(LinearLayout)findViewById(R.id.secEnDate);
-         lineEnDate=(View)findViewById(R.id.lineEnDate);
-         VlblEnDate=(TextView) findViewById(R.id.VlblEnDate);
-         dtpEnDate=(EditText) findViewById(R.id.dtpEnDate);
-         secExType=(LinearLayout)findViewById(R.id.secExType);
-         lineExType=(View)findViewById(R.id.lineExType);
-         VlblExType=(TextView) findViewById(R.id.VlblExType);
-         txtExType=(EditText) findViewById(R.id.txtExType);
-         secExDate=(LinearLayout)findViewById(R.id.secExDate);
-         lineExDate=(View)findViewById(R.id.lineExDate);
-         VlblExDate=(TextView) findViewById(R.id.VlblExDate);
-         dtpExDate=(EditText) findViewById(R.id.dtpExDate);
+//         secEnType=(LinearLayout)findViewById(R.id.secEnType);
+//         lineEnType=(View)findViewById(R.id.lineEnType);
+//         VlblEnType=(TextView) findViewById(R.id.VlblEnType);
+//         txtEnType=(EditText) findViewById(R.id.txtEnType);
+//         secEnDate=(LinearLayout)findViewById(R.id.secEnDate);
+//         lineEnDate=(View)findViewById(R.id.lineEnDate);
+//         VlblEnDate=(TextView) findViewById(R.id.VlblEnDate);
+//         dtpEnDate=(EditText) findViewById(R.id.dtpEnDate);
+//         secExType=(LinearLayout)findViewById(R.id.secExType);
+//         lineExType=(View)findViewById(R.id.lineExType);
+//         VlblExType=(TextView) findViewById(R.id.VlblExType);
+//         txtExType=(EditText) findViewById(R.id.txtExType);
+//         secExDate=(LinearLayout)findViewById(R.id.secExDate);
+//         lineExDate=(View)findViewById(R.id.lineExDate);
+//         VlblExDate=(TextView) findViewById(R.id.VlblExDate);
+//         dtpExDate=(EditText) findViewById(R.id.dtpExDate);
          secRnd=(LinearLayout)findViewById(R.id.secRnd);
          lineRnd=(View)findViewById(R.id.lineRnd);
          VlblRnd=(TextView) findViewById(R.id.VlblRnd);
@@ -515,34 +515,34 @@
    minute = c.get(Calendar.MINUTE);
    switch (id) {
        case DATE_DIALOG:
-           return new DatePickerDialog(this, mDateSetListener,g.mYear,g.mMonth-1,g.mDay);
+           //return new DatePickerDialog(this, mDateSetListener,g.mYear,g.mMonth-1,g.mDay);
        case TIME_DIALOG:
            return new TimePickerDialog(this, timePickerListener, hour, minute,false);
        }
      return null;
  }
-
- private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-      mYear = year; mMonth = monthOfYear+1; mDay = dayOfMonth;
-      EditText dtpDate;
-
-
-              dtpDate = (EditText)findViewById(R.id.dtpEnDate);
-             if (VariableID.equals("btnEnDate"))
-              {
-                  dtpDate = (EditText)findViewById(R.id.dtpEnDate);
-              }
-             else if (VariableID.equals("btnExDate"))
-              {
-                  dtpDate = (EditText)findViewById(R.id.dtpExDate);
-              }
-      dtpDate.setText(new StringBuilder()
-      .append(Global.Right("00"+mDay,2)).append("/")
-      .append(Global.Right("00"+mMonth,2)).append("/")
-      .append(mYear));
-      }
-  };
+//
+// private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+//    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//      mYear = year; mMonth = monthOfYear+1; mDay = dayOfMonth;
+//      EditText dtpDate;
+//
+//
+//              dtpDate = (EditText)findViewById(R.id.dtpEnDate);
+//             if (VariableID.equals("btnEnDate"))
+//              {
+//                  dtpDate = (EditText)findViewById(R.id.dtpEnDate);
+//              }
+//             else if (VariableID.equals("btnExDate"))
+//              {
+//                  dtpDate = (EditText)findViewById(R.id.dtpExDate);
+//              }
+//      dtpDate.setText(new StringBuilder()
+//      .append(Global.Right("00"+mDay,2)).append("/")
+//      .append(Global.Right("00"+mMonth,2)).append("/")
+//      .append(mYear));
+//      }
+//  };
 
  private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
     public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {

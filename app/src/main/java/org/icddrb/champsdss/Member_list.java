@@ -71,9 +71,11 @@ package org.icddrb.champsdss;
          super.onCreate(savedInstanceState);
    try
      {
+
          setContentView(R.layout.member_list);
          C = new Connection(this);
          g = Global.getInstance();
+
          STARTTIME = g.CurrentTime24();
 
          TableName = "Member";
@@ -110,6 +112,7 @@ package org.icddrb.champsdss;
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
+                         startActivity(new Intent(Member_list.this, MainMenu.class));
                      }});
                  adb.show();
              }});
@@ -119,7 +122,7 @@ package org.icddrb.champsdss;
 
              public void onClick(View view) {
                    //write your code here
-                   DataSearch(VILL, BARI, HH, MSLNO);
+                   DataSearch(g.getVillageCode(), g.getBariCode(), g.getHouseholdNo());
 
              }});
 
@@ -139,8 +142,7 @@ package org.icddrb.champsdss;
              }});
 
 
-        DataSearch(VILL, BARI, HH, MSLNO);
-
+         DataSearch(g.getVillageCode(), g.getBariCode(), g.getHouseholdNo());
 
      }
      catch(Exception  e)
@@ -150,23 +152,35 @@ package org.icddrb.champsdss;
      }
  }
  
- @Override
+/* @Override
  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
      super.onActivityResult(requestCode, resultCode, data);
      if (resultCode == Activity.RESULT_CANCELED) {
          //Write your code if there's no result
      } else {
-         DataSearch(VILL, BARI, HH, MSLNO);
-     }
- }
 
- private void DataSearch(String Vill, String Bari, String HH, String MSlNo)
+         if(VILL.equalsIgnoreCase(""))
+         {
+
+         }
+         else {
+             VILL=g.getVillageCode();
+             BARI=g.getBariCode();
+             HH=g.getHouseholdNo();
+
+         }
+
+         DataSearch(VILL, BARI, HH);
+     }
+ }*/
+
+ private void DataSearch(String Vill, String Bari, String HH)
      {
        try
         {
      
            Member_DataModel d = new Member_DataModel();
-             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
+             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -212,8 +226,6 @@ package org.icddrb.champsdss;
             return;
         }
      }
-
-
  public class DataListAdapter extends BaseAdapter 
  {
      private Context context;

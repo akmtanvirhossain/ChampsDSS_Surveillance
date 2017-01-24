@@ -299,10 +299,14 @@
          
          rdoSex1 = (RadioButton) findViewById(R.id.rdoSex1);
          rdoSex2 = (RadioButton) findViewById(R.id.rdoSex2);
+
          secBDate=(LinearLayout)findViewById(R.id.secBDate);
          lineBDate=(View)findViewById(R.id.lineBDate);
          VlblBDate=(TextView) findViewById(R.id.VlblBDate);
          dtpBDate=(EditText) findViewById(R.id.dtpBDate);
+
+
+
          secAgeY=(LinearLayout)findViewById(R.id.secAgeY);
          lineAgeY=(View)findViewById(R.id.lineAgeY);
          VlblAgeY=(TextView) findViewById(R.id.VlblAgeY);
@@ -356,6 +360,72 @@
          ArrayAdapter<String> adptrMS= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listMS);
          spnMS.setAdapter(adptrMS);
 
+         spnMS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 if (position != 2)
+                 {
+
+                     seclblSpsl.setVisibility(View.GONE);
+                     txtSp1.setText("");
+                     txtSp1.setVisibility(View.GONE);
+                     lineSp1.setVisibility(View.GONE);
+                     secSp1.setVisibility(View.GONE);
+                     lineSp1.setVisibility(View.GONE);
+
+                     txtSp2.setText("");
+                     txtSp2.setVisibility(View.GONE);
+                     lineSp2.setVisibility(View.GONE);
+                     secSp2.setVisibility(View.GONE);
+                     lineSp2.setVisibility(View.GONE);
+
+                     txtSp3.setText("");
+                     txtSp3.setVisibility(View.GONE);
+                     lineSp3.setVisibility(View.GONE);
+                     secSp3.setVisibility(View.GONE);
+                     lineSp3.setVisibility(View.GONE);
+
+                     txtSp4.setText("");
+                     txtSp4.setVisibility(View.GONE);
+                     lineSp4.setVisibility(View.GONE);
+                     secSp4.setVisibility(View.GONE);
+                     lineSp4.setVisibility(View.GONE);
+
+                 } else {
+
+                     seclblSpsl.setVisibility(View.VISIBLE);
+                     txtSp1.setVisibility(View.VISIBLE);
+                     lineSp1.setVisibility(View.VISIBLE);
+                     secSp1.setVisibility(View.VISIBLE);
+                     lineSp1.setVisibility(View.VISIBLE);
+
+                     txtSp2.setText("");
+                     txtSp2.setVisibility(View.VISIBLE);
+                     lineSp2.setVisibility(View.VISIBLE);
+                     secSp2.setVisibility(View.VISIBLE);
+                     lineSp2.setVisibility(View.VISIBLE);
+
+                     txtSp3.setText("");
+                     txtSp3.setVisibility(View.VISIBLE);
+                     lineSp3.setVisibility(View.VISIBLE);
+                     secSp3.setVisibility(View.VISIBLE);
+                     lineSp3.setVisibility(View.VISIBLE);
+
+                     txtSp4.setText("");
+                     txtSp4.setVisibility(View.VISIBLE);
+                     lineSp4.setVisibility(View.VISIBLE);
+                     secSp4.setVisibility(View.VISIBLE);
+                     lineSp4.setVisibility(View.VISIBLE);
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
+
+             }
+         });
+
+
          secOcp=(LinearLayout)findViewById(R.id.secOcp);
          lineOcp=(View)findViewById(R.id.lineOcp);
          VlblOcp=(TextView) findViewById(R.id.VlblOcp);
@@ -390,34 +460,63 @@
          lineSp1=(View)findViewById(R.id.lineSp1);
          VlblSp1=(TextView) findViewById(R.id.VlblSp1);
          txtSp1=(EditText) findViewById(R.id.txtSp1);
+
          secSp2=(LinearLayout)findViewById(R.id.secSp2);
          lineSp2=(View)findViewById(R.id.lineSp2);
          VlblSp2=(TextView) findViewById(R.id.VlblSp2);
          txtSp2=(EditText) findViewById(R.id.txtSp2);
+
          secSp3=(LinearLayout)findViewById(R.id.secSp3);
          lineSp3=(View)findViewById(R.id.lineSp3);
          VlblSp3=(TextView) findViewById(R.id.VlblSp3);
          txtSp3=(EditText) findViewById(R.id.txtSp3);
+
          secSp4=(LinearLayout)findViewById(R.id.secSp4);
          lineSp4=(View)findViewById(R.id.lineSp4);
          VlblSp4=(TextView) findViewById(R.id.VlblSp4);
          txtSp4=(EditText) findViewById(R.id.txtSp4);
+
+
          secEnType=(LinearLayout)findViewById(R.id.secEnType);
          lineEnType=(View)findViewById(R.id.lineEnType);
          VlblEnType=(TextView) findViewById(R.id.VlblEnType);
          txtEnType=(EditText) findViewById(R.id.txtEnType);
+
          secEnDate=(LinearLayout)findViewById(R.id.secEnDate);
          lineEnDate=(View)findViewById(R.id.lineEnDate);
          VlblEnDate=(TextView) findViewById(R.id.VlblEnDate);
          dtpEnDate=(EditText) findViewById(R.id.dtpEnDate);
+
          secExType=(LinearLayout)findViewById(R.id.secExType);
          lineExType=(View)findViewById(R.id.lineExType);
          VlblExType=(TextView) findViewById(R.id.VlblExType);
          txtExType=(EditText) findViewById(R.id.txtExType);
+
          secExDate=(LinearLayout)findViewById(R.id.secExDate);
          lineExDate=(View)findViewById(R.id.lineExDate);
          VlblExDate=(TextView) findViewById(R.id.VlblExDate);
          dtpExDate=(EditText) findViewById(R.id.dtpExDate);
+
+
+         txtEnType.setVisibility(View.GONE);
+         VlblEnType.setVisibility(View.GONE);
+         secEnType.setVisibility(View.GONE);
+         lineEnType.setVisibility(View.GONE);
+
+         dtpEnDate.setVisibility(View.GONE);
+         VlblEnDate.setVisibility(View.GONE);
+         secEnDate.setVisibility(View.GONE);
+         lineEnDate.setVisibility(View.GONE);
+
+         txtExType.setVisibility(View.GONE);
+         VlblExType.setVisibility(View.GONE);
+         secExType.setVisibility(View.GONE);
+         lineExType.setVisibility(View.GONE);
+
+         dtpExDate.setVisibility(View.GONE);
+         VlblExDate.setVisibility(View.GONE);
+         secExDate.setVisibility(View.GONE);
+         lineExDate.setVisibility(View.GONE);
 
 
          dtpBDate.setOnTouchListener(new View.OnTouchListener() {
@@ -731,12 +830,24 @@
          //objSave.setLon(Double.toString(currentLongitude));
 
          String status = objSave.SaveUpdateData(this);
-         if(status.length()==0) {
+         if(status.length()==0)
+         {
              Intent returnIntent = new Intent();
              returnIntent.putExtra("res", "");
              setResult(Activity.RESULT_OK, returnIntent);
 
+             Bundle IDBundle = new Bundle();
+             IDBundle.putString("Vill", txtVill.getText().toString());
+             IDBundle.putString("Bari", txtBari.getText().toString());
+             IDBundle.putString("hh", txtHH.getText().toString());
+             IDBundle.putString("MSlNo", txtMSlNo.getText().toString());
+             g.setVillageCode(txtVill.getText().toString());
+             g.setBariCode(txtBari.getText().toString());
+             g.setHouseholdNo(txtHH.getText().toString());
+             finish();
+
              Connection.MessageBox(Member.this, "Saved Successfully");
+             startActivity(new Intent(Member.this, Member_list.class).putExtras(IDbundle));
          }
          else{
              Connection.MessageBox(Member.this, status);
@@ -869,7 +980,7 @@
      public void onProviderDisabled(String provider) {
      }
    };
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+  //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
  }
 
  void updateLocation(Location location) {

@@ -44,6 +44,19 @@
                 android:textSize="20sp" />
 
             <Button
+                android:id="@+id/cmdMember"
+                style="@style/menuButtonStyle"
+                android:layout_width="fill_parent"
+                android:layout_marginBottom="5sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/button_style_gray"
+                android:gravity="center|center_vertical"
+                android:text="Member Registration"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <Button
                 android:id="@+id/cmdDataSync"
                 style="@style/menuButtonStyle"
                 android:layout_width="match_parent"

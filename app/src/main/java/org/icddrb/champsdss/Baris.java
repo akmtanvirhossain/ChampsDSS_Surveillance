@@ -348,19 +348,19 @@
         EditText dtpDate;
 
 
-        dtpDate = (EditText)findViewById(R.id.dtpEnDate);
-        if (VariableID.equals("btnEnDate"))
-        {
-            dtpDate = (EditText)findViewById(R.id.dtpEnDate);
-        }
-        else if (VariableID.equals("btnExDate"))
-        {
-            dtpDate = (EditText)findViewById(R.id.dtpExDate);
-        }
-        dtpDate.setText(new StringBuilder()
-                .append(Global.Right("00"+mDay,2)).append("/")
-                .append(Global.Right("00"+mMonth,2)).append("/")
-                .append(mYear));
+//        dtpDate = (EditText)findViewById(R.id.dtpEnDate);
+//        if (VariableID.equals("btnEnDate"))
+//        {
+//            dtpDate = (EditText)findViewById(R.id.dtpEnDate);
+//        }
+//        else if (VariableID.equals("btnExDate"))
+//        {
+//            dtpDate = (EditText)findViewById(R.id.dtpExDate);
+//        }
+//        dtpDate.setText(new StringBuilder()
+//                .append(Global.Right("00"+mDay,2)).append("/")
+//                .append(Global.Right("00"+mMonth,2)).append("/")
+//                .append(mYear));
       }
   };
 
@@ -392,7 +392,7 @@
      public void onProviderDisabled(String provider) {
      }
    };
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+//  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
  }
 
  void updateLocation(Location location) {

@@ -66,8 +66,9 @@
         <activity android:name=".SES_list" />
         <activity android:name=".PregHis" />
         <activity android:name=".PregHis_list" />
-        <activity android:name=".Baris" />
-        <activity android:name=".Baris_list" />
+
+        <activity android:name=".Baris" android:label="Bari Form" android:theme="@style/CustomDialogTheme" />
+
     </application>
 
 </manifest>

@@ -6,135 +6,72 @@
         <TextView android:id="@+id/lblHeading" android:text="Household List" android:paddingLeft="10sp" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
     </LinearLayout>
 
-    <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
+    <View android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="100sp"
+            android:gravity="left"
+            android:text=" Union"
+            android:textColor="#000000"
+            android:textSize="18sp"/>
 
-    <TableLayout
-        android:id="@+id/firsttab"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingLeft="10sp"
-        android:paddingRight="10sp"
-        android:stretchColumns="1" >
+        <Spinner
+            android:id="@+id/spnUnion"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:prompt="@string/planet_prompt"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <View android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="100sp"
+            android:gravity="left"
+            android:text=" Village"
+            android:textColor="#000000"
+            android:textSize="18sp"/>
 
-        <TableRow android:gravity="left" android:background="#f3f3f3" android:visibility="gone">
+        <Spinner
+            android:id="@+id/spnVill" android:layout_column="1"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:prompt="@string/planet_prompt"
+            android:textSize="25sp" />
+        <Button android:id="@+id/cmdBari" android:background="@drawable/button_style"
+            android:layout_width="85sp"  android:textSize="14sp"
+            android:layout_height="40sp"
+            android:text="New Bari"/>
+    </LinearLayout>
+    <View android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+        <TextView
+            android:layout_height="40sp" android:layout_width="100sp"
+            android:gravity="left"
+            android:text=" Bari"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
-            <TextView android:id="@+id/lblBlock"
-                android:layout_column="0" android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp"
-                android:textSize="25sp" android:gravity="left"
-                android:textColor="#000000"
-                android:text="" android:layout_height="40sp" android:layout_width="0sp"/>
-
-            <TextView android:id="@+id/lblVillageName" android:layout_column="1" android:layout_span="2"
-                android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp" android:layout_marginRight="25sp"
-                android:textSize="25sp" android:gravity="right"
-                android:textColor="#000000"	android:text="lblVillage"/>
-        </TableRow>
-        <TableRow android:gravity="left" android:background="#F3F3F3">
-
-            <TextView android:id="@+id/lblTotalHH"
-                android:layout_column="0" android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp"
-                android:textSize="20sp"
-                android:textColor="#006699"
-                android:text="" android:layout_height="40sp"/>
-
-            <TextView android:id="@+id/lblHHVisited" android:layout_marginLeft="50sp" android:layout_column="1"
-                android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp" android:layout_marginRight="25sp"
-                android:textSize="20sp"
-                android:textColor="#006699"	android:text=""
-                android:layout_width="wrap_content" />
-
-        </TableRow>
-
-        <TableRow android:gravity="left" android:background="#ffffff">
-
-            <TextView
-                android:layout_height="40sp"
-                android:layout_column="0"
-                android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp"
-                android:gravity="left"
-                android:text=" Union"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <Spinner
-                android:id="@+id/spnUnion" android:layout_column="1"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20sp"
-                android:layout_marginRight="10sp"
-                android:drawSelectorOnTop="true"
-                android:prompt="@string/planet_prompt"
-                android:textSize="25sp" />
-
-        </TableRow>
-
-        <TableRow android:gravity="left" android:background="#ffffff">
-
-            <TextView
-                android:layout_height="40sp"
-                android:layout_column="0"
-                android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp"
-                android:gravity="left"
-                android:text=" Village"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <Spinner
-                android:id="@+id/spnVill" android:layout_column="1"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20sp"
-                android:layout_marginRight="10sp"
-                android:drawSelectorOnTop="true"
-                android:prompt="@string/planet_prompt"
-                android:textSize="25sp" />
-            <Button android:id="@+id/cmdBari" android:layout_column="2"
-                android:layout_width="85sp"  android:textSize="14sp"
-                android:layout_height="40sp"
-                android:text="New Bari"/>
-
-        </TableRow>
-        <TableRow android:gravity="left" android:background="#ffffff">
-
-            <TextView
-                android:layout_height="40sp"
-                android:layout_column="0"
-                android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp"
-                android:gravity="left"
-                android:text=" Bari"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-
-            <Spinner
-                android:id="@+id/spnBari" android:layout_column="1"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20sp"
-                android:layout_marginRight="10sp"
-                android:drawSelectorOnTop="true"
-                android:prompt="@string/planet_prompt"
-                android:textSize="25sp" />
-            <Button android:id="@+id/cmdHH" android:layout_column="2"
-                android:layout_width="85sp"  android:textSize="14sp"
-                android:layout_height="40sp"
-                android:text="New HH"/>
-
-        </TableRow>
-        <View android:layout_height="2dip" android:background="#00CD00" />
-        <TableRow android:gravity="left" >
-
-
-        </TableRow>
-    </TableLayout>
-
-
+        <Spinner
+            android:id="@+id/spnBari"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:prompt="@string/planet_prompt"
+            android:textSize="25sp" />
+        <Button android:id="@+id/cmdUpdateBari" android:background="@drawable/button_style"
+            android:layout_width="85sp"  android:textSize="14sp"
+            android:layout_height="40sp"
+            android:text="Update"/>
+    </LinearLayout>
+    <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+        <Button android:id="@+id/cmdHH" android:layout_marginLeft="20sp" android:layout_marginRight="20sp" android:background="@drawable/button_style_blue"
+            android:layout_width="match_parent"  android:textSize="18sp" android:textColor="#ffffff"
+            android:layout_height="40sp"
+            android:text="New HH Registration"/>
+    </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
     <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:overScrollMode="always" android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:scrollbarStyle="outsideInset" android:scrollbars="vertical">
     <LinearLayout android:layout_marginLeft="10sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">

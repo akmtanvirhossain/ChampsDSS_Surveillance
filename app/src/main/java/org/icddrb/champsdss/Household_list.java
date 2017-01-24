@@ -1,39 +1,38 @@
 package org.icddrb.champsdss;
 //Android Manifest Code
  //<activity android:name=".Household_list" android:label="Household: List" />
- import java.util.ArrayList;
- import java.util.HashMap;
- import java.util.List;
- import android.app.*;
- import android.app.AlertDialog;
- import android.content.Context;
- import android.content.DialogInterface;
- import android.content.Intent;
- import android.database.Cursor;
- import android.location.Location;
- import android.view.KeyEvent;
- import android.os.Bundle;
- import android.view.Menu;
- import android.view.MenuInflater;
- import android.view.MenuItem;
- import android.view.View;
- import android.view.MotionEvent;
- import android.view.ViewGroup;
- import android.view.LayoutInflater;
- import android.widget.AdapterView;
- import android.widget.LinearLayout;
- import android.widget.ListView;
- import android.widget.SimpleAdapter;
- import android.widget.BaseAdapter;
- import android.widget.TextView;
- import android.widget.Button;
- import android.widget.ImageButton;
- import Common.*;
- import android.view.Window;
- import android.view.WindowManager;
- import android.view.Gravity;
- import android.widget.Spinner;
- import android.widget.EditText;
+ import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import Common.Connection;
+import Common.Global;
 
  public class Household_list extends Activity {
     boolean networkAvailable=false;
@@ -163,7 +162,7 @@ package org.icddrb.champsdss;
          spnVill = (Spinner) findViewById(R.id.spnVill);
          spnBari = (Spinner) findViewById(R.id.spnBari);
 
-         spnUnion.setAdapter(C.getArrayAdapter("Select distinct UnCode||'-'||UnName from Village order by UnCode"));
+         spnUnion.setAdapter(C.getArrayAdapter("Select UnCode||'-'||UnName from Unions order by UnCode"));
          spnUnion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -178,24 +177,13 @@ package org.icddrb.champsdss;
              }
          });
 
-         spnUnion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-             @Override
-             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                 String UN = Connection.SelectedSpinnerValue(spnUnion.getSelectedItem().toString(), "-");
-                 spnVill.setAdapter(C.getArrayAdapter("Select '' union Select distinct VCode||'-'||VName from Village where UNCode='" + UN + "'"));
-                 //DataSearch();
-             }
-
-             @Override
-             public void onNothingSelected(AdapterView<?> parent) {
-
-             }
-         });
 
          spnVill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                 //DataSearch();
+                 if (spnVill.getSelectedItemPosition()==0) return;
+                 String[] V = Connection.split(spnVill.getSelectedItem().toString(),'-');
+                 spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='"+ V[0] +"'"));
              }
 
              @Override
@@ -214,13 +202,9 @@ package org.icddrb.champsdss;
                  }
                  else if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase("all bari"))
                  {
-                     g.setBariCode("");
-                     //BlockList(false, "");
                  }
                  else
                  {
-                     g.setBariCode(spnBari.getSelectedItem().toString());
-                     //BlockList(false, Global.Left(spnBari.getSelectedItem().toString(),4));
                  }
 
              }
@@ -232,21 +216,44 @@ package org.icddrb.champsdss;
 
          });
 
-         final Spinner BariList = (Spinner)findViewById(R.id.spnBari);
-         BariList.setAdapter(C.getArrayAdapter("Select ' ' union Select ' All Bari' union select Bari||', '||BariName from Baris b where b.cluster='"+ g.getClusterCode() +"' and b.block='"+ g.getBlockCode() +"'"));
-         BariList.setSelection(2);
 
          Button cmdBari = (Button)findViewById(R.id.cmdBari);
          cmdBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
-                 if (BariList.getSelectedItemPosition() == 0) return;
-                 if (BariList.getSelectedItem().toString().trim().equalsIgnoreCase("all bari"))
+                 if(spnVill.getSelectedItemPosition()==0){
+                     Connection.MessageBox(Household_list.this,"Please select a valid village from dropdown list.");
                      return;
+                 }
+                 String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
+                 Bundle IDbundle = new Bundle();
+                 IDbundle.putString("Vill", V);
+                 IDbundle.putString("Bari", "");
 
-                 String CurrentBariNo = Global.Left(BariList.getSelectedItem().toString(), 4);
-                 ShowBariForm(g.getVillageCode(), CurrentBariNo, "s");
+                 Intent intent = new Intent(getApplicationContext(),Baris.class);
+                 intent.putExtras(IDbundle);
+                 startActivity(intent);
              }
          });
+
+         Button cmdUpdateBari = (Button)findViewById(R.id.cmdUpdateBari);
+         cmdUpdateBari.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View arg0) {
+                 if(spnBari.getSelectedItemPosition()==0){
+                     Connection.MessageBox(Household_list.this,"Please select a valid Bari from dropdown list.");
+                     return;
+                 }
+                 String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
+                 String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
+                 Bundle IDbundle = new Bundle();
+                 IDbundle.putString("Vill", V);
+                 IDbundle.putString("Bari", B);
+
+                 Intent intent = new Intent(getApplicationContext(),Baris.class);
+                 intent.putExtras(IDbundle);
+                 startActivity(intent);
+             }
+         });
+
      }
      catch(Exception  e)
      {

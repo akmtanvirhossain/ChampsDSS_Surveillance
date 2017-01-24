@@ -161,10 +161,19 @@
          lineVill=(View)findViewById(R.id.lineVill);
          VlblVill=(TextView) findViewById(R.id.VlblVill);
          txtVill=(EditText) findViewById(R.id.txtVill);
+         txtVill.setText(VILL);
+         txtVill.setEnabled(false);
          secBari=(LinearLayout)findViewById(R.id.secBari);
          lineBari=(View)findViewById(R.id.lineBari);
          VlblBari=(TextView) findViewById(R.id.VlblBari);
          txtBari=(EditText) findViewById(R.id.txtBari);
+         if(BARI.length()==0)
+             txtBari.setText(NewBariNo(VILL));
+         else
+             txtBari.setText(BARI);
+
+         txtBari.setEnabled(false);
+
          secCluster=(LinearLayout)findViewById(R.id.secCluster);
          lineCluster=(View)findViewById(R.id.lineCluster);
          VlblCluster=(TextView) findViewById(R.id.VlblCluster);
@@ -192,8 +201,6 @@
 
 
 
-
-
          //Hide all skip variables
 
 
@@ -202,6 +209,7 @@
         public void onClick(View v) { 
             DataSave();
         }});
+         DataSearch(VILL, BARI);
      }
      catch(Exception  e)
      {
@@ -229,7 +237,7 @@
              txtBari.requestFocus(); 
              return;	
            }
-         else if(txtCluster.getText().toString().length()==0 & secCluster.isShown())
+         /*else if(txtCluster.getText().toString().length()==0 & secCluster.isShown())
            {
              Connection.MessageBox(Baris.this, "Required field: Cluster.");
              txtCluster.requestFocus(); 
@@ -240,7 +248,7 @@
              Connection.MessageBox(Baris.this, "Required field: Block.");
              spnBlock.requestFocus(); 
              return;	
-           }
+           }*/
          else if(txtBariName.getText().toString().length()==0 & secBariName.isShown())
            {
              Connection.MessageBox(Baris.this, "Required field: Bari Name.");
@@ -260,8 +268,10 @@
          Baris_DataModel objSave = new Baris_DataModel();
          objSave.setVill(txtVill.getText().toString());
          objSave.setBari(txtBari.getText().toString());
-         objSave.setCluster(txtCluster.getText().toString());
-         objSave.setBlock((spnBlock.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnBlock.getSelectedItem().toString(), "-")));
+         //objSave.setCluster(txtCluster.getText().toString());
+         //objSave.setBlock((spnBlock.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnBlock.getSelectedItem().toString(), "-")));
+         objSave.setCluster("");
+         objSave.setBlock("");
          objSave.setBariName(txtBariName.getText().toString());
          objSave.setBariLoc(txtBariLoc.getText().toString());
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
@@ -302,10 +312,10 @@
            String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"'";
            List<Baris_DataModel> data = d.SelectAll(this, SQL);
            for(Baris_DataModel item : data){
-             txtVill.setText(item.getVill());
-             txtBari.setText(item.getBari());
-             txtCluster.setText(item.getCluster());
-             spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock, item.getBlock()));
+             //txtVill.setText(item.getVill());
+             //txtBari.setText(item.getBari());
+             //txtCluster.setText(item.getCluster());
+             //spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock, item.getBlock()));
              txtBariName.setText(item.getBariName());
              txtBariLoc.setText(item.getBariLoc());
            }
@@ -429,4 +439,12 @@
      super.onDestroy();
      turnGPSOff();
  }
+
+     private String NewBariNo(String Vill)
+     {
+         String B = C.ReturnSingleValue("Select cast(ifnull(max(Bari),0)+1 as varchar(4))BariNo from Baris where Vill='"+ Vill +"'");
+         B = Global.Right("000"+B,4);
+         return B;
+     }
+
 }

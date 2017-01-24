@@ -68,6 +68,7 @@
         <activity android:name=".PregHis_list" />
 
         <activity android:name=".Baris" android:label="Bari Form" android:theme="@style/CustomDialogTheme" />
+        <activity android:name=".Household_Visit" />
 
     </application>
 

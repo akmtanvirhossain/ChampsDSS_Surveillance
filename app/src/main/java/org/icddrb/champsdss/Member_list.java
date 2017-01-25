@@ -78,6 +78,12 @@ package org.icddrb.champsdss;
 
          STARTTIME = g.CurrentTime24();
 
+         Bundle IDbundle = getIntent().getExtras();
+         VILL = IDbundle.getString("Vill");
+         BARI = IDbundle.getString("Bari");
+         HH = IDbundle.getString("HH");
+         MSLNO = IDbundle.getString("MSlNo");
+
          TableName = "Member";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
          lblHeading.setOnTouchListener(new View.OnTouchListener() {
@@ -122,7 +128,7 @@ package org.icddrb.champsdss;
 
              public void onClick(View view) {
                    //write your code here
-                   DataSearch(g.getVillageCode(), g.getBariCode(), g.getHouseholdNo());
+                 DataSearch(VILL, BARI, HH, MSLNO);
 
              }});
 
@@ -142,7 +148,7 @@ package org.icddrb.champsdss;
              }});
 
 
-         DataSearch(g.getVillageCode(), g.getBariCode(), g.getHouseholdNo());
+         DataSearch(VILL, BARI, HH, MSLNO);
 
      }
      catch(Exception  e)
@@ -152,7 +158,7 @@ package org.icddrb.champsdss;
      }
  }
  
-/* @Override
+@Override
  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
      super.onActivityResult(requestCode, resultCode, data);
      if (resultCode == Activity.RESULT_CANCELED) {
@@ -167,20 +173,21 @@ package org.icddrb.champsdss;
              VILL=g.getVillageCode();
              BARI=g.getBariCode();
              HH=g.getHouseholdNo();
+             MSLNO=g.getmemSlNo();
 
          }
 
-         DataSearch(VILL, BARI, HH);
+         DataSearch(VILL, BARI, HH, MSLNO);
      }
- }*/
+ }
 
- private void DataSearch(String Vill, String Bari, String HH)
+ private void DataSearch(String Vill, String Bari, String HH ,String MSlNo)
      {
        try
         {
      
            Member_DataModel d = new Member_DataModel();
-             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 

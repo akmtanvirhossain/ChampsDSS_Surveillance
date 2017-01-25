@@ -498,27 +498,6 @@
          dtpExDate=(EditText) findViewById(R.id.dtpExDate);
 
 
-         txtEnType.setVisibility(View.GONE);
-         VlblEnType.setVisibility(View.GONE);
-         secEnType.setVisibility(View.GONE);
-         lineEnType.setVisibility(View.GONE);
-
-         dtpEnDate.setVisibility(View.GONE);
-         VlblEnDate.setVisibility(View.GONE);
-         secEnDate.setVisibility(View.GONE);
-         lineEnDate.setVisibility(View.GONE);
-
-         txtExType.setVisibility(View.GONE);
-         VlblExType.setVisibility(View.GONE);
-         secExType.setVisibility(View.GONE);
-         lineExType.setVisibility(View.GONE);
-
-         dtpExDate.setVisibility(View.GONE);
-         VlblExDate.setVisibility(View.GONE);
-         secExDate.setVisibility(View.GONE);
-         lineExDate.setVisibility(View.GONE);
-
-
          dtpBDate.setOnTouchListener(new View.OnTouchListener() {
              @Override
              public boolean onTouch(View v, MotionEvent event) {
@@ -817,6 +796,7 @@
          objSave.setSp2(txtSp2.getText().toString());
          objSave.setSp3(txtSp3.getText().toString());
          objSave.setSp4(txtSp4.getText().toString());
+
          objSave.setEnType(txtEnType.getText().toString());
          objSave.setEnDate(dtpEnDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEnDate.getText().toString()) : dtpEnDate.getText().toString());
          objSave.setExType(txtExType.getText().toString());
@@ -841,9 +821,11 @@
              IDBundle.putString("Bari", txtBari.getText().toString());
              IDBundle.putString("hh", txtHH.getText().toString());
              IDBundle.putString("MSlNo", txtMSlNo.getText().toString());
+
              g.setVillageCode(txtVill.getText().toString());
              g.setBariCode(txtBari.getText().toString());
              g.setHouseholdNo(txtHH.getText().toString());
+             g.setmemSlNo(txtMSlNo.getText().toString());
              finish();
 
              Connection.MessageBox(Member.this, "Saved Successfully");

@@ -75,6 +75,59 @@
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
     <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:overScrollMode="always" android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:scrollbarStyle="outsideInset" android:scrollbars="vertical">
     <LinearLayout android:layout_marginLeft="10sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+        <!--****************** added by sakib**************-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="left" android:paddingTop="5sp" android:paddingBottom="5sp"
+            android:background="@color/Heading"
+            >
+
+            <TextView android:layout_marginLeft="10sp"
+                android:text="HH"
+                android:layout_width="30sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvListHeadingNo"
+                android:textColor="@android:color/white"
+                android:layout_gravity="left"
+                />
+
+            <TextView
+                android:layout_marginLeft="30sp"
+                android:text="Head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvListHeadingName"
+                android:textColor="@android:color/white"
+                android:layout_gravity="start"
+
+                />
+
+            <TextView
+                android:layout_marginLeft="220sp"
+                android:text="TotMember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvListHeadingTotMem"
+                android:textColor="@android:color/white"
+
+                android:layout_gravity="start"
+                />
+
+            <TextView
+                android:layout_marginLeft="20sp"
+                android:text="Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvListHeadingStatus"
+                android:textColor="@android:color/white"
+
+                android:layout_gravity="start"
+                />
+        </LinearLayout>
+        <!--****************** added by sakib**************-->
        <LinearLayout android:id="@+id/secListView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
              <ListView android:scrollbars="vertical"
                   android:id="@+id/lstData"

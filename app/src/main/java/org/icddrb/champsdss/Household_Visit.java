@@ -22,6 +22,7 @@
  import android.view.KeyEvent;
  import android.view.MotionEvent;
  import android.view.View;
+ import android.widget.AdapterView;
  import android.widget.ArrayAdapter;
  import android.widget.Button;
  import android.widget.DatePicker;
@@ -33,6 +34,7 @@
  import android.widget.Spinner;
  import android.widget.TextView;
  import android.widget.TimePicker;
+ import android.widget.Toast;
 
  import java.util.ArrayList;
  import java.util.Calendar;
@@ -109,26 +111,47 @@
          View lineTotRWo;
          TextView VlblTotRWo;
          EditText txtTotRWo;
-         LinearLayout secEnType;
-         View lineEnType;
-         TextView VlblEnType;
-         EditText txtEnType;
-         LinearLayout secEnDate;
-         View lineEnDate;
-         TextView VlblEnDate;
-         EditText dtpEnDate;
-         LinearLayout secExType;
-         View lineExType;
-         TextView VlblExType;
-         EditText txtExType;
-         LinearLayout secExDate;
-         View lineExDate;
-         TextView VlblExDate;
-         EditText dtpExDate;
-         LinearLayout secRnd;
-         View lineRnd;
-         TextView VlblRnd;
-         EditText txtRnd;
+
+//         LinearLayout secEnType;
+//         View lineEnType;
+//         TextView VlblEnType;
+//         EditText txtEnType;
+//         LinearLayout secEnDate;
+//         View lineEnDate;
+//         TextView VlblEnDate;
+//         EditText dtpEnDate;
+//         LinearLayout secExType;
+//         View lineExType;
+//         TextView VlblExType;
+//         EditText txtExType;
+//         LinearLayout secExDate;
+//         View lineExDate;
+//         TextView VlblExDate;
+//         EditText dtpExDate;
+//         LinearLayout secRnd;
+//         View lineRnd;
+//         TextView VlblRnd;
+//         EditText txtRnd;
+
+     //***********************sakib****************************************
+         LinearLayout secVDate;
+         View lineVDate;
+         TextView VlblVDate;
+         EditText dtpVDate;
+         LinearLayout secVStatus;
+         View lineVStatus;
+         TextView VlblVStatus;
+         Spinner spnVStatus;
+
+         LinearLayout secVStatusOth;
+         View lineVStatusOth;
+         TextView VlblVStatusOth;
+         EditText txtVStatusOth;
+         LinearLayout secResp;
+         View lineResp;
+         TextView VlblResp;
+         Spinner spnResp;
+     //***********************sakib********************************************
 
     static String TableName;
 
@@ -145,7 +168,8 @@
          super.onCreate(savedInstanceState);
    try
      {
-         setContentView(R.layout.household);
+         setContentView(R.layout.household_visit);
+
          C = new Connection(this);
          g = Global.getInstance();
 
@@ -250,32 +274,129 @@
 //         lineExDate=(View)findViewById(R.id.lineExDate);
 //         VlblExDate=(TextView) findViewById(R.id.VlblExDate);
 //         dtpExDate=(EditText) findViewById(R.id.dtpExDate);
-         secRnd=(LinearLayout)findViewById(R.id.secRnd);
-         lineRnd=(View)findViewById(R.id.lineRnd);
-         VlblRnd=(TextView) findViewById(R.id.VlblRnd);
-         txtRnd=(EditText) findViewById(R.id.txtRnd);
+//         secRnd=(LinearLayout)findViewById(R.id.secRnd);
+//         lineRnd=(View)findViewById(R.id.lineRnd);
+//         VlblRnd=(TextView) findViewById(R.id.VlblRnd);
+//         txtRnd=(EditText) findViewById(R.id.txtRnd);
 
 
-         dtpEnDate.setOnTouchListener(new View.OnTouchListener() {
+         //***********************sakib********************************************************
+         secVDate=(LinearLayout)findViewById(R.id.secVDate);
+         lineVDate=(View)findViewById(R.id.lineVDate);
+         VlblVDate=(TextView) findViewById(R.id.VlblVDate);
+         dtpVDate=(EditText) findViewById(R.id.dtpVDate);
+         secVStatus=(LinearLayout)findViewById(R.id.secVStatus);
+         lineVStatus=(View)findViewById(R.id.lineVStatus);
+         VlblVStatus=(TextView) findViewById(R.id.VlblVStatus);
+         spnVStatus=(Spinner) findViewById(R.id.spnVStatus);
+         List<String> listVStatus = new ArrayList<String>();
+
+         listVStatus.add("");
+         listVStatus.add("1-ইন্টারভিউ সফল হয়েছে");
+         listVStatus.add("2-বাড়ি পরিদর্শনের সময় খানার কোন সদস্যকে বা উপযুক্ত কাউকে পাওয়া যায় নাই");
+         listVStatus.add("3-অনেক দিনের জন্য খানার সকল সদস্য অনুপস্থিত");
+         listVStatus.add("4-ইন্টারভিউ বাতিল");
+         listVStatus.add("5-ইন্টারভিউ দিতে রাজী নয়");
+         listVStatus.add("6-বাসা খালি অথবা ঠিকানাটি কোন বাসস্থানের নয়");
+         listVStatus.add("7-বাসস্থানটি ধংসপ্রাপ্ত");
+         listVStatus.add("8-বাসস্থানটি খুঁজে পাওয়া যায় নাই");
+         listVStatus.add("9-অন্যান");
+         ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listVStatus);
+         spnVStatus.setAdapter(adptrVStatus);
+
+         spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
-             public boolean onTouch(View v, MotionEvent event) {
-                 final int DRAWABLE_RIGHT  = 2;
-                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                     if(event.getRawX() >= (dtpEnDate.getRight() - dtpEnDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                         VariableID = "btnEnDate"; showDialog(DATE_DIALOG);
-                      return true;
-                     }
+             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                 if (spnVStatus.getSelectedItem().toString().length() == 0) return;
+                 String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(),"-");
+                 if(!spnData.equalsIgnoreCase("9"))
+                 {
+                     secVStatusOth.setVisibility(View.GONE);
+                     lineVStatusOth.setVisibility(View.GONE);
+                     txtVStatusOth.setText("");
                  }
-                 return false;
+                 else
+                 {
+                     secVStatusOth.setVisibility(View.VISIBLE);
+                     lineVStatusOth.setVisibility(View.VISIBLE);
+                 }
+             }
+             @Override
+             public void onNothingSelected(AdapterView<?> parentView) {
              }
          });
-         dtpExDate.setOnTouchListener(new View.OnTouchListener() {
+         secVStatusOth=(LinearLayout)findViewById(R.id.secVStatusOth);
+         lineVStatusOth=(View)findViewById(R.id.lineVStatusOth);
+         VlblVStatusOth=(TextView) findViewById(R.id.VlblVStatusOth);
+         txtVStatusOth=(EditText) findViewById(R.id.txtVStatusOth);
+
+         secResp=(LinearLayout)findViewById(R.id.secResp);
+         lineResp=(View)findViewById(R.id.lineResp);
+         VlblResp=(TextView) findViewById(R.id.VlblResp);
+         spnResp=(Spinner) findViewById(R.id.spnResp);
+         //***********************sakib********************************************************
+
+         List<String> listResp = new ArrayList<String>();
+
+         listResp.add("");
+         listResp.add("1-Member1");
+         listResp.add("2-Member2");
+         listResp.add("3-Member3");
+         listResp.add("4-Member4");
+         listResp.add("5-Member5");
+         listResp.add("6-Member6");
+
+         ArrayAdapter<String> adptrResp= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listResp);
+         spnResp.setAdapter(adptrResp);
+
+         txtVill.setText(VILL);
+         txtVill.setFocusable(false);
+         txtBari.setText(BARI);
+         txtBari.setFocusable(false);
+         if(HH.equals(""))
+         {
+             HH=HHSerial();
+         }
+         txtHH.setText(HH);
+         txtHH.setFocusable(false);
+
+
+//         dtpEnDate.setOnTouchListener(new View.OnTouchListener() {
+//             @Override
+//             public boolean onTouch(View v, MotionEvent event) {
+//                 final int DRAWABLE_RIGHT  = 2;
+//                 if(event.getAction() == MotionEvent.ACTION_UP) {
+//                     if(event.getRawX() >= (dtpEnDate.getRight() - dtpEnDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+//                         VariableID = "btnEnDate"; showDialog(DATE_DIALOG);
+//                      return true;
+//                     }
+//                 }
+//                 return false;
+//             }
+//         });
+//         dtpExDate.setOnTouchListener(new View.OnTouchListener() {
+//             @Override
+//             public boolean onTouch(View v, MotionEvent event) {
+//                 final int DRAWABLE_RIGHT  = 2;
+//                 if(event.getAction() == MotionEvent.ACTION_UP) {
+//                     if(event.getRawX() >= (dtpExDate.getRight() - dtpExDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+//                         VariableID = "btnExDate"; showDialog(DATE_DIALOG);
+//                      return true;
+//                     }
+//                 }
+//                 return false;
+//             }
+//         });
+
+         dtpVDate.setOnTouchListener(new View.OnTouchListener() {
              @Override
              public boolean onTouch(View v, MotionEvent event) {
+
                  final int DRAWABLE_RIGHT  = 2;
                  if(event.getAction() == MotionEvent.ACTION_UP) {
-                     if(event.getRawX() >= (dtpExDate.getRight() - dtpExDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                         VariableID = "btnExDate"; showDialog(DATE_DIALOG);
+                     if(event.getRawX() >= (dtpVDate.getRight() - dtpVDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                         VariableID = "dtpVDate"; showDialog(DATE_DIALOG);
+
                       return true;
                      }
                  }
@@ -293,6 +414,8 @@
         public void onClick(View v) { 
             DataSave();
         }});
+
+         DataSearch(VILL,BARI,HH);
      }
      catch(Exception  e)
      {
@@ -300,6 +423,19 @@
          return;
      }
  }
+
+     private String HHSerial()
+     {
+         String SL = C.ReturnSingleValue("Select (ifnull(max(cast(HH as int)),0)+1)SL from Household where Bari='"+BARI+"'"); //where ParticipantID='"+ ParticipantID +"'");
+         int length=SL.length();
+         String s = "";
+         for(int i=0;i<2-length;i++)
+         {
+             s+="0";
+         }
+         SL=s+SL;
+         return SL;
+     }
 
  private void DataSave()
  {
@@ -338,12 +474,12 @@
              txtMobileNo1.requestFocus(); 
              return;	
            }
-         else if(txtMobileNo2.getText().toString().length()==0 & secMobileNo2.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: ২য় মোবাইল নম্বর.");
-             txtMobileNo2.requestFocus(); 
-             return;	
-           }
+//         else if(txtMobileNo2.getText().toString().length()==0 & secMobileNo2.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: ২য় মোবাইল নম্বর.");
+//             txtMobileNo2.requestFocus();
+//             return;
+//           }
          else if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: খানা প্রধানের নাম.");
@@ -374,56 +510,82 @@
              txtTotRWo.requestFocus(); 
              return;	
            }
-         else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: তালিকাভুক্তির ধরন.");
-             txtEnType.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtEnType.getText().toString().length()==0 ? "20" : txtEnType.getText().toString()) < 20 || Integer.valueOf(txtEnType.getText().toString().length()==0 ? "25" : txtEnType.getText().toString()) > 25)
-           {
-             Connection.MessageBox(Household_Visit.this, "Value should be between 20 and 25(তালিকাভুক্তির ধরন).");
-             txtEnType.requestFocus(); 
-             return;	
-           }
-         DV = Global.DateValidate(dtpEnDate.getText().toString());
-         if(DV.length()!=0 & secEnDate.isShown())
+         DV = Global.DateValidate(dtpVDate.getText().toString());
+         if(DV.length()!=0 & secVDate.isShown())
            {
              Connection.MessageBox(Household_Visit.this, DV);
-             dtpEnDate.requestFocus(); 
-             return;	
+               dtpVDate.requestFocus();
+             return;
            }
-         else if(txtExType.getText().toString().length()==0 & secExType.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: ExType.");
-             txtExType.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtExType.getText().toString().length()==0 ? "51" : txtExType.getText().toString()) < 51 || Integer.valueOf(txtExType.getText().toString().length()==0 ? "56" : txtExType.getText().toString()) > 56)
-           {
-             Connection.MessageBox(Household_Visit.this, "Value should be between 51 and 56(ExType).");
-             txtExType.requestFocus(); 
-             return;	
-           }
-         DV = Global.DateValidate(dtpExDate.getText().toString());
-         if(DV.length()!=0 & secExDate.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, DV);
-             dtpExDate.requestFocus(); 
-             return;	
-           }
-         else if(txtRnd.getText().toString().length()==0 & secRnd.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: রাউন্ড.");
-             txtRnd.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtRnd.getText().toString().length()==0 ? "1" : txtRnd.getText().toString()) < 1 || Integer.valueOf(txtRnd.getText().toString().length()==0 ? "99" : txtRnd.getText().toString()) > 99)
-           {
-             Connection.MessageBox(Household_Visit.this, "Value should be between 1 and 99(রাউন্ড).");
-             txtRnd.requestFocus(); 
-             return;	
-           }
+         else if(spnVStatus.getSelectedItemPosition()==0  & spnVStatus.isShown())
+         {
+             Connection.MessageBox(Household_Visit.this, "Required field: সাক্ষাতকারের ফলাফল.");
+             spnVStatus.requestFocus();
+             return;
+         }
+         else if(txtVStatusOth.getText().toString().length()==0 & txtVStatusOth.isShown())
+         {
+             Connection.MessageBox(Household_Visit.this, "Required field: অন্যান্য উল্লেখ করুন");
+             txtVStatusOth.requestFocus();
+             return;
+         }
+         else if(spnResp.getSelectedItemPosition()==0  & spnResp.isShown())
+         {
+             Connection.MessageBox(Household_Visit.this, "Required field: উত্তরদাতা.");
+             spnResp.requestFocus();
+             return;
+         }
+
+//         else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: তালিকাভুক্তির ধরন.");
+//             txtEnType.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtEnType.getText().toString().length()==0 ? "20" : txtEnType.getText().toString()) < 20 || Integer.valueOf(txtEnType.getText().toString().length()==0 ? "25" : txtEnType.getText().toString()) > 25)
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Value should be between 20 and 25(তালিকাভুক্তির ধরন).");
+//             txtEnType.requestFocus();
+//             return;
+//           }
+//         DV = Global.DateValidate(dtpEnDate.getText().toString());
+//         if(DV.length()!=0 & secEnDate.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, DV);
+//             dtpEnDate.requestFocus();
+//             return;
+//           }
+//         else if(txtExType.getText().toString().length()==0 & secExType.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: ExType.");
+//             txtExType.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtExType.getText().toString().length()==0 ? "51" : txtExType.getText().toString()) < 51 || Integer.valueOf(txtExType.getText().toString().length()==0 ? "56" : txtExType.getText().toString()) > 56)
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Value should be between 51 and 56(ExType).");
+//             txtExType.requestFocus();
+//             return;
+//           }
+//         DV = Global.DateValidate(dtpExDate.getText().toString());
+//         if(DV.length()!=0 & secExDate.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, DV);
+//             dtpExDate.requestFocus();
+//             return;
+//           }
+//         else if(txtRnd.getText().toString().length()==0 & secRnd.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: রাউন্ড.");
+//             txtRnd.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtRnd.getText().toString().length()==0 ? "1" : txtRnd.getText().toString()) < 1 || Integer.valueOf(txtRnd.getText().toString().length()==0 ? "99" : txtRnd.getText().toString()) > 99)
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Value should be between 1 and 99(রাউন্ড).");
+//             txtRnd.requestFocus();
+//             return;
+//           }
  
          String SQL = "";
          RadioButton rb;
@@ -438,11 +600,11 @@
          objSave.setHHHead(txtHHHead.getText().toString());
          objSave.setTotMem(txtTotMem.getText().toString());
          objSave.setTotRWo(txtTotRWo.getText().toString());
-         objSave.setEnType(txtEnType.getText().toString());
-         objSave.setEnDate(dtpEnDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEnDate.getText().toString()) : dtpEnDate.getText().toString());
-         objSave.setExType(txtExType.getText().toString());
-         objSave.setExDate(dtpExDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpExDate.getText().toString()) : dtpExDate.getText().toString());
-         objSave.setRnd(txtRnd.getText().toString());
+         objSave.setEnType("20");
+         objSave.setEnDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
+         objSave.setExType("");
+         objSave.setExDate("");
+         objSave.setRnd("00");
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
          objSave.setStartTime(STARTTIME);
          objSave.setEndTime(g.CurrentTime24());
@@ -450,21 +612,53 @@
          objSave.setEntryUser(ENTRYUSER); //from data entry user list
          //objSave.setLat(Double.toString(currentLatitude));
          //objSave.setLon(Double.toString(currentLongitude));
-
          String status = objSave.SaveUpdateData(this);
-         if(status.length()==0) {
-             Intent returnIntent = new Intent();
-             returnIntent.putExtra("res", "");
-             setResult(Activity.RESULT_OK, returnIntent);
 
-             Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+
+         //*************************************visit save by sakib************************************************
+         Visits_DataModel objSave1 = new Visits_DataModel();
+         objSave1.setVill(txtVill.getText().toString());
+         objSave1.setBari(txtBari.getText().toString());
+         objSave1.setHH(txtHH.getText().toString());
+         objSave1.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
+         objSave1.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
+         objSave1.setVStatusOth(txtVStatusOth.getText().toString());
+
+         //objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
+         objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
+
+         objSave1.setRnd("00");
+         objSave1.setEnDt(Global.DateTimeNowYMDHMS());
+         objSave1.setStartTime(STARTTIME);
+         objSave1.setEndTime(g.CurrentTime24());
+         objSave1.setDeviceID(DEVICEID);
+         objSave1.setEntryUser(ENTRYUSER); //from data entry user list
+         //objSave.setLat(Double.toString(currentLatitude));
+         //objSave.setLon(Double.toString(currentLongitude));
+
+         String status1 = objSave1.SaveUpdateData(this);
+
+         //*************************************visit save by sakib************************************************
+
+
+         if(status1.length()==0) {
+             if(status.length()==0)
+             {
+                 Intent returnIntent = new Intent();
+                 returnIntent.putExtra("res", "");
+                 setResult(Activity.RESULT_OK, returnIntent);
+
+                 Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+             }
+             else{
+                 Connection.MessageBox(Household_Visit.this, status1);
+                 return;
+             }
          }
          else{
              Connection.MessageBox(Household_Visit.this, status);
              return;
          }
-
-
 
      }
      catch(Exception  e)
@@ -493,11 +687,29 @@
              txtHHHead.setText(item.getHHHead());
              txtTotMem.setText(item.getTotMem());
              txtTotRWo.setText(item.getTotRWo());
-             txtEnType.setText(item.getEnType());
-             dtpEnDate.setText(item.getEnDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getEnDate()));
-             txtExType.setText(item.getExType());
-             dtpExDate.setText(item.getExDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getExDate()));
-             txtRnd.setText(item.getRnd());
+
+             //*********************************************sakib*********************************************
+
+               Visits_DataModel d1 = new Visits_DataModel();
+               String SQL1 = "Select * from Visits Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+               List<Visits_DataModel> data1 = d1.SelectAll(this, SQL1);
+               for(Visits_DataModel item1 : data1) {
+                   txtVill.setText(item1.getVill());
+                   txtBari.setText(item1.getBari());
+                   txtHH.setText(item1.getHH());
+                   dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));
+                   spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item1.getVStatus()));
+                   txtVStatusOth.setText(item1.getVStatusOth());
+                   spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item1.getResp()));
+               }
+
+
+            //*********************************************sakib**********************************************
+//             txtEnType.setText(item.getEnType());
+//             dtpEnDate.setText(item.getEnDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getEnDate()));
+//             txtExType.setText(item.getExType());
+//             dtpExDate.setText(item.getExDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getExDate()));
+//             txtRnd.setText(item.getRnd());
            }
         }
         catch(Exception  e)
@@ -515,34 +727,38 @@
    minute = c.get(Calendar.MINUTE);
    switch (id) {
        case DATE_DIALOG:
-           //return new DatePickerDialog(this, mDateSetListener,g.mYear,g.mMonth-1,g.mDay);
+           return new DatePickerDialog(this, mDateSetListener,g.mYear,g.mMonth-1,g.mDay);
        case TIME_DIALOG:
            return new TimePickerDialog(this, timePickerListener, hour, minute,false);
        }
      return null;
  }
 //
-// private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-//    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//      mYear = year; mMonth = monthOfYear+1; mDay = dayOfMonth;
-//      EditText dtpDate;
-//
-//
-//              dtpDate = (EditText)findViewById(R.id.dtpEnDate);
-//             if (VariableID.equals("btnEnDate"))
-//              {
-//                  dtpDate = (EditText)findViewById(R.id.dtpEnDate);
-//              }
-//             else if (VariableID.equals("btnExDate"))
-//              {
-//                  dtpDate = (EditText)findViewById(R.id.dtpExDate);
-//              }
-//      dtpDate.setText(new StringBuilder()
-//      .append(Global.Right("00"+mDay,2)).append("/")
-//      .append(Global.Right("00"+mMonth,2)).append("/")
-//      .append(mYear));
-//      }
-//  };
+ private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+      mYear = year; mMonth = monthOfYear+1; mDay = dayOfMonth;
+      EditText dtpDate;
+
+
+              dtpDate = (EditText)findViewById(R.id.dtpEnDate);
+             if (VariableID.equals("btnEnDate"))
+              {
+                  dtpDate = (EditText)findViewById(R.id.dtpEnDate);
+              }
+             else if (VariableID.equals("btnExDate"))
+              {
+                  dtpDate = (EditText)findViewById(R.id.dtpExDate);
+              }
+             else if(VariableID.equals("dtpVDate"))
+             {
+                 dtpDate= (EditText) findViewById(R.id.dtpVDate);
+             }
+      dtpDate.setText(new StringBuilder()
+      .append(Global.Right("00"+mDay,2)).append("/")
+      .append(Global.Right("00"+mMonth,2)).append("/")
+      .append(mYear));
+      }
+  };
 
  private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
     public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {

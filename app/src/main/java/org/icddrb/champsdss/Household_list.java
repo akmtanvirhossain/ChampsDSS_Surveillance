@@ -17,7 +17,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+ import android.widget.ArrayAdapter;
+ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,8 +27,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+ import android.widget.Toast;
 
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -161,6 +163,10 @@ import Common.Global;
          spnUnion = (Spinner) findViewById(R.id.spnUnion);
          spnVill = (Spinner) findViewById(R.id.spnVill);
          spnBari = (Spinner) findViewById(R.id.spnBari);
+         List<String> listBari = new ArrayList<String>();
+         listBari.add("");
+         ArrayAdapter<String> adptrBari= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listBari);
+         spnBari.setAdapter(adptrBari);
 
          spnUnion.setAdapter(C.getArrayAdapter("Select UnCode||'-'||UnName from Unions order by UnCode"));
          spnUnion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -168,6 +174,7 @@ import Common.Global;
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                  String D = Connection.SelectedSpinnerValue(spnUnion.getSelectedItem().toString(), "-");
                  spnVill.setAdapter(C.getArrayAdapter("Select '' union Select distinct VCode||'-'||VName from Village where UnCode='" + D + "'"));
+
                  //DataSearch();
              }
 
@@ -184,6 +191,7 @@ import Common.Global;
                  if (spnVill.getSelectedItemPosition()==0) return;
                  String[] V = Connection.split(spnVill.getSelectedItem().toString(),'-');
                  spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='"+ V[0] +"'"));
+                 VILL=V[0];
              }
 
              @Override
@@ -198,13 +206,16 @@ import Common.Global;
 
                  if(spnBari.getSelectedItemPosition()==0)
                  {
-
+                    return;
                  }
                  else if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase("all bari"))
                  {
                  }
                  else
                  {
+                     String [] B=Connection.split(spnBari.getSelectedItem().toString(),'-');
+                     BARI=B[0];
+                     DataSearch(VILL,BARI,HH);
                  }
 
              }
@@ -253,6 +264,28 @@ import Common.Global;
                  startActivity(intent);
              }
          });
+
+         Button cmdHH= (Button) findViewById((R.id.cmdHH));
+         cmdHH.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 if(spnBari.getSelectedItemPosition()==0){
+                     Connection.MessageBox(Household_list.this,"Please select a valid Bari from dropdown list.");
+                     return;
+                 }
+                 String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
+                 String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
+                 IDbundle.putString("Vill", V);
+                 IDbundle.putString("Bari", B);
+                 IDbundle.putString("HH", "");
+
+                 Intent intent = new Intent(getApplicationContext(),Household_Visit.class);
+                 intent.putExtras(IDbundle);
+                 startActivity(intent);
+             }
+         });
+
+         DataSearch(VILL,BARI,HH);
 
      }
      catch(Exception  e)
@@ -409,7 +442,8 @@ import Common.Global;
         {
      
            Household_DataModel d = new Household_DataModel();
-             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+             //String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+                String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' ";
              List<Household_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -464,36 +498,39 @@ import Common.Global;
  	        }
          LinearLayout   secListRow = (LinearLayout)convertView.findViewById(R.id.secListRow);
 
-         final TextView Vill = (TextView)convertView.findViewById(R.id.Vill);
-         final TextView Bari = (TextView)convertView.findViewById(R.id.Bari);
+//         final TextView Vill = (TextView)convertView.findViewById(R.id.Vill);
+//         final TextView Bari = (TextView)convertView.findViewById(R.id.Bari);
          final TextView HH = (TextView)convertView.findViewById(R.id.HH);
-         final TextView Religion = (TextView)convertView.findViewById(R.id.Religion);
-         final TextView MobileNo1 = (TextView)convertView.findViewById(R.id.MobileNo1);
-         final TextView MobileNo2 = (TextView)convertView.findViewById(R.id.MobileNo2);
+//         final TextView Religion = (TextView)convertView.findViewById(R.id.Religion);
+//         final TextView MobileNo1 = (TextView)convertView.findViewById(R.id.MobileNo1);
+//         final TextView MobileNo2 = (TextView)convertView.findViewById(R.id.MobileNo2);
          final TextView HHHead = (TextView)convertView.findViewById(R.id.HHHead);
          final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
-         final TextView TotRWo = (TextView)convertView.findViewById(R.id.TotRWo);
-         final TextView EnType = (TextView)convertView.findViewById(R.id.EnType);
-         final TextView EnDate = (TextView)convertView.findViewById(R.id.EnDate);
-         final TextView ExType = (TextView)convertView.findViewById(R.id.ExType);
-         final TextView ExDate = (TextView)convertView.findViewById(R.id.ExDate);
-         final TextView Rnd = (TextView)convertView.findViewById(R.id.Rnd);
+         final TextView Visit = (TextView)convertView.findViewById(R.id.Visit);
+//         final TextView TotRWo = (TextView)convertView.findViewById(R.id.TotRWo);
+//         final TextView EnType = (TextView)convertView.findViewById(R.id.EnType);
+//         final TextView EnDate = (TextView)convertView.findViewById(R.id.EnDate);
+//         final TextView ExType = (TextView)convertView.findViewById(R.id.ExType);
+//         final TextView ExDate = (TextView)convertView.findViewById(R.id.ExDate);
+//         final TextView Rnd = (TextView)convertView.findViewById(R.id.Rnd);
 
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
-         Vill.setText(o.get("Vill"));
-         Bari.setText(o.get("Bari"));
+//         Vill.setText(o.get("Vill"));
+//         Bari.setText(o.get("Bari"));
          HH.setText(o.get("HH"));
-         Religion.setText(o.get("Religion"));
-         MobileNo1.setText(o.get("MobileNo1"));
-         MobileNo2.setText(o.get("MobileNo2"));
+//         Religion.setText(o.get("Religion"));
+//         MobileNo1.setText(o.get("MobileNo1"));
+//         MobileNo2.setText(o.get("MobileNo2"));
          HHHead.setText(o.get("HHHead"));
          TotMem.setText(o.get("TotMem"));
-         TotRWo.setText(o.get("TotRWo"));
-         EnType.setText(o.get("EnType"));
-         EnDate.setText(o.get("EnDate"));
-         ExType.setText(o.get("ExType"));
-         ExDate.setText(o.get("ExDate"));
-         Rnd.setText(o.get("Rnd"));
+         Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+VILL+"' AND Bari='"+BARI+"' AND HH='"+o.get("HH")+"'"));
+
+//         TotRWo.setText(o.get("TotRWo"));
+//         EnType.setText(o.get("EnType"));
+//         EnDate.setText(o.get("EnDate"));
+//         ExType.setText(o.get("ExType"));
+//         ExDate.setText(o.get("ExDate"));
+//         Rnd.setText(o.get("Rnd"));
 
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -503,7 +540,7 @@ import Common.Global;
                IDbundle.putString("Bari", o.get("Bari"));
                IDbundle.putString("HH", o.get("HH"));
                Intent f1;
-               f1 = new Intent(getApplicationContext(), Household.class);
+               f1 = new Intent(getApplicationContext(), Household_Visit.class);
                f1.putExtras(IDbundle);
                startActivity(f1);
             }

@@ -52,6 +52,11 @@
  import android.widget.TimePicker;
  import android.widget.ArrayAdapter;
  import android.widget.CompoundButton;
+
+ import org.joda.time.Days;
+ import org.joda.time.LocalDate;
+ import org.joda.time.Months;
+
  import Common.*;
 
  public class Member extends Activity {
@@ -250,10 +255,19 @@
          lineHH=(View)findViewById(R.id.lineHH);
          VlblHH=(TextView) findViewById(R.id.VlblHH);
          txtHH=(EditText) findViewById(R.id.txtHH);
+
          secMSlNo=(LinearLayout)findViewById(R.id.secMSlNo);
          lineMSlNo=(View)findViewById(R.id.lineMSlNo);
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          txtMSlNo=(EditText) findViewById(R.id.txtMSlNo);
+
+         if(MSLNO.length()==0)
+             txtMSlNo.setText(MemNo(VILL,BARI,HH));
+         else
+             txtMSlNo.setText(MSLNO);
+
+         txtMSlNo.setEnabled(false);
+
          secPNo=(LinearLayout)findViewById(R.id.secPNo);
          linePNo=(View)findViewById(R.id.linePNo);
          VlblPNo=(TextView) findViewById(R.id.VlblPNo);
@@ -548,6 +562,8 @@
         public void onClick(View v) { 
             DataSave();
         }});
+
+         DataSearch(VILL,BARI,HH,MSLNO);
      }
      catch(Exception  e)
      {
@@ -560,7 +576,6 @@
  {
    try
      {
- 
          String DV="";
 
          if(txtVill.getText().toString().length()==0 & secVill.isShown())
@@ -631,6 +646,25 @@
              txtAgeY.requestFocus(); 
              return;	
            }
+
+
+         SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+         Date date = format1.parse(dtpBDate.getText().toString());
+         String intMonth = (String) android.text.format.DateFormat.format("MM", date); //06
+         String year = (String) android.text.format.DateFormat.format("yyyy", date); //2013
+         String day = (String) android.text.format.DateFormat.format("dd", date); //20
+         LocalDate birthdate = new LocalDate(Integer.valueOf(year), Integer.valueOf(intMonth), Integer.valueOf(day));
+         LocalDate now = new LocalDate();
+         // Years age = Years.yearsBetween(birthdate, now);
+         int months = Months.monthsBetween(birthdate, now).getMonths();
+         int days = Days.daysBetween(birthdate, now).getDays();
+         // int xMonths = Integer.parseInt(months.toString());
+         int mDays = (365 * Integer.valueOf(txtAgeY.getText().toString()));
+         if (Math.abs(days - mDays) > 30) {
+             Connection.MessageBox(Member.this, "Required field: বয়স এর সাথে জন্মতারিখ মিল নেই");
+             txtAgeY.requestFocus();
+             return;
+         }
          else if(Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "0" : txtAgeY.getText().toString()) < 0 || Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "110" : txtAgeY.getText().toString()) > 110)
            {
              Connection.MessageBox(Member.this, "Value should be between 0 and 110(বয়স (পূর্ণ বছরে)).");
@@ -1009,4 +1043,10 @@
      super.onDestroy();
      turnGPSOff();
  }
+     private String MemNo(String Vill,String Bari,String HH)
+     {
+         String M = C.ReturnSingleValue("Select cast(ifnull(max(MSlNo),0)+1 as varchar(2))MemNo from Member where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'");
+         M = Global.Right("0"+M,2);
+         return M;
+     }
 }

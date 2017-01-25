@@ -8,10 +8,12 @@
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
     <LinearLayout  android:layout_marginTop="5sp" android:layout_width="fill_parent" android:gravity="end" android:layout_height="wrap_content" android:orientation="horizontal">
+        <Button android:id="@+id/btnMemberName" android:layout_width="wrap_content" android:layout_height="30sp" android:layout_marginBottom="10sp" android:layout_marginLeft="20sp" android:layout_marginRight="20sp" android:layout_marginTop="5dip" android:background="@drawable/button_style_blue" android:text=" Add Member Name " android:textColor="#FFFFFF" android:textSize="18sp" />
+
         <Button android:id="@+id/btnRefresh"  android:background="@drawable/button_style_blue" android:textSize="18sp" android:textColor="#FFFFFF"
             android:layout_width="wrap_content" android:layout_height="30sp" android:layout_marginTop="5dip" android:layout_marginBottom="10sp" android:text=" Refresh " android:paddingLeft="5sp" android:paddingRight="5sp"/>
-        <Button android:id="@+id/btnAdd" android:layout_marginLeft="20sp" android:layout_marginRight="20sp"  android:textSize="18sp" android:textColor="#FFFFFF"
-            android:background="@drawable/button_style_blue" android:layout_width="wrap_content" android:layout_height="30sp" android:layout_marginTop="5dip" android:layout_marginBottom="10sp" android:text="New Member " android:paddingLeft="5sp" android:paddingRight="5sp"/>
+        <!--<Button android:id="@+id/btnAdd" android:layout_marginLeft="20sp" android:layout_marginRight="20sp"  android:textSize="18sp" android:textColor="#FFFFFF"-->
+            <!--android:background="@drawable/button_style_blue" android:layout_width="wrap_content" android:layout_height="30sp" android:layout_marginTop="5dip" android:layout_marginBottom="10sp" android:text="New Member " android:paddingLeft="5sp" android:paddingRight="5sp"/>-->
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
 

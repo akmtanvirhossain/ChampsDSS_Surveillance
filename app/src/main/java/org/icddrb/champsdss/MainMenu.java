@@ -52,7 +52,6 @@ public class MainMenu extends Activity {
             });
             */
 
-
             cmdHHInterview = (Button) findViewById(R.id.cmdHHInterview);
             cmdHHInterview.setOnClickListener(new View.OnClickListener() {
                 @Override

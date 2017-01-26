@@ -10,7 +10,9 @@ package org.icddrb.champsdss;
  import android.content.DialogInterface;
  import android.content.Intent;
  import android.database.Cursor;
+ import android.graphics.Color;
  import android.location.Location;
+ import android.view.Gravity;
  import android.view.KeyEvent;
  import android.os.Bundle;
  import android.view.Menu;
@@ -20,6 +22,8 @@ package org.icddrb.champsdss;
  import android.view.MotionEvent;
  import android.view.ViewGroup;
  import android.view.LayoutInflater;
+ import android.view.Window;
+ import android.view.WindowManager;
  import android.widget.LinearLayout;
  import android.widget.ListView;
  import android.widget.SimpleAdapter;
@@ -62,6 +66,9 @@ package org.icddrb.champsdss;
     Button btnRefresh;
 
     static String STARTTIME = "";
+     static String DEVICEID  = "";
+     static String ENTRYUSER = "";
+
     static String VILL = "";
     static String BARI = "";
     static String HH = "";
@@ -77,6 +84,8 @@ package org.icddrb.champsdss;
          g = Global.getInstance();
 
          STARTTIME = g.CurrentTime24();
+         DEVICEID  = g.getDeviceNo();
+         ENTRYUSER = g.getUserId();
 
          Bundle IDbundle = getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
@@ -123,32 +132,41 @@ package org.icddrb.champsdss;
                  adb.show();
              }});
 
+         Button btnMemberName = (Button) findViewById(R.id.btnMemberName);
+         btnMemberName.setOnClickListener(new View.OnClickListener() {
+
+             public void onClick(View view) {
+                 MemberNameForm(VILL, BARI,HH);
+
+             }
+         });
+
          btnRefresh = (Button) findViewById(R.id.btnRefresh);
          btnRefresh.setOnClickListener(new View.OnClickListener() {
 
              public void onClick(View view) {
                    //write your code here
-                 DataSearch(VILL, BARI, HH, MSLNO);
+//                 DataSearch(VILL, BARI, HH, MSLNO);
+                 DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
 
              }});
 
-         btnAdd   = (Button) findViewById(R.id.btnAdd);
-         btnAdd.setOnClickListener(new View.OnClickListener() {
-
-             public void onClick(View view) {
-                         Bundle IDbundle = new Bundle();
-                         IDbundle.putString("Vill", "");
-                         IDbundle.putString("Bari", "");
-                         IDbundle.putString("HH", "");
-                         IDbundle.putString("MSlNo", "");
-                         Intent intent = new Intent(getApplicationContext(), Member.class);
-                         intent.putExtras(IDbundle);
-                         startActivityForResult(intent, 1);
-
-             }});
-
-
-         DataSearch(VILL, BARI, HH, MSLNO);
+//         btnAdd   = (Button) findViewById(R.id.btnAdd);
+//         btnAdd.setOnClickListener(new View.OnClickListener() {
+//
+//             public void onClick(View view) {
+//                         Bundle IDbundle = new Bundle();
+//                         IDbundle.putString("Vill", "");
+//                         IDbundle.putString("Bari", "");
+//                         IDbundle.putString("HH", "");
+//                         IDbundle.putString("MSlNo", "");
+//                         Intent intent = new Intent(getApplicationContext(), Member.class);
+//                         intent.putExtras(IDbundle);
+//                         startActivityForResult(intent,1);
+//             }});
+//
+//         DataSearch(VILL, BARI, HH);
+         //DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
 
      }
      catch(Exception  e)
@@ -164,30 +182,19 @@ package org.icddrb.champsdss;
      if (resultCode == Activity.RESULT_CANCELED) {
          //Write your code if there's no result
      } else {
-
-         if(VILL.equalsIgnoreCase(""))
-         {
-
-         }
-         else {
-             VILL=g.getVillageCode();
-             BARI=g.getBariCode();
-             HH=g.getHouseholdNo();
-             MSLNO=g.getmemSlNo();
-
-         }
-
-         DataSearch(VILL, BARI, HH, MSLNO);
+         //DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
+         DataSearch(VILL,BARI,HH);
      }
  }
 
- private void DataSearch(String Vill, String Bari, String HH ,String MSlNo)
+ private void DataSearch(String Vill, String Bari, String HH )
      {
        try
         {
      
            Member_DataModel d = new Member_DataModel();
-             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
+//             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+            String SQL = "Select * from "+ TableName ;
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -233,6 +240,89 @@ package org.icddrb.champsdss;
             return;
         }
      }
+
+     private void MemberNameForm(final String VILL, final String BARI , final String HH) {
+         try {
+             final Dialog dialog = new Dialog(Member_list.this);
+             dialog.setTitle("Member Name Form");
+             dialog.setContentView(R.layout.member_name);
+             dialog.setCanceledOnTouchOutside(true);
+             dialog.setCancelable(true);
+
+             Window window = dialog.getWindow();
+             WindowManager.LayoutParams wlp = window.getAttributes();
+
+             wlp.gravity = Gravity.TOP;
+             wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+             window.setAttributes(wlp);
+
+             final TextView txtVill = (TextView) dialog.findViewById(R.id.txtVill);
+             final TextView txtBari = (TextView) dialog.findViewById(R.id.txtBari);
+             final TextView txtHH = (TextView) dialog.findViewById(R.id.txtHH);
+             final TextView txtMSlNo = (TextView) dialog.findViewById(R.id.txtMSlNo);
+             final TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
+             txtVill.setText(VILL);
+             txtBari.setText(BARI);
+             txtHH.setText(HH);
+
+             txtMSlNo.setEnabled(false);
+
+             //txtH21.setText(String.valueOf(MemSlNo()));
+             txtMSlNo.setText(MemberSerial(VILL, BARI,HH));
+
+             Button cmdContactNoSave = (Button) dialog.findViewById(R.id.cmdSave);
+             cmdContactNoSave.setOnClickListener(new View.OnClickListener() {
+                 public void onClick(View arg0) {
+
+                     if (txtName.getText().toString().length() == 0) {
+                         Connection.MessageBox(Member_list.this, "Required field: Name of member.");
+                         txtName.requestFocus();
+                         return;
+                     }
+                     //***
+                     Member_DataModel objSave = new Member_DataModel();
+                     objSave.setVill(txtVill.getText().toString());
+                     objSave.setBari(txtBari.getText().toString());
+                     objSave.setHH(txtHH.getText().toString());
+                     objSave.setMSlNo(txtMSlNo.getText().toString());
+                     objSave.setName(txtName.getText().toString());
+                     objSave.setEnDt(Global.DateTimeNowYMDHMS());
+                     objSave.setStartTime(STARTTIME);
+                     objSave.setEndTime(g.CurrentTime24());
+                     objSave.setDeviceID(DEVICEID);
+                     objSave.setEntryUser(ENTRYUSER); //from data entry user list
+                     String status = objSave.SaveUpdateData(Member_list.this);
+
+                     DataSearch(VILL,BARI,HH);
+                     txtMSlNo.setText(MemberSerial(VILL,BARI,HH));
+                     txtName.setText("");
+                     txtMSlNo.requestFocus();
+
+                 }
+             });
+
+   /*         Button cmdContactNoClose = (Button)dialog.findViewById(R.id.cmdContactNoClose);
+            cmdContactNoClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    dialog.dismiss();
+                }
+            });*/
+
+
+             dialog.show();
+         } catch (Exception e) {
+             Connection.MessageBox(Member_list.this, e.getMessage());
+             return;
+         }
+     }
+
+     private String MemberSerial(String VILL, String BARI , String HH)
+     {
+         String M = C.ReturnSingleValue("Select (ifnull(max(cast(MSlNo as int)),0)+1)serial from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'");
+         M = Global.Right("0"+M,2);
+         return M;
+     }
+
  public class DataListAdapter extends BaseAdapter 
  {
      private Context context;
@@ -298,14 +388,22 @@ package org.icddrb.champsdss;
          ExType.setText(o.get("ExType"));
          ExDate.setText(o.get("ExDate"));
 
+         if (o.get("PNo").length() == 0) {
+             MSlNo.setTextColor(Color.RED);
+             Name.setTextColor(Color.RED);
+         } else {
+             MSlNo.setTextColor(Color.BLACK);
+             Name.setTextColor(Color.BLACK);
+         }
+
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                //Write your code here
                Bundle IDbundle = new Bundle();
-               IDbundle.putString("Vill", o.get("Vill"));
-               IDbundle.putString("Bari", o.get("Bari"));
-               IDbundle.putString("HH", o.get("HH"));
-               IDbundle.putString("MSlNo", o.get("MSlNo"));
+               IDbundle.putString("Vill", o.get(VILL));
+               IDbundle.putString("Bari", o.get(BARI));
+               IDbundle.putString("HH", o.get(HH));
+               IDbundle.putString("MSlNo", o.get(MSLNO));
                Intent f1;
                f1 = new Intent(getApplicationContext(), Member.class);
                f1.putExtras(IDbundle);

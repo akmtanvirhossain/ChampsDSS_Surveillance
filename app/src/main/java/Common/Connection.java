@@ -16,12 +16,15 @@ import android.widget.ArrayAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.icddrb.champsdss.R;
+
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import Utility.*;
+
+import Utility.CompressZip;
 
 //--------------------------------------------------------------------------------------------------
 // Created by TanvirHossain on 17/03/2015.
@@ -280,7 +283,7 @@ public class Connection extends SQLiteOpenHelper {
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this.dbContext,
-                android.R.layout.simple_spinner_item, dataList);
+                R.layout.multiline_spinner_dropdown_item, dataList);
 
         return dataAdapter;
     }

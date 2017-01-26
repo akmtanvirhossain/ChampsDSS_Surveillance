@@ -80,6 +80,7 @@ import Common.Global;
     static String BARI = "";
     static String HH = "";
 
+
  public void onCreate(Bundle savedInstanceState)
  {
          super.onCreate(savedInstanceState);

@@ -337,7 +337,7 @@
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
          HH = IDbundle.getString("HH");
-         SESNO = IDbundle.getString("SESNo");
+         //SESNO = IDbundle.getString("SESNo");
 
          TableName = "SES";
 
@@ -414,7 +414,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnVStatus.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("1"))
+                 if(!spnData.equalsIgnoreCase("9"))
                  {
                     secVStatusOth.setVisibility(View.GONE);
                     lineVStatusOth.setVisibility(View.GONE);
@@ -474,7 +474,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnWSDrink.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnWSDrink.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("96"))
+                 if(!spnData.equalsIgnoreCase("96"))
                  {
                     secWSDrinkOth.setVisibility(View.GONE);
                     lineWSDrinkOth.setVisibility(View.GONE);
@@ -519,7 +519,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnWSCook.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnWSCook.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("96"))
+                 if(!spnData.equalsIgnoreCase("96"))
                  {
                     secWSCookOth.setVisibility(View.GONE);
                     lineWSCookOth.setVisibility(View.GONE);
@@ -564,7 +564,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnWSWash.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnWSWash.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("96"))
+                 if(!spnData.equalsIgnoreCase("96"))
                  {
                     secWSWashOth.setVisibility(View.GONE);
                     lineWSWashOth.setVisibility(View.GONE);
@@ -605,7 +605,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnLatrine.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnLatrine.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("96"))
+                 if(!spnData.equalsIgnoreCase("96"))
                  {
                     secLatrineOth.setVisibility(View.GONE);
                     lineLatrineOth.setVisibility(View.GONE);
@@ -765,7 +765,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnRoof.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnRoof.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("96"))
+                 if(!spnData.equalsIgnoreCase("96"))
                  {
                     secRoofOth.setVisibility(View.GONE);
                     lineRoofOth.setVisibility(View.GONE);
@@ -811,7 +811,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnWall.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnWall.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("96"))
+                 if(!spnData.equalsIgnoreCase("96"))
                  {
                     secWallOth.setVisibility(View.GONE);
                     lineWallOth.setVisibility(View.GONE);
@@ -857,7 +857,7 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnFloor.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnFloor.getSelectedItem().toString(),"-");
-                 if(spnData.equalsIgnoreCase("96"))
+                 if(!spnData.equalsIgnoreCase("96"))
                  {
                     secFloorOth.setVisibility(View.GONE);
                     lineFloorOth.setVisibility(View.GONE);
@@ -940,19 +940,51 @@
          secFloorOth.setVisibility(View.GONE);
          lineFloorOth.setVisibility(View.GONE);
 
+         //**********************************sakib start********************************************
+         txtVill.setText(VILL);
+         txtVill.setFocusable(false);
+         txtBari.setText(BARI);
+         txtBari.setFocusable(false);
+         txtHH.setText(HH);
+         if(SESNO.equals(""))
+         {
+             SESNO=SesSerial();
+         }
+         txtHH.setText(HH);
+         txtHH.setFocusable(false);
+
+         txtSESNo.setText(SESNO);
+         txtSESNo.setFocusable(false);
+         //**********************************sakib start********************************************
+
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave);
         cmdSave.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) { 
             DataSave();
         }});
+
      }
+
      catch(Exception  e)
      {
          Connection.MessageBox(SES.this, e.getMessage());
          return;
      }
  }
+
+     private String SesSerial()
+     {
+         String SL = C.ReturnSingleValue("Select (ifnull(max(cast(SESNo as int)),0)+1)SL from SES where HH='"+HH+"'"); //where ParticipantID='"+ ParticipantID +"'");
+         int length=SL.length();
+         String s = "";
+         for(int i=0;i<1-length;i++)
+         {
+             s+="0";
+         }
+         SL=s+SL;
+         return SL;
+     }
 
  private void DataSave()
  {

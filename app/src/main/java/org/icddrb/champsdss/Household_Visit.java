@@ -34,8 +34,9 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+ import android.widget.Toast;
 
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +134,9 @@ import Common.Global;
 //         EditText txtRnd;
 
      //***********************sakib****************************************
+         Button btnPlusMobile1;
+         Button btnMinusMobile1;
+
          LinearLayout secVDate;
          View lineVDate;
          TextView VlblVDate;
@@ -245,6 +249,9 @@ import Common.Global;
          lineMobileNo2=(View)findViewById(R.id.lineMobileNo2);
          VlblMobileNo2=(TextView) findViewById(R.id.VlblMobileNo2);
          txtMobileNo2=(EditText) findViewById(R.id.txtMobileNo2);
+
+
+
          secHHHead=(LinearLayout)findViewById(R.id.secHHHead);
          lineHHHead=(View)findViewById(R.id.lineHHHead);
          VlblHHHead=(TextView) findViewById(R.id.VlblHHHead);
@@ -407,6 +414,29 @@ import Common.Global;
 
          //Hide all skip variables
          secVStatusOth.setVisibility(View.GONE);
+         //***********************added by sakib********************************************
+         secMobileNo2.setVisibility(View.GONE);
+         txtMobileNo2.setVisibility(View.GONE);
+
+         btnPlusMobile1= (Button) findViewById(R.id.btnPlusMobile1);
+         btnPlusMobile1.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 secMobileNo2.setVisibility(View.VISIBLE);
+                 txtMobileNo2.setVisibility(View.VISIBLE);
+             }
+         });
+
+         btnMinusMobile1= (Button) findViewById(R.id.btnMinusMobile1);
+         btnMinusMobile1.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 secMobileNo2.setVisibility(View.GONE);
+                 txtMobileNo2.setText("");
+                 txtMobileNo2.setVisibility(View.GONE);
+             }
+         });
+         //***********************added by sakib********************************************
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave);
         cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -467,18 +497,18 @@ import Common.Global;
              spnReligion.requestFocus(); 
              return;	
            }
-         else if(txtMobileNo1.getText().toString().length()==0 & secMobileNo1.isShown())
+         else if(txtMobileNo1.getText().toString().length()!=0 & txtMobileNo1.getText().toString().length()!=11 & secMobileNo1.isShown())
            {
-             Connection.MessageBox(Household_Visit.this, "Required field: ১ম মোবাইল নম্বর.");
+             Connection.MessageBox(Household_Visit.this, "Required field: ১ম মোবাইল নম্বর ১১ সংখ্যা হতে হবে.");
              txtMobileNo1.requestFocus(); 
              return;	
            }
-//         else if(txtMobileNo2.getText().toString().length()==0 & secMobileNo2.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Required field: ২য় মোবাইল নম্বর.");
-//             txtMobileNo2.requestFocus();
-//             return;
-//           }
+         else if(txtMobileNo2.getText().toString().length()!=0 &txtMobileNo2.getText().toString().length()!=11  & secMobileNo2.isShown())
+           {
+             Connection.MessageBox(Household_Visit.this, "Required field: ২য় মোবাইল নম্বর ১১ সংখ্যা হতে হবে.");
+             txtMobileNo2.requestFocus();
+             return;
+           }
          else if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: খানা প্রধানের নাম.");

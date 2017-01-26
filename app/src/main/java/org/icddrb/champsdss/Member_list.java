@@ -25,8 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+ import android.widget.Toast;
 
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,6 +66,8 @@ import Common.Global;
     Button btnAdd;
     Button btnRefresh;
 
+
+
      static String DEVICEID  = "";
      static String ENTRYUSER = "";
 
@@ -95,10 +98,10 @@ import Common.Global;
          CurrentVillage = IDbundle.getString("Village");
          CurrentVCode   = IDbundle.getString("VCode");
 
-         Bundle IDbundle = getIntent().getExtras();
+         //IDbundle = getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
-         HH = IDbundle.getString("01");
+         HH = IDbundle.getString("HH");
          MSLNO = IDbundle.getString("MSlNo");
 
          TableName = "Member";
@@ -149,6 +152,28 @@ import Common.Global;
 //                 DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
 
              }});
+
+
+         //*************************sakib start**************************************
+         Button btnSES = (Button) findViewById(R.id.btnSES);
+         btnSES.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
+                 Intent f1;
+                 f1 = new Intent(getApplicationContext(), SES.class);
+                 IDbundle.putString("Vill", VILL);
+                 IDbundle.putString("Bari", BARI);
+                 IDbundle.putString("HH", HH);
+                 f1.putExtras(IDbundle);
+                 startActivity(f1);
+             }
+         });
+
+
+         //*************************sakib end****************************************
+
+
 
          Button btnMemberName = (Button) findViewById(R.id.btnMemberName);
          btnMemberName.setOnClickListener(new View.OnClickListener() {

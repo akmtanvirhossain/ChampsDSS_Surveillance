@@ -107,7 +107,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tvListHeadingTotMem"
                 android:textColor="@android:color/black"/>
-
             <TextView
                 android:text="ফলাফল"
                 android:layout_width="wrap_content"

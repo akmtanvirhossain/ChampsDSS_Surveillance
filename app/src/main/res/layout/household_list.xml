@@ -92,24 +92,21 @@
                 android:layout_width="80sp"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvListHeadingNo"
-                android:textColor="@android:color/black"
-                />
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:text="খানা প্রধান"
                 android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvListHeadingName"
-                android:textColor="@android:color/black"
-                />
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:text="মোট সদস্য"
                 android:layout_width="120sp"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvListHeadingTotMem"
-                android:textColor="@android:color/black"
-                />
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:text="ফলাফল"

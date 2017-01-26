@@ -6,43 +6,42 @@
  //<activity android:name=".Household" android:label="Household" />
 
  import android.app.Activity;
- import android.app.AlertDialog;
- import android.app.DatePickerDialog;
- import android.app.Dialog;
- import android.app.TimePickerDialog;
- import android.content.Context;
- import android.content.DialogInterface;
- import android.content.Intent;
- import android.location.Location;
- import android.location.LocationListener;
- import android.location.LocationManager;
- import android.net.Uri;
- import android.os.Bundle;
- import android.provider.Settings;
- import android.view.KeyEvent;
- import android.view.MotionEvent;
- import android.view.View;
- import android.widget.AdapterView;
- import android.widget.ArrayAdapter;
- import android.widget.Button;
- import android.widget.DatePicker;
- import android.widget.EditText;
- import android.widget.ImageButton;
- import android.widget.LinearLayout;
- import android.widget.RadioButton;
- import android.widget.SimpleAdapter;
- import android.widget.Spinner;
- import android.widget.TextView;
- import android.widget.TimePicker;
- import android.widget.Toast;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
- import java.util.ArrayList;
- import java.util.Calendar;
- import java.util.HashMap;
- import java.util.List;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
- import Common.Connection;
- import Common.Global;
+import Common.Connection;
+import Common.Global;
 
  public class Household_Visit extends Activity {
     boolean networkAvailable=false;
@@ -301,7 +300,7 @@
          listVStatus.add("7-বাসস্থানটি ধংসপ্রাপ্ত");
          listVStatus.add("8-বাসস্থানটি খুঁজে পাওয়া যায় নাই");
          listVStatus.add("9-অন্যান");
-         ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listVStatus);
+         ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, R.layout.multiline_spinner_dropdown_item, listVStatus);
          spnVStatus.setAdapter(adptrVStatus);
 
          spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -407,7 +406,7 @@
 
 
          //Hide all skip variables
-
+         secVStatusOth.setVisibility(View.GONE);
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave);
         cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -644,11 +643,19 @@
          if(status1.length()==0) {
              if(status.length()==0)
              {
-                 Intent returnIntent = new Intent();
-                 returnIntent.putExtra("res", "");
-                 setResult(Activity.RESULT_OK, returnIntent);
-
-                 Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                 String VS = spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
+                 if(VS.equals("1")){
+                     Intent f1;
+                     f1 = new Intent(getApplicationContext(), Member_list.class);
+                     f1.putExtras(IDbundle);
+                     startActivity(f1);
+                 }else
+                 {
+                     Intent returnIntent = new Intent();
+                     returnIntent.putExtra("res", "hh");
+                     setResult(Activity.RESULT_OK, returnIntent);
+                     Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                 }
              }
              else{
                  Connection.MessageBox(Household_Visit.this, status1);

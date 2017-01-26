@@ -4,55 +4,41 @@
 
  //Android Manifest Code
  //<activity android:name=".Baris" android:label="Baris" />
- import java.text.ParseException;
- import java.text.SimpleDateFormat;
- import java.util.ArrayList;
- import java.util.Calendar;
- import java.util.Date;
- import java.util.HashMap;
- import java.util.List;
- import android.app.*;
- import android.app.AlertDialog;
- import android.app.DatePickerDialog;
- import android.app.Dialog;
- import android.app.TimePickerDialog;
- import android.content.Context;
- import android.content.DialogInterface;
- import android.content.Intent;
- import android.database.Cursor;
- import android.location.Location;
- import android.location.LocationListener;
- import android.location.LocationManager;
- import android.net.Uri;
- import android.provider.Settings;
- import android.view.KeyEvent;
- import android.os.Bundle;
- import android.view.Menu;
- import android.view.MenuInflater;
- import android.view.MenuItem;
- import android.view.View;
- import android.view.MotionEvent;
- import android.view.View.OnFocusChangeListener;
- import android.view.ViewGroup;
- import android.view.LayoutInflater;
- import android.widget.AdapterView;
- import android.widget.Button;
- import android.widget.CheckBox;
- import android.widget.DatePicker;
- import android.widget.EditText;
- import android.widget.ImageButton;
- import android.widget.LinearLayout;
- import android.widget.RadioButton;
- import android.widget.RadioGroup;
- import android.widget.ListView;
- import android.widget.SimpleAdapter;
- import android.widget.BaseAdapter;
- import android.widget.Spinner;
- import android.widget.TextView;
- import android.widget.TimePicker;
- import android.widget.ArrayAdapter;
- import android.widget.CompoundButton;
- import Common.*;
+ import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+
+import Common.Connection;
+import Common.Global;
 
  public class Baris extends Activity {
     boolean networkAvailable=false;
@@ -285,7 +271,7 @@
          String status = objSave.SaveUpdateData(this);
          if(status.length()==0) {
              Intent returnIntent = new Intent();
-             returnIntent.putExtra("res", "");
+             returnIntent.putExtra("res", "bari");
              setResult(Activity.RESULT_OK, returnIntent);
 
              Connection.MessageBox(Baris.this, "Saved Successfully");

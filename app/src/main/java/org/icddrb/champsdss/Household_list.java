@@ -7,7 +7,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
+ import android.graphics.Color;
+ import android.location.Location;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -17,8 +18,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
- import android.widget.ArrayAdapter;
- import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,16 +28,16 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
- import android.widget.Toast;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import Common.Connection;
 import Common.Global;
+ import Common.Utility;
 
- public class Household_list extends Activity {
+public class Household_list extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
     double currentLatitude,currentLongitude;
@@ -216,7 +217,7 @@ import Common.Global;
                  {
                      String [] B=Connection.split(spnBari.getSelectedItem().toString(),'-');
                      BARI=B[0];
-                     DataSearch(VILL,BARI,HH);
+                     DataSearch(VILL,BARI);
                  }
 
              }
@@ -243,7 +244,7 @@ import Common.Global;
 
                  Intent intent = new Intent(getApplicationContext(),Baris.class);
                  intent.putExtras(IDbundle);
-                 startActivity(intent);
+                 startActivityForResult(intent, 1);
              }
          });
 
@@ -262,7 +263,7 @@ import Common.Global;
 
                  Intent intent = new Intent(getApplicationContext(),Baris.class);
                  intent.putExtras(IDbundle);
-                 startActivity(intent);
+                 startActivityForResult(intent, 1);
              }
          });
 
@@ -282,11 +283,11 @@ import Common.Global;
 
                  Intent intent = new Intent(getApplicationContext(),Household_Visit.class);
                  intent.putExtras(IDbundle);
-                 startActivity(intent);
+                 startActivityForResult(intent, 1);
              }
          });
 
-         DataSearch(VILL,BARI,HH);
+         DataSearch(VILL,BARI);
 
      }
      catch(Exception  e)
@@ -295,6 +296,9 @@ import Common.Global;
          return;
      }
  }
+
+
+
      /*
      public boolean onOptionsItemSelected(MenuItem item) {
          switch (item.getItemId()) {
@@ -432,19 +436,27 @@ import Common.Global;
      if (resultCode == Activity.RESULT_CANCELED) {
          //Write your code if there's no result
      } else {
-         //DataSearch(VILL, BARI, HH);
+         if(data.getExtras().getString("res").equals("bari")) {
+             if (spnVill.getSelectedItemPosition() == 0) return;
+             String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
+             spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='" + V[0] + "'"));
+         }else if(data.getExtras().getString("res").equals("hh")) {
+             if (spnVill.getSelectedItemPosition() == 0 | spnBari.getSelectedItemPosition() == 0) return;
+             String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
+             String[] B = Connection.split(spnBari.getSelectedItem().toString(), '-');
+             DataSearch(V[0],B[0]);
+         }
      }
  }
 
 
- private void DataSearch(String Vill, String Bari, String HH)
+ private void DataSearch(String Vill, String Bari)
      {
        try
         {
      
            Household_DataModel d = new Household_DataModel();
-             //String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
-                String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' ";
+             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' ";
              List<Household_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -452,7 +464,7 @@ import Common.Global;
 
              ListView list = (ListView)findViewById(R.id.lstData);
              HashMap<String, String> map;
-
+             Integer i = 0;
              for(Household_DataModel item : data){
                  map = new HashMap<String, String>();
                  map.put("Vill", item.getVill());
@@ -469,11 +481,14 @@ import Common.Global;
                  map.put("ExType", item.getExType());
                  map.put("ExDate", item.getExDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getExDate()));
                  map.put("Rnd", item.getRnd());
+                 map.put("sl", i.toString());
+                 i+=1;
                  dataList.add(map);
              }
              dataAdapter = new SimpleAdapter(Household_list.this, dataList, R.layout.household_list,new String[] {"rowsec"},
                            new int[] {R.id.secListRow});
              list.setAdapter(new DataListAdapter(this, dataAdapter));
+            Utility.setListViewHeightBasedOnChildren(list);
         }
         catch(Exception  e)
         {
@@ -499,39 +514,19 @@ import Common.Global;
  	        }
          LinearLayout   secListRow = (LinearLayout)convertView.findViewById(R.id.secListRow);
 
-//         final TextView Vill = (TextView)convertView.findViewById(R.id.Vill);
-//         final TextView Bari = (TextView)convertView.findViewById(R.id.Bari);
          final TextView HH = (TextView)convertView.findViewById(R.id.HH);
-//         final TextView Religion = (TextView)convertView.findViewById(R.id.Religion);
-//         final TextView MobileNo1 = (TextView)convertView.findViewById(R.id.MobileNo1);
-//         final TextView MobileNo2 = (TextView)convertView.findViewById(R.id.MobileNo2);
          final TextView HHHead = (TextView)convertView.findViewById(R.id.HHHead);
          final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
          final TextView Visit = (TextView)convertView.findViewById(R.id.Visit);
-//         final TextView TotRWo = (TextView)convertView.findViewById(R.id.TotRWo);
-//         final TextView EnType = (TextView)convertView.findViewById(R.id.EnType);
-//         final TextView EnDate = (TextView)convertView.findViewById(R.id.EnDate);
-//         final TextView ExType = (TextView)convertView.findViewById(R.id.ExType);
-//         final TextView ExDate = (TextView)convertView.findViewById(R.id.ExDate);
-//         final TextView Rnd = (TextView)convertView.findViewById(R.id.Rnd);
-
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
-//         Vill.setText(o.get("Vill"));
-//         Bari.setText(o.get("Bari"));
          HH.setText(o.get("HH"));
-//         Religion.setText(o.get("Religion"));
-//         MobileNo1.setText(o.get("MobileNo1"));
-//         MobileNo2.setText(o.get("MobileNo2"));
          HHHead.setText(o.get("HHHead"));
          TotMem.setText(o.get("TotMem"));
          Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+VILL+"' AND Bari='"+BARI+"' AND HH='"+o.get("HH")+"'"));
-
-//         TotRWo.setText(o.get("TotRWo"));
-//         EnType.setText(o.get("EnType"));
-//         EnDate.setText(o.get("EnDate"));
-//         ExType.setText(o.get("ExType"));
-//         ExDate.setText(o.get("ExDate"));
-//         Rnd.setText(o.get("Rnd"));
+         if(Integer.valueOf(o.get("sl"))%2==0)
+             secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
+         else
+             secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

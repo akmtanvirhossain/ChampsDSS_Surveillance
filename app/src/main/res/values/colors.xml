@@ -3,6 +3,7 @@
     <color name="pressed_color">#4d90fe</color>
     <color name="default_color">#ffffff</color>
     <color name="questionHeader">#0097a7</color>
+    <color name="tableHeading">#C2E0EC</color>
     <color name="Heading">#006699</color>
     <color name="pageHeading">#FFFFFF</color>
     <color name="pageHeadingBack">#FFC4005F</color>

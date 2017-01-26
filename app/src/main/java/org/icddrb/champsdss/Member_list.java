@@ -1,37 +1,37 @@
 package org.icddrb.champsdss;
 //Android Manifest Code
  //<activity android:name=".Member_list" android:label="Member: List" />
- import java.util.ArrayList;
- import java.util.HashMap;
- import java.util.List;
- import android.app.*;
- import android.app.AlertDialog;
- import android.content.Context;
- import android.content.DialogInterface;
- import android.content.Intent;
- import android.database.Cursor;
- import android.graphics.Color;
- import android.location.Location;
- import android.view.Gravity;
- import android.view.KeyEvent;
- import android.os.Bundle;
- import android.view.Menu;
- import android.view.MenuInflater;
- import android.view.MenuItem;
- import android.view.View;
- import android.view.MotionEvent;
- import android.view.ViewGroup;
- import android.view.LayoutInflater;
- import android.view.Window;
- import android.view.WindowManager;
- import android.widget.LinearLayout;
- import android.widget.ListView;
- import android.widget.SimpleAdapter;
- import android.widget.BaseAdapter;
- import android.widget.TextView;
- import android.widget.Button;
- import android.widget.ImageButton;
- import Common.*;
+ import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.location.Location;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import Common.Connection;
+import Common.Global;
 
  public class Member_list extends Activity {
     boolean networkAvailable=false;
@@ -135,7 +135,7 @@ package org.icddrb.champsdss;
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
-                         startActivity(new Intent(Member_list.this, MainMenu.class));
+                         //startActivity(new Intent(Member_list.this, MainMenu.class));
                      }});
                  adb.show();
              }});
@@ -154,6 +154,9 @@ package org.icddrb.champsdss;
          btnMemberName.setOnClickListener(new View.OnClickListener() {
 
              public void onClick(View view) {
+                 VILL="001";
+                 BARI="0001";
+                 HH = "01";
                  MemberNameForm(VILL, BARI,g.getHouseholdNo());
 
              }

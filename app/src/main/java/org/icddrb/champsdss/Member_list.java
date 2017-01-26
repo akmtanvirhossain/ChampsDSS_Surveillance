@@ -65,14 +65,18 @@ package org.icddrb.champsdss;
     Button btnAdd;
     Button btnRefresh;
 
-    static String STARTTIME = "";
      static String DEVICEID  = "";
      static String ENTRYUSER = "";
 
-    static String VILL = "";
-    static String BARI = "";
-    static String HH = "";
-    static String MSLNO = "";
+     Bundle IDbundle;
+     private static String CurrentVillage;
+     private static String CurrentVCode;
+
+     static String STARTTIME = "";
+     static String VILL = "";
+     static String BARI = "";
+     static String HH = "";
+     static String MSLNO = "";
 
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -87,10 +91,14 @@ package org.icddrb.champsdss;
          DEVICEID  = g.getDeviceNo();
          ENTRYUSER = g.getUserId();
 
+         IDbundle       = getIntent().getExtras();
+         CurrentVillage = IDbundle.getString("Village");
+         CurrentVCode   = IDbundle.getString("VCode");
+
          Bundle IDbundle = getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
-         HH = IDbundle.getString("HH");
+         HH = IDbundle.getString("01");
          MSLNO = IDbundle.getString("MSlNo");
 
          TableName = "Member";
@@ -132,42 +140,24 @@ package org.icddrb.champsdss;
                  adb.show();
              }});
 
-         Button btnMemberName = (Button) findViewById(R.id.btnMemberName);
-         btnMemberName.setOnClickListener(new View.OnClickListener() {
-
-             public void onClick(View view) {
-                 MemberNameForm(VILL, BARI,HH);
-
-             }
-         });
-
          btnRefresh = (Button) findViewById(R.id.btnRefresh);
          btnRefresh.setOnClickListener(new View.OnClickListener() {
 
              public void onClick(View view) {
                    //write your code here
-//                 DataSearch(VILL, BARI, HH, MSLNO);
-                 DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
+                 DataSearch(VILL, BARI, g.getHouseholdNo());
+//                 DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
 
              }});
 
-//         btnAdd   = (Button) findViewById(R.id.btnAdd);
-//         btnAdd.setOnClickListener(new View.OnClickListener() {
-//
-//             public void onClick(View view) {
-//                         Bundle IDbundle = new Bundle();
-//                         IDbundle.putString("Vill", "");
-//                         IDbundle.putString("Bari", "");
-//                         IDbundle.putString("HH", "");
-//                         IDbundle.putString("MSlNo", "");
-//                         Intent intent = new Intent(getApplicationContext(), Member.class);
-//                         intent.putExtras(IDbundle);
-//                         startActivityForResult(intent,1);
-//             }});
-//
-//         DataSearch(VILL, BARI, HH);
-         //DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
+         Button btnMemberName = (Button) findViewById(R.id.btnMemberName);
+         btnMemberName.setOnClickListener(new View.OnClickListener() {
 
+             public void onClick(View view) {
+                 MemberNameForm(VILL, BARI,g.getHouseholdNo());
+
+             }
+         });
      }
      catch(Exception  e)
      {
@@ -183,7 +173,7 @@ package org.icddrb.champsdss;
          //Write your code if there's no result
      } else {
          //DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
-         DataSearch(VILL,BARI,HH);
+//         DataSearch(VILL,BARI,HH);
      }
  }
 
@@ -191,10 +181,10 @@ package org.icddrb.champsdss;
      {
        try
         {
-     
            Member_DataModel d = new Member_DataModel();
-//             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
-            String SQL = "Select * from "+ TableName ;
+//             String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
+            String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"'";
+//            String SQL = "Select * from "+ TableName ;
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -261,10 +251,14 @@ package org.icddrb.champsdss;
              final TextView txtHH = (TextView) dialog.findViewById(R.id.txtHH);
              final TextView txtMSlNo = (TextView) dialog.findViewById(R.id.txtMSlNo);
              final TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
+
              txtVill.setText(VILL);
              txtBari.setText(BARI);
-             txtHH.setText(HH);
+             txtHH.setText("01");
 
+             txtVill.setEnabled(false);
+             txtBari.setEnabled(false);
+             txtHH.setEnabled(false);
              txtMSlNo.setEnabled(false);
 
              //txtH21.setText(String.valueOf(MemSlNo()));
@@ -400,10 +394,10 @@ package org.icddrb.champsdss;
             public void onClick(View v) {
                //Write your code here
                Bundle IDbundle = new Bundle();
-               IDbundle.putString("Vill", o.get(VILL));
-               IDbundle.putString("Bari", o.get(BARI));
-               IDbundle.putString("HH", o.get(HH));
-               IDbundle.putString("MSlNo", o.get(MSLNO));
+               IDbundle.putString("Vill", o.get("Vill"));
+               IDbundle.putString("Bari", o.get("Bari"));
+               IDbundle.putString("HH", o.get("HH"));
+               IDbundle.putString("MSlNo", o.get("MSlNo"));
                Intent f1;
                f1 = new Intent(getApplicationContext(), Member.class);
                f1.putExtras(IDbundle);

@@ -4,25 +4,25 @@
         <TextView android:text="Vill" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
         <TextView android:text="Bari" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
         <TextView android:text="HH" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:text="সিরিয়াল নং" android:layout_width="80dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="PNo" android:layout_width="150dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="নাম" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content"/>
-        <TextView android:text="সম্পর্ক" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="লিঙ্গ" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="জন্ম তারিখ" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="বয়স(Y)" android:layout_width="80dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="মায়ের সিরিয়াল" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="বাবার সিরিয়াল" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="সর্বোচ্চ শ্রেণি পাশ" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text=" বৈবাহিক অবস্থা" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text=" পেশা" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 1" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 2" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 3" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 4" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content"/>
-        <TextView android:text="EnType" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:text="EnDate" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:text="ExType" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:text="ExDate" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
+        <TextView android:text="সিরিয়াল নং" android:layout_width="80dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="স্থায়ী নাম্বার" android:layout_width="170dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="নাম" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="সম্পর্ক" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="লিঙ্গ" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="জন্ম তারিখ" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="বয়স(Y)" android:layout_width="80dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="মায়ের সিরিয়াল" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="বাবার সিরিয়াল" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="সর্বোচ্চ শ্রেণি পাশ" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text=" বৈবাহিক অবস্থা" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text=" পেশা" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 1" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 2" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 3" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 4" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="EnType" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone"  android:textSize="16sp"/>
+        <TextView android:text="EnDate" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" android:textSize="16sp"/>
+        <TextView android:text="ExType" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" android:textSize="16sp"/>
+        <TextView android:text="ExDate" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" android:textSize="16sp"/>
     </LinearLayout>
  </LinearLayout>

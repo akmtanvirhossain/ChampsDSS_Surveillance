@@ -58,7 +58,6 @@
             android:theme="@style/CustomTheme"></activity>
 
         <activity android:name=".Household_list" />
-        <activity android:name=".HouseholdIndex1" />
         <activity android:name=".Household" />
         <activity android:name=".Member" />
         <activity android:name=".Member_list" />

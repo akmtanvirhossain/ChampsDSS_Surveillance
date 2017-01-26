@@ -134,11 +134,13 @@
          LinearLayout secMoNo;
          View lineMoNo;
          TextView VlblMoNo;
-         EditText txtMoNo;
+         Spinner spnMoNo;
+
          LinearLayout secFaNo;
          View lineFaNo;
          TextView VlblFaNo;
-         EditText txtFaNo;
+         Spinner spnFaNo;
+
          LinearLayout secEdu;
          View lineEdu;
          TextView VlblEdu;
@@ -236,6 +238,7 @@
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
+                         startActivity(new Intent(Member.this, Member_list.class));
                      }});
                  adb.show();
              }});
@@ -319,20 +322,32 @@
          VlblBDate=(TextView) findViewById(R.id.VlblBDate);
          dtpBDate=(EditText) findViewById(R.id.dtpBDate);
 
-
-
          secAgeY=(LinearLayout)findViewById(R.id.secAgeY);
          lineAgeY=(View)findViewById(R.id.lineAgeY);
          VlblAgeY=(TextView) findViewById(R.id.VlblAgeY);
          txtAgeY=(EditText) findViewById(R.id.txtAgeY);
-         secMoNo=(LinearLayout)findViewById(R.id.secMoNo);
-         lineMoNo=(View)findViewById(R.id.lineMoNo);
-         VlblMoNo=(TextView) findViewById(R.id.VlblMoNo);
-         txtMoNo=(EditText) findViewById(R.id.txtMoNo);
-         secFaNo=(LinearLayout)findViewById(R.id.secFaNo);
-         lineFaNo=(View)findViewById(R.id.lineFaNo);
-         VlblFaNo=(TextView) findViewById(R.id.VlblFaNo);
-         txtFaNo=(EditText) findViewById(R.id.txtFaNo);
+
+         secMoNo = (LinearLayout) findViewById(R.id.secMoNo);
+         lineMoNo = (View) findViewById(R.id.lineMoNo);
+         VlblMoNo = (TextView) findViewById(R.id.VlblMoNo);
+         spnMoNo = (Spinner) findViewById(R.id.spnMoNo);
+         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+
+         secFaNo = (LinearLayout) findViewById(R.id.secFaNo);
+         lineFaNo = (View) findViewById(R.id.lineFaNo);
+         VlblFaNo = (TextView) findViewById(R.id.VlblFaNo);
+         spnFaNo = (Spinner) findViewById(R.id.spnFaNo);
+         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+
+//         secMoNo=(LinearLayout)findViewById(R.id.secMoNo);
+//         lineMoNo=(View)findViewById(R.id.lineMoNo);
+//         VlblMoNo=(TextView) findViewById(R.id.VlblMoNo);
+//         txtMoNo=(EditText) findViewById(R.id.txtMoNo);
+//         secFaNo=(LinearLayout)findViewById(R.id.secFaNo);
+//         lineFaNo=(View)findViewById(R.id.lineFaNo);
+//         VlblFaNo=(TextView) findViewById(R.id.VlblFaNo);
+//         txtFaNo=(EditText) findViewById(R.id.txtFaNo);
+
          secEdu=(LinearLayout)findViewById(R.id.secEdu);
          lineEdu=(View)findViewById(R.id.lineEdu);
          VlblEdu=(TextView) findViewById(R.id.VlblEdu);
@@ -555,7 +570,9 @@
 
 
          //Hide all skip variables
-
+         txtVill.setEnabled(false);
+         txtBari.setEnabled(false);
+         txtHH.setEnabled(false);
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave);
         cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -671,30 +688,42 @@
              txtAgeY.requestFocus(); 
              return;	
            }
-         else if(txtMoNo.getText().toString().length()==0 & secMoNo.isShown())
-           {
-             Connection.MessageBox(Member.this, "Required field: মায়ের সিরিয়াল নম্বর.");
-             txtMoNo.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtMoNo.getText().toString().length()==0 ? "0" : txtMoNo.getText().toString()) < 0 || Integer.valueOf(txtMoNo.getText().toString().length()==0 ? "99" : txtMoNo.getText().toString()) > 99)
-           {
-             Connection.MessageBox(Member.this, "Value should be between 0 and 99(মায়ের সিরিয়াল নম্বর).");
-             txtMoNo.requestFocus(); 
-             return;	
-           }
-         else if(txtFaNo.getText().toString().length()==0 & secFaNo.isShown())
-           {
-             Connection.MessageBox(Member.this, "Required field: বাবার সিরিয়াল নম্বর.");
-             txtFaNo.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtFaNo.getText().toString().length()==0 ? "0" : txtFaNo.getText().toString()) < 0 || Integer.valueOf(txtFaNo.getText().toString().length()==0 ? "99" : txtFaNo.getText().toString()) > 99)
-           {
-             Connection.MessageBox(Member.this, "Value should be between 0 and 99(বাবার সিরিয়াল নম্বর).");
-             txtFaNo.requestFocus(); 
-             return;	
-           }
+         else if(spnMoNo.getSelectedItemPosition()==0  & spnMoNo.isShown())
+         {
+             Connection.MessageBox(Member.this, "Required field: মায়ের সিরিয়াল নম্বর");
+             spnMoNo.requestFocus();
+             return;
+         }
+         else if(spnFaNo.getSelectedItemPosition()==0  & spnFaNo.isShown())
+         {
+             Connection.MessageBox(Member.this, "Required field: বাবার সিরিয়াল নম্বর");
+             spnFaNo.requestFocus();
+             return;
+         }
+//         else if(txtMoNo.getText().toString().length()==0 & secMoNo.isShown())
+//           {
+//             Connection.MessageBox(Member.this, "Required field: মায়ের সিরিয়াল নম্বর.");
+//             txtMoNo.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtMoNo.getText().toString().length()==0 ? "0" : txtMoNo.getText().toString()) < 0 || Integer.valueOf(txtMoNo.getText().toString().length()==0 ? "99" : txtMoNo.getText().toString()) > 99)
+//           {
+//             Connection.MessageBox(Member.this, "Value should be between 0 and 99(মায়ের সিরিয়াল নম্বর).");
+//             txtMoNo.requestFocus();
+//             return;
+//           }
+//         else if(txtFaNo.getText().toString().length()==0 & secFaNo.isShown())
+//           {
+//             Connection.MessageBox(Member.this, "Required field: বাবার সিরিয়াল নম্বর.");
+//             txtFaNo.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtFaNo.getText().toString().length()==0 ? "0" : txtFaNo.getText().toString()) < 0 || Integer.valueOf(txtFaNo.getText().toString().length()==0 ? "99" : txtFaNo.getText().toString()) > 99)
+//           {
+//             Connection.MessageBox(Member.this, "Value should be between 0 and 99(বাবার সিরিয়াল নম্বর).");
+//             txtFaNo.requestFocus();
+//             return;
+//           }
          else if(spnEdu.getSelectedItemPosition()==0  & secEdu.isShown())
            {
              Connection.MessageBox(Member.this, "Required field: সর্বোচ্চ শ্রেণি পাশ.");
@@ -821,8 +850,11 @@
 
          objSave.setBDate(dtpBDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpBDate.getText().toString()) : dtpBDate.getText().toString());
          objSave.setAgeY(txtAgeY.getText().toString());
-         objSave.setMoNo(txtMoNo.getText().toString());
-         objSave.setFaNo(txtFaNo.getText().toString());
+//         objSave.setMoNo(txtMoNo.getText().toString());
+//         objSave.setFaNo(txtFaNo.getText().toString());
+         objSave.setMoNo((spnMoNo.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")));
+         objSave.setFaNo((spnFaNo.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-")));
+
          objSave.setEdu((spnEdu.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEdu.getSelectedItem().toString(), "-")));
          objSave.setMS((spnMS.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnMS.getSelectedItem().toString(), "-")));
          objSave.setOcp((spnOcp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnOcp.getSelectedItem().toString(), "-")));
@@ -905,8 +937,10 @@
              }
              dtpBDate.setText(item.getBDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getBDate()));
              txtAgeY.setText(item.getAgeY());
-             txtMoNo.setText(item.getMoNo());
-             txtFaNo.setText(item.getFaNo());
+//             txtMoNo.setText(item.getMoNo());
+//             txtFaNo.setText(item.getFaNo());
+             spnMoNo.setSelection(Global.SpinnerItemPositionAnyLength(spnMoNo, item.getMoNo()));
+             spnFaNo.setSelection(Global.SpinnerItemPositionAnyLength(spnFaNo, item.getFaNo()));
              spnEdu.setSelection(Global.SpinnerItemPositionAnyLength(spnEdu, item.getEdu()));
              spnMS.setSelection(Global.SpinnerItemPositionAnyLength(spnMS, item.getMS()));
              spnOcp.setSelection(Global.SpinnerItemPositionAnyLength(spnOcp, item.getOcp()));

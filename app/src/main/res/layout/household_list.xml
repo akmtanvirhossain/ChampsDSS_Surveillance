@@ -85,8 +85,7 @@
             android:layout_height="match_parent"
             android:textAlignment="center"
             android:gravity="left" android:paddingTop="5sp" android:paddingBottom="5sp"
-            android:background="@color/tableHeading"
-            >
+            android:background="@color/tableHeading">
 
             <TextView
                 android:text=" খানা #"

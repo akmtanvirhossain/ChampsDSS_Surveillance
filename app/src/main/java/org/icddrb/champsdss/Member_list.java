@@ -20,7 +20,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
+ import android.widget.EditText;
+ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -33,8 +34,9 @@ import java.util.List;
 
 import Common.Connection;
 import Common.Global;
+ import Common.Utility;
 
- public class Member_list extends Activity {
+public class Member_list extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
     double currentLatitude,currentLongitude; 
@@ -66,20 +68,23 @@ import Common.Global;
     Button btnAdd;
     Button btnRefresh;
 
+    EditText txtVill;
+    EditText txtBari;
+    EditText txtHH;
 
+    static String DEVICEID  = "";
+    static String ENTRYUSER = "";
 
-     static String DEVICEID  = "";
-     static String ENTRYUSER = "";
+    Bundle IDbundle;
+    private static String CurrentVillage;
+    private static String CurrentVCode;
 
-     Bundle IDbundle;
-     private static String CurrentVillage;
-     private static String CurrentVCode;
+    static String STARTTIME = "";
+    static String VILL = "";
+    static String BARI = "";
+    static String HH = "";
+    static String MSLNO = "";
 
-     static String STARTTIME = "";
-     static String VILL = "";
-     static String BARI = "";
-     static String HH = "";
-     static String MSLNO = "";
 
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -94,15 +99,23 @@ import Common.Global;
          DEVICEID  = g.getDeviceNo();
          ENTRYUSER = g.getUserId();
 
-         IDbundle       = getIntent().getExtras();
-         CurrentVillage = IDbundle.getString("Village");
-         CurrentVCode   = IDbundle.getString("VCode");
-
-         //IDbundle = getIntent().getExtras();
+         IDbundle=getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
          HH = IDbundle.getString("HH");
          MSLNO = IDbundle.getString("MSlNo");
+
+         final TextView txtVill = (TextView) findViewById(R.id.txtVill);
+         final TextView txtBari = (TextView) findViewById(R.id.txtBari);
+         final TextView txtHH = (TextView) findViewById(R.id.txtHH);
+
+         txtVill.setText(VILL);
+         txtBari.setText(BARI);
+         txtHH.setText(HH);
+
+         LinearLayout secMenu;
+         secMenu= (LinearLayout) findViewById(R.id.secMenu);
+         secMenu.setVisibility(View.VISIBLE);
 
          TableName = "Member";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
@@ -131,7 +144,7 @@ import Common.Global;
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
-                 if (!C.Existence("Select Rnd from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
                      return;
                  }
@@ -149,7 +162,7 @@ import Common.Global;
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
-                         startActivity(new Intent(Member_list.this, Household_list.class));
+//                        startActivity(new Intent(Member_list.this, Household_list.class));
                      }});
                  adb.show();
              }});
@@ -159,7 +172,7 @@ import Common.Global;
 
              public void onClick(View view) {
                    //write your code here
-                 DataSearch(VILL, BARI, g.getHouseholdNo());
+                 DataSearch(VILL, BARI, HH);
 //                 DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
 
              }});
@@ -170,7 +183,7 @@ import Common.Global;
          btnSES.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 if (!C.Existence("Select Rnd from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
                      return;
                  }
@@ -180,7 +193,6 @@ import Common.Global;
                      Connection.MessageBox(Member_list.this, infoMiss + " জন সদস্যের তথ্য আপডেট করা হয় নাই");
                      return;
                  }
-
 
                  Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
                  Intent f1;
@@ -202,13 +214,9 @@ import Common.Global;
                  IDbundle.putString("Vill", VILL);
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
-
-//                 VILL="001";
-//                 BARI="0001";
-//                 HH = "01";
                  MemberNameForm(VILL, BARI,HH);
-
              }
+
          });
      }
      catch(Exception  e)
@@ -224,8 +232,8 @@ import Common.Global;
      if (resultCode == Activity.RESULT_CANCELED) {
          //Write your code if there's no result
      } else {
-         //DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
-//         DataSearch(VILL,BARI,HH);
+//         DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
+         DataSearch(VILL,BARI,HH);
      }
  }
 
@@ -234,8 +242,8 @@ import Common.Global;
        try
         {
            Member_DataModel d = new Member_DataModel();
-//             String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
-            String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"'";
+             String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
+//            String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"'";
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -243,7 +251,7 @@ import Common.Global;
 
              ListView list = (ListView)findViewById(R.id.lstData);
              HashMap<String, String> map;
-
+            Integer i = 0;
              for(Member_DataModel item : data){
                  map = new HashMap<String, String>();
                  map.put("Vill", item.getVill());
@@ -269,11 +277,14 @@ import Common.Global;
                  map.put("EnDate", item.getEnDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getEnDate()));
                  map.put("ExType", item.getExType());
                  map.put("ExDate", item.getExDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getExDate()));
+                 map.put("sl", i.toString());
+                 i+=1;
                  dataList.add(map);
              }
              dataAdapter = new SimpleAdapter(Member_list.this, dataList, R.layout.member_list,new String[] {"rowsec"},
                            new int[] {R.id.secListRow});
              list.setAdapter(new DataListAdapter(this, dataAdapter));
+            Utility.setListViewHeightBasedOnChildren(list);
         }
         catch(Exception  e)
         {
@@ -441,6 +452,10 @@ import Common.Global;
              Name.setTextColor(Color.BLACK);
          }
 
+         if(Integer.valueOf(o.get("sl"))%2==0)
+             secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
+         else
+             secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                //Write your code here

@@ -4,9 +4,10 @@
     android:orientation="vertical">
     <LinearLayout android:layout_width="fill_parent" android:layout_height="45sp" android:orientation="horizontal" android:background="@color/pageHeadingBack">
         <ImageButton android:id="@+id/cmdBack" android:background="@color/pageHeadingBack" android:src="@drawable/back" android:layout_width="50sp" android:layout_height="match_parent"/>
-        <TextView android:id="@+id/lblHeading" android:text="Member" android:paddingLeft="10sp" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
+        <TextView android:id="@+id/lblHeading" android:text="খানা সদস্যদের তালিকা" android:paddingLeft="10sp" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
+
     <LinearLayout android:id="@+id/secVill" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
 
         <TextView android:id="@+id/VlblVill" android:text="খানা নম্বর" android:layout_width="100sp" android:layout_height="wrap_content" android:textSize="20sp" />
@@ -17,14 +18,14 @@
     </LinearLayout>
     <View android:id="@+id/lineVill" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
-    <LinearLayout  android:layout_marginTop="5sp" android:layout_weight="4" android:layout_width="fill_parent" android:gravity="end" android:layout_height="wrap_content" android:orientation="horizontal">
+    <LinearLayout android:id="@+id/secMenu" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <Button android:id="@+id/btnMemberName" android:layout_weight="1" android:layout_width="wrap_content"  android:layout_height="40sp" android:layout_marginBottom="10sp" android:layout_marginLeft="20sp" android:layout_marginRight="20sp" android:layout_marginTop="5dip" android:background="@drawable/button_style_blue" android:text=" Add Member Name " android:textColor="#FFFFFF" android:textSize="18sp" />
         <Button android:id="@+id/btnSES" android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="40sp" android:layout_marginBottom="10sp" android:layout_marginLeft="10sp" android:layout_marginRight="10sp" android:layout_marginTop="5dip" android:background="@drawable/button_style_blue" android:text=" SES " android:textColor="#FFFFFF" android:textSize="18sp" />
         <Button android:id="@+id/btnPregHis" android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="40sp" android:layout_marginBottom="10sp" android:layout_marginLeft="10sp" android:layout_marginRight="10sp" android:layout_marginTop="5dip" android:background="@drawable/button_style_blue" android:text=" Preg. His " android:textColor="#FFFFFF" android:textSize="18sp" />
         <Button android:id="@+id/btnRefresh" android:layout_weight="1"  android:background="@drawable/button_style_blue" android:textSize="18sp" android:textColor="#FFFFFF" android:layout_width="wrap_content" android:layout_height="40sp" android:layout_marginTop="5dip" android:layout_marginBottom="10sp" android:text=" Refresh " android:paddingLeft="5sp" android:paddingRight="5sp"/>
     </LinearLayout>
+    <View android:id="@+id/lineMenu" android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
 
-    <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -76,7 +77,7 @@
                         <ListView
                             android:id="@+id/lstData"
                             android:layout_width="match_parent"
-                            android:layout_height="600dp"
+                            android:layout_height="wrap_content"
                             android:clickable="true"
                             android:divider="#000000"
                             android:dividerHeight="1px"
@@ -86,4 +87,5 @@
             </ScrollView>
         </LinearLayout>
     </HorizontalScrollView>
+
 </LinearLayout>

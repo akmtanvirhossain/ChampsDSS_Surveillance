@@ -68,21 +68,21 @@ public class MainMenu extends Activity {
                 }
             });
 
-            cmdMember = (Button) findViewById(R.id.cmdMember);
-            cmdMember.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle IDbundle = new Bundle();
-                    IDbundle.putString("Village", "");
-                    IDbundle.putString("VCode", "");
-                    finish();
-                    Intent f1;
-                    f1 = new Intent(getApplicationContext(), Member_list.class);
-                    f1.putExtras(IDbundle);
-                    startActivity(f1);
-                    //startActivity(new Intent(MainMenu.this, HouseholdIndex1.class));
-                }
-            });
+//            cmdMember = (Button) findViewById(R.id.cmdMember);
+//            cmdMember.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Bundle IDbundle = new Bundle();
+//                    IDbundle.putString("Village", "");
+//                    IDbundle.putString("VCode", "");
+//                    finish();
+//                    Intent f1;
+//                    f1 = new Intent(getApplicationContext(), Member_list.class);
+//                    f1.putExtras(IDbundle);
+//                    startActivity(f1);
+//                    //startActivity(new Intent(MainMenu.this, HouseholdIndex1.class));
+//                }
+//            });
 
             cmdDataSync = (Button) findViewById(R.id.cmdDataSync);
             cmdDataSync.setOnClickListener(new View.OnClickListener() {

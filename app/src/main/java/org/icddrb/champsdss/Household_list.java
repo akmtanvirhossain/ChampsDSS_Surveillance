@@ -95,6 +95,9 @@ public class Household_list extends Activity {
          IDbundle       = getIntent().getExtras();
          CurrentVillage = IDbundle.getString("Village");
          CurrentVCode   = IDbundle.getString("VCode");
+         VILL = IDbundle.getString("Vill");
+         BARI = IDbundle.getString("Bari");
+         HH = IDbundle.getString("HH");
 
          TableName = "Household";
          lblHeading = (TextView)findViewById(R.id.lblHeading);

@@ -709,7 +709,6 @@ import Common.Global;
      {
        try
         {
-     
            RadioButton rb;
            Household_DataModel d = new Household_DataModel();
            String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";

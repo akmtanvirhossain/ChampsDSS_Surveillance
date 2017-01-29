@@ -499,7 +499,7 @@
          secSp2=(LinearLayout)findViewById(R.id.secSp2);
          lineSp2=(View)findViewById(R.id.lineSp2);
          VlblSp2=(TextView) findViewById(R.id.VlblSp2);
-         spnSp2=(Spinner) findViewById(R.id.spnSp1);
+         spnSp2=(Spinner) findViewById(R.id.spnSp2);
          spnSp2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
 
          secSp3=(LinearLayout)findViewById(R.id.secSp3);
@@ -808,7 +808,6 @@
              spnMoNo.requestFocus();
              return;
          }
-
          if ((RTH[0].equals("4") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
          {
              Connection.MessageBox(Member.this, "খানা প্রধানের বাবা/মা এর বয়স অবশ্যই ১৫ বছরের বেশী হবে");
@@ -844,7 +843,6 @@
              spnSp4.requestFocus();
              return;
          }
-
          else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
                  Connection.MessageBox(Member.this, "পিতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
                  spnFaNo.requestFocus();
@@ -865,7 +863,6 @@
              spnFaNo.requestFocus();
              return;
          }
-
          else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
                  Connection.MessageBox(Member.this, "মাতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
                  spnSp1.requestFocus();
@@ -914,7 +911,7 @@
 //         }
 
 
-         dtpEnDate.setText(Global.DateConvertDMY(C.ReturnSingleValue("select VDate from Visits where where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")));
+         dtpEnDate.setText(Global.DateConvertDMY(C.ReturnSingleValue("select VDate from Visits where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")));
 
          String SQL = "";
          RadioButton rb;

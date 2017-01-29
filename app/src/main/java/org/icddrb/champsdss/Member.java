@@ -576,7 +576,6 @@
          });
 
 
-
          //Hide all skip variables
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
@@ -824,7 +823,6 @@
              Connection.MessageBox(Member.this, "পিতা মাতার সাথে বয়স মিল নেই");
              txtAgeY.requestFocus();
              return;
-
          }
          else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
              Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের লাইন একই হবে না");
@@ -903,12 +901,12 @@
              spnSp1.requestFocus();
              return;
          }
-
-         if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("10") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
+         else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("10") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
              Connection.MessageBox(Member.this, "খানা প্রধান ২ জন হতে পারবেনা");
              txtName.requestFocus();
              return;
          }
+
 //         else if(Ocp = 3 & sex.equals("1"))
 //         {
 //             Connection.MessageBox(MemberEvents.this, "পুরুষ লোকের পেশা ০৩ হতে পারে না।");
@@ -1125,8 +1123,6 @@
 
     }
   };
-
-
  //GPS Reading
  //.....................................................................................................
  public void FindLocation() {

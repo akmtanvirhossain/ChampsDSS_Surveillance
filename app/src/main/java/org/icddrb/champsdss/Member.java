@@ -149,28 +149,34 @@
          View lineMS;
          TextView VlblMS;
          Spinner spnMS;
+
          LinearLayout secOcp;
          View lineOcp;
          TextView VlblOcp;
          Spinner spnOcp;
+
          LinearLayout seclblSpsl;
          View linelblSpsl;
+
          LinearLayout secSp1;
          View lineSp1;
          TextView VlblSp1;
-         EditText txtSp1;
+         Spinner spnSp1;
+
          LinearLayout secSp2;
          View lineSp2;
          TextView VlblSp2;
-         EditText txtSp2;
+         Spinner spnSp2;
+
          LinearLayout secSp3;
          View lineSp3;
          TextView VlblSp3;
-         EditText txtSp3;
+         Spinner spnSp3;
          LinearLayout secSp4;
          View lineSp4;
          TextView VlblSp4;
-         EditText txtSp4;
+         Spinner spnSp4;
+
          LinearLayout secEnType;
          View lineEnType;
          TextView VlblEnType;
@@ -343,6 +349,7 @@
 //         lineMoNo=(View)findViewById(R.id.lineMoNo);
 //         VlblMoNo=(TextView) findViewById(R.id.VlblMoNo);
 //         txtMoNo=(EditText) findViewById(R.id.txtMoNo);
+
 //         secFaNo=(LinearLayout)findViewById(R.id.secFaNo);
 //         lineFaNo=(View)findViewById(R.id.lineFaNo);
 //         VlblFaNo=(TextView) findViewById(R.id.VlblFaNo);
@@ -396,26 +403,26 @@
                  {
 
                      seclblSpsl.setVisibility(View.GONE);
-                     txtSp1.setText("");
-                     txtSp1.setVisibility(View.GONE);
+                     spnSp1.setSelection(0);
+                     spnSp1.setVisibility(View.GONE);
                      lineSp1.setVisibility(View.GONE);
                      secSp1.setVisibility(View.GONE);
                      lineSp1.setVisibility(View.GONE);
 
-                     txtSp2.setText("");
-                     txtSp2.setVisibility(View.GONE);
+                     spnSp2.setSelection(0);
+                     spnSp2.setVisibility(View.GONE);
                      lineSp2.setVisibility(View.GONE);
                      secSp2.setVisibility(View.GONE);
                      lineSp2.setVisibility(View.GONE);
 
-                     txtSp3.setText("");
-                     txtSp3.setVisibility(View.GONE);
+                     spnSp3.setSelection(0);
+                     spnSp3.setVisibility(View.GONE);
                      lineSp3.setVisibility(View.GONE);
                      secSp3.setVisibility(View.GONE);
                      lineSp3.setVisibility(View.GONE);
 
-                     txtSp4.setText("");
-                     txtSp4.setVisibility(View.GONE);
+                     spnSp4.setSelection(0);
+                     spnSp4.setVisibility(View.GONE);
                      lineSp4.setVisibility(View.GONE);
                      secSp4.setVisibility(View.GONE);
                      lineSp4.setVisibility(View.GONE);
@@ -423,25 +430,22 @@
                  } else {
 
                      seclblSpsl.setVisibility(View.VISIBLE);
-                     txtSp1.setVisibility(View.VISIBLE);
+                     spnSp1.setVisibility(View.VISIBLE);
                      lineSp1.setVisibility(View.VISIBLE);
                      secSp1.setVisibility(View.VISIBLE);
                      lineSp1.setVisibility(View.VISIBLE);
 
-                     txtSp2.setText("");
-                     txtSp2.setVisibility(View.VISIBLE);
+                     spnSp2.setVisibility(View.VISIBLE);
                      lineSp2.setVisibility(View.VISIBLE);
                      secSp2.setVisibility(View.VISIBLE);
                      lineSp2.setVisibility(View.VISIBLE);
 
-                     txtSp3.setText("");
-                     txtSp3.setVisibility(View.VISIBLE);
+                     spnSp3.setVisibility(View.VISIBLE);
                      lineSp3.setVisibility(View.VISIBLE);
                      secSp3.setVisibility(View.VISIBLE);
                      lineSp3.setVisibility(View.VISIBLE);
 
-                     txtSp4.setText("");
-                     txtSp4.setVisibility(View.VISIBLE);
+                     spnSp4.setVisibility(View.VISIBLE);
                      lineSp4.setVisibility(View.VISIBLE);
                      secSp4.setVisibility(View.VISIBLE);
                      lineSp4.setVisibility(View.VISIBLE);
@@ -485,26 +489,30 @@
 
          seclblSpsl=(LinearLayout)findViewById(R.id.seclblSpsl);
          linelblSpsl=(View)findViewById(R.id.linelblSpsl);
+
          secSp1=(LinearLayout)findViewById(R.id.secSp1);
          lineSp1=(View)findViewById(R.id.lineSp1);
          VlblSp1=(TextView) findViewById(R.id.VlblSp1);
-         txtSp1=(EditText) findViewById(R.id.txtSp1);
+         spnSp1 = (Spinner) findViewById(R.id.spnSp1);
+         spnSp1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
 
          secSp2=(LinearLayout)findViewById(R.id.secSp2);
          lineSp2=(View)findViewById(R.id.lineSp2);
          VlblSp2=(TextView) findViewById(R.id.VlblSp2);
-         txtSp2=(EditText) findViewById(R.id.txtSp2);
+         spnSp2=(Spinner) findViewById(R.id.spnSp1);
+         spnSp2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
 
          secSp3=(LinearLayout)findViewById(R.id.secSp3);
          lineSp3=(View)findViewById(R.id.lineSp3);
          VlblSp3=(TextView) findViewById(R.id.VlblSp3);
-         txtSp3=(EditText) findViewById(R.id.txtSp3);
+         spnSp3=(Spinner) findViewById(R.id.spnSp3);
+         spnSp3.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
 
          secSp4=(LinearLayout)findViewById(R.id.secSp4);
          lineSp4=(View)findViewById(R.id.lineSp4);
          VlblSp4=(TextView) findViewById(R.id.VlblSp4);
-         txtSp4=(EditText) findViewById(R.id.txtSp4);
-
+         spnSp4=(Spinner) findViewById(R.id.spnSp4);
+         spnSp4.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
 
          secEnType=(LinearLayout)findViewById(R.id.secEnType);
          lineEnType=(View)findViewById(R.id.lineEnType);
@@ -700,30 +708,6 @@
              spnFaNo.requestFocus();
              return;
          }
-//         else if(txtMoNo.getText().toString().length()==0 & secMoNo.isShown())
-//           {
-//             Connection.MessageBox(Member.this, "Required field: মায়ের সিরিয়াল নম্বর.");
-//             txtMoNo.requestFocus();
-//             return;
-//           }
-//         else if(Integer.valueOf(txtMoNo.getText().toString().length()==0 ? "0" : txtMoNo.getText().toString()) < 0 || Integer.valueOf(txtMoNo.getText().toString().length()==0 ? "99" : txtMoNo.getText().toString()) > 99)
-//           {
-//             Connection.MessageBox(Member.this, "Value should be between 0 and 99(মায়ের সিরিয়াল নম্বর).");
-//             txtMoNo.requestFocus();
-//             return;
-//           }
-//         else if(txtFaNo.getText().toString().length()==0 & secFaNo.isShown())
-//           {
-//             Connection.MessageBox(Member.this, "Required field: বাবার সিরিয়াল নম্বর.");
-//             txtFaNo.requestFocus();
-//             return;
-//           }
-//         else if(Integer.valueOf(txtFaNo.getText().toString().length()==0 ? "0" : txtFaNo.getText().toString()) < 0 || Integer.valueOf(txtFaNo.getText().toString().length()==0 ? "99" : txtFaNo.getText().toString()) > 99)
-//           {
-//             Connection.MessageBox(Member.this, "Value should be between 0 and 99(বাবার সিরিয়াল নম্বর).");
-//             txtFaNo.requestFocus();
-//             return;
-//           }
          else if(spnEdu.getSelectedItemPosition()==0  & secEdu.isShown())
            {
              Connection.MessageBox(Member.this, "Required field: সর্বোচ্চ শ্রেণি পাশ.");
@@ -742,54 +726,30 @@
              spnOcp.requestFocus(); 
              return;	
            }
-         else if(txtSp1.getText().toString().length()==0 & secSp1.isShown())
-           {
+         else if(spnSp1.getSelectedItemPosition()==0  & spnSp1.isShown())
+         {
              Connection.MessageBox(Member.this, "Required field: সিরিয়াল নম্বর ১.");
-             txtSp1.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtSp1.getText().toString().length()==0 ? "00" : txtSp1.getText().toString()) < 00 || Integer.valueOf(txtSp1.getText().toString().length()==0 ? "30" : txtSp1.getText().toString()) > 30)
-           {
-             Connection.MessageBox(Member.this, "Value should be between 00 and 30(সিরিয়াল নম্বর ১).");
-             txtSp1.requestFocus(); 
-             return;	
-           }
-         else if(txtSp2.getText().toString().length()==0 & secSp2.isShown())
-           {
+             spnSp1.requestFocus();
+             return;
+         }
+         else if(spnSp2.getSelectedItemPosition()==0  & spnSp2.isShown())
+         {
              Connection.MessageBox(Member.this, "Required field: সিরিয়াল নম্বর ২.");
-             txtSp2.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtSp2.getText().toString().length()==0 ? "00" : txtSp2.getText().toString()) < 00 || Integer.valueOf(txtSp2.getText().toString().length()==0 ? "30" : txtSp2.getText().toString()) > 30)
-           {
-             Connection.MessageBox(Member.this, "Value should be between 00 and 30(সিরিয়াল নম্বর ২).");
-             txtSp2.requestFocus(); 
-             return;	
-           }
-         else if(txtSp3.getText().toString().length()==0 & secSp3.isShown())
-           {
+             spnSp2.requestFocus();
+             return;
+         }
+         else if(spnSp3.getSelectedItemPosition()==0  & spnSp3.isShown())
+         {
              Connection.MessageBox(Member.this, "Required field: সিরিয়াল নম্বর ৩.");
-             txtSp3.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtSp3.getText().toString().length()==0 ? "00" : txtSp3.getText().toString()) < 00 || Integer.valueOf(txtSp3.getText().toString().length()==0 ? "30" : txtSp3.getText().toString()) > 30)
-           {
-             Connection.MessageBox(Member.this, "Value should be between 00 and 30(সিরিয়াল নম্বর ৩).");
-             txtSp3.requestFocus(); 
-             return;	
-           }
-         else if(txtSp4.getText().toString().length()==0 & secSp4.isShown())
-           {
+             spnSp3.requestFocus();
+             return;
+         }
+         else if(spnSp4.getSelectedItemPosition()==0  & spnSp4.isShown())
+         {
              Connection.MessageBox(Member.this, "Required field: সিরিয়াল নম্বর ৪.");
-             txtSp4.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtSp4.getText().toString().length()==0 ? "00" : txtSp4.getText().toString()) < 00 || Integer.valueOf(txtSp4.getText().toString().length()==0 ? "30" : txtSp4.getText().toString()) > 30)
-           {
-             Connection.MessageBox(Member.this, "Value should be between 00 and 30(সিরিয়াল নম্বর ৪).");
-             txtSp4.requestFocus(); 
-             return;	
-           }
+             spnSp4.requestFocus();
+             return;
+         }
          else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
            {
              Connection.MessageBox(Member.this, "Required field: EnType.");
@@ -828,7 +788,136 @@
              dtpExDate.requestFocus(); 
              return;	
            }
- 
+         String[] RTH = spnRth.getSelectedItem().toString().split("-");
+         String[] MS = spnMS.getSelectedItem().toString().split("-");
+         String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
+
+         if ((RTH[0].equals("2") | RTH[0].equals("4") | RTH[0].equals("7") | RTH[0].equals("10") | RTH[0].equals("11") | RTH[0].equals("15") | RTH[0].equals("17")) & MS[0].equals("30")) {
+             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক ২,৪,৭,১০,১১,১৫,১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
+             spnRth.requestFocus();
+             return;
+         }
+         else if(txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-")))
+         {
+             Connection.MessageBox(Member.this, "পিতার লাইন ও সদস্যের লাইন একই হবে না");
+             spnFaNo.requestFocus();
+             return;
+         }
+         else if(txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")))
+         {
+             Connection.MessageBox(Member.this, "মাতার লাইন ও সদস্যের লাইন একই হবে না");
+             spnMoNo.requestFocus();
+             return;
+         }
+
+         if ((RTH[0].equals("4") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         {
+             Connection.MessageBox(Member.this, "খানা প্রধানের বাবা/মা এর বয়স অবশ্যই ১৫ বছরের বেশী হবে");
+             txtAgeY.requestFocus();
+             return;
+         }
+         if (!isAgeDifferenceWithParentsValid(txtVill.getText().toString(),txtBari.getText().toString(),txtHH.getText().toString(),
+                 Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-"),
+                 Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-"),
+                 txtAgeY.getText().toString())) {
+
+             Connection.MessageBox(Member.this, "পিতা মাতার সাথে বয়স মিল নেই");
+             txtAgeY.requestFocus();
+             return;
+
+         }
+         else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
+             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের লাইন একই হবে না");
+             spnSp1.requestFocus();
+             return;
+         }
+         else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
+             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের লাইন একই হবে না");
+             spnSp2.requestFocus();
+             return;
+         }
+         else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
+             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের লাইন একই হবে না");
+             spnSp3.requestFocus();
+             return;
+         }
+         else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
+             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের লাইন একই হবে না");
+             spnSp4.requestFocus();
+             return;
+         }
+
+         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
+                 Connection.MessageBox(Member.this, "পিতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+                 spnFaNo.requestFocus();
+                 return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
+             Connection.MessageBox(Member.this, "পিতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+             spnFaNo.requestFocus();
+             return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
+             Connection.MessageBox(Member.this, "পিতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+             spnFaNo.requestFocus();
+             return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
+             Connection.MessageBox(Member.this, "পিতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+             spnFaNo.requestFocus();
+             return;
+         }
+
+         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
+                 Connection.MessageBox(Member.this, "মাতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+                 spnSp1.requestFocus();
+                 return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
+             Connection.MessageBox(Member.this, "মাতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+             spnSp2.requestFocus();
+             return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
+             Connection.MessageBox(Member.this, "মাতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+             spnSp3.requestFocus();
+             return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
+             Connection.MessageBox(Member.this, "মাতার লাইন ও সদস্যের স্বামী অথবা স্ত্রী  লাইন একই হবে না");
+             spnSp4.requestFocus();
+             return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
+             Connection.MessageBox(Member.this, "১ম স্বামী/স্ত্রী লাইন নং  এবং ২য় স্বামী/স্ত্রী লাইন নং একই হবে না");
+             spnSp1.requestFocus();
+             return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
+             Connection.MessageBox(Member.this, "২য় স্বামী/স্ত্রী লাইন নং  এবং ৩য় স্বামী/স্ত্রী লাইন নং একই হবে না");
+             spnSp1.requestFocus();
+             return;
+         }
+         else if (Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
+             Connection.MessageBox(Member.this, "৩য় স্বামী/স্ত্রী লাইন নং  এবং ৪র্থ স্বামী/স্ত্রী লাইন নং একই হবে না");
+             spnSp1.requestFocus();
+             return;
+         }
+
+         if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("10") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
+             Connection.MessageBox(Member.this, "খানা প্রধান ২ জন হতে পারবেনা");
+             txtName.requestFocus();
+             return;
+         }
+//         else if(Ocp = 3 & sex.equals("1"))
+//         {
+//             Connection.MessageBox(MemberEvents.this, "পুরুষ লোকের পেশা ০৩ হতে পারে না।");
+//             return;
+//         }
+
+
+         dtpEnDate.setText(Global.DateConvertDMY(C.ReturnSingleValue("select VDate from Visits where where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")));
+
          String SQL = "";
          RadioButton rb;
 
@@ -850,23 +939,19 @@
 
          objSave.setBDate(dtpBDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpBDate.getText().toString()) : dtpBDate.getText().toString());
          objSave.setAgeY(txtAgeY.getText().toString());
-//         objSave.setMoNo(txtMoNo.getText().toString());
-//         objSave.setFaNo(txtFaNo.getText().toString());
          objSave.setMoNo((spnMoNo.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")));
          objSave.setFaNo((spnFaNo.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-")));
-
          objSave.setEdu((spnEdu.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEdu.getSelectedItem().toString(), "-")));
          objSave.setMS((spnMS.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnMS.getSelectedItem().toString(), "-")));
          objSave.setOcp((spnOcp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnOcp.getSelectedItem().toString(), "-")));
-         objSave.setSp1(txtSp1.getText().toString());
-         objSave.setSp2(txtSp2.getText().toString());
-         objSave.setSp3(txtSp3.getText().toString());
-         objSave.setSp4(txtSp4.getText().toString());
-
-         objSave.setEnType(txtEnType.getText().toString());
+         objSave.setSp1((spnSp1.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-")));
+         objSave.setSp2((spnSp2.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-")));
+         objSave.setSp3((spnSp3.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-")));
+         objSave.setSp4((spnSp4.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-")));
+         objSave.setEnType("20");
          objSave.setEnDate(dtpEnDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEnDate.getText().toString()) : dtpEnDate.getText().toString());
-         objSave.setExType(txtExType.getText().toString());
-         objSave.setExDate(dtpExDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpExDate.getText().toString()) : dtpExDate.getText().toString());
+         objSave.setExType("");
+         objSave.setExDate("");
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
          objSave.setStartTime(STARTTIME);
          objSave.setEndTime(g.CurrentTime24());
@@ -937,17 +1022,15 @@
              }
              dtpBDate.setText(item.getBDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getBDate()));
              txtAgeY.setText(item.getAgeY());
-//             txtMoNo.setText(item.getMoNo());
-//             txtFaNo.setText(item.getFaNo());
              spnMoNo.setSelection(Global.SpinnerItemPositionAnyLength(spnMoNo, item.getMoNo()));
              spnFaNo.setSelection(Global.SpinnerItemPositionAnyLength(spnFaNo, item.getFaNo()));
              spnEdu.setSelection(Global.SpinnerItemPositionAnyLength(spnEdu, item.getEdu()));
              spnMS.setSelection(Global.SpinnerItemPositionAnyLength(spnMS, item.getMS()));
              spnOcp.setSelection(Global.SpinnerItemPositionAnyLength(spnOcp, item.getOcp()));
-             txtSp1.setText(item.getSp1());
-             txtSp2.setText(item.getSp2());
-             txtSp3.setText(item.getSp3());
-             txtSp4.setText(item.getSp4());
+             spnSp1.setSelection(Global.SpinnerItemPositionAnyLength(spnSp1, item.getOcp()));
+             spnSp2.setSelection(Global.SpinnerItemPositionAnyLength(spnSp2, item.getOcp()));
+             spnSp3.setSelection(Global.SpinnerItemPositionAnyLength(spnSp3, item.getOcp()));
+             spnSp4.setSelection(Global.SpinnerItemPositionAnyLength(spnSp4, item.getOcp()));
              txtEnType.setText(item.getEnType());
              dtpEnDate.setText(item.getEnDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getEnDate()));
              txtExType.setText(item.getExType());
@@ -961,8 +1044,38 @@
         }
      }
 
+     private boolean isAgeDifferenceWithParentsValid(String VILL, String BARI,String HH, String fatherSL, String motherSL, String Age) {
+         // Cursor fCursor,mCursor;
 
+         String fAge = C.ReturnSingleValue("select AgeY from MEMBER where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + fatherSL + "'");
+         String mAge = C.ReturnSingleValue("select AgeY from MEMBER where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + motherSL + "'");
 
+         if (fAge.isEmpty()) {
+             fAge = "0";
+
+         }
+         if (mAge.isEmpty()) {
+             mAge = "0";
+         }
+         if (fAge.equals("0") | mAge.equals("0")) {
+             return true;
+         }
+
+         int cAge = Integer.valueOf(Age);
+         return !(((Integer.valueOf(fAge) - cAge) < 12) | ((Integer.valueOf(mAge) - cAge) < 12));
+     }
+     private boolean isHhHeadValid(String VILL, String BARI,String HH, String MSLNO) {
+         Cursor cursor;
+         cursor = C.ReadData("select * from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and Rth =01 and MSlNo !='" + MSLNO + "'");
+         if (cursor.getCount() > 0) {
+
+             cursor.close();
+             return false;
+         } else {
+             cursor.close();
+             return true;
+         }
+     }
  protected Dialog onCreateDialog(int id) {
    final Calendar c = Calendar.getInstance();
    hour = c.get(Calendar.HOUR_OF_DAY);

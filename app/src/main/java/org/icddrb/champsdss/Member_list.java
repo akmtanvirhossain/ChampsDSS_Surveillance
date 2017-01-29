@@ -131,6 +131,17 @@ import Common.Global;
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
+                 if (!C.Existence("Select Rnd from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                     Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
+                     return;
+                 }
+                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
+
+                 if (Integer.valueOf(infoMiss) > 0) {
+                     Connection.MessageBox(Member_list.this, infoMiss + " জন সদস্যের তথ্য আপডেট করা হয় নাই");
+                     return;
+                 }
+
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                  adb.setTitle("Close");
                  adb.setMessage("Do you want to close this form[Yes/No]?");
@@ -138,7 +149,7 @@ import Common.Global;
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
-                         //startActivity(new Intent(Member_list.this, MainMenu.class));
+                         startActivity(new Intent(Member_list.this, Household_list.class));
                      }});
                  adb.show();
              }});
@@ -154,11 +165,23 @@ import Common.Global;
              }});
 
 
-         //*************************sakib start**************************************
+
          Button btnSES = (Button) findViewById(R.id.btnSES);
          btnSES.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                 if (!C.Existence("Select Rnd from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                     Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
+                     return;
+                 }
+                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
+
+                 if (Integer.valueOf(infoMiss) > 0) {
+                     Connection.MessageBox(Member_list.this, infoMiss + " জন সদস্যের তথ্য আপডেট করা হয় নাই");
+                     return;
+                 }
+
+
                  Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
                  Intent f1;
                  f1 = new Intent(getApplicationContext(), SES.class);
@@ -170,19 +193,20 @@ import Common.Global;
              }
          });
 
-
-         //*************************sakib end****************************************
-
-
-
          Button btnMemberName = (Button) findViewById(R.id.btnMemberName);
          btnMemberName.setOnClickListener(new View.OnClickListener() {
 
              public void onClick(View view) {
-                 VILL="001";
-                 BARI="0001";
-                 HH = "01";
-                 MemberNameForm(VILL, BARI,g.getHouseholdNo());
+                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
+
+                 IDbundle.putString("Vill", VILL);
+                 IDbundle.putString("Bari", BARI);
+                 IDbundle.putString("HH", HH);
+
+//                 VILL="001";
+//                 BARI="0001";
+//                 HH = "01";
+                 MemberNameForm(VILL, BARI,HH);
 
              }
          });
@@ -212,7 +236,6 @@ import Common.Global;
            Member_DataModel d = new Member_DataModel();
 //             String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
             String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"'";
-//            String SQL = "Select * from "+ TableName ;
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -282,7 +305,7 @@ import Common.Global;
 
              txtVill.setText(VILL);
              txtBari.setText(BARI);
-             txtHH.setText("01");
+             txtHH.setText(HH);
 
              txtVill.setEnabled(false);
              txtBari.setEnabled(false);

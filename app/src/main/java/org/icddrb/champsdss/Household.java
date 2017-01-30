@@ -487,7 +487,6 @@
      {
        try
         {
-     
            RadioButton rb;
            Household_DataModel d = new Household_DataModel();
            String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
@@ -515,8 +514,6 @@
             return;
         }
      }
-
-
 
  protected Dialog onCreateDialog(int id) {
    final Calendar c = Calendar.getInstance();

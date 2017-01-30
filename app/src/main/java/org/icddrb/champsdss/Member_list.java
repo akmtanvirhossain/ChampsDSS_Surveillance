@@ -119,33 +119,17 @@ public class Member_list extends Activity {
 
          TableName = "Member";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
-         lblHeading.setOnTouchListener(new View.OnTouchListener() {
-             @Override
-             public boolean onTouch(View v, MotionEvent event) {
-                 final int DRAWABLE_RIGHT  = 2;
-                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                     if(event.getRawX() >= (lblHeading.getRight() - lblHeading.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                         AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
-                         adb.setTitle("Close");
-                         adb.setMessage("Do you want to close this form[Yes/No]?");
-                         adb.setNegativeButton("No", null);
-                         adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
-                             public void onClick(DialogInterface dialog, int which) {
-                                 finish();
-                             }});
-                         adb.show();
-                         return true;
-                     }
-                 }
-                 return false;
-             }
-         });
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
+                     return;
+                 }
+                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 {
+                     Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
                      return;
                  }
                  String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
@@ -161,6 +145,15 @@ public class Member_list extends Activity {
                  adb.setNegativeButton("No", null);
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
+                         Bundle IDbundle = new Bundle();
+                         IDbundle.putString("Vill", VILL);
+                         IDbundle.putString("Bari", BARI);
+                         IDbundle.putString("HH", HH);
+
+                         Intent intent = new Intent(getApplicationContext(), Household_list.class);
+                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                         intent.putExtras(IDbundle);
+                         getApplicationContext().startActivity(intent);
                          finish();
 //                        startActivity(new Intent(Member_list.this, Household_list.class));
                      }});
@@ -173,11 +166,7 @@ public class Member_list extends Activity {
              public void onClick(View view) {
                    //write your code here
                  DataSearch(VILL, BARI, HH);
-//                 DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
-
              }});
-
-
 
          Button btnSES = (Button) findViewById(R.id.btnSES);
          btnSES.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +174,11 @@ public class Member_list extends Activity {
              public void onClick(View v) {
                  if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
+                     return;
+                 }
+                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 {
+                     Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
                      return;
                  }
                  String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
@@ -218,6 +212,11 @@ public class Member_list extends Activity {
              }
 
          });
+
+         txtVill.setEnabled(false);
+         txtBari.setEnabled(false);
+         txtHH.setEnabled(false);
+
      }
      catch(Exception  e)
      {
@@ -232,7 +231,6 @@ public class Member_list extends Activity {
      if (resultCode == Activity.RESULT_CANCELED) {
          //Write your code if there's no result
      } else {
-//         DataSearch(g.getVillageCode(),g.getBariCode(),g.getHouseholdNo());
          DataSearch(VILL,BARI,HH);
      }
  }
@@ -243,7 +241,6 @@ public class Member_list extends Activity {
         {
            Member_DataModel d = new Member_DataModel();
              String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
-//            String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"'";
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -323,7 +320,6 @@ public class Member_list extends Activity {
              txtHH.setEnabled(false);
              txtMSlNo.setEnabled(false);
 
-             //txtH21.setText(String.valueOf(MemSlNo()));
              txtMSlNo.setText(MemberSerial(VILL, BARI,HH));
 
              Button cmdContactNoSave = (Button) dialog.findViewById(R.id.cmdSave);
@@ -470,7 +466,6 @@ public class Member_list extends Activity {
                startActivity(f1);
             }
           });
-
 
          return convertView;
        }

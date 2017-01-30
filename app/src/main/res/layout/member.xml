@@ -126,7 +126,7 @@
 
         <LinearLayout android:id="@+id/secSp2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
             <TextView android:id="@+id/lblSp2" android:text="১৩" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-            <TextView android:id="@+id/VlblSp2" android:text="সিরিয়াল নম্বর ১" android:layout_width="270sp" android:layout_height="wrap_content" android:textSize="20sp" />
+            <TextView android:id="@+id/VlblSp2" android:text="সিরিয়াল নম্বর ২" android:layout_width="270sp" android:layout_height="wrap_content" android:textSize="20sp" />
             <!--<EditText android:id="@+id/spnSp2" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />-->
             <Spinner android:id="@+id/spnSp2" android:drawSelectorOnTop="true" android:layout_width="200sp" android:layout_height="wrap_content" android:layout_weight="0" android:prompt="@string/planet_prompt" android:textSize="20sp" />
         </LinearLayout>

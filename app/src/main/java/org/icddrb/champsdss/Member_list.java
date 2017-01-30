@@ -452,6 +452,7 @@ public class Member_list extends Activity {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
          else
              secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                //Write your code here

@@ -527,7 +527,11 @@
          lineExDate=(View)findViewById(R.id.lineExDate);
          VlblExDate=(TextView) findViewById(R.id.VlblExDate);
          dtpExDate=(EditText) findViewById(R.id.dtpExDate);
-         dtpVDate=(TextView) findViewById(R.id.dtpVDate);
+
+//         dtpVDate=(TextView) findViewById(R.id.dtpVDate);
+//         dtpVDate=(TextView) findViewById(R.id.dtpVDate);
+//         final TextView VlblVDate=(TextView) findViewById(R.id.VlblVDate);
+//         dtpVDate.setText(g.CurrentTime24());
 
          dtpBDate.setOnTouchListener(new View.OnTouchListener() {
              @Override
@@ -664,7 +668,6 @@
              txtAgeY.requestFocus(); 
              return;	
            }
-
 
          SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
          Date date = format1.parse(dtpBDate.getText().toString());
@@ -883,7 +886,7 @@
              txtName.requestFocus();
              return;
          }
-         if(txtPNo.getText().length()!=11)
+         else if(txtPNo.getText().length()!=11)
          {
              Connection.MessageBox(Member.this, "PNo অবশ্যই ১১ ডিজিট হতে হবে।");
              txtPNo.requestFocus();
@@ -895,7 +898,7 @@
 //             dtpBDate.requestFocus();
 //             return;
 //         }
-//         else if(Ocp = 3 & sex.equals("1"))
+//         else if(Ocp = ("3") & rdoSex1.isChecked()("1"))
 //         {
 //             Connection.MessageBox(Member.this, "পুরুষ লোকের পেশা ০৩ হতে পারে না।");
 //             return;

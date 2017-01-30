@@ -892,6 +892,7 @@
              txtPNo.requestFocus();
              return;
          }
+
 //         if(Global.DateDifferenceDays(dtpVDate.getText().toString(), dtpBDate.getText().toString())<0)
 //         {
 //             Connection.MessageBox(Member.this, "জন্ম তারিখ ভিজিটের তারিখের আগে হতে হবে।");

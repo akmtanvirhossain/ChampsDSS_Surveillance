@@ -261,7 +261,7 @@ import Common.Global;
          VlblTotMem=(TextView) findViewById(R.id.VlblTotMem);
          txtTotMem=(EditText) findViewById(R.id.txtTotMem);
          secTotRWo=(LinearLayout)findViewById(R.id.secTotRWo);
-        // lineTotRWo=(View)findViewById(R.id.lineTotRWo);
+//         lineTotRWo=(View)findViewById(R.id.lineTotRWo);
          VlblTotRWo=(TextView) findViewById(R.id.VlblTotRWo);
          txtTotRWo=(EditText) findViewById(R.id.txtTotRWo);
 //         secEnType=(LinearLayout)findViewById(R.id.secEnType);
@@ -291,6 +291,7 @@ import Common.Global;
          lineVDate=(View)findViewById(R.id.lineVDate);
          VlblVDate=(TextView) findViewById(R.id.VlblVDate);
          dtpVDate=(EditText) findViewById(R.id.dtpVDate);
+         dtpVDate.setText(Global.DateNowDMY());
          secVStatus=(LinearLayout)findViewById(R.id.secVStatus);
          lineVStatus=(View)findViewById(R.id.lineVStatus);
          VlblVStatus=(TextView) findViewById(R.id.VlblVStatus);
@@ -310,11 +311,61 @@ import Common.Global;
          ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, R.layout.multiline_spinner_dropdown_item, listVStatus);
          spnVStatus.setAdapter(adptrVStatus);
 
-         spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+         spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+         {
              @Override
-             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
+             {
                  if (spnVStatus.getSelectedItem().toString().length() == 0) return;
                  String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(),"-");
+
+                 if(spnData.equalsIgnoreCase("1"))
+                 {
+                     secReligion.setVisibility(View.VISIBLE);
+                     lineReligion.setVisibility(View.VISIBLE);
+
+                     secMobileNo1.setVisibility(View.VISIBLE);
+                     lineMobileNo1.setVisibility(View.VISIBLE);
+
+                     secMobileNo2.setVisibility(View.VISIBLE);
+                     lineMobileNo2.setVisibility(View.VISIBLE);
+                     txtMobileNo2.setVisibility(View.VISIBLE);
+
+                     secHHHead.setVisibility(View.VISIBLE);
+                     lineHHHead.setVisibility(View.VISIBLE);
+
+                     secTotMem.setVisibility(View.VISIBLE);
+                     lineTotMem.setVisibility(View.VISIBLE);
+
+                     secTotRWo.setVisibility(View.VISIBLE);
+
+                 }
+                 else
+                 {
+                     secReligion.setVisibility(View.GONE);
+                     lineReligion.setVisibility(View.GONE);
+                     spnReligion.setSelection(0);
+
+                     secMobileNo1.setVisibility(View.GONE);
+                     lineMobileNo1.setVisibility(View.GONE);
+                     txtMobileNo1.setText("");
+
+                     secMobileNo2.setVisibility(View.GONE);
+                     lineMobileNo2.setVisibility(View.GONE);
+                     txtMobileNo2.setText("");
+
+                     secHHHead.setVisibility(View.GONE);
+                     lineHHHead.setVisibility(View.GONE);
+                     txtHHHead.setText("");
+
+                     secTotMem.setVisibility(View.GONE);
+                     lineTotMem.setVisibility(View.GONE);
+                     txtTotMem.setText("");
+
+                     secTotRWo.setVisibility(View.GONE);
+                     txtTotRWo.setText("");
+                 }
+
                  if(!spnData.equalsIgnoreCase("9"))
                  {
                      secVStatusOth.setVisibility(View.GONE);
@@ -331,6 +382,7 @@ import Common.Global;
              public void onNothingSelected(AdapterView<?> parentView) {
              }
          });
+
          secVStatusOth=(LinearLayout)findViewById(R.id.secVStatusOth);
          lineVStatusOth=(View)findViewById(R.id.lineVStatusOth);
          VlblVStatusOth=(TextView) findViewById(R.id.VlblVStatusOth);
@@ -414,6 +466,13 @@ import Common.Global;
 
          //Hide all skip variables
          secVStatusOth.setVisibility(View.GONE);
+         secReligion.setVisibility(View.GONE);
+         secMobileNo1.setVisibility(View.GONE);
+         secMobileNo2.setVisibility(View.GONE);
+         secHHHead.setVisibility(View.GONE);
+         secTotMem.setVisibility(View.GONE);
+         secTotRWo.setVisibility(View.GONE);
+
          //***********************added by sakib********************************************
          secMobileNo2.setVisibility(View.GONE);
          txtMobileNo2.setVisibility(View.GONE);
@@ -668,7 +727,6 @@ import Common.Global;
          String status1 = objSave1.SaveUpdateData(this);
 
          //*************************************visit save by sakib************************************************
-
 
          if(status1.length()==0) {
              if(status.length()==0)

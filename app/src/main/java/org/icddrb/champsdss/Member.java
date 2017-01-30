@@ -275,6 +275,9 @@
          linePNo=(View)findViewById(R.id.linePNo);
          VlblPNo=(TextView) findViewById(R.id.VlblPNo);
          txtPNo=(EditText) findViewById(R.id.txtPNo);
+
+         txtPNo.setText(VILL.toString()+BARI.toString()+HH.toString()+txtMSlNo.getText().toString());
+
          secName=(LinearLayout)findViewById(R.id.secName);
          lineName=(View)findViewById(R.id.lineName);
          VlblName=(TextView) findViewById(R.id.VlblName);
@@ -578,6 +581,7 @@
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
+         txtPNo.setEnabled(false);
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave);
         cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -793,13 +797,31 @@
              txtAgeY.requestFocus();
              return;
          }
+         else if ((RTH[0].equals("2") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         {
+             Connection.MessageBox(Member.this, "খানা প্রধানের স্বামী অথবা স্ত্রী  বয়স অবশ্যই ১৫ বছরের বেশী হবে");
+             txtAgeY.requestFocus();
+             return;
+         }
+         else if ((RTH[0].equals("7") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         {
+             Connection.MessageBox(Member.this, "খানা প্রধানের দাদা/দাদি/নানা/নানি এর বয়স অবশ্যই ১৫ বছরের বেশী হবে");
+             txtAgeY.requestFocus();
+             return;
+         }
+         else if ((RTH[0].equals("10") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         {
+             Connection.MessageBox(Member.this, "খানা প্রধানের শ্বশুর/শাশুড়ী এর বয়স অবশ্যই ১৫ বছরের বেশী হবে");
+             txtAgeY.requestFocus();
+             return;
+         }
          else if (!isAgeDifferenceWithParentsValid(txtVill.getText().toString(),txtBari.getText().toString(),txtHH.getText().toString(),
                  Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-"),
                  Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-"),
                  txtAgeY.getText().toString())) {
-             Connection.MessageBox(Member.this, "পিতা মাতার সাথে বয়স মিল নেই");
-             txtAgeY.requestFocus();
-             return;
+                 Connection.MessageBox(Member.this, "পিতা মাতার সাথে বয়স মিল নেই");
+                 txtAgeY.requestFocus();
+                 return;
          }
          else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-"))& spnMoNo.isShown()) {
              Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
@@ -998,7 +1020,7 @@
              txtBari.setText(item.getBari());
              txtHH.setText(item.getHH());
              txtMSlNo.setText(item.getMSlNo());
-             txtPNo.setText(item.getPNo());
+            // txtPNo.setText(item.getPNo());
              txtName.setText(item.getName());
              spnRth.setSelection(Global.SpinnerItemPositionAnyLength(spnRth, item.getRth()));
              String[] d_rdogrpSex = new String[] {"1","2"};

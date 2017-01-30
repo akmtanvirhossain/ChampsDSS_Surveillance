@@ -123,15 +123,6 @@ public class Member_list extends Activity {
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
-                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
-                     Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
-                     return;
-                 }
-                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
-                 {
-                     Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
-                     return;
-                 }
                  String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
 
                  if (Integer.valueOf(infoMiss) > 0) {

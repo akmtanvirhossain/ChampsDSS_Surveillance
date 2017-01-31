@@ -246,6 +246,7 @@
              }});
 
 
+
          seclbl1=(LinearLayout)findViewById(R.id.seclbl1);
          linelbl1=(View)findViewById(R.id.linelbl1);
          secVill=(LinearLayout)findViewById(R.id.secVill);

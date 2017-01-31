@@ -31,7 +31,9 @@ package org.icddrb.champsdss;
 
  public class Baris_list extends Activity {
     boolean networkAvailable=false;
-    Location currentLocation; 
+    Location currentLocation;
+
+
     double currentLatitude,currentLongitude; 
     //Disabled Back/Home key
     //--------------------------------------------------------------------------------------------------

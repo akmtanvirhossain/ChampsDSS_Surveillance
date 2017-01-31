@@ -422,8 +422,8 @@
                     secRnd.setVisibility(View.GONE);
                     lineRnd.setVisibility(View.GONE);
                     txtRnd.setText("");
-                    seclbl015.setVisibility(View.GONE);
-                    linelbl015.setVisibility(View.GONE);
+//                    seclbl015.setVisibility(View.GONE);
+//                    linelbl015.setVisibility(View.GONE);
                  }
                  else
                  {
@@ -431,8 +431,8 @@
                     lineVStatusOth.setVisibility(View.VISIBLE);
                     secRnd.setVisibility(View.VISIBLE);
                     lineRnd.setVisibility(View.VISIBLE);
-                    seclbl015.setVisibility(View.VISIBLE);
-                    linelbl015.setVisibility(View.VISIBLE);
+//                    seclbl015.setVisibility(View.VISIBLE);
+//                    linelbl015.setVisibility(View.VISIBLE);
                  }
              }
              @Override

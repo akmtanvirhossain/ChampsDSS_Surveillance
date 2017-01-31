@@ -81,6 +81,7 @@
     static final int DATE_DIALOG = 1;
     static final int TIME_DIALOG = 2;
 
+
     Connection C;
     Global g;
     SimpleAdapter dataAdapter;

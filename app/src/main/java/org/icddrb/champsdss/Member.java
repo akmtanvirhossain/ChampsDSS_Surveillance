@@ -328,13 +328,13 @@ import Common.Global;
          lineMoNo = (View) findViewById(R.id.lineMoNo);
          VlblMoNo = (TextView) findViewById(R.id.VlblMoNo);
          spnMoNo = (Spinner) findViewById(R.id.spnMoNo);
-         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
+         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
 
          secFaNo = (LinearLayout) findViewById(R.id.secFaNo);
          lineFaNo = (View) findViewById(R.id.lineFaNo);
          VlblFaNo = (TextView) findViewById(R.id.VlblFaNo);
          spnFaNo = (Spinner) findViewById(R.id.spnFaNo);
-         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
+         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
 
 //         secMoNo=(LinearLayout)findViewById(R.id.secMoNo);
 //         lineMoNo=(View)findViewById(R.id.lineMoNo);
@@ -484,25 +484,25 @@ import Common.Global;
          lineSp1=(View)findViewById(R.id.lineSp1);
          VlblSp1=(TextView) findViewById(R.id.VlblSp1);
          spnSp1 = (Spinner) findViewById(R.id.spnSp1);
-         spnSp1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
+         spnSp1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
 
          secSp2=(LinearLayout)findViewById(R.id.secSp2);
          lineSp2=(View)findViewById(R.id.lineSp2);
          VlblSp2=(TextView) findViewById(R.id.VlblSp2);
          spnSp2=(Spinner) findViewById(R.id.spnSp2);
-         spnSp2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
+         spnSp2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
 
          secSp3=(LinearLayout)findViewById(R.id.secSp3);
          lineSp3=(View)findViewById(R.id.lineSp3);
          VlblSp3=(TextView) findViewById(R.id.VlblSp3);
          spnSp3=(Spinner) findViewById(R.id.spnSp3);
-         spnSp3.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
+         spnSp3.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
 
          secSp4=(LinearLayout)findViewById(R.id.secSp4);
          lineSp4=(View)findViewById(R.id.lineSp4);
          VlblSp4=(TextView) findViewById(R.id.VlblSp4);
          spnSp4=(Spinner) findViewById(R.id.spnSp4);
-         spnSp4.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
+         spnSp4.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
 
          secEnType=(LinearLayout)findViewById(R.id.secEnType);
          lineEnType=(View)findViewById(R.id.lineEnType);

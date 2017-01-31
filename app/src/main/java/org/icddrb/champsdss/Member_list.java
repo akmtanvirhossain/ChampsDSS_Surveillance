@@ -10,7 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.Gravity;
+ import android.support.annotation.RequiresPermission;
+ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -117,8 +118,6 @@ public class Member_list extends Activity {
          String BariName  = C.ReturnSingleValue("Select BariName from Baris  Where Vill='"+ VILL +"' and Bari='"+ BARI +"'");
          lblBariName.setText(": "+BARI+", "+BariName);
 
-
-
 //         final TextView txtVill = (TextView) findViewById(R.id.txtVill);
 //         final TextView txtBari = (TextView) findViewById(R.id.txtBari);
 //         final TextView txtHH = (TextView) findViewById(R.id.txtHH);
@@ -214,6 +213,7 @@ public class Member_list extends Activity {
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
                  MemberNameForm(VILL, BARI,HH);
+
              }
 
          });
@@ -221,7 +221,6 @@ public class Member_list extends Activity {
 //         txtVill.setEnabled(false);
 //         txtBari.setEnabled(false);
 //         txtHH.setEnabled(false);
-
      }
      catch(Exception  e)
      {
@@ -306,7 +305,7 @@ public class Member_list extends Activity {
              Window window = dialog.getWindow();
              WindowManager.LayoutParams wlp = window.getAttributes();
 
-             wlp.gravity = Gravity.TOP;
+             wlp.gravity = Gravity.CENTER;
              wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
              window.setAttributes(wlp);
 

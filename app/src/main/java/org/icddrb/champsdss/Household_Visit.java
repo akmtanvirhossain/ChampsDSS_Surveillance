@@ -326,7 +326,7 @@ import Common.Global;
 
                      secMobileNo1.setVisibility(View.VISIBLE);
                      lineMobileNo1.setVisibility(View.VISIBLE);
-
+//
                      secMobileNo2.setVisibility(View.VISIBLE);
                      lineMobileNo2.setVisibility(View.VISIBLE);
                      txtMobileNo2.setVisibility(View.VISIBLE);
@@ -461,13 +461,11 @@ import Common.Global;
              }
          });
 
-
-
          //Hide all skip variables
          secVStatusOth.setVisibility(View.GONE);
          secReligion.setVisibility(View.GONE);
          secMobileNo1.setVisibility(View.GONE);
-         secMobileNo2.setVisibility(View.GONE);
+//         secMobileNo2.setVisibility(View.GONE);
          secHHHead.setVisibility(View.GONE);
          secTotMem.setVisibility(View.GONE);
          secTotRWo.setVisibility(View.GONE);

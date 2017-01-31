@@ -336,7 +336,6 @@ import Common.Global;
 
                      secTotMem.setVisibility(View.VISIBLE);
                      lineTotMem.setVisibility(View.VISIBLE);
-
                      secTotRWo.setVisibility(View.VISIBLE);
 
                  }

@@ -67,10 +67,10 @@ public class Member_list extends Activity {
     TextView lblHeading;
     Button btnAdd;
     Button btnRefresh;
-
-    EditText txtVill;
-    EditText txtBari;
-    EditText txtHH;
+//
+//    EditText txtVill;
+//    EditText txtBari;
+//    EditText txtHH;
 
     static String DEVICEID  = "";
     static String ENTRYUSER = "";
@@ -100,18 +100,32 @@ public class Member_list extends Activity {
          ENTRYUSER = g.getUserId();
 
          IDbundle=getIntent().getExtras();
+         CurrentVillage = IDbundle.getString("VName");
+         CurrentVCode   = IDbundle.getString("VCode");
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
          HH = IDbundle.getString("HH");
          MSLNO = IDbundle.getString("MSlNo");
 
-         final TextView txtVill = (TextView) findViewById(R.id.txtVill);
-         final TextView txtBari = (TextView) findViewById(R.id.txtBari);
-         final TextView txtHH = (TextView) findViewById(R.id.txtHH);
+         TextView lblHousehold=(TextView)findViewById(R.id.lblHousehold);
+         lblHousehold.setText(": "+VILL+"-"+BARI+"-"+HH);
+         TextView lblVillName=(TextView)findViewById(R.id.lblVillName);
+         String VillageName  = C.ReturnSingleValue("Select VName from Village  Where VCode='"+ VILL +"'");
+         lblVillName.setText(": "+VILL+", "+VillageName);
 
-         txtVill.setText(VILL);
-         txtBari.setText(BARI);
-         txtHH.setText(HH);
+         TextView lblBariName=(TextView)findViewById(R.id.lblBariName);
+         String BariName  = C.ReturnSingleValue("Select BariName from Baris  Where Vill='"+ VILL +"' and Bari='"+ BARI +"'");
+         lblBariName.setText(": "+BARI+", "+BariName);
+
+
+
+//         final TextView txtVill = (TextView) findViewById(R.id.txtVill);
+//         final TextView txtBari = (TextView) findViewById(R.id.txtBari);
+//         final TextView txtHH = (TextView) findViewById(R.id.txtHH);
+//
+//         txtVill.setText(VILL);
+//         txtBari.setText(BARI);
+//         txtHH.setText(HH);
 
          LinearLayout secMenu;
          secMenu= (LinearLayout) findViewById(R.id.secMenu);
@@ -204,9 +218,9 @@ public class Member_list extends Activity {
 
          });
 
-         txtVill.setEnabled(false);
-         txtBari.setEnabled(false);
-         txtHH.setEnabled(false);
+//         txtVill.setEnabled(false);
+//         txtBari.setEnabled(false);
+//         txtHH.setEnabled(false);
 
      }
      catch(Exception  e)

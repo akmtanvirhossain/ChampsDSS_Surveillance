@@ -92,7 +92,7 @@ public class Household_list extends Activity {
          g = Global.getInstance();
          STARTTIME = g.CurrentTime24();
 
-         IDbundle       = getIntent().getExtras();
+         IDbundle = getIntent().getExtras();
          CurrentVillage = IDbundle.getString("Village");
          CurrentVCode   = IDbundle.getString("VCode");
          VILL = IDbundle.getString("Vill");

@@ -398,7 +398,6 @@
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                  if (position != 2)
                  {
-
                      seclblSpsl.setVisibility(View.GONE);
                      spnSp1.setSelection(0);
                      spnSp1.setVisibility(View.GONE);

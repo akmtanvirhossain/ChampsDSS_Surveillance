@@ -311,7 +311,7 @@ public class Connection extends SQLiteOpenHelper {
 
     //Find the variable positions in an array list
     //----------------------------------------------------------------------------------------------
-    private int VarPosition(String VariableName, String[] ColumnList) {
+    public int VarPosition(String VariableName, String[] ColumnList) {
         int pos = 0;
         for (int i = 0; i < ColumnList.length; i++) {
             if (VariableName.trim().equalsIgnoreCase(ColumnList[i].toString().trim())) {
@@ -1239,7 +1239,7 @@ public class Connection extends SQLiteOpenHelper {
     }
 
     //done
-    private String[] Sync_Parameter(String TableName) {
+    public String[] Sync_Parameter(String TableName) {
         String VariableList = "";
         String UniqueField = "";
         String SQLStr = "";

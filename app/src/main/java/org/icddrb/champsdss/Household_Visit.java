@@ -34,9 +34,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
- import android.widget.Toast;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -327,9 +326,9 @@ import Common.Global;
                      secMobileNo1.setVisibility(View.VISIBLE);
                      lineMobileNo1.setVisibility(View.VISIBLE);
 
-                     secMobileNo2.setVisibility(View.VISIBLE);
-                     lineMobileNo2.setVisibility(View.VISIBLE);
-                     txtMobileNo2.setVisibility(View.VISIBLE);
+                     secMobileNo2.setVisibility(View.GONE);
+                     lineMobileNo2.setVisibility(View.GONE);
+                     txtMobileNo2.setVisibility(View.GONE);
 
                      secHHHead.setVisibility(View.VISIBLE);
                      lineHHHead.setVisibility(View.VISIBLE);

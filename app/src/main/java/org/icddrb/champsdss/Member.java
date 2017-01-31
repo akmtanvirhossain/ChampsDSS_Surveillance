@@ -4,60 +4,51 @@
 
  //Android Manifest Code
  //<activity android:name=".Member" android:label="Member" />
- import java.text.ParseException;
- import java.text.SimpleDateFormat;
- import java.util.ArrayList;
- import java.util.Calendar;
- import java.util.Date;
- import java.util.HashMap;
- import java.util.List;
- import android.app.*;
- import android.app.AlertDialog;
- import android.app.DatePickerDialog;
- import android.app.Dialog;
- import android.app.TimePickerDialog;
- import android.content.Context;
- import android.content.DialogInterface;
- import android.content.Intent;
- import android.database.Cursor;
- import android.location.Location;
- import android.location.LocationListener;
- import android.location.LocationManager;
- import android.net.Uri;
- import android.provider.Settings;
- import android.view.KeyEvent;
- import android.os.Bundle;
- import android.view.Menu;
- import android.view.MenuInflater;
- import android.view.MenuItem;
- import android.view.View;
- import android.view.MotionEvent;
- import android.view.View.OnFocusChangeListener;
- import android.view.ViewGroup;
- import android.view.LayoutInflater;
- import android.widget.AdapterView;
- import android.widget.Button;
- import android.widget.CheckBox;
- import android.widget.DatePicker;
- import android.widget.EditText;
- import android.widget.ImageButton;
- import android.widget.LinearLayout;
- import android.widget.RadioButton;
- import android.widget.RadioGroup;
- import android.widget.ListView;
- import android.widget.SimpleAdapter;
- import android.widget.BaseAdapter;
- import android.widget.Spinner;
- import android.widget.TextView;
- import android.widget.TimePicker;
- import android.widget.ArrayAdapter;
- import android.widget.CompoundButton;
+ import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
- import org.joda.time.Days;
- import org.joda.time.LocalDate;
- import org.joda.time.Months;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.Months;
 
- import Common.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import Common.Connection;
+import Common.Global;
 
  public class Member extends Activity {
     boolean networkAvailable=false;
@@ -337,13 +328,13 @@
          lineMoNo = (View) findViewById(R.id.lineMoNo);
          VlblMoNo = (TextView) findViewById(R.id.VlblMoNo);
          spnMoNo = (Spinner) findViewById(R.id.spnMoNo);
-         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
 
          secFaNo = (LinearLayout) findViewById(R.id.secFaNo);
          lineFaNo = (View) findViewById(R.id.lineFaNo);
          VlblFaNo = (TextView) findViewById(R.id.VlblFaNo);
          spnFaNo = (Spinner) findViewById(R.id.spnFaNo);
-         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
 
 //         secMoNo=(LinearLayout)findViewById(R.id.secMoNo);
 //         lineMoNo=(View)findViewById(R.id.lineMoNo);
@@ -434,20 +425,20 @@
                      secSp1.setVisibility(View.VISIBLE);
                      lineSp1.setVisibility(View.VISIBLE);
 
-                     spnSp2.setVisibility(View.VISIBLE);
-                     lineSp2.setVisibility(View.VISIBLE);
-                     secSp2.setVisibility(View.VISIBLE);
-                     lineSp2.setVisibility(View.VISIBLE);
+                     spnSp2.setVisibility(View.GONE);
+                     lineSp2.setVisibility(View.GONE);
+                     secSp2.setVisibility(View.GONE);
+                     lineSp2.setVisibility(View.GONE);
 
-                     spnSp3.setVisibility(View.VISIBLE);
-                     lineSp3.setVisibility(View.VISIBLE);
-                     secSp3.setVisibility(View.VISIBLE);
-                     lineSp3.setVisibility(View.VISIBLE);
+                     spnSp3.setVisibility(View.GONE);
+                     lineSp3.setVisibility(View.GONE);
+                     secSp3.setVisibility(View.GONE);
+                     lineSp3.setVisibility(View.GONE);
 
-                     spnSp4.setVisibility(View.VISIBLE);
-                     lineSp4.setVisibility(View.VISIBLE);
-                     secSp4.setVisibility(View.VISIBLE);
-                     lineSp4.setVisibility(View.VISIBLE);
+                     spnSp4.setVisibility(View.GONE);
+                     lineSp4.setVisibility(View.GONE);
+                     secSp4.setVisibility(View.GONE);
+                     lineSp4.setVisibility(View.GONE);
                  }
              }
 
@@ -493,25 +484,25 @@
          lineSp1=(View)findViewById(R.id.lineSp1);
          VlblSp1=(TextView) findViewById(R.id.VlblSp1);
          spnSp1 = (Spinner) findViewById(R.id.spnSp1);
-         spnSp1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+         spnSp1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
 
          secSp2=(LinearLayout)findViewById(R.id.secSp2);
          lineSp2=(View)findViewById(R.id.lineSp2);
          VlblSp2=(TextView) findViewById(R.id.VlblSp2);
          spnSp2=(Spinner) findViewById(R.id.spnSp2);
-         spnSp2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+         spnSp2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
 
          secSp3=(LinearLayout)findViewById(R.id.secSp3);
          lineSp3=(View)findViewById(R.id.lineSp3);
          VlblSp3=(TextView) findViewById(R.id.VlblSp3);
          spnSp3=(Spinner) findViewById(R.id.spnSp3);
-         spnSp3.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+         spnSp3.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
 
          secSp4=(LinearLayout)findViewById(R.id.secSp4);
          lineSp4=(View)findViewById(R.id.lineSp4);
          VlblSp4=(TextView) findViewById(R.id.VlblSp4);
          spnSp4=(Spinner) findViewById(R.id.spnSp4);
-         spnSp4.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+         spnSp4.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '88-এই খানার সদস্য নয়'"));
 
          secEnType=(LinearLayout)findViewById(R.id.secEnType);
          lineEnType=(View)findViewById(R.id.lineEnType);
@@ -579,11 +570,85 @@
          });
 
 
+         spnSp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 if (position > 0)
+                 {
+                     spnSp2.setVisibility(View.VISIBLE);
+                     lineSp2.setVisibility(View.VISIBLE);
+                     secSp2.setVisibility(View.VISIBLE);
+                     lineSp2.setVisibility(View.VISIBLE);
+                 }else{
+                     spnSp2.setVisibility(View.GONE);
+                     lineSp2.setVisibility(View.GONE);
+                     secSp2.setVisibility(View.GONE);
+                     lineSp2.setVisibility(View.GONE);
+                     spnSp2.setSelection(0);
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
+
+             }
+         });
+         spnSp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 if (position > 0)
+                 {
+                     spnSp3.setVisibility(View.VISIBLE);
+                     lineSp3.setVisibility(View.VISIBLE);
+                     secSp3.setVisibility(View.VISIBLE);
+                     lineSp3.setVisibility(View.VISIBLE);
+                 }else{
+                     spnSp3.setVisibility(View.GONE);
+                     lineSp3.setVisibility(View.GONE);
+                     secSp3.setVisibility(View.GONE);
+                     lineSp3.setVisibility(View.GONE);
+                     spnSp3.setSelection(0);
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
+
+             }
+         });
+         spnSp3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 if (position > 0)
+                 {
+                     spnSp4.setVisibility(View.VISIBLE);
+                     lineSp4.setVisibility(View.VISIBLE);
+                     secSp4.setVisibility(View.VISIBLE);
+                     lineSp4.setVisibility(View.VISIBLE);
+                 }else{
+                     spnSp4.setVisibility(View.GONE);
+                     lineSp4.setVisibility(View.GONE);
+                     secSp4.setVisibility(View.GONE);
+                     lineSp4.setVisibility(View.GONE);
+                     spnSp4.setSelection(0);
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
+
+             }
+         });
+
          //Hide all skip variables
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
          txtPNo.setEnabled(false);
+         //secSp1.setVisibility(View.GONE);
+         secSp2.setVisibility(View.GONE);
+         secSp3.setVisibility(View.GONE);
+         secSp4.setVisibility(View.GONE);
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave);
         cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -978,7 +1043,7 @@
          String status = objSave.SaveUpdateData(this);
          if(status.length()==0)
          {
-             Intent returnIntent = new Intent();
+             /*Intent returnIntent = new Intent();
              returnIntent.putExtra("res", "");
              setResult(Activity.RESULT_OK, returnIntent);
              Bundle IDBundle = new Bundle();
@@ -991,10 +1056,13 @@
              g.setBariCode(txtBari.getText().toString());
              g.setHouseholdNo(txtHH.getText().toString());
              g.setmemSlNo(txtMSlNo.getText().toString());
-             finish();
+             finish();*/
+
+             Intent returnIntent = new Intent();
+             returnIntent.putExtra("res", "");
+             setResult(Activity.RESULT_OK, returnIntent);
 
              Connection.MessageBox(Member.this, "Saved Successfully");
-//             startActivity(new Intent(Member.this, Member_list.class).putExtras(IDbundle));
          }
          else{
              Connection.MessageBox(Member.this, status);

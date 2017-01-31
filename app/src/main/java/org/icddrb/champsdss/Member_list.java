@@ -13,28 +13,27 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
- import android.widget.EditText;
- import android.widget.ImageButton;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
- import android.widget.Toast;
+import android.widget.Toast;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import Common.Connection;
 import Common.Global;
- import Common.Utility;
+import Common.Utility;
 
 public class Member_list extends Activity {
     boolean networkAvailable=false;
@@ -207,7 +206,7 @@ public class Member_list extends Activity {
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
-
+         DataSearch(VILL,BARI,HH);
      }
      catch(Exception  e)
      {
@@ -455,9 +454,28 @@ public class Member_list extends Activity {
                Intent f1;
                f1 = new Intent(getApplicationContext(), Member.class);
                f1.putExtras(IDbundle);
-               startActivity(f1);
+               //startActivity(f1);
+                startActivityForResult(f1, 1);
             }
           });
+
+         final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
+         delMember.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+                 AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+                 adb.setTitle("মুছে ফেলা");
+                 adb.setMessage("আপনি কি সদস্যঃ "+ o.get("Name") +" এর তথ্য  মুছে ফেলতে চান[হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int which) {
+                      C.Save("Delete from Member where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "' and MSlNo='" + o.get("MSlNo") + "'");
+                         DataSearch(o.get("Vill"),o.get("Bari"),o.get("HH"));
+                     }
+                 });
+                 adb.show();
+
+             }
+         });
 
          return convertView;
        }

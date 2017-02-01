@@ -12,7 +12,6 @@
     </LinearLayout>
     <View android:id="@+id/linelbl1" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
-
         <LinearLayout android:id="@+id/secVill" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblVill" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblVill" android:text="খানা নম্বর"

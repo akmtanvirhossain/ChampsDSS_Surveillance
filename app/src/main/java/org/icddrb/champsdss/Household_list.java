@@ -37,6 +37,9 @@ import Common.Connection;
 import Common.Global;
  import Common.Utility;
 
+ import static org.icddrb.champsdss.R.id.txtMSlNo;
+ import static org.icddrb.champsdss.R.id.txtTotMem;
+
 public class Household_list extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
@@ -80,7 +83,8 @@ public class Household_list extends Activity {
     static String VILL = "";
     static String BARI = "";
     static String HH = "";
-
+    static String DEVICEID  = "";
+    static String ENTRYUSER = "";
 
  public void onCreate(Bundle savedInstanceState)
  {
@@ -91,6 +95,8 @@ public class Household_list extends Activity {
          C = new Connection(this);
          g = Global.getInstance();
          STARTTIME = g.CurrentTime24();
+         DEVICEID  = g.getDeviceNo();
+         ENTRYUSER = g.getUserId();
 
          IDbundle = getIntent().getExtras();
          CurrentVillage = IDbundle.getString("Village");
@@ -290,6 +296,23 @@ public class Household_list extends Activity {
              }
          });
 
+         Button cmdHHList= (Button) findViewById((R.id.cmdHHList));
+         cmdHHList.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 if(spnBari.getSelectedItemPosition()==0){
+                     Connection.MessageBox(Household_list.this,"Please select a valid Bari from dropdown list.");
+                     return;
+                 }
+                 String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
+                 String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
+                 IDbundle.putString("Vill", V);
+                 IDbundle.putString("Bari", B);
+                 IDbundle.putString("HH", "");
+                 HHListForm(VILL, BARI);
+             }
+         });
+
          DataSearch(VILL,BARI);
 
      }
@@ -300,8 +323,78 @@ public class Household_list extends Activity {
      }
  }
 
+    private void HHListForm(final String VILL, final String BARI) {
+        try {
+            final Dialog dialog = new Dialog(Household_list.this);
+            dialog.setTitle("নতুন খানার তালিকা");
+            dialog.setContentView(R.layout.hh_list);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCancelable(true);
 
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
 
+            wlp.gravity = Gravity.CENTER;
+            wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            window.setAttributes(wlp);
+
+            final TextView txtVill = (TextView) dialog.findViewById(R.id.txtVill);
+            final TextView txtBari = (TextView) dialog.findViewById(R.id.txtBari);
+            final TextView txtHH = (TextView) dialog.findViewById(R.id.txtHH);
+            final TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
+
+            txtVill.setText(VILL);
+            txtBari.setText(BARI);
+
+            txtVill.setEnabled(false);
+            txtBari.setEnabled(false);
+            txtHH.setEnabled(false);
+
+            txtHH.setText(HHSerial(VILL, BARI));
+
+            Button cmdContactNoSave = (Button) dialog.findViewById(R.id.cmdSave);
+            cmdContactNoSave.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+
+                    if (txtName.getText().toString().length() == 0) {
+                        Connection.MessageBox(Household_list.this, "Required field: Name of Head.");
+                        txtName.requestFocus();
+                        return;
+                    }
+                    //***
+                    Household_DataModel objSave = new Household_DataModel();
+                    objSave.setVill(txtVill.getText().toString());
+                    objSave.setBari(txtBari.getText().toString());
+                    objSave.setHH(txtHH.getText().toString());
+                    objSave.setHHHead(txtName.getText().toString());
+
+                    objSave.setEnDt(Global.DateTimeNowYMDHMS());
+                    objSave.setStartTime(STARTTIME);
+                    objSave.setEndTime(g.CurrentTime24());
+                    objSave.setDeviceID(DEVICEID);
+                    objSave.setEntryUser(ENTRYUSER); //from data entry user list
+                    String status = objSave.SaveUpdateData(Household_list.this);
+
+                    DataSearch(VILL,BARI);
+                    txtHH.setText(HHSerial(VILL,BARI));
+                    txtName.setText("");
+                    txtHH.requestFocus();
+
+                }
+            });
+
+            dialog.show();
+        } catch (Exception e) {
+            Connection.MessageBox(Household_list.this, e.getMessage());
+            return;
+        }
+    }
+    private String HHSerial(String VILL, String BARI)
+    {
+        String H = C.ReturnSingleValue("Select (ifnull(max(cast(HH as int)),0)+1)serial from Household where Vill='" + VILL + "' and Bari='" + BARI + "'");
+        H = Global.Right("0"+H,2);
+        return H;
+    }
      /*
      public boolean onOptionsItemSelected(MenuItem item) {
          switch (item.getItemId()) {
@@ -525,6 +618,15 @@ public class Household_list extends Activity {
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
          TotMem.setText(o.get("TotMem"));
+
+         if (o.get("TotMem").length() == 0) {
+             HH.setTextColor(Color.RED);
+             HHHead.setTextColor(Color.RED);
+         } else {
+             HH.setTextColor(Color.BLACK);
+             HHHead.setTextColor(Color.BLACK);
+         }
+
          Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+VILL+"' AND Bari='"+BARI+"' AND HH='"+o.get("HH")+"'"));
          if(Integer.valueOf(o.get("sl"))%2==0)
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));

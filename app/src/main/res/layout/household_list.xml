@@ -69,15 +69,32 @@
             android:text="আপডেট"/>
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+
+
+    <LinearLayout android:id="@+id/secHHMenu" android:layout_weight="3" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0"
+        android:weightSum="1">
+
+        <Button android:id="@+id/cmdHHList" android:layout_marginLeft="20sp" android:layout_marginRight="20sp" android:background="@drawable/button_style_blue"
+            android:layout_width="wrap_content"  android:textSize="18sp" android:textColor="#ffffff" android:layout_height="40sp" android:text="নতুন খানার তালিকা"
+            android:layout_weight="0.50" />
+
         <Button android:id="@+id/cmdHH" android:layout_marginLeft="20sp" android:layout_marginRight="20sp" android:background="@drawable/button_style_blue"
-            android:layout_width="match_parent"  android:textSize="18sp" android:textColor="#ffffff"
-            android:layout_height="40sp"
-            android:text="নতুন খানা নিবন্ধন"/>
+            android:layout_width="wrap_content"  android:textSize="18sp" android:textColor="#ffffff" android:layout_height="40sp" android:text="নতুন খানা নিবন্ধন"
+            android:layout_weight="0.50" />
+
     </LinearLayout>
-    <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
+    <View android:id="@+id/lineHHMenu" android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
+
+
+    <!--<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">-->
+        <!--<Button android:id="@+id/cmdHH" android:layout_marginLeft="20sp" android:layout_marginRight="20sp" android:background="@drawable/button_style_blue"-->
+            <!--android:layout_width="match_parent"  android:textSize="18sp" android:textColor="#ffffff" android:layout_height="40sp" android:text="নতুন খানা নিবন্ধন"/>-->
+    <!--</LinearLayout>-->
+    <!--<View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />-->
+
     <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:overScrollMode="always" android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:scrollbarStyle="outsideInset" android:scrollbars="vertical">
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+
         <!--****************** added by sakib**************-->
         <LinearLayout
             android:orientation="horizontal"

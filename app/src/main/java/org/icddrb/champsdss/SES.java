@@ -366,8 +366,6 @@
                      }});
                  adb.show();
              }});
-
-
          seclbl01=(LinearLayout)findViewById(R.id.seclbl01);
          linelbl01=(View)findViewById(R.id.linelbl01);
          seclbl02=(LinearLayout)findViewById(R.id.seclbl02);
@@ -393,7 +391,7 @@
          spnSESNo=(Spinner) findViewById(R.id.spnSESNo);
 
          List<String> listSESNo = new ArrayList<String>();
-         listSESNo.add("01");
+         listSESNo.add("1");
 
          ArrayAdapter<String> adptrSESno= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listSESNo);
          spnSESNo.setAdapter(adptrSESno);
@@ -825,15 +823,15 @@
                     secLatrineOth.setVisibility(View.GONE);
                     lineLatrineOth.setVisibility(View.GONE);
                     txtLatrineOth.setText("");
-                    seclbl017.setVisibility(View.GONE);
-                    linelbl017.setVisibility(View.GONE);
+//                    seclbl017.setVisibility(View.GONE);
+//                    linelbl017.setVisibility(View.GONE);
                  }
                  else
                  {
                     secLatrineOth.setVisibility(View.VISIBLE);
                     lineLatrineOth.setVisibility(View.VISIBLE);
-                    seclbl017.setVisibility(View.VISIBLE);
-                    linelbl017.setVisibility(View.VISIBLE);
+//                    seclbl017.setVisibility(View.VISIBLE);
+//                    linelbl017.setVisibility(View.VISIBLE);
                  }
              }
              @Override
@@ -1610,8 +1608,7 @@
          objSave.setVill(txtVill.getText().toString());
          objSave.setBari(txtBari.getText().toString());
          objSave.setHH(txtHH.getText().toString());
-//         objSave.setSESNo(txtSESNo.getText().toString());
-         objSave.setSESNo((spnSESNo.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSESNo.getSelectedItem().toString(), "-")));
+         objSave.setSESNo((spnSESNo.getSelectedItem().toString()));
          objSave.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
          objSave.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
          objSave.setVStatusOth(txtVStatusOth.getText().toString());
@@ -1754,7 +1751,7 @@
              rb = (RadioButton)rdogrpOthLand.getChildAt(i);
              if (rb.isChecked()) objSave.setOthLand(d_rdogrpOthLand[i]);
          }
-
+         objSave.setRnd("00");
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
          objSave.setStartTime(STARTTIME);
          objSave.setEndTime(g.CurrentTime24());
@@ -1796,12 +1793,11 @@
              txtVill.setText(item.getVill());
              txtBari.setText(item.getBari());
              txtHH.setText(item.getHH());
-//             txtSESNo.setText(item.getSESNo());
              spnSESNo.setSelection(Global.SpinnerItemPositionAnyLength(spnSESNo, item.getSESNo()));
              dtpVDate.setText(item.getVDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getVDate()));
              spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item.getVStatus()));
              txtVStatusOth.setText(item.getVStatusOth());
-             txtRnd.setText(item.getRnd());
+//             txtRnd.setText(item.getRnd());
              spnWSDrink.setSelection(Global.SpinnerItemPositionAnyLength(spnWSDrink, item.getWSDrink()));
              txtWSDrinkOth.setText(item.getWSDrinkOth());
              spnWSCook.setSelection(Global.SpinnerItemPositionAnyLength(spnWSCook, item.getWSCook()));

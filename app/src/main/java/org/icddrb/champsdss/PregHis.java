@@ -578,6 +578,7 @@
          linelbl108=(View)findViewById(R.id.linelbl108);
          seclbl108a=(LinearLayout)findViewById(R.id.seclbl108a);
          linelbl108a=(View)findViewById(R.id.linelbl108a);
+
          secSonLivOut=(LinearLayout)findViewById(R.id.secSonLivOut);
          lineSonLivOut=(View)findViewById(R.id.lineSonLivOut);
          VlblSonLivOut=(TextView) findViewById(R.id.VlblSonLivOut);

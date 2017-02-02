@@ -271,7 +271,7 @@ public class LoginActivity extends Activity {
                 File file=Environment.getExternalStorageDirectory();
 
                 file.mkdirs();
-                File outputFile = new File(file.getAbsolutePath() + File.separator + ProjectSetting.DatabaseName);
+                File outputFile = new File(file.getAbsolutePath()+ File.separator + ProjectSetting.NewVersionName +".apk");
 
                 if(outputFile.exists()){
                     outputFile.delete();

@@ -102,7 +102,7 @@
          LinearLayout secSESNo;
          View lineSESNo;
          TextView VlblSESNo;
-         EditText txtSESNo;
+         Spinner spnSESNo;
          LinearLayout secVDate;
          View lineVDate;
          TextView VlblVDate;
@@ -243,6 +243,10 @@
          View linelbl018;
          LinearLayout seclbl018a;
          View linelbl018a;
+
+         LinearLayout seclbl019;
+         View linelbl019;
+
          LinearLayout secBuffalo;
          View lineBuffalo;
          TextView VlblBuffalo;
@@ -337,7 +341,7 @@
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
          HH = IDbundle.getString("HH");
-         //SESNO = IDbundle.getString("SESNo");
+         SESNO = IDbundle.getString("SESNo");
 
          TableName = "SES";
 
@@ -382,14 +386,25 @@
          lineHH=(View)findViewById(R.id.lineHH);
          VlblHH=(TextView) findViewById(R.id.VlblHH);
          txtHH=(EditText) findViewById(R.id.txtHH);
+
          secSESNo=(LinearLayout)findViewById(R.id.secSESNo);
          lineSESNo=(View)findViewById(R.id.lineSESNo);
          VlblSESNo=(TextView) findViewById(R.id.VlblSESNo);
-         txtSESNo=(EditText) findViewById(R.id.txtSESNo);
+         spnSESNo=(Spinner) findViewById(R.id.spnSESNo);
+
+         List<String> listSESNo = new ArrayList<String>();
+         listSESNo.add("01");
+
+         ArrayAdapter<String> adptrSESno= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listSESNo);
+         spnSESNo.setAdapter(adptrSESno);
+         SESNO=spnSESNo.getSelectedItem().toString();
+
          secVDate=(LinearLayout)findViewById(R.id.secVDate);
          lineVDate=(View)findViewById(R.id.lineVDate);
          VlblVDate=(TextView) findViewById(R.id.VlblVDate);
          dtpVDate=(EditText) findViewById(R.id.dtpVDate);
+         dtpVDate.setText(Global.DateNowDMY());
+
          secVStatus=(LinearLayout)findViewById(R.id.secVStatus);
          lineVStatus=(View)findViewById(R.id.lineVStatus);
          VlblVStatus=(TextView) findViewById(R.id.VlblVStatus);
@@ -406,7 +421,7 @@
          listVStatus.add("7-বাসস্থানটি ধংসপ্রাপ্ত");
          listVStatus.add("8-বাসস্থানটি খুঁজে পাওয়া যায় নাই");
          listVStatus.add("9-অন্যান");
-         ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listVStatus);
+         ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, R.layout.multiline_spinner_dropdown_item, listVStatus);
          spnVStatus.setAdapter(adptrVStatus);
 
          spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -414,22 +429,224 @@
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
              if (spnVStatus.getSelectedItem().toString().length() == 0) return;
              String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(),"-");
-                 if(!spnData.equalsIgnoreCase("9"))
-                 {
-                    secVStatusOth.setVisibility(View.GONE);
-                    lineVStatusOth.setVisibility(View.GONE);
-                    txtVStatusOth.setText("");
-//                    seclbl015.setVisibility(View.GONE);
-//                    linelbl015.setVisibility(View.GONE);
+                 if(spnData.equalsIgnoreCase("9"))
+                 {   secVStatusOth.setVisibility(View.VISIBLE);
+                     lineVStatusOth.setVisibility(View.VISIBLE);
+                     seclbl015.setVisibility(View.VISIBLE);
+                     linelbl015.setVisibility(View.VISIBLE);
                  }
                  else
                  {
-                    secVStatusOth.setVisibility(View.VISIBLE);
-                    lineVStatusOth.setVisibility(View.VISIBLE);
-//                    secRnd.setVisibility(View.VISIBLE);
-//                    lineRnd.setVisibility(View.VISIBLE);
-//                    seclbl015.setVisibility(View.VISIBLE);
-//                    linelbl015.setVisibility(View.VISIBLE);
+                     secVStatusOth.setVisibility(View.GONE);
+                     lineVStatusOth.setVisibility(View.GONE);
+                     txtVStatusOth.setText("");
+                     seclbl015.setVisibility(View.GONE);
+                     linelbl015.setVisibility(View.GONE);
+                 }
+                 if(!spnData.equalsIgnoreCase("1"))
+                 {
+                     lineRnd.setVisibility(View.GONE);
+                     txtRnd.setText("");
+                     seclbl015.setVisibility(View.GONE);
+                     linelbl015.setVisibility(View.GONE);
+                     secWSDrink.setVisibility(View.GONE);
+                     lineWSDrink.setVisibility(View.GONE);
+                     spnWSDrink.setSelection(0);
+                     secWSDrinkOth.setVisibility(View.GONE);
+                     lineWSDrinkOth.setVisibility(View.GONE);
+                     txtWSDrinkOth.setText("");
+                     secWSCook.setVisibility(View.GONE);
+                     lineWSCook.setVisibility(View.GONE);
+                     spnWSCook.setSelection(0);
+                     secWSCookOth.setVisibility(View.GONE);
+                     lineWSCookOth.setVisibility(View.GONE);
+                     txtWSCookOth.setText("");
+                     secWSWash.setVisibility(View.GONE);
+                     lineWSWash.setVisibility(View.GONE);
+                     spnWSWash.setSelection(0);
+                     secWSWashOth.setVisibility(View.GONE);
+                     lineWSWashOth.setVisibility(View.GONE);
+                     txtWSWashOth.setText("");
+                     secLatrine.setVisibility(View.GONE);
+                     lineLatrine.setVisibility(View.GONE);
+                     spnLatrine.setSelection(0);
+                     secLatrineOth.setVisibility(View.GONE);
+                     lineLatrineOth.setVisibility(View.GONE);
+                     txtLatrineOth.setText("");
+                     seclbl017.setVisibility(View.GONE);
+                     linelbl017.setVisibility(View.GONE);
+                     secElectricity.setVisibility(View.GONE);
+                     lineElectricity.setVisibility(View.GONE);
+                     rdogrpElectricity.clearCheck();
+                     secRadio.setVisibility(View.GONE);
+                     lineRadio.setVisibility(View.GONE);
+                     rdogrpRadio.clearCheck();
+                     secTV.setVisibility(View.GONE);
+                     lineTV.setVisibility(View.GONE);
+                     rdogrpTV.clearCheck();
+                     secMobile.setVisibility(View.GONE);
+                     lineMobile.setVisibility(View.GONE);
+                     rdogrpMobile.clearCheck();
+                     secTelephone.setVisibility(View.GONE);
+                     lineTelephone.setVisibility(View.GONE);
+                     rdogrpTelephone.clearCheck();
+                     secRefrige.setVisibility(View.GONE);
+                     lineRefrige.setVisibility(View.GONE);
+                     rdogrpRefrige.clearCheck();
+                     secWatch.setVisibility(View.GONE);
+                     lineWatch.setVisibility(View.GONE);
+                     rdogrpWatch.clearCheck();
+                     secElecFan.setVisibility(View.GONE);
+                     lineElecFan.setVisibility(View.GONE);
+                     rdogrpElecFan.clearCheck();
+                     secRickVan.setVisibility(View.GONE);
+                     lineRickVan.setVisibility(View.GONE);
+                     rdogrpRickVan.clearCheck();
+                     secBicycle.setVisibility(View.GONE);
+                     lineBicycle.setVisibility(View.GONE);
+                     rdogrpBicycle.clearCheck();
+                     secMotCycle.setVisibility(View.GONE);
+                     lineMotCycle.setVisibility(View.GONE);
+                     rdogrpMotCycle.clearCheck();
+                     secComputer.setVisibility(View.GONE);
+                     lineComputer.setVisibility(View.GONE);
+                     rdogrpComputer.clearCheck();
+                     seclbl018.setVisibility(View.GONE);
+                     linelbl018.setVisibility(View.GONE);
+                     seclbl018a.setVisibility(View.GONE);
+                     linelbl018a.setVisibility(View.GONE);
+                     secBuffalo.setVisibility(View.GONE);
+                     lineBuffalo.setVisibility(View.GONE);
+                     txtBuffalo.setText("");
+                     secBull.setVisibility(View.GONE);
+                     lineBull.setVisibility(View.GONE);
+                     txtBull.setText("");
+                     secGoat.setVisibility(View.GONE);
+                     lineGoat.setVisibility(View.GONE);
+                     txtGoat.setText("");
+                     secChicken.setVisibility(View.GONE);
+                     lineChicken.setVisibility(View.GONE);
+                     txtChicken.setText("");
+                     secPigeon.setVisibility(View.GONE);
+                     linePigeon.setVisibility(View.GONE);
+                     txtPigeon.setText("");
+
+                     seclbl019.setVisibility(View.GONE);
+                     linelbl019.setVisibility(View.GONE);
+                     seclbl019.setVisibility(View.GONE);
+                     linelbl019.setVisibility(View.GONE);
+
+                     secRoof.setVisibility(View.GONE);
+                     lineRoof.setVisibility(View.GONE);
+                     spnRoof.setSelection(0);
+                     secRoofOth.setVisibility(View.GONE);
+                     lineRoofOth.setVisibility(View.GONE);
+                     txtRoofOth.setText("");
+                     secWall.setVisibility(View.GONE);
+                     lineWall.setVisibility(View.GONE);
+                     spnWall.setSelection(0);
+                     secWallOth.setVisibility(View.GONE);
+                     lineWallOth.setVisibility(View.GONE);
+                     txtWallOth.setText("");
+                     secFloor.setVisibility(View.GONE);
+                     lineFloor.setVisibility(View.GONE);
+                     spnFloor.setSelection(0);
+                     secFloorOth.setVisibility(View.GONE);
+                     lineFloorOth.setVisibility(View.GONE);
+                     txtFloorOth.setText("");
+                     secHomestead.setVisibility(View.GONE);
+                     lineHomestead.setVisibility(View.GONE);
+                     rdogrpHomestead.clearCheck();
+
+                     secHomesteadOth.setVisibility(View.GONE);
+                     lineHomesteadOth.setVisibility(View.GONE);
+                     rdogrpHomesteadOth.clearCheck();
+
+                     secOthLand.setVisibility(View.GONE);
+                     lineOthLand.setVisibility(View.GONE);
+                     rdogrpOthLand.clearCheck();
+                 }
+
+                 else
+                 {
+                     seclbl015.setVisibility(View.VISIBLE);
+                     linelbl015.setVisibility(View.VISIBLE);
+                     secWSDrink.setVisibility(View.VISIBLE);
+                     lineWSDrink.setVisibility(View.VISIBLE);
+//                     secWSDrinkOth.setVisibility(View.VISIBLE);
+//                     lineWSDrinkOth.setVisibility(View.VISIBLE);
+                     secWSCook.setVisibility(View.VISIBLE);
+                     lineWSCook.setVisibility(View.VISIBLE);
+//                     secWSCookOth.setVisibility(View.VISIBLE);
+//                     lineWSCookOth.setVisibility(View.VISIBLE);
+                     secWSWash.setVisibility(View.VISIBLE);
+                     lineWSWash.setVisibility(View.VISIBLE);
+//                     secWSWashOth.setVisibility(View.VISIBLE);
+//                     lineWSWashOth.setVisibility(View.VISIBLE);
+                     secLatrine.setVisibility(View.VISIBLE);
+                     lineLatrine.setVisibility(View.VISIBLE);
+//                     secLatrineOth.setVisibility(View.VISIBLE);
+//                     lineLatrineOth.setVisibility(View.VISIBLE);
+                     seclbl017.setVisibility(View.VISIBLE);
+                     linelbl017.setVisibility(View.VISIBLE);
+                     secElectricity.setVisibility(View.VISIBLE);
+                     lineElectricity.setVisibility(View.VISIBLE);
+                     secRadio.setVisibility(View.VISIBLE);
+                     lineRadio.setVisibility(View.VISIBLE);
+                     secTV.setVisibility(View.VISIBLE);
+                     lineTV.setVisibility(View.VISIBLE);
+                     secMobile.setVisibility(View.VISIBLE);
+                     lineMobile.setVisibility(View.VISIBLE);
+                     secTelephone.setVisibility(View.VISIBLE);
+                     lineTelephone.setVisibility(View.VISIBLE);
+                     secRefrige.setVisibility(View.VISIBLE);
+                     lineRefrige.setVisibility(View.VISIBLE);
+                     secWatch.setVisibility(View.VISIBLE);
+                     lineWatch.setVisibility(View.VISIBLE);
+                     secElecFan.setVisibility(View.VISIBLE);
+                     lineElecFan.setVisibility(View.VISIBLE);
+                     secRickVan.setVisibility(View.VISIBLE);
+                     lineRickVan.setVisibility(View.VISIBLE);
+                     secBicycle.setVisibility(View.VISIBLE);
+                     lineBicycle.setVisibility(View.VISIBLE);
+                     secMotCycle.setVisibility(View.VISIBLE);
+                     lineMotCycle.setVisibility(View.VISIBLE);
+                     secComputer.setVisibility(View.VISIBLE);
+                     lineComputer.setVisibility(View.VISIBLE);
+                     seclbl018.setVisibility(View.VISIBLE);
+                     linelbl018.setVisibility(View.VISIBLE);
+                     seclbl018a.setVisibility(View.VISIBLE);
+                     linelbl018a.setVisibility(View.VISIBLE);
+                     seclbl019.setVisibility(View.VISIBLE);
+                     linelbl019.setVisibility(View.VISIBLE);
+                     seclbl019.setVisibility(View.VISIBLE);
+                     linelbl019.setVisibility(View.VISIBLE);
+                     secBuffalo.setVisibility(View.VISIBLE);
+                     lineBuffalo.setVisibility(View.VISIBLE);
+                     secBull.setVisibility(View.VISIBLE);
+                     lineBull.setVisibility(View.VISIBLE);
+                     secGoat.setVisibility(View.VISIBLE);
+                     lineGoat.setVisibility(View.VISIBLE);
+                     secChicken.setVisibility(View.VISIBLE);
+                     lineChicken.setVisibility(View.VISIBLE);
+                     secPigeon.setVisibility(View.VISIBLE);
+                     linePigeon.setVisibility(View.VISIBLE);
+                     secRoof.setVisibility(View.VISIBLE);
+                     lineRoof.setVisibility(View.VISIBLE);
+//                     secRoofOth.setVisibility(View.VISIBLE);
+//                     lineRoofOth.setVisibility(View.VISIBLE);
+                     secWall.setVisibility(View.VISIBLE);
+                     lineWall.setVisibility(View.VISIBLE);
+//                     secWallOth.setVisibility(View.VISIBLE);
+//                     lineWallOth.setVisibility(View.VISIBLE);
+                     secFloor.setVisibility(View.VISIBLE);
+                     lineFloor.setVisibility(View.VISIBLE);
+                     secHomestead.setVisibility(View.VISIBLE);
+                     lineHomestead.setVisibility(View.VISIBLE);
+//                     secHomesteadOth.setVisibility(View.VISIBLE);
+//                     lineHomesteadOth.setVisibility(View.VISIBLE);
+                     secOthLand.setVisibility(View.VISIBLE);
+                     lineOthLand.setVisibility(View.VISIBLE);
 
                  }
              }
@@ -717,6 +934,9 @@
          linelbl018=(View)findViewById(R.id.linelbl018);
          seclbl018a=(LinearLayout)findViewById(R.id.seclbl018a);
          linelbl018a=(View)findViewById(R.id.linelbl018a);
+         seclbl019=(LinearLayout)findViewById(R.id.seclbl019);
+         linelbl019=(View)findViewById(R.id.linelbl019);
+
          secBuffalo=(LinearLayout)findViewById(R.id.secBuffalo);
          lineBuffalo=(View)findViewById(R.id.lineBuffalo);
          VlblBuffalo=(TextView) findViewById(R.id.VlblBuffalo);
@@ -915,12 +1135,14 @@
 
 
          //Hide all skip variables
+         txtVill.setEnabled(false);
+         txtBari.setEnabled(false);
+         txtHH.setEnabled(false);
+
          secVStatusOth.setVisibility(View.GONE);
          lineVStatusOth.setVisibility(View.GONE);
          secRnd.setVisibility(View.GONE);
          lineRnd.setVisibility(View.GONE);
-         seclbl015.setVisibility(View.GONE);
-         linelbl015.setVisibility(View.GONE);
          secWSDrinkOth.setVisibility(View.GONE);
          lineWSDrinkOth.setVisibility(View.GONE);
          secWSCookOth.setVisibility(View.GONE);
@@ -929,30 +1151,108 @@
          lineWSWashOth.setVisibility(View.GONE);
          secLatrineOth.setVisibility(View.GONE);
          lineLatrineOth.setVisibility(View.GONE);
-         seclbl017.setVisibility(View.GONE);
-         linelbl017.setVisibility(View.GONE);
          secRoofOth.setVisibility(View.GONE);
          lineRoofOth.setVisibility(View.GONE);
          secWallOth.setVisibility(View.GONE);
          lineWallOth.setVisibility(View.GONE);
          secFloorOth.setVisibility(View.GONE);
          lineFloorOth.setVisibility(View.GONE);
+         seclbl015.setVisibility(View.GONE);
+         linelbl015.setVisibility(View.GONE);
+         secWSDrink.setVisibility(View.GONE);
+         lineWSDrink.setVisibility(View.GONE);
+         secWSDrinkOth.setVisibility(View.GONE);
+         lineWSDrinkOth.setVisibility(View.GONE);
+         secWSCook.setVisibility(View.GONE);
+         lineWSCook.setVisibility(View.GONE);
+         secWSCookOth.setVisibility(View.GONE);
+         lineWSCookOth.setVisibility(View.GONE);
+         secWSWash.setVisibility(View.GONE);
+         lineWSWash.setVisibility(View.GONE);
+         secWSWashOth.setVisibility(View.GONE);
+         lineWSWashOth.setVisibility(View.GONE);
+         secLatrine.setVisibility(View.GONE);
+         lineLatrine.setVisibility(View.GONE);
+         secLatrineOth.setVisibility(View.GONE);
+         lineLatrineOth.setVisibility(View.GONE);
+         seclbl017.setVisibility(View.GONE);
+         linelbl017.setVisibility(View.GONE);
+         secElectricity.setVisibility(View.GONE);
+         lineElectricity.setVisibility(View.GONE);
+         secRadio.setVisibility(View.GONE);
+         lineRadio.setVisibility(View.GONE);
+         secTV.setVisibility(View.GONE);
+         lineTV.setVisibility(View.GONE);
+         secMobile.setVisibility(View.GONE);
+         lineMobile.setVisibility(View.GONE);
+         secTelephone.setVisibility(View.GONE);
+         lineTelephone.setVisibility(View.GONE);
+         secRefrige.setVisibility(View.GONE);
+         lineRefrige.setVisibility(View.GONE);
+         secWatch.setVisibility(View.GONE);
+         lineWatch.setVisibility(View.GONE);
+         secElecFan.setVisibility(View.GONE);
+         lineElecFan.setVisibility(View.GONE);
+         secRickVan.setVisibility(View.GONE);
+         lineRickVan.setVisibility(View.GONE);
+         secBicycle.setVisibility(View.GONE);
+         lineBicycle.setVisibility(View.GONE);
+         secMotCycle.setVisibility(View.GONE);
+         lineMotCycle.setVisibility(View.GONE);
+         secComputer.setVisibility(View.GONE);
+         lineComputer.setVisibility(View.GONE);
+         seclbl018.setVisibility(View.GONE);
+         linelbl018.setVisibility(View.GONE);
+         seclbl018a.setVisibility(View.GONE);
+         linelbl018a.setVisibility(View.GONE);
+         seclbl019.setVisibility(View.GONE);
+         linelbl019.setVisibility(View.GONE);
+         seclbl019.setVisibility(View.GONE);
+         linelbl019.setVisibility(View.GONE);
+         secBuffalo.setVisibility(View.GONE);
+         lineBuffalo.setVisibility(View.GONE);
+         secBull.setVisibility(View.GONE);
+         lineBull.setVisibility(View.GONE);
+         secGoat.setVisibility(View.GONE);
+         lineGoat.setVisibility(View.GONE);
+         secChicken.setVisibility(View.GONE);
+         lineChicken.setVisibility(View.GONE);
+         secPigeon.setVisibility(View.GONE);
+         linePigeon.setVisibility(View.GONE);
+           secRoof.setVisibility(View.GONE);
+         lineRoof.setVisibility(View.GONE);
+          secRoofOth.setVisibility(View.GONE);
+         lineRoofOth.setVisibility(View.GONE);
+          secWall.setVisibility(View.GONE);
+         lineWall.setVisibility(View.GONE);
+         secWallOth.setVisibility(View.GONE);
+         lineWallOth.setVisibility(View.GONE);
+         secFloor.setVisibility(View.GONE);
+         lineFloor.setVisibility(View.GONE);
+         secFloorOth.setVisibility(View.GONE);
+         lineFloorOth.setVisibility(View.GONE);
+         secHomestead.setVisibility(View.GONE);
+         lineHomestead.setVisibility(View.GONE);
+         secHomesteadOth.setVisibility(View.GONE);
+         lineHomesteadOth.setVisibility(View.GONE);
+         secOthLand.setVisibility(View.GONE);
+         lineOthLand.setVisibility(View.GONE);
 
-         //**********************************sakib start********************************************
+          //**********************************sakib start********************************************
          txtVill.setText(VILL);
          txtVill.setFocusable(false);
          txtBari.setText(BARI);
          txtBari.setFocusable(false);
          txtHH.setText(HH);
-         if(SESNO.equals(""))
-         {
-             SESNO=SesSerial();
-         }
-         txtHH.setText(HH);
-         txtHH.setFocusable(false);
+//         if(SESNO.equals(""))
+//         {
+//             SESNO=SesSerial();
+//         }
+//         txtHH.setText(HH);
+//         txtHH.setFocusable(false);
 
-         txtSESNo.setText(SESNO);
-         txtSESNo.setFocusable(false);
+//         txtSESNo.setText(SESNO);
+//         txtSESNo.setFocusable(false);
          //**********************************sakib start********************************************
 
 
@@ -961,6 +1261,7 @@
         public void onClick(View v) { 
             DataSave();
         }});
+         DataSearch(VILL,BARI,HH,SESNO);
 
      }
 
@@ -988,7 +1289,6 @@
  {
    try
      {
- 
          String DV="";
 
          if(txtVill.getText().toString().length()==0 & secVill.isShown())
@@ -997,30 +1297,31 @@
              txtVill.requestFocus(); 
              return;	
            }
-         else if(txtBari.getText().toString().length()==0 & secBari.isShown())
+         else if(txtBari.getText().toString().length()==0 )
            {
-             Connection.MessageBox(SES.this, "Required field: বাড়ি.");
-             txtBari.requestFocus(); 
-             return;	
+            Connection.MessageBox(SES.this, "Required field: বাড়ি.");
+             txtBari.requestFocus();
+             return;
            }
-         else if(txtHH.getText().toString().length()==0 & secHH.isShown())
+         else if(txtHH.getText().toString().length()==0)
            {
              Connection.MessageBox(SES.this, "Required field: খানা.");
-             txtHH.requestFocus(); 
-             return;	
+             txtHH.requestFocus();
+             return;
            }
-         else if(txtSESNo.getText().toString().length()==0 & secSESNo.isShown())
-           {
-             Connection.MessageBox(SES.this, "Required field: SESNo.");
-             txtSESNo.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtSESNo.getText().toString().length()==0 ? "1" : txtSESNo.getText().toString()) < 1 || Integer.valueOf(txtSESNo.getText().toString().length()==0 ? "9" : txtSESNo.getText().toString()) > 9)
-           {
-             Connection.MessageBox(SES.this, "Value should be between 1 and 9(SESNo).");
-             txtSESNo.requestFocus(); 
-             return;	
-           }
+//         else if(txtSESNo.getText().toString().length()==0 & secSESNo.isShown())
+//           {
+//             Connection.MessageBox(SES.this, "Required field: SESNo.");
+//             txtSESNo.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtSESNo.getText().toString().length()==0 ? "1" : txtSESNo.getText().toString()) < 1 || Integer.valueOf(txtSESNo.getText().toString().length()==0 ? "9" : txtSESNo.getText().toString()) > 9)
+//           {
+//             Connection.MessageBox(SES.this, "Value should be between 1 and 9(SESNo).");
+//             txtSESNo.requestFocus();
+//             return;
+//           }
+
          DV = Global.DateValidate(dtpVDate.getText().toString());
          if(DV.length()!=0 & secVDate.isShown())
            {
@@ -1309,7 +1610,8 @@
          objSave.setVill(txtVill.getText().toString());
          objSave.setBari(txtBari.getText().toString());
          objSave.setHH(txtHH.getText().toString());
-         objSave.setSESNo(txtSESNo.getText().toString());
+//         objSave.setSESNo(txtSESNo.getText().toString());
+         objSave.setSESNo((spnSESNo.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSESNo.getSelectedItem().toString(), "-")));
          objSave.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
          objSave.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
          objSave.setVStatusOth(txtVStatusOth.getText().toString());
@@ -1494,7 +1796,8 @@
              txtVill.setText(item.getVill());
              txtBari.setText(item.getBari());
              txtHH.setText(item.getHH());
-             txtSESNo.setText(item.getSESNo());
+//             txtSESNo.setText(item.getSESNo());
+             spnSESNo.setSelection(Global.SpinnerItemPositionAnyLength(spnSESNo, item.getSESNo()));
              dtpVDate.setText(item.getVDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getVDate()));
              spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item.getVStatus()));
              txtVStatusOth.setText(item.getVStatusOth());
@@ -1723,7 +2026,7 @@
      public void onProviderDisabled(String provider) {
      }
    };
-  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+//  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
  }
 
  void updateLocation(Location location) {

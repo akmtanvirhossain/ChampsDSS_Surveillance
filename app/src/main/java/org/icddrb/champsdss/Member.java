@@ -890,11 +890,7 @@ import Common.Global;
                  txtAgeY.requestFocus();
                  return;
          }
-         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-"))& spnMoNo.isShown()) {
-             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
-             spnFaNo.requestFocus();
-             return;
-         }
+
          else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
              Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
              spnSp1.requestFocus();
@@ -981,18 +977,25 @@ import Common.Global;
              txtPNo.requestFocus();
              return;
          }
+         if(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00") ||(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00")))
+         {
 
+         }
+         else
+         {
+             if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
+                 Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
+                 spnFaNo.requestFocus();
+                 return;
+             }
+         }
 //         if(Global.DateDifferenceDays(dtpVDate.getText().toString(), dtpBDate.getText().toString())<0)
 //         {
 //             Connection.MessageBox(Member.this, "জন্ম তারিখ ভিজিটের তারিখের আগে হতে হবে।");
 //             dtpBDate.requestFocus();
 //             return;
 //         }
-//         else if(Ocp = ("3") & rdoSex1.isChecked()("1"))
-//         {
-//             Connection.MessageBox(Member.this, "পুরুষ লোকের পেশা ০৩ হতে পারে না।");
-//             return;
-//         }
+
 
 
          dtpEnDate.setText(Global.DateConvertDMY(C.ReturnSingleValue("select VDate from Visits where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")));

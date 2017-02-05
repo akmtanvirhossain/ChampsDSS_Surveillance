@@ -313,17 +313,17 @@
          RadioButton rdoOthLand1;
          RadioButton rdoOthLand2;
 
-    static String TableName;
+        static String TableName;
 
-    static String STARTTIME = "";
-    static String DEVICEID  = "";
-    static String ENTRYUSER = "";
+        static String STARTTIME = "";
+        static String DEVICEID  = "";
+        static String ENTRYUSER = "";
 
-    Bundle IDbundle;
-    static String VILL = "";
-    static String BARI = "";
-    static String HH = "";
-    static String SESNO = "";
+        Bundle IDbundle;
+        static String VILL = "";
+        static String BARI = "";
+        static String HH = "";
+        static String SESNO = "";
 
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -537,12 +537,15 @@
                      secRoof.setVisibility(View.GONE);
                      lineRoof.setVisibility(View.GONE);
                      spnRoof.setSelection(0);
+
                      secRoofOth.setVisibility(View.GONE);
                      lineRoofOth.setVisibility(View.GONE);
                      txtRoofOth.setText("");
+
                      secWall.setVisibility(View.GONE);
                      lineWall.setVisibility(View.GONE);
                      spnWall.setSelection(0);
+
                      secWallOth.setVisibility(View.GONE);
                      lineWallOth.setVisibility(View.GONE);
                      txtWallOth.setText("");
@@ -633,6 +636,7 @@
                      lineRoof.setVisibility(View.VISIBLE);
 //                     secRoofOth.setVisibility(View.VISIBLE);
 //                     lineRoofOth.setVisibility(View.VISIBLE);
+
                      secWall.setVisibility(View.VISIBLE);
                      lineWall.setVisibility(View.VISIBLE);
 //                     secWallOth.setVisibility(View.VISIBLE);
@@ -1797,7 +1801,6 @@
              dtpVDate.setText(item.getVDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getVDate()));
              spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item.getVStatus()));
              txtVStatusOth.setText(item.getVStatusOth());
-//             txtRnd.setText(item.getRnd());
              spnWSDrink.setSelection(Global.SpinnerItemPositionAnyLength(spnWSDrink, item.getWSDrink()));
              txtWSDrinkOth.setText(item.getWSDrinkOth());
              spnWSCook.setSelection(Global.SpinnerItemPositionAnyLength(spnWSCook, item.getWSCook()));

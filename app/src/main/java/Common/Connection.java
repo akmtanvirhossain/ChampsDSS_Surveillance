@@ -594,6 +594,65 @@ public class Connection extends SQLiteOpenHelper {
         return resp;
     }
 
+    public String DownloadJSON_InsertOnly(String SQL, String TableName, String ColumnList, String UniqueField) {
+        String WhereClause = "";
+        int varPos = 0;
+
+        String response = "";
+        String resp = "";
+
+        try {
+            DownloadDataJSON dload = new DownloadDataJSON();
+            response = dload.execute(SQL).get();
+
+            //Process Response
+            DownloadClass d = new DownloadClass();
+            Gson gson = new Gson();
+            Type collType = new TypeToken<DownloadClass>() {
+            }.getType();
+            DownloadClass responseData = gson.fromJson(response, collType);
+
+            String UField[] = UniqueField.split(",");
+            String VarList[] = ColumnList.split(",");
+
+            List<String> dataStatus = new ArrayList<>();
+
+            for (int i = 0; i < responseData.getdata().size(); i++) {
+                String VarData[] = split(responseData.getdata().get(i).toString(), '^');
+
+                SQL = "";
+
+                //Insert command
+                for (int r = 0; r < VarList.length; r++) {
+                    if (r == 0) {
+                        SQL = "Insert into " + TableName + "(" + ColumnList + ")Values(";
+                        SQL += "'" + VarData[r].toString() + "'";
+                    } else {
+                        SQL += ",'" + VarData[r].toString() + "'";
+                    }
+                }
+                SQL += ")";
+
+                Save(SQL);
+
+                dataStatus.add(WhereClause);
+            }
+
+
+            //Status back to server
+            if (dataStatus.size() > 0) {
+
+            }
+
+
+        } catch (Exception e) {
+            resp = e.getMessage();
+            e.printStackTrace();
+        }
+
+        return resp;
+    }
+
     public String DownloadJSON_UpdateServer(String SQL, String TableName, String ColumnList, String UniqueField) {
         String WhereClause = "";
         int varPos = 0;
@@ -1029,7 +1088,7 @@ public class Connection extends SQLiteOpenHelper {
         }
         cur_H.close();
 
-        Res = DownloadJSON(SQLString, TableName, VariableList, UniqueField);
+        Res = DownloadJSON_InsertOnly(SQLString, TableName, VariableList, UniqueField);
     }
 
     //done

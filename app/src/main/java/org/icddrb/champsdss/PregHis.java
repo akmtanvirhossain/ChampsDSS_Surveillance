@@ -1345,10 +1345,10 @@
              txtMarMon.requestFocus(); 
              return;	
            }
-         if (Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "9999" : txtMarYear.getText().toString()) == 9999)
-         {
-
-         }
+//         if (Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "9999" : txtMarYear.getText().toString()) == 9999)
+//         {
+//
+//         }
          else if(txtMarYear.getText().toString().length()==0 & secMarMon.isShown())
            {
              Connection.MessageBox(PregHis.this, "Required field: বছর.");
@@ -1556,8 +1556,8 @@
          {
              Q106A=0;
              Q106B=0;
-             Q108A=0;
-             Q108B=0;
+//             Q108A=0;
+//             Q108B=0;
          }
          if(rdoGaveBirth1.isChecked())
          {
@@ -1582,7 +1582,7 @@
              else
              {
                  Q110A=0;
-                 Q110A=0;
+                 Q110B=0;
              }
          }
          if(rdoGaveBirth1.isChecked())

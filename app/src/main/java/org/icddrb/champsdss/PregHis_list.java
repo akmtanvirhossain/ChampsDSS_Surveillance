@@ -135,7 +135,6 @@ package org.icddrb.champsdss;
                          Intent intent = new Intent(getApplicationContext(), PregHis.class);
                          intent.putExtras(IDbundle);
                          startActivityForResult(intent, 1);
-
              }});
 
 

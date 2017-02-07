@@ -77,9 +77,10 @@
         <TextView android:id="@+id/lblMarriageStatus" android:text="১০০." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblMarriageStatus" android:text="খানা রেজিস্ট্রেশন ফর্ম চেক করুন ,এই খানায় কি কোন ৫০ বছরের নীচে মহিলা আছে যিনি বিবাহিত অথবা কখনও বিবাহ হয়েছিল ?" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <RadioGroup android:id="@+id/rdogrpMarriageStatus" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp">
-         
-           <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dp" android:textSize="20sp" android:id="@+id/rdoMarriageStatus1" android:text="হ্যাঁ"/>
-           <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dp" android:textSize="20sp" android:id="@+id/rdoMarriageStatus2" android:text="না"/>
+
+            <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dp" android:textSize="20sp" android:id="@+id/rdoMarriageStatus1" android:text="হ্যাঁ"/>
+
+            <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dp" android:textSize="20sp" android:id="@+id/rdoMarriageStatus2" android:text="না"/>
         </RadioGroup>
     </LinearLayout>
     <View android:id="@+id/lineMarriageStatus" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
@@ -97,7 +98,8 @@
     </LinearLayout>
     <View android:id="@+id/linelbl04" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl103" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl103" android:text="১০৩.  আপনি কোন সালের কোন মাসে বিয়ে করেছেন ? (বছর এবং মাস লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl103a" android:text="১০৩." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl103" android:text="আপনি কোন সালের কোন মাসে বিয়ে করেছেন ? (বছর এবং মাস লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
     </LinearLayout>
     <View android:id="@+id/linelbl103" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -146,7 +148,8 @@
     </LinearLayout>
     <View android:id="@+id/lineChildLivWWo" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl106" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl106" android:text="১০৬.  কয়জন ছেলে/মেয়ে আপনার সাথে থাকে? (কোন ছেলে বা মেয়ে সাথে না থাকলে, ’০০’ লিখুন )" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl106b" android:text="১০৬." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl106" android:text="কয়জন ছেলে/মেয়ে আপনার সাথে থাকে? (কোন ছেলে বা মেয়ে সাথে না থাকলে, ’০০’ লিখুন )" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
     </LinearLayout>
     <View android:id="@+id/linelbl106" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -178,7 +181,8 @@
     </LinearLayout>
     <View android:id="@+id/lineChldLivOut" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl108" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl108" android:text="১০৮.  কয়জন জীবিত ছেলে আছে, যারা আপনার সাথে থাকে না? এবং কয়জন জীবিত মেয়ে আছে যারা আপনার সাথে থাকে না? (বসবাস করে না এমন ছেলে বা মেয়ে না থাকলে, ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl108b" android:text="১০৮." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl108" android:text="কয়জন জীবিত ছেলে আছে, যারা আপনার সাথে থাকে না? এবং কয়জন জীবিত মেয়ে আছে যারা আপনার সাথে থাকে না? (বসবাস করে না এমন ছেলে বা মেয়ে না থাকলে, ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
     </LinearLayout>
     <View android:id="@+id/linelbl108" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -198,6 +202,7 @@
         <TextView android:id="@+id/VlblDaugLivOut" android:text="b. অন্য কোথাও থাকে এমন মেয়ের সংখ্যা" android:layout_width="340sp" android:layout_height="wrap_content" android:textSize="20sp" />
          <EditText android:id="@+id/txtDaugLivOut" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
+    <View android:id="@+id/lineSonLivOut1" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secChldDie" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblChldDie" android:text="১০৯." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblChldDie" android:text="আপনি কি কখনও এমন কোন ছেলে বা মেয়ে জন্ম দিয়েছেন যে জীবিত জন্ম নিয়েছিল কিন্তু পরে মারা গিয়েছে ?" android:layout_width="340sp" android:layout_height="wrap_content" android:textSize="20sp" />
@@ -212,12 +217,13 @@
         <View android:id="@+id/lineDaugLivOut" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
         <LinearLayout android:id="@+id/seclbl109" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-            <TextView android:id="@+id/lblHlbl109" android:text="যদি উত্তর না হয়, যাচাই করুন: এমন কোন ছেলে বা মেয়ে, যে জন্ম নেয়ার পর কেঁদেছিল বা যার মধ্যে জন্মের পর জীবনের লক্ষণ দেখা গিয়েছিল, কিন্তু জন্মের পর কিছুক্ষন বা কয়েক ঘণ্টা বা কয়েক দিন মাত্র জীবিত?" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+            <TextView android:id="@+id/lblHlbl109" android:text="১০৯ এ যদি উত্তর না হয়, যাচাই করুন: এমন কোন ছেলে বা মেয়ে, যে জন্ম নেয়ার পর কেঁদেছিল বা যার মধ্যে জন্মের পর জীবনের লক্ষণ দেখা গিয়েছিল, কিন্তু জন্মের পর কিছুক্ষন বা কয়েক ঘণ্টা বা কয়েক দিন মাত্র জীবিত?" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
         </LinearLayout>
         <View android:id="@+id/linelbl109" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
     <LinearLayout android:id="@+id/seclbl110" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl110" android:text="১১০.  সর্বমোট কয়জন ছেলে মারা গেছে?  কয়জন মেয়ে মারা গেছে? (কোন ছেলে বা মেয়ে মারা না গিয়ে থাকলে,  ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl110b" android:text="১১০." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl110" android:text="সর্বমোট কয়জন ছেলে মারা গেছে?  কয়জন মেয়ে মারা গেছে? (কোন ছেলে বা মেয়ে মারা না গিয়ে থাকলে,  ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
     </LinearLayout>
     <View android:id="@+id/linelbl110" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -239,7 +245,8 @@
     </LinearLayout>
     <View android:id="@+id/lineGirlDied" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl111" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl111" android:text="১১১.  কোন কোন গর্ভাবস্থা পূর্ণ মেয়াদের আগেই গর্ভনষ্ট বা গর্ভপাত হিসাবে শেষ হয়ে যেতে পারে। আবার কোন কোন গর্ভাবস্থা মৃতজন্ম বা মৃতশিশুর জন্ম দিতে পারে অর্থ্যাৎ যার জন্মের সময় জীবনের কোন লক্ষণই থাকে না।" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl111a" android:text="১১১." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl111" android:text="কোন কোন গর্ভাবস্থা পূর্ণ মেয়াদের আগেই গর্ভনষ্ট বা গর্ভপাত হিসাবে শেষ হয়ে যেতে পারে। আবার কোন কোন গর্ভাবস্থা মৃতজন্ম বা মৃতশিশুর জন্ম দিতে পারে অর্থ্যাৎ যার জন্মের সময় জীবনের কোন লক্ষণই থাকে না।" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
     </LinearLayout>
     <View android:id="@+id/linelbl111" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secNotLivBrth" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
@@ -261,7 +268,8 @@
     <View android:id="@+id/lineTotLB" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
     <LinearLayout android:id="@+id/seclbl113" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl113" android:text="১১৩.  (প্রশ্ন ১০৬, ১০৮, ১১০, এবং ১১২ উত্তরগুলো যোগ করুন এবং যোগফল পাশের ঘরে লিখুন।)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl113a" android:text="১১৩." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl113" android:text="(প্রশ্ন ১০৬, ১০৮, ১১০, এবং ১১২ উত্তরগুলো যোগ করুন এবং যোগফল পাশের ঘরে লিখুন।)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
     </LinearLayout>
     <View android:id="@+id/linelbl113" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secTotPregOut" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
@@ -271,6 +279,7 @@
     </LinearLayout>
 
     <View android:id="@+id/lineTotPregOut" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
+
     <LinearLayout android:id="@+id/secCurPreg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblCurPreg" android:text="১১৪." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblCurPreg" android:text="আপনি কি বর্তমানে গর্ভবতী ?" android:layout_width="340sp" android:layout_height="wrap_content" android:textSize="20sp" />

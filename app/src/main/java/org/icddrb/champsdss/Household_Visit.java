@@ -327,9 +327,9 @@ import Common.Global;
                      secMobileNo1.setVisibility(View.VISIBLE);
                      lineMobileNo1.setVisibility(View.VISIBLE);
 
-                     secMobileNo2.setVisibility(View.VISIBLE);
-                     lineMobileNo2.setVisibility(View.VISIBLE);
-                     txtMobileNo2.setVisibility(View.VISIBLE);
+                     secMobileNo2.setVisibility(View.GONE);
+                     lineMobileNo2.setVisibility(View.GONE);
+                     txtMobileNo2.setVisibility(View.GONE);
 
                      secHHHead.setVisibility(View.VISIBLE);
                      lineHHHead.setVisibility(View.VISIBLE);
@@ -354,9 +354,9 @@ import Common.Global;
                      lineMobileNo2.setVisibility(View.GONE);
                      txtMobileNo2.setText("");
 
-                     secHHHead.setVisibility(View.GONE);
-                     lineHHHead.setVisibility(View.GONE);
-                     txtHHHead.setText("");
+//                     secHHHead.setVisibility(View.GONE);
+//                     lineHHHead.setVisibility(View.GONE);
+//                     txtHHHead.setText("");
 
                      secTotMem.setVisibility(View.GONE);
                      lineTotMem.setVisibility(View.GONE);
@@ -469,7 +469,7 @@ import Common.Global;
          secReligion.setVisibility(View.GONE);
          secMobileNo1.setVisibility(View.GONE);
          secMobileNo2.setVisibility(View.GONE);
-         secHHHead.setVisibility(View.GONE);
+//         secHHHead.setVisibility(View.GONE);
          secTotMem.setVisibility(View.GONE);
          secTotRWo.setVisibility(View.GONE);
 
@@ -550,6 +550,12 @@ import Common.Global;
              txtHH.requestFocus(); 
              return;	
            }
+         else if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
+         {
+             Connection.MessageBox(Household_Visit.this, "Required field: খানা প্রধানের নাম.");
+             txtHHHead.requestFocus();
+             return;
+         }
          else if(spnReligion.getSelectedItemPosition()==0  & secReligion.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: ধর্ম.");
@@ -568,12 +574,7 @@ import Common.Global;
              txtMobileNo2.requestFocus();
              return;
            }
-         else if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: খানা প্রধানের নাম.");
-             txtHHHead.requestFocus(); 
-             return;	
-           }
+
          else if(txtTotMem.getText().toString().length()==0 & secTotMem.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: মোট সদস্য সংখ্যা.");

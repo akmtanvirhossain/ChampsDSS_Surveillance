@@ -28,8 +28,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+ import android.widget.Toast;
 
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,19 +41,19 @@ import Common.Global;
  import static org.icddrb.champsdss.R.id.txtMSlNo;
  import static org.icddrb.champsdss.R.id.txtTotMem;
 
-public class Household_list extends Activity {
+public class Household_list extends Activity  {
     boolean networkAvailable=false;
-    Location currentLocation; 
+    Location currentLocation;
     double currentLatitude,currentLongitude;
      Spinner spnUnion;
      Spinner spnVill;
      Spinner spnBari;
     //Disabled Back/Home key
     //--------------------------------------------------------------------------------------------------
-    @Override 
+    @Override
     public boolean onKeyDown(int iKeyCode, KeyEvent event)
     {
-        if(iKeyCode == KeyEvent.KEYCODE_BACK || iKeyCode == KeyEvent.KEYCODE_HOME) 
+        if(iKeyCode == KeyEvent.KEYCODE_BACK || iKeyCode == KeyEvent.KEYCODE_HOME)
              { return false; }
         else { return true;  }
     }
@@ -101,9 +102,11 @@ public class Household_list extends Activity {
          IDbundle = getIntent().getExtras();
          CurrentVillage = IDbundle.getString("Village");
          CurrentVCode   = IDbundle.getString("VCode");
-         VILL = IDbundle.getString("Vill");
-         BARI = IDbundle.getString("Bari");
+//         VILL = IDbundle.getString("Vill");
+//         BARI = IDbundle.getString("Bari");
          HH = IDbundle.getString("HH");
+
+
 
          TableName = "Household";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
@@ -203,6 +206,8 @@ public class Household_list extends Activity {
                  String[] V = Connection.split(spnVill.getSelectedItem().toString(),'-');
                  spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='"+ V[0] +"'"));
                  VILL=V[0];
+                 DataSearch(VILL,"");//Bari=""
+
              }
 
              @Override
@@ -221,6 +226,7 @@ public class Household_list extends Activity {
                  }
                  else if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase("all bari"))
                  {
+                     DataSearch(VILL,"");//Bari=""
                  }
                  else
                  {
@@ -313,6 +319,8 @@ public class Household_list extends Activity {
              }
          });
 
+
+
          DataSearch(VILL,BARI);
 
      }
@@ -322,6 +330,7 @@ public class Household_list extends Activity {
          return;
      }
  }
+
 
     private void HHListForm(final String VILL, final String BARI) {
         try {
@@ -550,9 +559,17 @@ public class Household_list extends Activity {
      {
        try
         {
-     
+
            Household_DataModel d = new Household_DataModel();
-             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' ";
+            String SQL ;
+            if(Bari.equals(""))
+            {
+                SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' ";
+            }else
+            {
+                SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' ";
+            }
+
              List<Household_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -594,7 +611,7 @@ public class Household_list extends Activity {
      }
 
 
- public class DataListAdapter extends BaseAdapter 
+ public class DataListAdapter extends BaseAdapter
  {
      private Context context;
      private SimpleAdapter dataAdap;
@@ -606,7 +623,7 @@ public class Household_list extends Activity {
      public View getView(final int position, View convertView, ViewGroup parent) {
          LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
          if (convertView == null) {
- 	        convertView = inflater.inflate(R.layout.household_row, null); 
+ 	        convertView = inflater.inflate(R.layout.household_row, null);
  	        }
          LinearLayout   secListRow = (LinearLayout)convertView.findViewById(R.id.secListRow);
 
@@ -618,8 +635,14 @@ public class Household_list extends Activity {
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
          TotMem.setText(o.get("TotMem"));
+         Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+VILL+"' AND Bari='"+BARI+"' AND HH='"+o.get("HH")+"'"));
 
-         if (o.get("TotMem").length() == 0) {
+         if(!Visit.getText().equals("1"))
+         {
+             Visit.setTextColor(Color.RED);
+         }
+
+         if (o.get("TotMem").length() == 0 && Visit.getText().length()==0) {
              HH.setTextColor(Color.RED);
              HHHead.setTextColor(Color.RED);
          } else {
@@ -627,7 +650,7 @@ public class Household_list extends Activity {
              HHHead.setTextColor(Color.BLACK);
          }
 
-         Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+VILL+"' AND Bari='"+BARI+"' AND HH='"+o.get("HH")+"'"));
+
          if(Integer.valueOf(o.get("sl"))%2==0)
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
          else
@@ -643,7 +666,8 @@ public class Household_list extends Activity {
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);
                f1.putExtras(IDbundle);
-               startActivity(f1);
+                startActivityForResult(f1, 1);
+               //startActivity(f1);
             }
           });
 

@@ -38,6 +38,7 @@ import Common.Connection;
 import Common.Global;
  import Common.Utility;
 
+ import static org.icddrb.champsdss.R.id.lblHeading;
  import static org.icddrb.champsdss.R.id.txtMSlNo;
  import static org.icddrb.champsdss.R.id.txtTotMem;
 
@@ -580,6 +581,7 @@ public class Household_list extends Activity  {
              ListView list = (ListView)findViewById(R.id.lstData);
              HashMap<String, String> map;
              Integer i = 0;
+             int totalHH=0;
              for(Household_DataModel item : data){
                  map = new HashMap<String, String>();
                  map.put("Vill", item.getVill());
@@ -598,8 +600,10 @@ public class Household_list extends Activity  {
                  map.put("Rnd", item.getRnd());
                  map.put("sl", i.toString());
                  i+=1;
+                 totalHH+=1;
                  dataList.add(map);
              }
+             lblHeading.setText("খানার তালিকা (মোট খানা:)"+totalHH);
              dataAdapter = new SimpleAdapter(Household_list.this, dataList, R.layout.household_list,new String[] {"rowsec"},
                            new int[] {R.id.secListRow});
              list.setAdapter(new DataListAdapter(this, dataAdapter));
@@ -641,10 +645,17 @@ public class Household_list extends Activity  {
 
          if(!Visit.getText().equals("1"))
          {
-//             secListRow.setBackgroundColor(Color.parseColor("#0000ff"));
-             Visit.setTextColor(Color.BLUE);
-             HH.setTextColor(Color.BLUE);
-             HHHead.setTextColor(Color.BLUE);
+//             secListRow.setBackgroundColor(Color.BLUE);
+             HH.setBackgroundColor(Color.BLUE);
+             HHHead.setBackgroundColor(Color.BLUE);
+             TotMem.setBackgroundColor(Color.BLUE);
+             Visit.setBackgroundColor(Color.BLUE);
+
+             Visit.setTextColor(Color.WHITE);
+             HH.setTextColor(Color.WHITE);
+             HHHead.setTextColor(Color.WHITE);
+             TotMem.setTextColor(Color.WHITE);
+
          }
          else  if(Visit.getText().equals("1"))
          {
@@ -655,6 +666,11 @@ public class Household_list extends Activity  {
          }
 
          if (o.get("TotMem").length() == 0 && Visit.getText().length()==0) {
+             HH.setBackgroundColor(Color.TRANSPARENT);
+             HHHead.setBackgroundColor(Color.TRANSPARENT);
+             TotMem.setBackgroundColor(Color.TRANSPARENT);
+             Visit.setBackgroundColor(Color.TRANSPARENT);
+
              HH.setTextColor(Color.RED);
              HHHead.setTextColor(Color.RED);
 

@@ -272,6 +272,8 @@ import Common.Global;
          if(status.length()==0) {
              Intent returnIntent = new Intent();
              returnIntent.putExtra("res", "bari");
+             returnIntent.putExtra("vid", txtVill.getText().toString());
+             returnIntent.putExtra("bid", txtBari.getText().toString());
              setResult(Activity.RESULT_OK, returnIntent);
 
              Connection.MessageBox(Baris.this, "Saved Successfully");

@@ -11,13 +11,13 @@
     <LinearLayout android:id="@+id/secVill" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblVill" android:text="" android:visibility="gone" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblVill" android:text="গ্রাম" android:layout_width="150sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <EditText android:id="@+id/txtVill" android:maxLength="3" android:layout_width="100sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
+        <EditText android:id="@+id/txtVill" android:maxLength="3" android:layout_width="80sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineVill" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secBari" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblBari" android:text="" android:visibility="gone" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblBari" android:text="বাড়ি" android:layout_width="150sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <EditText android:id="@+id/txtBari" android:maxLength="4" android:layout_width="100sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
+        <EditText android:id="@+id/txtBari" android:maxLength="4" android:layout_width="80sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineBari" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secCluster" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
@@ -35,13 +35,13 @@
     <LinearLayout android:id="@+id/secBariName" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblBariName" android:text="" android:visibility="gone" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblBariName" android:text="বাড়ির নাম" android:layout_width="150sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <EditText android:id="@+id/txtBariName" android:maxLength="100" android:layout_width="250sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
+        <EditText android:id="@+id/txtBariName" android:maxLength="100" android:layout_width="250sp" android:inputType="text|textCapWords" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineBariName" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secBariLoc" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblBariLoc" android:text="" android:visibility="gone" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblBariLoc" android:text="বাড়ির ঠিকানা" android:layout_width="150sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <EditText android:id="@+id/txtBariLoc" android:maxLength="100" android:layout_width="250sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
+        <EditText android:id="@+id/txtBariLoc" android:maxLength="100" android:layout_width="250sp" android:inputType="text|textCapWords" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineBariLoc" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
        <LinearLayout android:layout_width="fill_parent" android:paddingTop="20sp" android:layout_height="wrap_content" android:orientation="horizontal">

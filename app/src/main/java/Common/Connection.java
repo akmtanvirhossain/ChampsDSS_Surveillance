@@ -46,6 +46,9 @@ public class Connection extends SQLiteOpenHelper {
         super(context, DBLocation, null, DATABASE_VERSION);
         dbContext = context;
         ud_context = context;
+
+        //Save("Drop Table LastVillBari");
+        CreateTable("LastVillBari","Create table LastVillBari(Vill varchar(3), Bari varchar(4))");
     }
 
     //Split function

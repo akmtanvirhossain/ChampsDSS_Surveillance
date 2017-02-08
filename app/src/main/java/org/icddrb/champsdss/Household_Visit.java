@@ -34,9 +34,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
- import android.widget.Toast;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -731,10 +730,20 @@ import Common.Global;
              {
                  String VS = spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
                  if(VS.equals("1")){
+                     Intent returnIntent = new Intent();
+                     returnIntent.putExtra("res", "hh");
+                     setResult(Activity.RESULT_OK, returnIntent);
+
+                     finish();
+                     /*Intent f1;
+                     f1 = new Intent(getApplicationContext(), Member_list.class);
+                     f1.putExtras(IDbundle);
+                     startActivity(f1);*/
+
                      Intent f1;
                      f1 = new Intent(getApplicationContext(), Member_list.class);
                      f1.putExtras(IDbundle);
-                     startActivity(f1);
+                     startActivityForResult(f1, 1);
                  }else
                  {
                      Intent returnIntent = new Intent();

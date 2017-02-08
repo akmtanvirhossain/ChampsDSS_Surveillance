@@ -135,17 +135,22 @@ public class Member_list extends Activity {
                  adb.setNegativeButton("No", null);
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
-                         Bundle IDbundle = new Bundle();
+                         /*Bundle IDbundle = new Bundle();
                          IDbundle.putString("Vill", VILL);
                          IDbundle.putString("Bari", BARI);
                          IDbundle.putString("HH", HH);
-
+                         *//*
                          Intent intent = new Intent(getApplicationContext(), Household_list.class);
                          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                         intent.putExtras(IDbundle);
+                         //intent.putExtras(IDbundle);
                          getApplicationContext().startActivity(intent);
                          finish();
 //                        startActivity(new Intent(Member_list.this, Household_list.class));
+                         */
+                         Intent returnIntent = new Intent();
+                         returnIntent.putExtra("res", "hh");
+                         setResult(Activity.RESULT_OK, returnIntent);
+                         finish();
                      }});
                  adb.show();
              }});
@@ -284,6 +289,7 @@ public class Member_list extends Activity {
          try {
              final Dialog dialog = new Dialog(Member_list.this);
              dialog.setTitle("Member Name Form");
+             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
              dialog.setContentView(R.layout.member_name);
              dialog.setCanceledOnTouchOutside(true);
              dialog.setCancelable(true);
@@ -338,7 +344,7 @@ public class Member_list extends Activity {
                      DataSearch(VILL,BARI,HH);
                      txtMSlNo.setText(MemberSerial(VILL,BARI,HH));
                      txtName.setText("");
-                     txtMSlNo.requestFocus();
+                     txtName.requestFocus();
 
                  }
              });

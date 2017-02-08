@@ -623,7 +623,6 @@ import Common.Global;
              spnResp.requestFocus();
              return;
          }
-
 //         else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
 //           {
 //             Connection.MessageBox(Household_Visit.this, "Required field: তালিকাভুক্তির ধরন.");

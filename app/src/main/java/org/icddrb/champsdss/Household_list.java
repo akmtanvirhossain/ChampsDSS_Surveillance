@@ -534,6 +534,7 @@ public class Household_list extends Activity  {
          //});
 
          //dialog.show();
+
      }
  @Override
  protected void onActivityResult(int requestCode, int resultCode, Intent data) {

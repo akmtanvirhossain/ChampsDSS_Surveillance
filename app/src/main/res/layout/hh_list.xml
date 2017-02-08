@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:scrollbars="vertical">
 
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="45sp" android:orientation="horizontal" android:background="@color/pageHeadingBack">
+        <ImageButton android:id="@+id/cmdBack" android:background="@color/pageHeadingBack" android:src="@drawable/back" android:layout_width="50sp" android:layout_height="match_parent"/>
+        <TextView android:id="@+id/lblHeading" android:text="নতুন খানার তালিকা"  android:paddingLeft="10sp" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
+    </LinearLayout>
+    <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -52,7 +58,7 @@
                 <EditText
                     android:id="@+id/txtName"
                     style="@style/customEdit"
-                    android:layout_width="250sp"
+                    android:layout_width="320sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="0sp"
                     android:gravity="top|left"

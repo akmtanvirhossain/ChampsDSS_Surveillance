@@ -209,7 +209,6 @@ import Common.Global;
                  adb.show();
              }});
 
-
          seclbl02=(LinearLayout)findViewById(R.id.seclbl02);
          linelbl02=(View)findViewById(R.id.linelbl02);
          seclbl01=(LinearLayout)findViewById(R.id.seclbl01);
@@ -593,7 +592,7 @@ import Common.Global;
              txtTotRWo.requestFocus(); 
              return;	
            }
-         else if(Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "1" : txtTotRWo.getText().toString()) < 1 || Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "10" : txtTotRWo.getText().toString()) > 10)
+         else if(Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "0" : txtTotRWo.getText().toString()) < 0 || Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "10" : txtTotRWo.getText().toString()) > 10)
            {
              Connection.MessageBox(Household_Visit.this, "Value should be between 1 and 10(মোট মহিলা).");
              txtTotRWo.requestFocus(); 
@@ -702,7 +701,6 @@ import Common.Global;
          //objSave.setLat(Double.toString(currentLatitude));
          //objSave.setLon(Double.toString(currentLongitude));
          String status = objSave.SaveUpdateData(this);
-
 
          //*************************************visit save by sakib************************************************
          Visits_DataModel objSave1 = new Visits_DataModel();

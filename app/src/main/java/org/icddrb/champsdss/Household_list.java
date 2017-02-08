@@ -204,7 +204,8 @@ public class Household_list extends Activity  {
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                  if (spnVill.getSelectedItemPosition()==0) return;
                  String[] V = Connection.split(spnVill.getSelectedItem().toString(),'-');
-                 spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='"+ V[0] +"'"));
+                 spnBari.setAdapter(C.getArrayAdapter("Select '' union select Bari||'-'||BariName from Baris b where b.Vill='"+ V[0] +"'"));
+//                 spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='"+ V[0] +"'"));
                  VILL=V[0];
                  DataSearch(VILL,"");//Bari=""
 
@@ -331,11 +332,10 @@ public class Household_list extends Activity  {
      }
  }
 
-
     private void HHListForm(final String VILL, final String BARI) {
         try {
             final Dialog dialog = new Dialog(Household_list.this);
-            dialog.setTitle("নতুন খানার তালিকা");
+//            dialog.setTitle("নতুন খানার তালিকা");
             dialog.setContentView(R.layout.hh_list);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setCancelable(true);
@@ -544,7 +544,8 @@ public class Household_list extends Activity  {
          if(data.getExtras().getString("res").equals("bari")) {
              if (spnVill.getSelectedItemPosition() == 0) return;
              String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
-             spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='" + V[0] + "'"));
+             spnBari.setAdapter(C.getArrayAdapter("Select '' union select Bari||'-'||BariName from Baris b where b.Vill='" + V[0] + "'"));
+//             spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='" + V[0] + "'"));
          }else if(data.getExtras().getString("res").equals("hh")) {
              if (spnVill.getSelectedItemPosition() == 0 | spnBari.getSelectedItemPosition() == 0) return;
              String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
@@ -639,12 +640,23 @@ public class Household_list extends Activity  {
 
          if(!Visit.getText().equals("1"))
          {
-             Visit.setTextColor(Color.RED);
+//             secListRow.setBackgroundColor(Color.parseColor("#0000ff"));
+             Visit.setTextColor(Color.BLUE);
+             HH.setTextColor(Color.BLUE);
+             HHHead.setTextColor(Color.BLUE);
+         }
+         else  if(Visit.getText().equals("1"))
+         {
+//           secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+             Visit.setTextColor(Color.BLACK);
+             HH.setTextColor(Color.BLACK);
+             HHHead.setTextColor(Color.BLACK);
          }
 
          if (o.get("TotMem").length() == 0 && Visit.getText().length()==0) {
              HH.setTextColor(Color.RED);
              HHHead.setTextColor(Color.RED);
+
          } else {
              HH.setTextColor(Color.BLACK);
              HHHead.setTextColor(Color.BLACK);

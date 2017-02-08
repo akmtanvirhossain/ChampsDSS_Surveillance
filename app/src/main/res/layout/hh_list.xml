@@ -11,6 +11,7 @@
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
 
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

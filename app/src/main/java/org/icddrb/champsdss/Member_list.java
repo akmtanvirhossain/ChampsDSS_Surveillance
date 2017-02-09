@@ -193,6 +193,38 @@ public class Member_list extends Activity {
                  startActivity(f1);
              }
          });
+         Button btnPregHis = (Button) findViewById(R.id.btnPregHis);
+         btnPregHis.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                     Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
+                     return;
+                 }
+                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 {
+                     Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
+                     return;
+                 }
+                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
+
+                 if (Integer.valueOf(infoMiss) > 0) {
+
+                     Connection.MessageBox(Member_list.this, infoMiss + " জন সদস্যের তথ্য আপডেট করা হয় নাই");
+
+                     return;
+                 }
+                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
+                 Intent f1;
+                 f1 = new Intent(getApplicationContext(), PregHis.class);
+                 IDbundle.putString("Vill", VILL);
+                 IDbundle.putString("Bari", BARI);
+                 IDbundle.putString("HH", HH);
+                 f1.putExtras(IDbundle);
+                 startActivity(f1);
+
+             }
+         });
 
          Button btnMemberName = (Button) findViewById(R.id.btnMemberName);
          btnMemberName.setOnClickListener(new View.OnClickListener() {

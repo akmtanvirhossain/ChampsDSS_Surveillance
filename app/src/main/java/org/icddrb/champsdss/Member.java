@@ -754,6 +754,7 @@ import Common.Global;
              return;	
            }
 
+
          int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
          int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString())*365;
          if(abs(ageday-ageyear)>30){

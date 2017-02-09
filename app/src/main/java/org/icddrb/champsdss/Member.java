@@ -36,21 +36,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import org.joda.time.Days;
-import org.joda.time.LocalDate;
-import org.joda.time.Months;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import Common.Connection;
 import Common.Global;
-
- import static java.lang.Math.abs;
 
  public class Member extends Activity {
     boolean networkAvailable=false;
@@ -756,13 +748,13 @@ import Common.Global;
 
 
          int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
-         int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString())*365;
-         if(abs(ageday-ageyear)>30){
-             Connection.MessageBox(Member.this, "বয়স এর সাথে জন্মতারিখ মিল নেই");
+         int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString());
+         if(ageday/365!=ageyear){
+             Connection.MessageBox(Member.this, "বয়স এর সাথে জন্মতারিখ মিল নেই, বয়স "+ ageday/365 +" বছর হতে হবে।");
              return;
          }
 
-         SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+         /*SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
          Date date = format1.parse(dtpBDate.getText().toString());
          String intMonth = (String) android.text.format.DateFormat.format("MM", date); //06
          String year = (String) android.text.format.DateFormat.format("yyyy", date); //2013
@@ -778,10 +770,10 @@ import Common.Global;
              Connection.MessageBox(Member.this, "Required field: বয়স এর সাথে জন্মতারিখ মিল নেই");
              txtAgeY.requestFocus();
              return;
-         }
+         }*/
          else if(Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "0" : txtAgeY.getText().toString()) < 0 || Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "110" : txtAgeY.getText().toString()) > 110)
            {
-             Connection.MessageBox(Member.this, "Value should be between 0 and 110(বয়স (পূর্ণ বছরে)).");
+             Connection.MessageBox(Member.this, "সদস্যের বয়স ০ থেকে ১১০ এর ভিতরে হতে হবে।");
              txtAgeY.requestFocus(); 
              return;	
            }
@@ -916,7 +908,7 @@ import Common.Global;
                  return;
          }
 
-         else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
+         /*else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
              Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
              spnSp1.requestFocus();
              return;
@@ -990,7 +982,7 @@ import Common.Global;
              Connection.MessageBox(Member.this, "৩য় স্বামী/স্ত্রী সিরিয়াল নং  এবং ৪র্থ স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
              spnSp1.requestFocus();
              return;
-         }
+         }*/
          else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("10") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
              Connection.MessageBox(Member.this, "খানা প্রধান ২ জন হতে পারবেনা");
              txtName.requestFocus();

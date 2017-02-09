@@ -79,6 +79,9 @@ public class LoginActivity extends Activity {
                     Connection.MessageBox(LoginActivity.this,"Internet connection is not available for building initial database.");
                     return;
                 }
+            }else
+            {
+                C.CreateTable("LastVillBari","Create table LastVillBari(Vill varchar(3), Bari varchar(4))");
             }
 
 

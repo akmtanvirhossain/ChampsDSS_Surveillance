@@ -50,6 +50,8 @@ import java.util.List;
 import Common.Connection;
 import Common.Global;
 
+ import static java.lang.Math.abs;
+
  public class Member extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
@@ -573,12 +575,16 @@ import Common.Global;
          spnSp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 String[] d;
                  if (position > 0)
                  {
-                     spnSp2.setVisibility(View.VISIBLE);
-                     lineSp2.setVisibility(View.VISIBLE);
-                     secSp2.setVisibility(View.VISIBLE);
-                     lineSp2.setVisibility(View.VISIBLE);
+                     d = spnSp1.getSelectedItem().toString().split("-");
+                     if(!d.equals("00")) {
+                         spnSp2.setVisibility(View.VISIBLE);
+                         lineSp2.setVisibility(View.VISIBLE);
+                         secSp2.setVisibility(View.VISIBLE);
+                         lineSp2.setVisibility(View.VISIBLE);
+                     }
                  }else{
                      spnSp2.setVisibility(View.GONE);
                      lineSp2.setVisibility(View.GONE);
@@ -598,10 +604,14 @@ import Common.Global;
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                  if (position > 0)
                  {
-                     spnSp3.setVisibility(View.VISIBLE);
-                     lineSp3.setVisibility(View.VISIBLE);
-                     secSp3.setVisibility(View.VISIBLE);
-                     lineSp3.setVisibility(View.VISIBLE);
+                     String[] d;
+                     d = spnSp2.getSelectedItem().toString().split("-");
+                     if(!d.equals("00")) {
+                         spnSp3.setVisibility(View.VISIBLE);
+                         lineSp3.setVisibility(View.VISIBLE);
+                         secSp3.setVisibility(View.VISIBLE);
+                         lineSp3.setVisibility(View.VISIBLE);
+                     }
                  }else{
                      spnSp3.setVisibility(View.GONE);
                      lineSp3.setVisibility(View.GONE);
@@ -621,10 +631,14 @@ import Common.Global;
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                  if (position > 0)
                  {
-                     spnSp4.setVisibility(View.VISIBLE);
-                     lineSp4.setVisibility(View.VISIBLE);
-                     secSp4.setVisibility(View.VISIBLE);
-                     lineSp4.setVisibility(View.VISIBLE);
+                     String[] d;
+                     d = spnSp3.getSelectedItem().toString().split("-");
+                     if(!d.equals("00")) {
+                         spnSp4.setVisibility(View.VISIBLE);
+                         lineSp4.setVisibility(View.VISIBLE);
+                         secSp4.setVisibility(View.VISIBLE);
+                         lineSp4.setVisibility(View.VISIBLE);
+                     }
                  }else{
                      spnSp4.setVisibility(View.GONE);
                      lineSp4.setVisibility(View.GONE);
@@ -740,6 +754,13 @@ import Common.Global;
              return;	
            }
 
+         int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
+         int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString())*365;
+         if(abs(ageday-ageyear)>30){
+             Connection.MessageBox(Member.this, "বয়স এর সাথে জন্মতারিখ মিল নেই");
+             return;
+         }
+
          SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
          Date date = format1.parse(dtpBDate.getText().toString());
          String intMonth = (String) android.text.format.DateFormat.format("MM", date); //06
@@ -752,7 +773,7 @@ import Common.Global;
          int days = Days.daysBetween(birthdate, now).getDays();
          // int xMonths = Integer.parseInt(months.toString());
          int mDays = (365 * Integer.valueOf(txtAgeY.getText().toString()));
-         if (Math.abs(days - mDays) > 30) {
+         if (abs(days - mDays) > 30) {
              Connection.MessageBox(Member.this, "Required field: বয়স এর সাথে জন্মতারিখ মিল নেই");
              txtAgeY.requestFocus();
              return;
@@ -763,6 +784,9 @@ import Common.Global;
              txtAgeY.requestFocus(); 
              return;	
            }
+
+
+
          else if(spnMoNo.getSelectedItemPosition()==0  & spnMoNo.isShown())
          {
              Connection.MessageBox(Member.this, "Required field: মায়ের সিরিয়াল নম্বর");

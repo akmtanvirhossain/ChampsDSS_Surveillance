@@ -115,6 +115,7 @@ public class MainMenu extends Activity {
                                         List<String> tableList = new ArrayList<String>();
                                         tableList.add("Baris");
                                         tableList.add("Household");
+                                        tableList.add("Visits");
                                         tableList.add("Member");
                                         tableList.add("SES");
                                         tableList.add("PregHis");

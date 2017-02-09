@@ -48,7 +48,6 @@ public class Connection extends SQLiteOpenHelper {
         ud_context = context;
 
         //Save("Drop Table LastVillBari");
-        CreateTable("LastVillBari","Create table LastVillBari(Vill varchar(3), Bari varchar(4))");
     }
 
     //Split function
@@ -1044,6 +1043,7 @@ public class Connection extends SQLiteOpenHelper {
             //Download data from server
             //------------------------------------------------------------------------------
             Sync_Download("Baris", DeviceID, "");
+
             //for surveillance
             //Sync_Download("Baris", DeviceID, "Cluster='"+ Cluster +"' and Block='"+ Block +"'");
 

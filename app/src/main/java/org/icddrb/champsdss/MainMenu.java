@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Common.Connection;
 import Common.Global;
 import Common.Tran_Download;
 
 public class MainMenu extends Activity {
 
-    static String USERID = "";
+    static String DEVICEID = "";
     Button cmdDataSync;
     Button cmdHHInterview;
     Button cmdMember;
@@ -32,7 +35,7 @@ public class MainMenu extends Activity {
             C = new Connection(this);
             g = Global.getInstance();
 
-            USERID = g.getDeviceNo();
+            DEVICEID = g.getDeviceNo();
             /*
             cmdHHInterview = (Button) findViewById(R.id.cmdHHInterview);
             cmdHHInterview.setOnClickListener(new View.OnClickListener() {
@@ -107,9 +110,8 @@ public class MainMenu extends Activity {
                                         Tran_Download td = new Tran_Download(MainMenu.this);
 
                                         //GPS Bari List
-                                        td.Sync_Download("Baris",USERID,"");
+                                        td.Sync_Download("Baris",DEVICEID,"");
 
-                                        /*
                                         List<String> tableList = new ArrayList<String>();
                                         tableList.add("Baris");
                                         tableList.add("Household");
@@ -117,8 +119,7 @@ public class MainMenu extends Activity {
                                         tableList.add("SES");
                                         tableList.add("PregHis");
 
-                                        //C.DataSync_UploadDownload(tableList, USERID);
-                                        */
+                                        C.Sync_Upload(tableList);
 
                                     } catch (Exception e) {
 

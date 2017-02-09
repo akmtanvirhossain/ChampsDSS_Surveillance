@@ -135,7 +135,7 @@ public class LoginActivity extends Activity {
                         if (networkAvailable == true)
                         {
                             //Retrieve data from server for checking local device
-                            String[] ServerVal  = Connection.split(C.ReturnResult("ReturnSingleValue","sp_ServerCheck '"+ UniqueID +"'"),',');
+                            String[] ServerVal  = Connection.split(C.ReturnResult("ReturnSingleValue","sp_ServerCheckDSS '"+ UniqueID +"'"),',');
                             String ServerDate   = ServerVal[0].toString();
                             String UpdateDT     = ServerVal[1].toString();
 

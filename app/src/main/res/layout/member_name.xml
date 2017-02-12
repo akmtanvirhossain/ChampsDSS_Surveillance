@@ -86,7 +86,7 @@
                     android:layout_marginRight="0sp"
                     android:gravity="top|left"
                     android:inputType="textMultiLine|textCapWords"
-                    android:maxLength="20"
+                    android:maxLength="100"
                     android:minHeight="40sp"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -101,7 +101,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="খানার সদস্যদের নাম (খানা প্রধানের নাম দিয়ে শুরু করুন)"
-                    android:textSize="20sp" />
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textSize="20sp"
+                    android:id="@+id/txtNameHint"/>
 
             </LinearLayout>
 

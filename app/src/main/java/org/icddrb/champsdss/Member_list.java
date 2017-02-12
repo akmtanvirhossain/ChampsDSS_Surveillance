@@ -13,7 +13,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.View;
+ import android.view.MotionEvent;
+ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -206,6 +207,18 @@ public class Member_list extends Activity {
                      Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
                      return;
                  }
+
+                 if(!C.Existence("Select Sex from Member  where Sex='2' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 {
+                     Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন মহিলা সদস্য এন্ট্রি করতে হবে.");
+                     return;
+                 }
+
+                 if(!C.Existence("Select Sex, AgeY,MS from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and cast(AgeY as int)<50 and Sex='2' and MS<>'30'"))
+                 {
+                     Connection.MessageBox(Member_list.this, "খানায় উপযুক্ত মহিলা নেই .");
+                     return;
+                 }
                  String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
 
                  if (Integer.valueOf(infoMiss) > 0) {
@@ -230,7 +243,7 @@ public class Member_list extends Activity {
          btnMemberName.setOnClickListener(new View.OnClickListener() {
 
              public void onClick(View view) {
-                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
+//                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
 
                  IDbundle.putString("Vill", VILL);
                  IDbundle.putString("Bari", BARI);
@@ -339,6 +352,10 @@ public class Member_list extends Activity {
              final TextView txtMSlNo = (TextView) dialog.findViewById(R.id.txtMSlNo);
              final TextView txtName = (TextView) dialog.findViewById(R.id.txtName);
 
+             txtName.requestFocus();
+             final  TextView txtNameHint=(TextView)dialog.findViewById(R.id.txtNameHint);
+
+
              txtVill.setText(VILL);
              txtBari.setText(BARI);
              txtHH.setText(HH);
@@ -349,6 +366,15 @@ public class Member_list extends Activity {
              txtMSlNo.setEnabled(false);
 
              txtMSlNo.setText(MemberSerial(VILL, BARI,HH));
+
+             if(txtMSlNo.getText().toString().equals("01"))
+             {
+                 txtNameHint.setVisibility(View.VISIBLE);
+             }else
+             {
+                 txtNameHint.setVisibility(View.GONE);
+             }
+
 
              Button cmdContactNoSave = (Button) dialog.findViewById(R.id.cmdSave);
              cmdContactNoSave.setOnClickListener(new View.OnClickListener() {
@@ -377,6 +403,13 @@ public class Member_list extends Activity {
                      txtMSlNo.setText(MemberSerial(VILL,BARI,HH));
                      txtName.setText("");
                      txtName.requestFocus();
+                     if(txtMSlNo.getText().toString().equals("01"))
+                     {
+                         txtNameHint.setVisibility(View.VISIBLE);
+                     }else
+                     {
+                         txtNameHint.setVisibility(View.GONE);
+                     }
 
                  }
              });

@@ -40,7 +40,7 @@
 
         <LinearLayout android:id="@+id/secVDate" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
             <TextView android:id="@+id/lblVDate" android:text="২." android:visibility="visible" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-            <TextView android:id="@+id/VlblVDate" android:text="ইন্টারভিউর তারিখ" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
+            <TextView android:id="@+id/VlblVDate" android:text="সাক্ষাতকারের তারিখ" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
             <EditText android:id="@+id/dtpVDate" android:drawableRight="@drawable/calendersmall" android:layout_width="150sp" android:inputType="text" android:layout_height="wrap_content" android:focusable="false" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp"/>
         </LinearLayout>
         <View android:id="@+id/lineVDate" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />

@@ -109,9 +109,9 @@ public class Household_list extends Activity  {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
                  adb.setTitle("Close");
-                 adb.setMessage("Do you want to close this form[Yes/No]?");
-                 adb.setNegativeButton("No", null);
-                 adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                 adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          String V = spnVill.getSelectedItemPosition()==0?"": Global.Left(spnVill.getSelectedItem().toString(),3);
                          String B = spnBari.getSelectedItemPosition()==0?"": Global.Left(spnBari.getSelectedItem().toString(),4);
@@ -225,7 +225,7 @@ public class Household_list extends Activity  {
          cmdBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
                  if(spnVill.getSelectedItemPosition()==0){
-                     Connection.MessageBox(Household_list.this,"Please select a valid village from dropdown list.");
+                     Connection.MessageBox(Household_list.this,"গ্রামের তালিকা থেকে সঠিক গ্রামের নাম নির্বাচন করুন.");
                      return;
                  }
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
@@ -243,7 +243,7 @@ public class Household_list extends Activity  {
          cmdUpdateBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
                  if(spnBari.getSelectedItemPosition()==0){
-                     Connection.MessageBox(Household_list.this,"Please select a valid Bari from dropdown list.");
+                     Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
                  }
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
@@ -263,7 +263,7 @@ public class Household_list extends Activity  {
              @Override
              public void onClick(View v) {
                  if(spnBari.getSelectedItemPosition()==0){
-                     Connection.MessageBox(Household_list.this,"Please select a valid Bari from dropdown list.");
+                     Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
                  }
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
@@ -283,7 +283,7 @@ public class Household_list extends Activity  {
              @Override
              public void onClick(View v) {
                  if(spnBari.getSelectedItemPosition()==0){
-                     Connection.MessageBox(Household_list.this,"Please select a valid Bari from dropdown list.");
+                     Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
                  }
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
@@ -346,7 +346,7 @@ public class Household_list extends Activity  {
                 public void onClick(View arg0) {
 
                     if (txtName.getText().toString().length() == 0) {
-                        Connection.MessageBox(Household_list.this, "Required field: Name of Head.");
+                        Connection.MessageBox(Household_list.this, "Required field: খানা প্রধানের নাম");
                         txtName.requestFocus();
                         return;
                     }

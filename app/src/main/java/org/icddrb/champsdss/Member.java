@@ -779,7 +779,6 @@ import Common.Global;
            }
 
 
-
          else if(spnMoNo.getSelectedItemPosition()==0  & spnMoNo.isShown())
          {
              Connection.MessageBox(Member.this, "Required field: মায়ের সিরিয়াল নম্বর");

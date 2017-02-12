@@ -581,7 +581,7 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "01" : txtTotMem.getText().toString()) < 01 || Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "30" : txtTotMem.getText().toString()) > 30)
            {
-             Connection.MessageBox(Household_Visit.this, "Value should be between 01 and 30(মোট সদস্য সংখ্যা).");
+             Connection.MessageBox(Household_Visit.this, "সদস্য  সংখ্যা  অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে(মোট সদস্য সংখ্যা).");
              txtTotMem.requestFocus(); 
              return;	
            }
@@ -593,7 +593,7 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "0" : txtTotRWo.getText().toString()) < 0 || Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "10" : txtTotRWo.getText().toString()) > 10)
            {
-             Connection.MessageBox(Household_Visit.this, "Value should be between 1 and 10(মোট মহিলা).");
+             Connection.MessageBox(Household_Visit.this, "মোট মহিলার সংখ্যা  অবশ্যই ০ থেকে ১০ এর ভিতর হতে হবে (মোট মহিলা).");
              txtTotRWo.requestFocus(); 
              return;	
            }
@@ -622,6 +622,17 @@ import Common.Global;
              spnResp.requestFocus();
              return;
          }
+
+         Integer TotMem = Integer.valueOf(txtTotMem.getText().toString().length() == 0 ? "0" : txtTotMem.getText().toString());
+         Integer TotRWo = Integer.valueOf(txtTotRWo.getText().toString().length() == 0 ? "0" : txtTotRWo.getText().toString());
+
+         if (TotMem < TotRWo) {
+             Connection.MessageBox(Household_Visit.this, "কতজন মহিলা আছে অবশ্যই মোট সদস্য  সংখ্যার সমান অথবা কম হবে");
+             txtTotMem.requestFocus();
+             return;
+         }
+
+
 //         else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
 //           {
 //             Connection.MessageBox(Household_Visit.this, "Required field: তালিকাভুক্তির ধরন.");

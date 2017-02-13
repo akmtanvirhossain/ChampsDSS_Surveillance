@@ -271,7 +271,7 @@ import Common.Global;
 
          TableName = "PregHis";
 
-         //asdadasadadads
+
 
          //turnGPSOn();
          //GPS Location

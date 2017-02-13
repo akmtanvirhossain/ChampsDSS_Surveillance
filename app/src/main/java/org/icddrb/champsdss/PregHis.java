@@ -312,7 +312,7 @@ import Common.Global;
          lineMSlNo=(View)findViewById(R.id.lineMSlNo);
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          spnMSlNo=(Spinner) findViewById(R.id.spnMSlNo);
-         spnMSlNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and cast(AgeY as int)<50 and Sex='2' and MS<>'30'"));
+         spnMSlNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday('now')-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"));
 
          secPNo=(LinearLayout)findViewById(R.id.secPNo);
          linePNo=(View)findViewById(R.id.linePNo);

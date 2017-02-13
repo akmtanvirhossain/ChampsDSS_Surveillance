@@ -213,9 +213,9 @@ public class Member_list extends Activity {
                      return;
                  }
 
-                 if(!C.Existence("Select Sex, AgeY,MS from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and cast(AgeY as int)<50 and Sex='2' and MS<>'30'"))
+                 if(!C.Existence("Select Sex, AgeY,MS from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday('now')-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"))
                  {
-                     Connection.MessageBox(Member_list.this, "খানায় উপযুক্ত মহিলা নেই .");
+                     Connection.MessageBox(Member_list.this, "খানায় ৫০ বছরের কম বয়সের কখনও বিবাহ হয়েছে এমন মহিলা নেই .");
                      return;
                  }
                  String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");

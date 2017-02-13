@@ -97,8 +97,6 @@ public class Household_list extends Activity  {
          IDbundle = getIntent().getExtras();
          CurrentVillage = IDbundle.getString("Village");
          CurrentVCode   = IDbundle.getString("VCode");
-//         VILL = IDbundle.getString("Vill");
-//         BARI = IDbundle.getString("Bari");
          HH = IDbundle.getString("HH");
 
          TableName = "Household";
@@ -123,33 +121,6 @@ public class Household_list extends Activity  {
                      }});
                  adb.show();
              }});
-
-        /* btnRefresh = (Button) findViewById(R.id.btnRefresh);
-         btnRefresh.setOnClickListener(new View.OnClickListener() {
-
-             public void onClick(View view) {
-                   //write your code here
-                   DataSearch(VILL, BARI, HH);
-
-             }});
-
-         btnAdd   = (Button) findViewById(R.id.btnAdd);
-         btnAdd.setOnClickListener(new View.OnClickListener() {
-
-             public void onClick(View view) {
-                         Bundle IDbundle = new Bundle();
-                         IDbundle.putString("Vill", "");
-                         IDbundle.putString("Bari", "");
-                         IDbundle.putString("HH", "");
-                         Intent intent = new Intent(getApplicationContext(), Household.class);
-                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                         intent.putExtras(IDbundle);
-                         getApplicationContext().startActivity(intent);
-                         startActivityForResult(intent, 1);
-             }});
-        */
-        //DataSearch(VILL, BARI, HH);
-
 
          spnUnion = (Spinner) findViewById(R.id.spnUnion);
          spnVill = (Spinner) findViewById(R.id.spnVill);
@@ -295,11 +266,33 @@ public class Household_list extends Activity  {
              }
          });
 
+         Button cmdGPS= (Button) findViewById((R.id.cmdGPS));
+         cmdGPS.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 if(spnVill.getSelectedItemPosition()==0){
+                     Connection.MessageBox(Household_list.this,"Please select a valid Village from dropdown list.");
+                     return;
+                 }
+                 /*else if(spnBari.getSelectedItemPosition()==0){
+                     Connection.MessageBox(Household_list.this,"Please select a valid bari from dropdown list.");
+                     return;
+                 }*/
+                 String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
+                 String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
+                 IDbundle.putString("village", V);
+                 IDbundle.putString("bari", B);
 
-         String VillBari = C.ReturnSingleValue("Select Vill||'-'||Bari from LastVillBari");
+                 Intent intent1 = new Intent(getApplicationContext(),map.IconGeneratorDemoActivity.class);
+                 intent1.putExtras(IDbundle);
+                 startActivity(intent1);
+             }
+         });
+
+         /*String VillBari = C.ReturnSingleValue("Select Vill||'-'||Bari from LastVillBari");
          String[] VB = (VillBari.length()==0?" - ":VillBari).toString().split("-");
          VILL = VB[0];
-         BARI = VB[1];
+         BARI = VB[1];*/
          //spnVill.setSelection(Global.SpinnerItemPositionAnyLength(spnVill,VB[0]));
          //spnBari.setSelection(Global.SpinnerItemPositionAnyLength(spnBari,VB[1]));
          DataSearch(VILL,BARI);

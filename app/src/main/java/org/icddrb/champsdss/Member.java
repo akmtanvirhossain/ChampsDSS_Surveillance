@@ -567,22 +567,25 @@ import Common.Global;
          spnSp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                 String[] d;
+                 String d = "";
                  if (position > 0)
                  {
-                     d = spnSp1.getSelectedItem().toString().split("-");
-                     if(!d.equals("00")) {
-                         spnSp2.setVisibility(View.VISIBLE);
-                         lineSp2.setVisibility(View.VISIBLE);
-                         secSp2.setVisibility(View.VISIBLE);
-                         lineSp2.setVisibility(View.VISIBLE);
-                     }
-                 }else{
+                     String[] a = spnSp1.getSelectedItem().toString().split("-");
+                     d = a[0];
+                 }
+
+                 if(d.equals("00") | d.length()==0) {
                      spnSp2.setVisibility(View.GONE);
                      lineSp2.setVisibility(View.GONE);
                      secSp2.setVisibility(View.GONE);
                      lineSp2.setVisibility(View.GONE);
                      spnSp2.setSelection(0);
+
+                 }else{
+                     spnSp2.setVisibility(View.VISIBLE);
+                     lineSp2.setVisibility(View.VISIBLE);
+                     secSp2.setVisibility(View.VISIBLE);
+                     lineSp2.setVisibility(View.VISIBLE);
                  }
              }
 
@@ -594,23 +597,26 @@ import Common.Global;
          spnSp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 String d = "";
                  if (position > 0)
                  {
-                     String[] d;
-                     d = spnSp2.getSelectedItem().toString().split("-");
-                     if(!d.equals("00")) {
-                         spnSp3.setVisibility(View.VISIBLE);
-                         lineSp3.setVisibility(View.VISIBLE);
-                         secSp3.setVisibility(View.VISIBLE);
-                         lineSp3.setVisibility(View.VISIBLE);
-                     }
-                 }else{
+                     String[] a = spnSp2.getSelectedItem().toString().split("-");
+                     d = a[0];
+                 }
+
+                 if(d.equals("00") | d.length()==0) {
                      spnSp3.setVisibility(View.GONE);
                      lineSp3.setVisibility(View.GONE);
                      secSp3.setVisibility(View.GONE);
                      lineSp3.setVisibility(View.GONE);
                      spnSp3.setSelection(0);
+                 }else{
+                     spnSp3.setVisibility(View.VISIBLE);
+                     lineSp3.setVisibility(View.VISIBLE);
+                     secSp3.setVisibility(View.VISIBLE);
+                     lineSp3.setVisibility(View.VISIBLE);
                  }
+
              }
 
              @Override
@@ -621,23 +627,26 @@ import Common.Global;
          spnSp3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 String d = "";
                  if (position > 0)
                  {
-                     String[] d;
-                     d = spnSp3.getSelectedItem().toString().split("-");
-                     if(!d.equals("00")) {
-                         spnSp4.setVisibility(View.VISIBLE);
-                         lineSp4.setVisibility(View.VISIBLE);
-                         secSp4.setVisibility(View.VISIBLE);
-                         lineSp4.setVisibility(View.VISIBLE);
-                     }
-                 }else{
+                     String[] a = spnSp3.getSelectedItem().toString().split("-");
+                     d = a[0];
+                 }
+
+                 if(d.equals("00") | d.length()==0) {
                      spnSp4.setVisibility(View.GONE);
                      lineSp4.setVisibility(View.GONE);
                      secSp4.setVisibility(View.GONE);
                      lineSp4.setVisibility(View.GONE);
                      spnSp4.setSelection(0);
+                 }else{
+                     spnSp4.setVisibility(View.VISIBLE);
+                     lineSp4.setVisibility(View.VISIBLE);
+                     secSp4.setVisibility(View.VISIBLE);
+                     lineSp4.setVisibility(View.VISIBLE);
                  }
+
              }
 
              @Override
@@ -1128,10 +1137,10 @@ import Common.Global;
              spnEdu.setSelection(Global.SpinnerItemPositionAnyLength(spnEdu, item.getEdu()));
              spnMS.setSelection(Global.SpinnerItemPositionAnyLength(spnMS, item.getMS()));
              spnOcp.setSelection(Global.SpinnerItemPositionAnyLength(spnOcp, item.getOcp()));
-             spnSp1.setSelection(Global.SpinnerItemPositionAnyLength(spnSp1, item.getOcp()));
-             spnSp2.setSelection(Global.SpinnerItemPositionAnyLength(spnSp2, item.getOcp()));
-             spnSp3.setSelection(Global.SpinnerItemPositionAnyLength(spnSp3, item.getOcp()));
-             spnSp4.setSelection(Global.SpinnerItemPositionAnyLength(spnSp4, item.getOcp()));
+             spnSp1.setSelection(Global.SpinnerItemPositionAnyLength(spnSp1, item.getSp1()));
+             spnSp2.setSelection(Global.SpinnerItemPositionAnyLength(spnSp2, item.getSp2()));
+             spnSp3.setSelection(Global.SpinnerItemPositionAnyLength(spnSp3, item.getSp3()));
+             spnSp4.setSelection(Global.SpinnerItemPositionAnyLength(spnSp4, item.getSp4()));
              txtEnType.setText(item.getEnType());
              dtpEnDate.setText(item.getEnDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getEnDate()));
              txtExType.setText(item.getExType());

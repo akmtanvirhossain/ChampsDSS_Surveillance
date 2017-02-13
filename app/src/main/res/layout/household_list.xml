@@ -3,8 +3,11 @@
 
     <LinearLayout android:layout_width="fill_parent" android:layout_height="45sp" android:orientation="horizontal" android:background="@color/pageHeadingBack">
         <ImageButton android:id="@+id/cmdBack" android:background="@color/pageHeadingBack" android:src="@drawable/back" android:layout_width="50sp" android:layout_height="match_parent"/>
-        <TextView android:id="@+id/lblHeading" android:text="খানার তালিকা" android:paddingLeft="10sp" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
-
+        <TextView android:id="@+id/lblHeading" android:text="খানার তালিকা" android:paddingLeft="10sp" android:layout_width="450sp" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
+        <Button android:id="@+id/cmdGPS" android:background="@drawable/button_style"
+            android:layout_width="85sp"  android:textSize="14sp"
+            android:layout_height="30sp" android:layout_gravity="center_vertical"
+            android:text="GPS"/>
 
     </LinearLayout>
 

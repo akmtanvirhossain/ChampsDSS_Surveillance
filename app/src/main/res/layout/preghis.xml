@@ -12,9 +12,9 @@
     </LinearLayout>
     <View android:id="@+id/linelbl01" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secVill" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-        <TextView android:id="@+id/lblVill" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/lblVill" android:text="" android:layout_width="60sp" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" />
 
-        <TextView android:id="@+id/VlblVill" android:text="খানা নম্বর" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/VlblVill" android:text="খানা নম্বর" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
 
         <EditText android:id="@+id/txtVill" android:maxLength="3" android:layout_width="60sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
         <EditText android:id="@+id/txtBari" android:maxLength="4" android:layout_width="60sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
@@ -29,32 +29,32 @@
     </LinearLayout>
     <View android:id="@+id/lineBari" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secHH" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-        <TextView android:id="@+id/lblHH" android:visibility="gone" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/lblHH" android:visibility="gone" android:text=""  android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblHH" android:visibility="gone" android:text="খানা" android:layout_width="370sp" android:layout_height="wrap_content" android:textSize="20sp" />
 
     </LinearLayout>
     <View android:id="@+id/lineHH" android:visibility="gone" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
     <LinearLayout android:id="@+id/secMSlNo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-        <TextView android:id="@+id/lblMSlNo" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <TextView android:id="@+id/VlblMSlNo" android:text="মহিলার সিরিয়াল নম্বরঃ " android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/lblMSlNo" android:text="" android:layout_width="60sp" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/VlblMSlNo" android:text="মহিলার সিরিয়াল নম্বরঃ " android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
 
-        <Spinner android:id="@+id/spnMSlNo" android:drawSelectorOnTop="true" android:layout_width="200sp" android:layout_height="wrap_content" android:layout_weight="0" android:prompt="@string/planet_prompt" android:textSize="20sp" />
+        <Spinner android:id="@+id/spnMSlNo" android:drawSelectorOnTop="true" android:layout_width="300sp" android:layout_height="wrap_content" android:layout_weight="0" android:prompt="@string/planet_prompt" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineMSlNo" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
         <LinearLayout android:id="@+id/secPNo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-            <TextView android:id="@+id/lblPNo" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-            <TextView android:id="@+id/VlblPNo" android:text="স্থায়ী নম্বর" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
-            <EditText android:id="@+id/txtPNo" android:maxLength="11" android:layout_width="150sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
+            <TextView android:id="@+id/lblPNo" android:text="" android:layout_width="60sp" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" />
+            <TextView android:id="@+id/VlblPNo" android:text="স্থায়ী নম্বর" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
+            <EditText android:id="@+id/txtPNo" android:maxLength="11" android:layout_width="150sp" android:enabled="false" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
         </LinearLayout>
 
         <View android:id="@+id/linePNo" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
         <LinearLayout android:id="@+id/secVDate" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-            <TextView android:id="@+id/lblVDate" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
+            <TextView android:id="@+id/lblVDate" android:text="" android:layout_width="60sp" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" />
 
-            <TextView android:id="@+id/VlblVDate" android:text="ইন্টারভিউর তারিখ" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
+            <TextView android:id="@+id/VlblVDate" android:text="ইন্টারভিউর তারিখ" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
 
             <EditText android:id="@+id/dtpVDate" android:drawableRight="@drawable/calendersmall" android:layout_width="150sp" android:inputType="text" android:layout_height="wrap_content" android:focusable="false" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp"/>
         </LinearLayout>
@@ -62,13 +62,13 @@
         <View android:id="@+id/lineVDate" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
     <LinearLayout android:id="@+id/secVStatus" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-        <TextView android:id="@+id/lblVStatus" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <TextView android:id="@+id/VlblVStatus" android:text="সাক্ষাতকারের ফলাফল" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <Spinner android:id="@+id/spnVStatus" android:drawSelectorOnTop="true" android:layout_width="200sp" android:layout_height="wrap_content" android:layout_weight="0" android:prompt="@string/planet_prompt" android:textSize="20sp" />
+        <TextView android:id="@+id/lblVStatus" android:text="" android:layout_width="60sp" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/VlblVStatus" android:text="সাক্ষাতকারের ফলাফল" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <Spinner android:id="@+id/spnVStatus" android:drawSelectorOnTop="true" android:layout_width="300sp" android:layout_height="wrap_content" android:layout_weight="0" android:prompt="@string/planet_prompt" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineVStatus" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secVStatusOth" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-        <TextView android:id="@+id/lblVStatusOth" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/lblVStatusOth" android:text="" android:layout_width="60sp" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblVStatusOth" android:text="অন্যান্য উল্লেখ করুন" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <EditText android:id="@+id/txtVStatusOth" android:maxLength="50" android:layout_width="250sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
@@ -86,7 +86,7 @@
     <View android:id="@+id/lineMarriageStatus" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl02" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
 
-        <TextView android:id="@+id/lblHlbl02" android:text="প্রতিজন ৫০ বছরের নীচে কখনও বিবাহিত মহিলার জন্য আলাদা আলাদা গর্ভের ইতিহাস ফর্ম  ব্যবহার করুন (খানা সদস্যের সিরিয়াল নং অনুসারে শুরু করুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl02" android:visibility="gone" android:text="প্রতিজন ৫০ বছরের নীচে কখনও বিবাহিত মহিলার জন্য আলাদা আলাদা গর্ভের ইতিহাস ফর্ম  ব্যবহার করুন (খানা সদস্যের সিরিয়াল নং অনুসারে শুরু করুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
     </LinearLayout>
     <View android:id="@+id/linelbl02" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <!--<LinearLayout android:id="@+id/seclbl03" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">-->
@@ -94,12 +94,12 @@
     <!--</LinearLayout>-->
     <!--<View android:id="@+id/linelbl03" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />-->
     <LinearLayout android:id="@+id/seclbl04" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl04" android:text="আপনার জীবনে আপনি যতবার গর্ভধারণ করেছেন , সেই সব গর্ভ সম্পর্কে এখন আমি আপনাকে কিছু প্রশ্ন জিজ্ঞাসা করতে চাই।" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl04" android:text="আপনার জীবনে আপনি যতবার গর্ভধারণ করেছেন , সেই সব গর্ভ সম্পর্কে এখন আমি আপনাকে কিছু প্রশ্ন জিজ্ঞাসা করতে চাই।" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="#006699"/>
     </LinearLayout>
     <View android:id="@+id/linelbl04" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl103" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl103a" android:text="১০৩." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
-        <TextView android:id="@+id/lblHlbl103" android:text="আপনি কোন সালের কোন মাসে বিয়ে করেছেন ? (বছর এবং মাস লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl103a" android:text="১০৩." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp"/>
+        <TextView android:id="@+id/lblHlbl103" android:text="আপনি কোন সালের কোন মাসে বিয়ে করেছেন ? (বছর এবং মাস লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp"/>
     </LinearLayout>
     <View android:id="@+id/linelbl103" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -148,8 +148,8 @@
     </LinearLayout>
     <View android:id="@+id/lineChildLivWWo" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl106" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl106b" android:text="১০৬." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
-        <TextView android:id="@+id/lblHlbl106" android:text="কয়জন ছেলে/মেয়ে আপনার সাথে থাকে? (কোন ছেলে বা মেয়ে সাথে না থাকলে, ’০০’ লিখুন )" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl106b" android:text="১০৬." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp"/>
+        <TextView android:id="@+id/lblHlbl106" android:text="কয়জন ছেলে/মেয়ে আপনার সাথে থাকে? (কোন ছেলে বা মেয়ে সাথে না থাকলে, ’০০’ লিখুন )" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp"/>
     </LinearLayout>
     <View android:id="@+id/linelbl106" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -181,8 +181,8 @@
     </LinearLayout>
     <View android:id="@+id/lineChldLivOut" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl108" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl108b" android:text="১০৮." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
-        <TextView android:id="@+id/lblHlbl108" android:text="কয়জন জীবিত ছেলে আছে, যারা আপনার সাথে থাকে না? এবং কয়জন জীবিত মেয়ে আছে যারা আপনার সাথে থাকে না? (বসবাস করে না এমন ছেলে বা মেয়ে না থাকলে, ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl108b" android:text="১০৮." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp"/>
+        <TextView android:id="@+id/lblHlbl108" android:text="কয়জন জীবিত ছেলে আছে, যারা আপনার সাথে থাকে না? এবং কয়জন জীবিত মেয়ে আছে যারা আপনার সাথে থাকে না? (বসবাস করে না এমন ছেলে বা মেয়ে না থাকলে, ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp"/>
     </LinearLayout>
     <View android:id="@+id/linelbl108" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -217,13 +217,13 @@
         <View android:id="@+id/lineDaugLivOut" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
         <LinearLayout android:id="@+id/seclbl109" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-            <TextView android:id="@+id/lblHlbl109" android:text="১০৯ এ যদি উত্তর না হয়, যাচাই করুন: এমন কোন ছেলে বা মেয়ে, যে জন্ম নেয়ার পর কেঁদেছিল বা যার মধ্যে জন্মের পর জীবনের লক্ষণ দেখা গিয়েছিল, কিন্তু জন্মের পর কিছুক্ষন বা কয়েক ঘণ্টা বা কয়েক দিন মাত্র জীবিত?" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+            <TextView android:id="@+id/lblHlbl109" android:text="১০৯ এ যদি উত্তর না হয়, যাচাই করুন: এমন কোন ছেলে বা মেয়ে, যে জন্ম নেয়ার পর কেঁদেছিল বা যার মধ্যে জন্মের পর জীবনের লক্ষণ দেখা গিয়েছিল, কিন্তু জন্মের পর কিছুক্ষন বা কয়েক ঘণ্টা বা কয়েক দিন মাত্র জীবিত?" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="#006699"/>
         </LinearLayout>
         <View android:id="@+id/linelbl109" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
     <LinearLayout android:id="@+id/seclbl110" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl110b" android:text="১১০." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
-        <TextView android:id="@+id/lblHlbl110" android:text="সর্বমোট কয়জন ছেলে মারা গেছে?  কয়জন মেয়ে মারা গেছে? (কোন ছেলে বা মেয়ে মারা না গিয়ে থাকলে,  ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl110b" android:text="১১০." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp"/>
+        <TextView android:id="@+id/lblHlbl110" android:text="সর্বমোট কয়জন ছেলে মারা গেছে?  কয়জন মেয়ে মারা গেছে? (কোন ছেলে বা মেয়ে মারা না গিয়ে থাকলে,  ‘০০’ লিখুন)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp"/>
     </LinearLayout>
     <View android:id="@+id/linelbl110" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
@@ -245,8 +245,8 @@
     </LinearLayout>
     <View android:id="@+id/lineGirlDied" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/seclbl111" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl111a" android:text="১১১." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
-        <TextView android:id="@+id/lblHlbl111" android:text="কোন কোন গর্ভাবস্থা পূর্ণ মেয়াদের আগেই গর্ভনষ্ট বা গর্ভপাত হিসাবে শেষ হয়ে যেতে পারে। আবার কোন কোন গর্ভাবস্থা মৃতজন্ম বা মৃতশিশুর জন্ম দিতে পারে অর্থ্যাৎ যার জন্মের সময় জীবনের কোন লক্ষণই থাকে না।" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl111a" android:text="১১১." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp"/>
+        <TextView android:id="@+id/lblHlbl111" android:text="কোন কোন গর্ভাবস্থা পূর্ণ মেয়াদের আগেই গর্ভনষ্ট বা গর্ভপাত হিসাবে শেষ হয়ে যেতে পারে। আবার কোন কোন গর্ভাবস্থা মৃতজন্ম বা মৃতশিশুর জন্ম দিতে পারে অর্থ্যাৎ যার জন্মের সময় জীবনের কোন লক্ষণই থাকে না।" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp"/>
     </LinearLayout>
     <View android:id="@+id/linelbl111" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secNotLivBrth" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
@@ -268,8 +268,8 @@
     <View android:id="@+id/lineTotLB" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
     <LinearLayout android:id="@+id/seclbl113" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <TextView android:id="@+id/lblHlbl113a" android:text="১১৩." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
-        <TextView android:id="@+id/lblHlbl113" android:text="(প্রশ্ন ১০৬, ১০৮, ১১০, এবং ১১২ উত্তরগুলো যোগ করুন এবং যোগফল পাশের ঘরে লিখুন।)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" style="@style/rowHeading"/>
+        <TextView android:id="@+id/lblHlbl113a" android:text="১১৩." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp"/>
+        <TextView android:id="@+id/lblHlbl113" android:text="(প্রশ্ন ১০৬, ১০৮, ১১০, এবং ১১২ উত্তরগুলো যোগ করুন এবং যোগফল পাশের ঘরে লিখুন।)" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp"/>
     </LinearLayout>
     <View android:id="@+id/linelbl113" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secTotPregOut" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">

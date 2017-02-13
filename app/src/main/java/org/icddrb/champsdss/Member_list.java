@@ -13,8 +13,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
- import android.view.MotionEvent;
- import android.view.View;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -381,7 +380,7 @@ public class Member_list extends Activity {
                  public void onClick(View arg0) {
 
                      if (txtName.getText().toString().length() == 0) {
-                         Connection.MessageBox(Member_list.this, "Required field: Name of member.");
+                         Connection.MessageBox(Member_list.this, "Required field: সদস্যের নাম।");
                          txtName.requestFocus();
                          return;
                      }
@@ -414,12 +413,12 @@ public class Member_list extends Activity {
                  }
              });
 
-   /*         Button cmdContactNoClose = (Button)dialog.findViewById(R.id.cmdContactNoClose);
-            cmdContactNoClose.setOnClickListener(new View.OnClickListener() {
+            ImageButton cmdBack = (ImageButton)dialog.findViewById(R.id.cmdBack);
+            cmdBack.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
                     dialog.dismiss();
                 }
-            });*/
+            });
 
 
              dialog.show();

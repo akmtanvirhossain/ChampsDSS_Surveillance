@@ -271,7 +271,7 @@ public class Household_list extends Activity  {
              @Override
              public void onClick(View v) {
                  if(spnVill.getSelectedItemPosition()==0){
-                     Connection.MessageBox(Household_list.this,"Please select a valid Village from dropdown list.");
+                     Connection.MessageBox(Household_list.this,"গ্রামের তালিকা থেকে সঠিক গ্রামের নাম নির্বাচন করুন.");
                      return;
                  }
                  /*else if(spnBari.getSelectedItemPosition()==0){
@@ -316,7 +316,7 @@ public class Household_list extends Activity  {
             Window window = dialog.getWindow();
             WindowManager.LayoutParams wlp = window.getAttributes();
 
-            wlp.gravity = Gravity.CENTER;
+            wlp.gravity = Gravity.TOP;
             wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
             window.setAttributes(wlp);
 

@@ -333,7 +333,7 @@ import Common.Global;
                      String PNo= C.ReturnSingleValue("Select PNo from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSL +"'");
                      txtPNo.setText(PNo);
                      if(dataSeatch == true)
-                         DataSearch(VILL,BARI,HH,spnMSlNo.getSelectedItem().toString());
+                         DataSearch(VILL,BARI,HH,MSL);
                  }
              }
              public void onNothingSelected(AdapterView<?> parentView) {
@@ -1717,7 +1717,7 @@ import Common.Global;
          
          else if(!rdoChldLivOut1.isChecked() & !rdoChldLivOut2.isChecked() & secChldLivOut.isShown())
            {
-              Connection.MessageBox(PregHis.this, "Select anyone options from (আপনি এমন কোন ছেলে বা মেয়ে জন্ম দিয়েছেন কি যারা এখন জীবিত আছে কিন্তু এখন আপনার সাথে থাকে না ?).");
+              Connection.MessageBox(PregHis.this, "১০৭. একটি অপশন নির্বাচন করুন  (আপনি এমন কোন ছেলে বা মেয়ে জন্ম দিয়েছেন কি যারা এখন জীবিত আছে কিন্তু এখন আপনার সাথে থাকে না ?).");
               rdoChldLivOut1.requestFocus();
               return;
            }
@@ -1729,7 +1729,7 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtSonLivOut.getText().toString().length()==0 ? "00" : txtSonLivOut.getText().toString()) < 00 || Integer.valueOf(txtSonLivOut.getText().toString().length()==0 ? "20" : txtSonLivOut.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 00 and 20(অন্য কোথাও থাকে এমন ছেলের সংখ্যা).");
+             Connection.MessageBox(PregHis.this, "১০৮a. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে(অন্য কোথাও থাকে এমন ছেলের সংখ্যা).");
              txtSonLivOut.requestFocus(); 
              return;	
            }
@@ -1741,14 +1741,14 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtDaugLivOut.getText().toString().length()==0 ? "00" : txtDaugLivOut.getText().toString()) < 00 || Integer.valueOf(txtDaugLivOut.getText().toString().length()==0 ? "20" : txtDaugLivOut.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 00 and 20(অন্য কোথাও থাকে এমন মেয়ের সংখ্যা).");
+             Connection.MessageBox(PregHis.this, "১০৮b. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে (অন্য কোথাও থাকে এমন মেয়ের সংখ্যা).");
              txtDaugLivOut.requestFocus(); 
              return;	
            }
          
          else if(!rdoChldDie1.isChecked() & !rdoChldDie2.isChecked() & secChldDie.isShown())
            {
-              Connection.MessageBox(PregHis.this, "Select anyone options from (আপনি কি কখনও এমন কোন ছেলে বা মেয়ে জন্ম দিয়েছেন যে জীবিত জন্ম নিয়েছিল কিন্তু পরে মারা গিয়েছে ?).");
+              Connection.MessageBox(PregHis.this, "১০৯. একটি অপশন নির্বাচন করুন (আপনি কি কখনও এমন কোন ছেলে বা মেয়ে জন্ম দিয়েছেন যে জীবিত জন্ম নিয়েছিল কিন্তু পরে মারা গিয়েছে ?).");
               rdoChldDie1.requestFocus();
               return;
            }
@@ -1760,7 +1760,7 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtBoyDied.getText().toString().length()==0 ? "0" : txtBoyDied.getText().toString()) < 0 || Integer.valueOf(txtBoyDied.getText().toString().length()==0 ? "20" : txtBoyDied.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 0 and 20(ছেলে মারা গেছে কতজন).");
+             Connection.MessageBox(PregHis.this, "১১০a. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে (ছেলে মারা গেছে কতজন).");
              txtBoyDied.requestFocus(); 
              return;	
            }
@@ -1772,26 +1772,26 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtGirlDied.getText().toString().length()==0 ? "0" : txtGirlDied.getText().toString()) < 0 || Integer.valueOf(txtGirlDied.getText().toString().length()==0 ? "20" : txtGirlDied.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 0 and 20(মেয়ে মারা গেছে কতজন).");
+             Connection.MessageBox(PregHis.this, "১১০b. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে (মেয়ে মারা গেছে কতজন).");
              txtGirlDied.requestFocus(); 
              return;	
            }
          
          else if(!rdoNotLivBrth1.isChecked() & !rdoNotLivBrth2.isChecked() & secNotLivBrth.isShown())
            {
-              Connection.MessageBox(PregHis.this, "Select anyone options from (আপনার জীবনে কি কখনও পেটে বাচ্চা আসার পর এধরনের কোন ঘটনা অর্থাৎ জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে?).");
+              Connection.MessageBox(PregHis.this, "১১১. একটি অপশন নির্বাচন করুন (আপনার জীবনে কি কখনও পেটে বাচ্চা আসার পর এধরনের কোন ঘটনা অর্থাৎ জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে?).");
               rdoNotLivBrth1.requestFocus();
               return;
            }
          else if(txtTotLB.getText().toString().length()==0 & secTotLB.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: মোট কতগুলো গর্ভাবস্থার ক্ষেত্রে জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে ?.");
+             Connection.MessageBox(PregHis.this, "Required field:১১২. মোট কতগুলো গর্ভাবস্থার ক্ষেত্রে জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে ?.");
              txtTotLB.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtTotLB.getText().toString().length()==0 ? "1" : txtTotLB.getText().toString()) < 1 || Integer.valueOf(txtTotLB.getText().toString().length()==0 ? "30" : txtTotLB.getText().toString()) > 30)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 1 and 30(মোট কতগুলো গর্ভাবস্থার ক্ষেত্রে জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে ?).");
+             Connection.MessageBox(PregHis.this, "১১২. অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে (মোট কতগুলো গর্ভাবস্থার ক্ষেত্রে জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে ?).");
              txtTotLB.requestFocus(); 
              return;	
            }
@@ -1803,14 +1803,14 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtTotPregOut.getText().toString().length()==0 ? "0" : txtTotPregOut.getText().toString()) < 0 || Integer.valueOf(txtTotPregOut.getText().toString().length()==0 ? "40" : txtTotPregOut.getText().toString()) > 40)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 0 and 40(মোট গর্ভ ফলাফলের সংখ্যা).");
+             Connection.MessageBox(PregHis.this, "১১৩. মোট গর্ভ ফলাফলের সংখ্যা) অবশ্যই ০০ থেকে ৪০ এর ভিতর হতে হবে (মোট গর্ভ ফলাফলের সংখ্যা).");
              txtTotPregOut.requestFocus(); 
              return;	
            }
          
          else if(!rdoCurPreg1.isChecked() & !rdoCurPreg2.isChecked() & !rdoCurPreg3.isChecked() & secCurPreg.isShown())
            {
-              Connection.MessageBox(PregHis.this, "Select anyone options from (আপনি কি বর্তমানে গর্ভবতী ?).");
+              Connection.MessageBox(PregHis.this, "১১৪. একটি অপশন নির্বাচন করুন (আপনি কি বর্তমানে গর্ভবতী ?).");
               rdoCurPreg1.requestFocus();
               return;
            }
@@ -1930,7 +1930,8 @@ import Common.Global;
          objSave.setVill(txtVill.getText().toString());
          objSave.setBari(txtBari.getText().toString());
          objSave.setHH(txtHH.getText().toString());
-         objSave.setMSlNo((spnMSlNo.getSelectedItem().toString()));
+//         objSave.setMSlNo((spnMSlNo.getSelectedItem().toString()));
+         objSave.setMSlNo((spnMSlNo.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnMSlNo.getSelectedItem().toString(), "-")));
          objSave.setPNo(txtPNo.getText().toString());
          objSave.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
          objSave.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
@@ -2043,7 +2044,7 @@ import Common.Global;
              //txtVill.setText(item.getVill());
              //txtBari.setText(item.getBari());
              //txtHH.setText(item.getHH());
-             //spnMSlNo.setSelection(Global.SpinnerItemPositionAnyLength(spnMSlNo, item.getMSlNo()));
+//             spnMSlNo.setSelection(Global.SpinnerItemPositionAnyLength(spnMSlNo, item.getMSlNo()));
              txtPNo.setText(item.getPNo());
              dtpVDate.setText(item.getVDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getVDate()));
              spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item.getVStatus()));

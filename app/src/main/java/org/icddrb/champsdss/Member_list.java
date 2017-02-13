@@ -131,9 +131,9 @@ public class Member_list extends Activity {
 
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                  adb.setTitle("Close");
-                 adb.setMessage("Do you want to close this form[Yes/No]?");
-                 adb.setNegativeButton("No", null);
-                 adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                 adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          /*Bundle IDbundle = new Bundle();
                          IDbundle.putString("Vill", VILL);
@@ -191,6 +191,7 @@ public class Member_list extends Activity {
                  IDbundle.putString("HH", HH);
                  f1.putExtras(IDbundle);
                  startActivity(f1);
+
              }
          });
          Button btnPregHis = (Button) findViewById(R.id.btnPregHis);
@@ -256,6 +257,20 @@ public class Member_list extends Activity {
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
          DataSearch(VILL,BARI,HH);
+
+         if (C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+             btnSES.setBackgroundColor(Color.GREEN);
+         }
+
+         String TotRh = C.ReturnSingleValue("Select TotRWO from Household Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+         String PregHis = C.ReturnSingleValue("Select count(*)Total from PregHis Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+
+//         Toast.makeText(this, ""+Integer.valueOf(TotRh), Toast.LENGTH_LONG).show();
+         if (Integer.valueOf(TotRh) == Integer.valueOf(PregHis))
+         {
+             btnPregHis.setBackgroundColor(Color.GREEN);
+         }
+
      }
      catch(Exception  e)
      {

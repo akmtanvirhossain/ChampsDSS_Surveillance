@@ -20,6 +20,7 @@
  import android.content.DialogInterface;
  import android.content.Intent;
  import android.database.Cursor;
+ import android.graphics.Color;
  import android.location.Location;
  import android.location.LocationListener;
  import android.location.LocationManager;
@@ -358,9 +359,9 @@
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(SES.this);
                  adb.setTitle("Close");
-                 adb.setMessage("Do you want to close this form[Yes/No]?");
-                 adb.setNegativeButton("No", null);
-                 adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                 adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
                      }});
@@ -1413,77 +1414,77 @@
          
          else if(!rdoRadio1.isChecked() & !rdoRadio2.isChecked() & secRadio.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (রেডিও).");
+              Connection.MessageBox(SES.this, "রেডিও থেকে একটি অপশন নির্বাচন করুন (রেডিও).");
               rdoRadio1.requestFocus();
               return;
            }
          
          else if(!rdoTV1.isChecked() & !rdoTV2.isChecked() & secTV.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (টেলিভিশন).");
+              Connection.MessageBox(SES.this, "টেলিভিশন থেকে একটি অপশন নির্বাচন করুন (টেলিভিশন).");
               rdoTV1.requestFocus();
               return;
            }
          
          else if(!rdoMobile1.isChecked() & !rdoMobile2.isChecked() & secMobile.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (মোবাইল ফোন).");
+              Connection.MessageBox(SES.this, "মোবাইল ফোন থেকে একটি অপশন নির্বাচন করুন (মোবাইল ফোন).");
               rdoMobile1.requestFocus();
               return;
            }
          
          else if(!rdoTelephone1.isChecked() & !rdoTelephone2.isChecked() & secTelephone.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (অন্য টেলিফোন).");
+              Connection.MessageBox(SES.this, "অন্য টেলিফোন থেকে একটি অপশন নির্বাচন করুন (অন্য টেলিফোন).");
               rdoTelephone1.requestFocus();
               return;
            }
          
          else if(!rdoRefrige1.isChecked() & !rdoRefrige2.isChecked() & secRefrige.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (রেফ্রিজারেটর).");
+              Connection.MessageBox(SES.this, "রেফ্রিজারেটর থেকে একটি অপশন নির্বাচন করুন (রেফ্রিজারেটর).");
               rdoRefrige1.requestFocus();
               return;
            }
          
          else if(!rdoWatch1.isChecked() & !rdoWatch2.isChecked() & secWatch.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (হাত ঘড়ি).");
+              Connection.MessageBox(SES.this, "হাত ঘড়ি) থেকে একটি অপশন নির্বাচন করুন (হাত ঘড়ি).");
               rdoWatch1.requestFocus();
               return;
            }
          
          else if(!rdoElecFan1.isChecked() & !rdoElecFan2.isChecked() & secElecFan.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (বৈদ্যুতিক পাখা).");
+              Connection.MessageBox(SES.this, "বৈদ্যুতিক পাখা থেকে একটি অপশন নির্বাচন করুন (বৈদ্যুতিক পাখা).");
               rdoElecFan1.requestFocus();
               return;
            }
          
          else if(!rdoRickVan1.isChecked() & !rdoRickVan2.isChecked() & secRickVan.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (রিকশা/ভ্যান/নৌকা).");
+              Connection.MessageBox(SES.this, "রিকশা/ভ্যান/নৌকা থেকে একটি অপশন নির্বাচন করুন (রিকশা/ভ্যান/নৌকা).");
               rdoRickVan1.requestFocus();
               return;
            }
          
          else if(!rdoBicycle1.isChecked() & !rdoBicycle2.isChecked() & secBicycle.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (বাইসাইকেল).");
+              Connection.MessageBox(SES.this, "বাইসাইকেল থেকে একটি অপশন নির্বাচন করুন (বাইসাইকেল).");
               rdoBicycle1.requestFocus();
               return;
            }
          
          else if(!rdoMotCycle1.isChecked() & !rdoMotCycle2.isChecked() & secMotCycle.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (মোটরসাইকেল/সিএনজি/টেম্পু/ইলেকট্রিক বাইক).");
+              Connection.MessageBox(SES.this, "মোটরসাইকেল থেকে একটি অপশন নির্বাচন করুন (মোটরসাইকেল/সিএনজি/টেম্পু/ইলেকট্রিক বাইক).");
               rdoMotCycle1.requestFocus();
               return;
            }
          
          else if(!rdoComputer1.isChecked() & !rdoComputer2.isChecked() & secComputer.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (কম্পিউটার/ল্যাপটপ).");
+              Connection.MessageBox(SES.this, "কম্পিউটার/ল্যাপটপ থেকে একটি অপশন নির্বাচন করুন (কম্পিউটার/ল্যাপটপ).");
               rdoComputer1.requestFocus();
               return;
            }
@@ -1495,7 +1496,7 @@
            }
          else if(Integer.valueOf(txtBuffalo.getText().toString().length()==0 ? "00" : txtBuffalo.getText().toString()) < 00 || Integer.valueOf(txtBuffalo.getText().toString().length()==0 ? "99" : txtBuffalo.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "Value should be between 00 and 99(মহিষ).");
+             Connection.MessageBox(SES.this, "মহিষ সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (মহিষ).");
              txtBuffalo.requestFocus(); 
              return;	
            }
@@ -1507,7 +1508,7 @@
            }
          else if(Integer.valueOf(txtBull.getText().toString().length()==0 ? "00" : txtBull.getText().toString()) < 00 || Integer.valueOf(txtBull.getText().toString().length()==0 ? "99" : txtBull.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "Value should be between 00 and 99(ষাঁড়/পরম্ন).");
+             Connection.MessageBox(SES.this, "ষাঁড়/পরম্ন সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (ষাঁড়/পরম্ন).");
              txtBull.requestFocus(); 
              return;	
            }
@@ -1519,7 +1520,7 @@
            }
          else if(Integer.valueOf(txtGoat.getText().toString().length()==0 ? "00" : txtGoat.getText().toString()) < 00 || Integer.valueOf(txtGoat.getText().toString().length()==0 ? "99" : txtGoat.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "Value should be between 00 and 99(ছাগল/ভেড়া).");
+             Connection.MessageBox(SES.this, "ছাগল/ভেড়া সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (ছাগল/ভেড়া).");
              txtGoat.requestFocus(); 
              return;	
            }
@@ -1531,7 +1532,7 @@
            }
          else if(Integer.valueOf(txtChicken.getText().toString().length()==0 ? "00" : txtChicken.getText().toString()) < 00 || Integer.valueOf(txtChicken.getText().toString().length()==0 ? "99" : txtChicken.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "Value should be between 00 and 99(মুরগি/হাঁস).");
+             Connection.MessageBox(SES.this, "মুরগি/হাঁস সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (মুরগি/হাঁস).");
              txtChicken.requestFocus(); 
              return;	
            }
@@ -1543,7 +1544,7 @@
            }
          else if(Integer.valueOf(txtPigeon.getText().toString().length()==0 ? "0" : txtPigeon.getText().toString()) < 0 || Integer.valueOf(txtPigeon.getText().toString().length()==0 ? "99" : txtPigeon.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "Value should be between 0 and 99(কবুতর/কোয়েল পাখি).");
+             Connection.MessageBox(SES.this, "কবুতর/কোয়েল পাখি সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (কবুতর/কোয়েল পাখি).");
              txtPigeon.requestFocus(); 
              return;	
            }
@@ -1586,21 +1587,21 @@
          
          else if(!rdoHomestead1.isChecked() & !rdoHomestead2.isChecked() & secHomestead.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (আপনাদের খানার মালিকানায় বসত ভিটা আছে কি ?).");
+              Connection.MessageBox(SES.this, "একটি অপশন নির্বাচন করুন (আপনাদের খানার মালিকানায় বসত ভিটা আছে কি ?).");
               rdoHomestead1.requestFocus();
               return;
            }
          
          else if(!rdoHomesteadOth1.isChecked() & !rdoHomesteadOth2.isChecked() & secHomesteadOth.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (আপনাদের খানার অন্য কোথাও বসত ভিটা আছে কি ?).");
+              Connection.MessageBox(SES.this, "একটি অপশন নির্বাচন করুন (আপনাদের খানার অন্য কোথাও বসত ভিটা আছে কি ?).");
               rdoHomesteadOth1.requestFocus();
               return;
            }
          
          else if(!rdoOthLand1.isChecked() & !rdoOthLand2.isChecked() & secOthLand.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from ((খানার বসত ভিটা ছাড়া) আপনাদের কোন জমি আছে কি ?).");
+              Connection.MessageBox(SES.this, "একটি অপশন নির্বাচন করুন ((খানার বসত ভিটা ছাড়া) আপনাদের কোন জমি আছে কি ?).");
               rdoOthLand1.requestFocus();
               return;
            }

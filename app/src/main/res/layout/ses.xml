@@ -182,7 +182,7 @@
     <View android:id="@+id/lineTelephone" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secRefrige" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblRefrige" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <TextView android:id="@+id/VlblRefrige" android:text="F .  রেফ্রিজারেটর" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/VlblRefrige" android:text="F .  ফ্রিজ" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <RadioGroup android:id="@+id/rdogrpRefrige" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp">
          
            <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dp" android:textSize="20sp" android:id="@+id/rdoRefrige1" android:text="হ্যাঁ"/>
@@ -262,13 +262,13 @@
     <View android:id="@+id/linelbl018a" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secBuffalo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblBuffalo" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <TextView android:id="@+id/VlblBuffalo" android:text="A .  মহিষ" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/VlblBuffalo" android:text="A .  মহিষ/ঘোড়া" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
          <EditText android:id="@+id/txtBuffalo" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineBuffalo" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secBull" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblBull" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <TextView android:id="@+id/VlblBull" android:text="B .  ষাঁড়/পরম্ন" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/VlblBull" android:text="B .  ষাঁড়/দুকধ জাত গরু" android:layout_width="300sp" android:layout_height="wrap_content" android:textSize="20sp" />
          <EditText android:id="@+id/txtBull" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
     <View android:id="@+id/lineBull" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />

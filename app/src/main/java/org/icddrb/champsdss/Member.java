@@ -220,17 +220,15 @@ import Common.Global;
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member.this);
                  adb.setTitle("Close");
-                 adb.setMessage("Do you want to close this form[Yes/No]?");
-                 adb.setNegativeButton("No", null);
-                 adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                 adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
 //                         startActivity(new Intent(Member.this, Member_list.class));
                      }});
                  adb.show();
              }});
-
-
 
          seclbl1=(LinearLayout)findViewById(R.id.seclbl1);
          linelbl1=(View)findViewById(R.id.linelbl1);
@@ -712,7 +710,7 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtMSlNo.getText().toString().length()==0 ? "1" : txtMSlNo.getText().toString()) < 1 || Integer.valueOf(txtMSlNo.getText().toString().length()==0 ? "30" : txtMSlNo.getText().toString()) > 30)
            {
-             Connection.MessageBox(Member.this, "Value should be between 1 and 30(সিরিয়াল নং).");
+             Connection.MessageBox(Member.this, "সিরিয়াল নং  অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে(সিরিয়াল নং).");
              txtMSlNo.requestFocus(); 
              return;	
            }

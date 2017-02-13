@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:scrollbars="vertical">
     <LinearLayout android:layout_width="fill_parent" android:layout_height="45sp" android:orientation="horizontal" android:background="@color/pageHeadingBack">
         <ImageButton android:id="@+id/cmdBack" android:background="@color/pageHeadingBack" android:src="@drawable/back" android:layout_width="50sp" android:layout_height="match_parent"/>
-        <TextView android:id="@+id/lblHeading" android:text="PregHis"  android:paddingLeft="10sp" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
+        <TextView android:id="@+id/lblHeading" android:text="গর্ভের ইতিহাস"  android:paddingLeft="10sp" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
 <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:overScrollMode="always" android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true" android:scrollbarStyle="outsideInset" android:scrollbars="vertical">

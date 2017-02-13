@@ -323,9 +323,16 @@ import Common.Global;
 
          spnMSlNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                //txtPNo.setText(VILL.toString()+BARI.toString()+HH.toString()+(spnMSlNo.getSelectedItem().toString()));
-                 if(dataSeatch == true)
-                    DataSearch(VILL,BARI,HH,spnMSlNo.getSelectedItem().toString());
+                 if(spnMSlNo.getSelectedItemPosition()==0){
+                     txtPNo.setText("");
+                     spnVStatus.setSelection(0);
+                 }else{
+                     String MSL = spnMSlNo.getSelectedItemPosition()==0?"":Global.Left(spnMSlNo.getSelectedItem().toString(),2);
+                     String PNo= C.ReturnSingleValue("Select PNo from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSL +"'");
+                     txtPNo.setText(PNo);
+                     if(dataSeatch == true)
+                         DataSearch(VILL,BARI,HH,spnMSlNo.getSelectedItem().toString());
+                 }
              }
              public void onNothingSelected(AdapterView<?> parentView) {
 
@@ -333,7 +340,6 @@ import Common.Global;
 
          });
 
-//         PNo1= C.ReturnSingleValue("Select PNo from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and SNo='"+ Global.Left(spnMSlNo.getSelectedItem().toString(),2) +"'");
 
          secVDate=(LinearLayout)findViewById(R.id.secVDate);
          lineVDate=(View)findViewById(R.id.lineVDate);
@@ -364,7 +370,86 @@ import Common.Global;
          spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-             if (spnVStatus.getSelectedItem().toString().length() == 0) return;
+             if (spnVStatus.getSelectedItem().toString().length() == 0) {
+                 secMarriageStatus.setVisibility(View.GONE);
+                 lineMarriageStatus.setVisibility(View.GONE);
+                 rdogrpMarriageStatus.clearCheck();
+                 seclbl02.setVisibility(View.GONE);
+                 linelbl02.setVisibility(View.GONE);
+                 seclbl04.setVisibility(View.GONE);
+                 linelbl04.setVisibility(View.GONE);
+                 seclbl103.setVisibility(View.GONE);
+                 linelbl103.setVisibility(View.GONE);
+                 secMarMon.setVisibility(View.GONE);
+                 lineMarMon.setVisibility(View.GONE);
+                 txtMarMon.setText("");
+                 txtMarYear.setText("");
+                 chkMarDK.setChecked(false);
+                 secGaveBirth.setVisibility(View.GONE);
+                 lineGaveBirth.setVisibility(View.GONE);
+                 rdogrpGaveBirth.clearCheck();
+                 secChildLivWWo.setVisibility(View.GONE);
+                 lineChildLivWWo.setVisibility(View.GONE);
+                 rdogrpChildLivWWo.clearCheck();
+                 seclbl106.setVisibility(View.GONE);
+                 linelbl106.setVisibility(View.GONE);
+                 seclbl106a.setVisibility(View.GONE);
+                 linelbl106a.setVisibility(View.GONE);
+                 secSonLivWWo.setVisibility(View.GONE);
+                 lineSonLivWWo.setVisibility(View.GONE);
+                 txtSonLivWWo.setText("");
+                 secDaugLivWWo.setVisibility(View.GONE);
+                 lineDaugLivWWo.setVisibility(View.GONE);
+                 txtDaugLivWWo.setText("");
+                 secChldLivOut.setVisibility(View.GONE);
+                 lineChldLivOut.setVisibility(View.GONE);
+                 rdogrpChldLivOut.clearCheck();
+                 seclbl108.setVisibility(View.GONE);
+                 linelbl108.setVisibility(View.GONE);
+                 seclbl108a.setVisibility(View.GONE);
+                 linelbl108a.setVisibility(View.GONE);
+                 secSonLivOut.setVisibility(View.GONE);
+                 lineSonLivOut.setVisibility(View.GONE);
+                 txtSonLivOut.setText("");
+                 secDaugLivOut.setVisibility(View.GONE);
+                 lineDaugLivOut.setVisibility(View.GONE);
+                 txtDaugLivOut.setText("");
+                 seclbl109.setVisibility(View.GONE);
+                 linelbl109.setVisibility(View.GONE);
+                 secChldDie.setVisibility(View.GONE);
+                 lineChldDie.setVisibility(View.GONE);
+                 rdogrpChldDie.clearCheck();
+                 seclbl110.setVisibility(View.GONE);
+                 linelbl110.setVisibility(View.GONE);
+                 seclbl110a.setVisibility(View.GONE);
+                 linelbl110a.setVisibility(View.GONE);
+                 secBoyDied.setVisibility(View.GONE);
+                 lineBoyDied.setVisibility(View.GONE);
+                 txtBoyDied.setText("");
+                 secGirlDied.setVisibility(View.GONE);
+                 lineGirlDied.setVisibility(View.GONE);
+                 txtGirlDied.setText("");
+                 seclbl111.setVisibility(View.GONE);
+                 linelbl111.setVisibility(View.GONE);
+                 secNotLivBrth.setVisibility(View.GONE);
+                 lineNotLivBrth.setVisibility(View.GONE);
+                 rdogrpNotLivBrth.clearCheck();
+                 secTotLB.setVisibility(View.GONE);
+                 lineTotLB.setVisibility(View.GONE);
+                 txtTotLB.setText("");
+                 seclbl113.setVisibility(View.GONE);
+                 linelbl113.setVisibility(View.GONE);
+                 secTotPregOut.setVisibility(View.GONE);
+                 lineTotPregOut.setVisibility(View.GONE);
+                 txtTotPregOut.setText("");
+                 secCurPreg.setVisibility(View.GONE);
+                 lineCurPreg.setVisibility(View.GONE);
+                 rdogrpCurPreg.clearCheck();
+                 secLMPDate.setVisibility(View.GONE);
+                 lineLMPDate.setVisibility(View.GONE);
+
+                 return;
+             }
              String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(),"-");
 
                  if(spnData.equalsIgnoreCase("9"))
@@ -1405,6 +1490,88 @@ import Common.Global;
          super.onResume();
          dataSeatch = true;
      }
+
+     private void ClearForm()
+     {
+         spnVStatus.setSelection(0);
+         secMarriageStatus.setVisibility(View.GONE);
+         lineMarriageStatus.setVisibility(View.GONE);
+         rdogrpMarriageStatus.clearCheck();
+         seclbl02.setVisibility(View.GONE);
+         linelbl02.setVisibility(View.GONE);
+         seclbl04.setVisibility(View.GONE);
+         linelbl04.setVisibility(View.GONE);
+         seclbl103.setVisibility(View.GONE);
+         linelbl103.setVisibility(View.GONE);
+         secMarMon.setVisibility(View.GONE);
+         lineMarMon.setVisibility(View.GONE);
+         txtMarMon.setText("");
+         txtMarYear.setText("");
+         chkMarDK.setChecked(false);
+         secGaveBirth.setVisibility(View.GONE);
+         lineGaveBirth.setVisibility(View.GONE);
+         rdogrpGaveBirth.clearCheck();
+         secChildLivWWo.setVisibility(View.GONE);
+         lineChildLivWWo.setVisibility(View.GONE);
+         rdogrpChildLivWWo.clearCheck();
+         seclbl106.setVisibility(View.GONE);
+         linelbl106.setVisibility(View.GONE);
+         seclbl106a.setVisibility(View.GONE);
+         linelbl106a.setVisibility(View.GONE);
+         secSonLivWWo.setVisibility(View.GONE);
+         lineSonLivWWo.setVisibility(View.GONE);
+         txtSonLivWWo.setText("");
+         secDaugLivWWo.setVisibility(View.GONE);
+         lineDaugLivWWo.setVisibility(View.GONE);
+         txtDaugLivWWo.setText("");
+         secChldLivOut.setVisibility(View.GONE);
+         lineChldLivOut.setVisibility(View.GONE);
+         rdogrpChldLivOut.clearCheck();
+         seclbl108.setVisibility(View.GONE);
+         linelbl108.setVisibility(View.GONE);
+         seclbl108a.setVisibility(View.GONE);
+         linelbl108a.setVisibility(View.GONE);
+         secSonLivOut.setVisibility(View.GONE);
+         lineSonLivOut.setVisibility(View.GONE);
+         txtSonLivOut.setText("");
+         secDaugLivOut.setVisibility(View.GONE);
+         lineDaugLivOut.setVisibility(View.GONE);
+         txtDaugLivOut.setText("");
+         seclbl109.setVisibility(View.GONE);
+         linelbl109.setVisibility(View.GONE);
+         secChldDie.setVisibility(View.GONE);
+         lineChldDie.setVisibility(View.GONE);
+         rdogrpChldDie.clearCheck();
+         seclbl110.setVisibility(View.GONE);
+         linelbl110.setVisibility(View.GONE);
+         seclbl110a.setVisibility(View.GONE);
+         linelbl110a.setVisibility(View.GONE);
+         secBoyDied.setVisibility(View.GONE);
+         lineBoyDied.setVisibility(View.GONE);
+         txtBoyDied.setText("");
+         secGirlDied.setVisibility(View.GONE);
+         lineGirlDied.setVisibility(View.GONE);
+         txtGirlDied.setText("");
+         seclbl111.setVisibility(View.GONE);
+         linelbl111.setVisibility(View.GONE);
+         secNotLivBrth.setVisibility(View.GONE);
+         lineNotLivBrth.setVisibility(View.GONE);
+         rdogrpNotLivBrth.clearCheck();
+         secTotLB.setVisibility(View.GONE);
+         lineTotLB.setVisibility(View.GONE);
+         txtTotLB.setText("");
+         seclbl113.setVisibility(View.GONE);
+         linelbl113.setVisibility(View.GONE);
+         secTotPregOut.setVisibility(View.GONE);
+         lineTotPregOut.setVisibility(View.GONE);
+         txtTotPregOut.setText("");
+         secCurPreg.setVisibility(View.GONE);
+         lineCurPreg.setVisibility(View.GONE);
+         rdogrpCurPreg.clearCheck();
+         secLMPDate.setVisibility(View.GONE);
+         lineLMPDate.setVisibility(View.GONE);
+     }
+
 
      private void DataSave()
  {

@@ -98,10 +98,10 @@
              <EditText android:id="@+id/txtTotMem" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/secTotRWo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-        <TextView android:id="@+id/lblTotRWo" android:text="৯." android:visibility="visible" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <TextView android:id="@+id/VlblTotRWo" android:text="কতজন এমন মহিলা আছে যার বয়স ৫০ বছরের নীচে, যিনি বিবাহিতা অথবা কখনও বিবাহ হয়েছিল?" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
-         <EditText android:id="@+id/txtTotRWo" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
+        <LinearLayout android:id="@+id/secTotRWo" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+        <TextView android:id="@+id/lblTotRWo" android:text="৯." android:visibility="gone" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
+        <TextView android:id="@+id/VlblTotRWo" android:visibility="gone" android:text="কতজন এমন মহিলা আছে যার বয়স ৫০ বছরের নীচে, যিনি বিবাহিতা অথবা কখনও বিবাহ হয়েছিল?" android:layout_width="220sp" android:layout_height="wrap_content" android:textSize="20sp" />
+         <EditText android:id="@+id/txtTotRWo" android:visibility="gone" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
 
         <!--<EditText android:id="@+id/dtpExDate" android:maxLength="2" android:layout_width="60sp" android:inputType="number" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />-->
 

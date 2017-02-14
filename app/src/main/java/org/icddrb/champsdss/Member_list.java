@@ -83,8 +83,8 @@ public class Member_list extends Activity {
     static String BARI = "";
     static String HH = "";
     static String MSLNO = "";
-
-
+    Button btnSES;
+    Button btnPregHis;
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
    try
@@ -163,7 +163,7 @@ public class Member_list extends Activity {
                  DataSearch(VILL, BARI, HH);
              }});
 
-         Button btnSES = (Button) findViewById(R.id.btnSES);
+         btnSES = (Button) findViewById(R.id.btnSES);
          btnSES.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -190,11 +190,11 @@ public class Member_list extends Activity {
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
                  f1.putExtras(IDbundle);
-                 startActivity(f1);
+                 startActivityForResult(f1, 1);
 
              }
          });
-         Button btnPregHis = (Button) findViewById(R.id.btnPregHis);
+         btnPregHis = (Button) findViewById(R.id.btnPregHis);
          btnPregHis.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -234,7 +234,7 @@ public class Member_list extends Activity {
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
                  f1.putExtras(IDbundle);
-                 startActivity(f1);
+                 startActivityForResult(f1, 1);
 
              }
          });
@@ -257,19 +257,20 @@ public class Member_list extends Activity {
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
          DataSearch(VILL,BARI,HH);
-
-         if (C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+         DataStatus();
+         /*if (C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
              btnSES.setBackgroundColor(Color.GREEN);
          }
 
-         String TotRh = C.ReturnSingleValue("Select TotRWO from Household Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+         //String TotRh = C.ReturnSingleValue("Select TotRWO from Household Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+         String TotRh = C.ReturnSingleValue("Select Count(*)TotRWO from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'");
          String PregHis = C.ReturnSingleValue("Select count(*)Total from PregHis Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
 
 //         Toast.makeText(this, ""+Integer.valueOf(TotRh), Toast.LENGTH_LONG).show();
          if (Integer.valueOf(TotRh) == Integer.valueOf(PregHis))
          {
              btnPregHis.setBackgroundColor(Color.GREEN);
-         }
+         }*/
 
      }
      catch(Exception  e)
@@ -286,9 +287,30 @@ public class Member_list extends Activity {
          //Write your code if there's no result
      } else {
          DataSearch(VILL,BARI,HH);
+         DataStatus();
      }
  }
 
+    private void DataStatus()
+    {
+        if (C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+            btnSES.setBackgroundColor(Color.GREEN);
+        }
+        else{
+            btnSES.setBackgroundResource(R.drawable.button_style);
+        }
+
+        String TotRh = C.ReturnSingleValue("Select Count(*)TotRWO from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'");
+        String PregHis = C.ReturnSingleValue("Select count(*)Total from PregHis Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+
+        if (Integer.valueOf(TotRh)>0 & Integer.valueOf(TotRh) == Integer.valueOf(PregHis))
+        {
+            btnPregHis.setBackgroundColor(Color.GREEN);
+        }
+        else{
+            btnPregHis.setBackgroundResource(R.drawable.button_style);
+        }
+    }
  private void DataSearch(String Vill, String Bari, String HH )
      {
        try

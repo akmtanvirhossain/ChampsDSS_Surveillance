@@ -1358,7 +1358,7 @@
            }
          else if(spnWSDrink.getSelectedItemPosition()==0  & secWSDrink.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: খাবার পানি.");
+             Connection.MessageBox(SES.this, "Required field: ১৫. খাবার পানি.");
              spnWSDrink.requestFocus(); 
              return;	
            }
@@ -1370,7 +1370,7 @@
            }
          else if(spnWSCook.getSelectedItemPosition()==0  & secWSCook.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: রান্নার পানি.");
+             Connection.MessageBox(SES.this, "Required field:১৫. রান্নার পানি.");
              spnWSCook.requestFocus(); 
              return;	
            }
@@ -1382,7 +1382,7 @@
            }
          else if(spnWSWash.getSelectedItemPosition()==0  & secWSWash.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: থালা বাসন ধোয়ার পানি.");
+             Connection.MessageBox(SES.this, "Required field:১৫. থালা বাসন ধোয়ার পানি.");
              spnWSWash.requestFocus(); 
              return;	
            }
@@ -1394,7 +1394,7 @@
            }
          else if(spnLatrine.getSelectedItemPosition()==0  & secLatrine.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: আপনার খানার সদস্যরা সাধারণত কি ধরণের পায়খানা/ল্যাট্রিন ব্যবহার করে?.");
+             Connection.MessageBox(SES.this, "Required field:১৬. আপনার খানার সদস্যরা সাধারণত কি ধরণের পায়খানা/ল্যাট্রিন ব্যবহার করে?.");
              spnLatrine.requestFocus(); 
              return;	
            }
@@ -1407,150 +1407,150 @@
          
          else if(!rdoElectricity1.isChecked() & !rdoElectricity2.isChecked() & secElectricity.isShown())
            {
-              Connection.MessageBox(SES.this, "Select anyone options from (বিদ্যুৎ/সৌর বিদ্যুৎ ).");
+              Connection.MessageBox(SES.this, "১৭a. বিদ্যুৎ/সৌর বিদ্যুৎ থেকে একটি অপশন নির্বাচন করুন.");
               rdoElectricity1.requestFocus();
               return;
            }
          
          else if(!rdoRadio1.isChecked() & !rdoRadio2.isChecked() & secRadio.isShown())
            {
-              Connection.MessageBox(SES.this, "রেডিও থেকে একটি অপশন নির্বাচন করুন (রেডিও).");
+              Connection.MessageBox(SES.this, "১৭b. রেডিও থেকে একটি অপশন নির্বাচন করুন .");
               rdoRadio1.requestFocus();
               return;
            }
          
          else if(!rdoTV1.isChecked() & !rdoTV2.isChecked() & secTV.isShown())
            {
-              Connection.MessageBox(SES.this, "টেলিভিশন থেকে একটি অপশন নির্বাচন করুন (টেলিভিশন).");
+              Connection.MessageBox(SES.this, "১৭c. টেলিভিশন থেকে একটি অপশন নির্বাচন করুন .");
               rdoTV1.requestFocus();
               return;
            }
          
          else if(!rdoMobile1.isChecked() & !rdoMobile2.isChecked() & secMobile.isShown())
            {
-              Connection.MessageBox(SES.this, "মোবাইল ফোন থেকে একটি অপশন নির্বাচন করুন (মোবাইল ফোন).");
+              Connection.MessageBox(SES.this, "১৭d. মোবাইল ফোন থেকে একটি অপশন নির্বাচন করুন .");
               rdoMobile1.requestFocus();
               return;
            }
          
          else if(!rdoTelephone1.isChecked() & !rdoTelephone2.isChecked() & secTelephone.isShown())
            {
-              Connection.MessageBox(SES.this, "অন্য টেলিফোন থেকে একটি অপশন নির্বাচন করুন (অন্য টেলিফোন).");
+              Connection.MessageBox(SES.this, "১৭e. অন্য টেলিফোন থেকে একটি অপশন নির্বাচন করুন .");
               rdoTelephone1.requestFocus();
               return;
            }
          
          else if(!rdoRefrige1.isChecked() & !rdoRefrige2.isChecked() & secRefrige.isShown())
            {
-              Connection.MessageBox(SES.this, "রেফ্রিজারেটর থেকে একটি অপশন নির্বাচন করুন (রেফ্রিজারেটর).");
+              Connection.MessageBox(SES.this, "১৭f. রেফ্রিজারেটর থেকে একটি অপশন নির্বাচন করুন .");
               rdoRefrige1.requestFocus();
               return;
            }
          
          else if(!rdoWatch1.isChecked() & !rdoWatch2.isChecked() & secWatch.isShown())
            {
-              Connection.MessageBox(SES.this, "হাত ঘড়ি) থেকে একটি অপশন নির্বাচন করুন (হাত ঘড়ি).");
+              Connection.MessageBox(SES.this, "১৭g. হাত ঘড়ি) থেকে একটি অপশন নির্বাচন করুন .");
               rdoWatch1.requestFocus();
               return;
            }
          
          else if(!rdoElecFan1.isChecked() & !rdoElecFan2.isChecked() & secElecFan.isShown())
            {
-              Connection.MessageBox(SES.this, "বৈদ্যুতিক পাখা থেকে একটি অপশন নির্বাচন করুন (বৈদ্যুতিক পাখা).");
+              Connection.MessageBox(SES.this, "১৭h. বৈদ্যুতিক পাখা থেকে একটি অপশন নির্বাচন করুন .");
               rdoElecFan1.requestFocus();
               return;
            }
          
          else if(!rdoRickVan1.isChecked() & !rdoRickVan2.isChecked() & secRickVan.isShown())
            {
-              Connection.MessageBox(SES.this, "রিকশা/ভ্যান/নৌকা থেকে একটি অপশন নির্বাচন করুন (রিকশা/ভ্যান/নৌকা).");
+              Connection.MessageBox(SES.this, "১৭i. রিকশা/ভ্যান/নৌকা থেকে একটি অপশন নির্বাচন করুন .");
               rdoRickVan1.requestFocus();
               return;
            }
          
          else if(!rdoBicycle1.isChecked() & !rdoBicycle2.isChecked() & secBicycle.isShown())
            {
-              Connection.MessageBox(SES.this, "বাইসাইকেল থেকে একটি অপশন নির্বাচন করুন (বাইসাইকেল).");
+              Connection.MessageBox(SES.this, "১৭j. বাইসাইকেল থেকে একটি অপশন নির্বাচন করুন .");
               rdoBicycle1.requestFocus();
               return;
            }
          
          else if(!rdoMotCycle1.isChecked() & !rdoMotCycle2.isChecked() & secMotCycle.isShown())
            {
-              Connection.MessageBox(SES.this, "মোটরসাইকেল থেকে একটি অপশন নির্বাচন করুন (মোটরসাইকেল/সিএনজি/টেম্পু/ইলেকট্রিক বাইক).");
+              Connection.MessageBox(SES.this, "১৭k. মোটরসাইকেল/সিএনজি/টেম্পু/ইলেকট্রিক বাইক থেকে একটি অপশন নির্বাচন করুন.");
               rdoMotCycle1.requestFocus();
               return;
            }
          
          else if(!rdoComputer1.isChecked() & !rdoComputer2.isChecked() & secComputer.isShown())
            {
-              Connection.MessageBox(SES.this, "কম্পিউটার/ল্যাপটপ থেকে একটি অপশন নির্বাচন করুন (কম্পিউটার/ল্যাপটপ).");
+              Connection.MessageBox(SES.this, "১৭l. কম্পিউটার/ল্যাপটপ থেকে একটি অপশন নির্বাচন করুন.");
               rdoComputer1.requestFocus();
               return;
            }
          else if(txtBuffalo.getText().toString().length()==0 & secBuffalo.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: মহিষ.");
+             Connection.MessageBox(SES.this, "Required field:১৮a মহিষ.");
              txtBuffalo.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtBuffalo.getText().toString().length()==0 ? "00" : txtBuffalo.getText().toString()) < 00 || Integer.valueOf(txtBuffalo.getText().toString().length()==0 ? "99" : txtBuffalo.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "মহিষ সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (মহিষ).");
+             Connection.MessageBox(SES.this, "মহিষ সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে.");
              txtBuffalo.requestFocus(); 
              return;	
            }
          else if(txtBull.getText().toString().length()==0 & secBull.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ষাঁড়/পরম্ন.");
+             Connection.MessageBox(SES.this, "Required field:১৮b ষাঁড়/পরম্ন.");
              txtBull.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtBull.getText().toString().length()==0 ? "00" : txtBull.getText().toString()) < 00 || Integer.valueOf(txtBull.getText().toString().length()==0 ? "99" : txtBull.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "ষাঁড়/পরম্ন সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (ষাঁড়/পরম্ন).");
+             Connection.MessageBox(SES.this, "ষাঁড়/পরম্ন সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে");
              txtBull.requestFocus(); 
              return;	
            }
          else if(txtGoat.getText().toString().length()==0 & secGoat.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ছাগল/ভেড়া.");
+             Connection.MessageBox(SES.this, "Required field:১৮c ছাগল/ভেড়া.");
              txtGoat.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtGoat.getText().toString().length()==0 ? "00" : txtGoat.getText().toString()) < 00 || Integer.valueOf(txtGoat.getText().toString().length()==0 ? "99" : txtGoat.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "ছাগল/ভেড়া সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (ছাগল/ভেড়া).");
+             Connection.MessageBox(SES.this, "ছাগল/ভেড়া সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে.");
              txtGoat.requestFocus(); 
              return;	
            }
          else if(txtChicken.getText().toString().length()==0 & secChicken.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: মুরগি/হাঁস.");
+             Connection.MessageBox(SES.this, "Required field:১৮d মুরগি/হাঁস.");
              txtChicken.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtChicken.getText().toString().length()==0 ? "00" : txtChicken.getText().toString()) < 00 || Integer.valueOf(txtChicken.getText().toString().length()==0 ? "99" : txtChicken.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "মুরগি/হাঁস সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (মুরগি/হাঁস).");
+             Connection.MessageBox(SES.this, "মুরগি/হাঁস সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে .");
              txtChicken.requestFocus(); 
              return;	
            }
          else if(txtPigeon.getText().toString().length()==0 & secPigeon.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: কবুতর/কোয়েল পাখি.");
+             Connection.MessageBox(SES.this, "Required field:১৮e কবুতর/কোয়েল পাখি.");
              txtPigeon.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtPigeon.getText().toString().length()==0 ? "0" : txtPigeon.getText().toString()) < 0 || Integer.valueOf(txtPigeon.getText().toString().length()==0 ? "99" : txtPigeon.getText().toString()) > 99)
            {
-             Connection.MessageBox(SES.this, "কবুতর/কোয়েল পাখি সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে (কবুতর/কোয়েল পাখি).");
+             Connection.MessageBox(SES.this, "কবুতর/কোয়েল পাখি সংখ্যা  অবশ্যই ০০ থেকে ৯৯ এর ভিতর হতে হবে.");
              txtPigeon.requestFocus(); 
              return;	
            }
          else if(spnRoof.getSelectedItemPosition()==0  & secRoof.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: বসত ঘরের চালের  প্রধান নির্মাণ সামগ্রী.");
+             Connection.MessageBox(SES.this, "Required field:১৯. বসত ঘরের চালের  প্রধান নির্মাণ সামগ্রী.");
              spnRoof.requestFocus(); 
              return;	
            }
@@ -1562,7 +1562,7 @@
            }
          else if(spnWall.getSelectedItemPosition()==0  & secWall.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: বসত ঘরের দেয়ালের প্রধান নির্মাণ সামগ্রী:.");
+             Connection.MessageBox(SES.this, "Required field:১৯. বসত ঘরের দেয়ালের প্রধান নির্মাণ সামগ্রী:.");
              spnWall.requestFocus(); 
              return;	
            }
@@ -1574,7 +1574,7 @@
            }
          else if(spnFloor.getSelectedItemPosition()==0  & secFloor.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: বসত ঘরের মেঝের প্রধান নির্মাণ সামগ্রী:.");
+             Connection.MessageBox(SES.this, "Required field:১৯. বসত ঘরের মেঝের প্রধান নির্মাণ সামগ্রী:.");
              spnFloor.requestFocus(); 
              return;	
            }
@@ -1587,21 +1587,21 @@
          
          else if(!rdoHomestead1.isChecked() & !rdoHomestead2.isChecked() & secHomestead.isShown())
            {
-              Connection.MessageBox(SES.this, "একটি অপশন নির্বাচন করুন (আপনাদের খানার মালিকানায় বসত ভিটা আছে কি ?).");
+              Connection.MessageBox(SES.this, "২০. আপনাদের খানার মালিকানায় বসত ভিটা আছে কি ? থেকে একটি অপশন নির্বাচন করুন .");
               rdoHomestead1.requestFocus();
               return;
            }
          
          else if(!rdoHomesteadOth1.isChecked() & !rdoHomesteadOth2.isChecked() & secHomesteadOth.isShown())
            {
-              Connection.MessageBox(SES.this, "একটি অপশন নির্বাচন করুন (আপনাদের খানার অন্য কোথাও বসত ভিটা আছে কি ?).");
+              Connection.MessageBox(SES.this, "আপনাদের খানার অন্য কোথাও বসত ভিটা আছে কি ? থেকে একটি অপশন নির্বাচন করুন .");
               rdoHomesteadOth1.requestFocus();
               return;
            }
          
          else if(!rdoOthLand1.isChecked() & !rdoOthLand2.isChecked() & secOthLand.isShown())
            {
-              Connection.MessageBox(SES.this, "একটি অপশন নির্বাচন করুন ((খানার বসত ভিটা ছাড়া) আপনাদের কোন জমি আছে কি ?).");
+              Connection.MessageBox(SES.this, "২১. খানার বসত ভিটা ছাড়া আপনাদের কোন জমি আছে কি ? থেকে একটি অপশন নির্বাচন করুন.");
               rdoOthLand1.requestFocus();
               return;
            }

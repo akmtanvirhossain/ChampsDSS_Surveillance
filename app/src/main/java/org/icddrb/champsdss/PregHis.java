@@ -291,6 +291,9 @@ import Common.Global;
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
+                         Intent returnIntent = new Intent();
+                         returnIntent.putExtra("res", "");
+                         setResult(Activity.RESULT_OK, returnIntent);
                      }});
                  adb.show();
              }});
@@ -314,7 +317,7 @@ import Common.Global;
          lineMSlNo=(View)findViewById(R.id.lineMSlNo);
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          spnMSlNo=(Spinner) findViewById(R.id.spnMSlNo);
-         spnMSlNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday('now')-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"));
+         spnMSlNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"));
 
          secPNo=(LinearLayout)findViewById(R.id.secPNo);
          linePNo=(View)findViewById(R.id.linePNo);
@@ -1640,13 +1643,13 @@ import Common.Global;
          
          else if(!rdoMarriageStatus1.isChecked() & !rdoMarriageStatus2.isChecked() & secMarriageStatus.isShown())
            {
-              Connection.MessageBox(PregHis.this, "Select anyone options from (এ খানা রেজিস্ট্রেশন ফর্ম চেক করুন , এই খানায় কি কোন ৫০ বছরের নীচে মহিলা আছে যিনি বিবাহিত অথবা কখনও বিবাহ হয়েছিল ?).");
+              Connection.MessageBox(PregHis.this, "একটি অপশন নির্বাচন করুন (এ খানা রেজিস্ট্রেশন ফর্ম চেক করুন , এই খানায় কি কোন ৫০ বছরের নীচে মহিলা আছে যিনি বিবাহিত অথবা কখনও বিবাহ হয়েছিল ?).");
               rdoMarriageStatus1.requestFocus();
               return;
            }
          else if(txtMarMon.getText().toString().length()==0 & secMarMon.isShown() )
            {
-             Connection.MessageBox(PregHis.this, "Required field: মাস.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৩. মাস.");
              txtMarMon.requestFocus(); 
              return;	
            }
@@ -1656,7 +1659,7 @@ import Common.Global;
          }
          else if(Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "1" : txtMarMon.getText().toString()) < 1 || Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "12" : txtMarMon.getText().toString()) > 12)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 1 and 12(মাস).");
+             Connection.MessageBox(PregHis.this, "১০৩. মাস অবশ্যই ১ থেকে ১২ এর ভিতর হতে হবে.");
              txtMarMon.requestFocus(); 
              return;	
            }
@@ -1666,82 +1669,82 @@ import Common.Global;
 //         }
          else if(txtMarYear.getText().toString().length()==0 & secMarMon.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: বছর.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৩. বছর.");
              txtMarYear.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "1960" : txtMarYear.getText().toString()) < 1960 || Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "2004" : txtMarYear.getText().toString()) > 2004)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 2004 and 1960(বছর).");
+             Connection.MessageBox(PregHis.this, "১০৩. বছর অবশ্যই ১৯৬০ থেকে ২০০৪ এর ভিতর হতে হবে.");
              txtMarYear.requestFocus(); 
              return;	
            }
          
          else if(!rdoGaveBirth1.isChecked() & !rdoGaveBirth2.isChecked() & secGaveBirth.isShown())
            {
-              Connection.MessageBox(PregHis.this, "Select anyone options from (আপনার কি কখনও কোন ছেলেমেয়ে হয়েছে ?  ).");
+              Connection.MessageBox(PregHis.this, "১০৪. আপনার কি কখনও কোন ছেলেমেয়ে হয়েছে একটি অপশন নির্বাচন করুন.");
               rdoGaveBirth1.requestFocus();
               return;
            }
          
          else if(!rdoChildLivWWo1.isChecked() & !rdoChildLivWWo2.isChecked() & secChildLivWWo.isShown())
            {
-              Connection.MessageBox(PregHis.this, "Select anyone options from (আপনি জন্ম দিয়েছেন , এমন ছেলে অথবা মেয়ে কি এখন আপনার সাথে বসবাস করছে ?).");
+              Connection.MessageBox(PregHis.this, "১০৫. একটি অপশন নির্বাচন করুন (আপনি জন্ম দিয়েছেন , এমন ছেলে অথবা মেয়ে কি এখন আপনার সাথে বসবাস করছে ?).");
               rdoChildLivWWo1.requestFocus();
               return;
            }
          else if(txtSonLivWWo.getText().toString().length()==0 & secSonLivWWo.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: কয়জন ছেলে আপনার সাথে থাকে?.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৬a কয়জন ছেলে আপনার সাথে থাকে?.");
              txtSonLivWWo.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtSonLivWWo.getText().toString().length()==0 ? "0" : txtSonLivWWo.getText().toString()) < 0 || Integer.valueOf(txtSonLivWWo.getText().toString().length()==0 ? "30" : txtSonLivWWo.getText().toString()) > 30)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 0 and 30(কয়জন ছেলে আপনার সাথে থাকে?).");
+             Connection.MessageBox(PregHis.this, "১০৬a. কয়জন ছেলে আপনার সাথে থাকে অবশ্যই ০ থেকে ৩০ এর ভিতর হতে হবে.");
              txtSonLivWWo.requestFocus(); 
              return;	
            }
          else if(txtDaugLivWWo.getText().toString().length()==0 & secDaugLivWWo.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: কয়জন মেয়ে আপনার সাথে থাকে?.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৬b কয়জন মেয়ে আপনার সাথে থাকে?.");
              txtDaugLivWWo.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtDaugLivWWo.getText().toString().length()==0 ? "00" : txtDaugLivWWo.getText().toString()) < 00 || Integer.valueOf(txtDaugLivWWo.getText().toString().length()==0 ? "30" : txtDaugLivWWo.getText().toString()) > 30)
            {
-             Connection.MessageBox(PregHis.this, "Value should be between 00 and 30(কয়জন মেয়ে আপনার সাথে থাকে?).");
+             Connection.MessageBox(PregHis.this, "১০৬b. কয়জন মেয়ে আপনার সাথে থাকে অবশ্যই ০ থেকে ৩০ এর ভিতর হতে হবে.");
              txtDaugLivWWo.requestFocus(); 
              return;	
            }
          
          else if(!rdoChldLivOut1.isChecked() & !rdoChldLivOut2.isChecked() & secChldLivOut.isShown())
            {
-              Connection.MessageBox(PregHis.this, "১০৭. একটি অপশন নির্বাচন করুন  (আপনি এমন কোন ছেলে বা মেয়ে জন্ম দিয়েছেন কি যারা এখন জীবিত আছে কিন্তু এখন আপনার সাথে থাকে না ?).");
+              Connection.MessageBox(PregHis.this, "১০৭. আপনি এমন কোন ছেলে বা মেয়ে জন্ম দিয়েছেন কি যারা এখন জীবিত আছে কিন্তু এখন আপনার সাথে থাকে না ? একটি অপশন নির্বাচন করুন .");
               rdoChldLivOut1.requestFocus();
               return;
            }
          else if(txtSonLivOut.getText().toString().length()==0 & secSonLivOut.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: অন্য কোথাও থাকে এমন ছেলের সংখ্যা.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৮a অন্য কোথাও থাকে এমন ছেলের সংখ্যা.");
              txtSonLivOut.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtSonLivOut.getText().toString().length()==0 ? "00" : txtSonLivOut.getText().toString()) < 00 || Integer.valueOf(txtSonLivOut.getText().toString().length()==0 ? "20" : txtSonLivOut.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "১০৮a. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে(অন্য কোথাও থাকে এমন ছেলের সংখ্যা).");
+             Connection.MessageBox(PregHis.this, "১০৮a. অন্য কোথাও থাকে এমন ছেলের সংখ্যা) অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে");
              txtSonLivOut.requestFocus(); 
              return;	
            }
          else if(txtDaugLivOut.getText().toString().length()==0 & secDaugLivOut.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: অন্য কোথাও থাকে এমন মেয়ের সংখ্যা.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৮b অন্য কোথাও থাকে এমন মেয়ের সংখ্যা.");
              txtDaugLivOut.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtDaugLivOut.getText().toString().length()==0 ? "00" : txtDaugLivOut.getText().toString()) < 00 || Integer.valueOf(txtDaugLivOut.getText().toString().length()==0 ? "20" : txtDaugLivOut.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "১০৮b. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে (অন্য কোথাও থাকে এমন মেয়ের সংখ্যা).");
+             Connection.MessageBox(PregHis.this, "১০৮b. অন্য কোথাও থাকে এমন মেয়ের সংখ্যা) অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে ");
              txtDaugLivOut.requestFocus(); 
              return;	
            }
@@ -1754,25 +1757,25 @@ import Common.Global;
            }
          else if(txtBoyDied.getText().toString().length()==0 & secBoyDied.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: ছেলে মারা গেছে কতজন.");
+             Connection.MessageBox(PregHis.this, "Required field:১১০a ছেলে মারা গেছে কতজন.");
              txtBoyDied.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtBoyDied.getText().toString().length()==0 ? "0" : txtBoyDied.getText().toString()) < 0 || Integer.valueOf(txtBoyDied.getText().toString().length()==0 ? "20" : txtBoyDied.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "১১০a. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে (ছেলে মারা গেছে কতজন).");
+             Connection.MessageBox(PregHis.this, "১১০a. ছেলে মারা গেছে কতজন অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে ");
              txtBoyDied.requestFocus(); 
              return;	
            }
          else if(txtGirlDied.getText().toString().length()==0 & secGirlDied.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: মেয়ে মারা গেছে কতজন.");
+             Connection.MessageBox(PregHis.this, "Required field:১১০b মেয়ে মারা গেছে কতজন.");
              txtGirlDied.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtGirlDied.getText().toString().length()==0 ? "0" : txtGirlDied.getText().toString()) < 0 || Integer.valueOf(txtGirlDied.getText().toString().length()==0 ? "20" : txtGirlDied.getText().toString()) > 20)
            {
-             Connection.MessageBox(PregHis.this, "১১০b. অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে (মেয়ে মারা গেছে কতজন).");
+             Connection.MessageBox(PregHis.this, "১১০b. মেয়ে মারা গেছে কতজন অবশ্যই ০ থেকে ২০ এর ভিতর হতে হবে ");
              txtGirlDied.requestFocus(); 
              return;	
            }
@@ -1791,26 +1794,26 @@ import Common.Global;
            }
          else if(Integer.valueOf(txtTotLB.getText().toString().length()==0 ? "1" : txtTotLB.getText().toString()) < 1 || Integer.valueOf(txtTotLB.getText().toString().length()==0 ? "30" : txtTotLB.getText().toString()) > 30)
            {
-             Connection.MessageBox(PregHis.this, "১১২. অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে (মোট কতগুলো গর্ভাবস্থার ক্ষেত্রে জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে ?).");
+             Connection.MessageBox(PregHis.this, "১১২. মোট কতগুলো গর্ভাবস্থার ক্ষেত্রে জীবিত বাচ্চা জন্ম না দেয়ার মত ঘটনা ঘটেছে অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে .");
              txtTotLB.requestFocus(); 
              return;	
            }
          else if(txtTotPregOut.getText().toString().length()==0 & secTotPregOut.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: মোট গর্ভ ফলাফলের সংখ্যা.");
+             Connection.MessageBox(PregHis.this, "Required field:১১৩. মোট গর্ভ ফলাফলের সংখ্যা.");
              txtTotPregOut.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtTotPregOut.getText().toString().length()==0 ? "0" : txtTotPregOut.getText().toString()) < 0 || Integer.valueOf(txtTotPregOut.getText().toString().length()==0 ? "40" : txtTotPregOut.getText().toString()) > 40)
            {
-             Connection.MessageBox(PregHis.this, "১১৩. মোট গর্ভ ফলাফলের সংখ্যা) অবশ্যই ০০ থেকে ৪০ এর ভিতর হতে হবে (মোট গর্ভ ফলাফলের সংখ্যা).");
+             Connection.MessageBox(PregHis.this, "১১৩. মোট গর্ভ ফলাফলের সংখ্যা) মোট গর্ভ ফলাফলের সংখ্যা) অবশ্যই ০০ থেকে ৪০ এর ভিতর হতে হবে ");
              txtTotPregOut.requestFocus(); 
              return;	
            }
          
          else if(!rdoCurPreg1.isChecked() & !rdoCurPreg2.isChecked() & !rdoCurPreg3.isChecked() & secCurPreg.isShown())
            {
-              Connection.MessageBox(PregHis.this, "১১৪. একটি অপশন নির্বাচন করুন (আপনি কি বর্তমানে গর্ভবতী ?).");
+              Connection.MessageBox(PregHis.this, "১১৪. আপনি কি বর্তমানে গর্ভবতী  একটি অপশন নির্বাচন করুন .");
               rdoCurPreg1.requestFocus();
               return;
            }

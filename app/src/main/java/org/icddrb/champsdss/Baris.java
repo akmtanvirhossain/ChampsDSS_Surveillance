@@ -18,9 +18,12 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.KeyEvent;
+ import android.view.Gravity;
+ import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
+ import android.view.Window;
+ import android.view.WindowManager;
+ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -107,6 +110,7 @@ import Common.Global;
    try
      {
          setContentView(R.layout.baris);
+
          C = new Connection(this);
          g = Global.getInstance();
 
@@ -241,12 +245,12 @@ import Common.Global;
              txtBariName.requestFocus(); 
              return;	
            }
-         else if(txtBariLoc.getText().toString().length()==0 & secBariLoc.isShown())
-           {
-             Connection.MessageBox(Baris.this, "Required field: Bari Location.");
-             txtBariLoc.requestFocus(); 
-             return;	
-           }
+//         else if(txtBariLoc.getText().toString().length()==0 & secBariLoc.isShown())
+//           {
+//             Connection.MessageBox(Baris.this, "Required field: Bari Location.");
+//             txtBariLoc.requestFocus();
+//             return;
+//           }
  
          String SQL = "";
          RadioButton rb;

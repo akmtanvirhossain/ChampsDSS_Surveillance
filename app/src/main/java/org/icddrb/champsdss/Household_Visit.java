@@ -585,18 +585,18 @@ import Common.Global;
              txtTotMem.requestFocus(); 
              return;	
            }
-         else if(txtTotRWo.getText().toString().length()==0 & secTotRWo.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: মোট মহিলা.");
-             txtTotRWo.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "0" : txtTotRWo.getText().toString()) < 0 || Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "10" : txtTotRWo.getText().toString()) > 10)
-           {
-             Connection.MessageBox(Household_Visit.this, "মোট মহিলার সংখ্যা  অবশ্যই ০ থেকে ১০ এর ভিতর হতে হবে (মোট মহিলা).");
-             txtTotRWo.requestFocus(); 
-             return;	
-           }
+//         else if(txtTotRWo.getText().toString().length()==0 & secTotRWo.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: মোট মহিলা.");
+//             txtTotRWo.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "0" : txtTotRWo.getText().toString()) < 0 || Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "10" : txtTotRWo.getText().toString()) > 10)
+//           {
+//             Connection.MessageBox(Household_Visit.this, "মোট মহিলার সংখ্যা  অবশ্যই ০ থেকে ১০ এর ভিতর হতে হবে (মোট মহিলা).");
+//             txtTotRWo.requestFocus();
+//             return;
+//           }
          DV = Global.DateValidate(dtpVDate.getText().toString());
          if(DV.length()!=0 & secVDate.isShown())
            {
@@ -623,14 +623,14 @@ import Common.Global;
              return;
          }
 
-         Integer TotMem = Integer.valueOf(txtTotMem.getText().toString().length() == 0 ? "0" : txtTotMem.getText().toString());
-         Integer TotRWo = Integer.valueOf(txtTotRWo.getText().toString().length() == 0 ? "0" : txtTotRWo.getText().toString());
-
-         if (TotMem < TotRWo) {
-             Connection.MessageBox(Household_Visit.this, "কতজন মহিলা আছে অবশ্যই মোট সদস্য  সংখ্যার সমান অথবা কম হবে");
-             txtTotMem.requestFocus();
-             return;
-         }
+//         Integer TotMem = Integer.valueOf(txtTotMem.getText().toString().length() == 0 ? "0" : txtTotMem.getText().toString());
+//         Integer TotRWo = Integer.valueOf(txtTotRWo.getText().toString().length() == 0 ? "0" : txtTotRWo.getText().toString());
+//
+//         if (TotMem < TotRWo) {
+//             Connection.MessageBox(Household_Visit.this, "কতজন মহিলা আছে অবশ্যই মোট সদস্য  সংখ্যার সমান অথবা কম হবে");
+//             txtTotMem.requestFocus();
+//             return;
+//         }
 
 
 //         else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
@@ -696,7 +696,8 @@ import Common.Global;
          objSave.setMobileNo2(txtMobileNo2.getText().toString());
          objSave.setHHHead(txtHHHead.getText().toString());
          objSave.setTotMem(txtTotMem.getText().toString());
-         objSave.setTotRWo(txtTotRWo.getText().toString());
+//         objSave.setTotRWo(txtTotRWo.getText().toString());
+         objSave.setTotRWo("");
          objSave.setEnType("20");
          objSave.setEnDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
          objSave.setExType("");
@@ -799,7 +800,7 @@ import Common.Global;
              txtMobileNo2.setText(item.getMobileNo2());
              txtHHHead.setText(item.getHHHead());
              txtTotMem.setText(item.getTotMem());
-             txtTotRWo.setText(item.getTotRWo());
+//             txtTotRWo.setText(item.getTotRWo());
 
              //*********************************************sakib*********************************************
 

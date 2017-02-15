@@ -614,7 +614,6 @@ import Common.Global;
                      secSp3.setVisibility(View.VISIBLE);
                      lineSp3.setVisibility(View.VISIBLE);
                  }
-
              }
 
              @Override
@@ -644,7 +643,6 @@ import Common.Global;
                      secSp4.setVisibility(View.VISIBLE);
                      lineSp4.setVisibility(View.VISIBLE);
                  }
-
              }
 
              @Override
@@ -735,7 +733,7 @@ import Common.Global;
          
          else if(!rdoSex1.isChecked() & !rdoSex2.isChecked() & secSex.isShown())
            {
-              Connection.MessageBox(Member.this, "Select anyone options from (লিঙ্গ).");
+              Connection.MessageBox(Member.this, "লিঙ্গ থেকে একটি অপশন নির্বাচন করুন");
               rdoSex1.requestFocus();
               return;
            }
@@ -860,6 +858,8 @@ import Common.Global;
              dtpExDate.requestFocus(); 
              return;	
            }
+
+
          String[] RTH = spnRth.getSelectedItem().toString().split("-");
          String[] MS = spnMS.getSelectedItem().toString().split("-");
          String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
@@ -871,13 +871,13 @@ import Common.Global;
          }
          else if(txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-")))
          {
-             Connection.MessageBox(Member.this, "পিতা ও সদস্যের সিরিয়াল একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ৯. বাবার সিরিয়াল ও এই সদস্যের সিরিয়াল একই হবে না");
              spnFaNo.requestFocus();
              return;
          }
          else if(txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")))
          {
-             Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের সিরিয়াল একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ৮. মায়ের সিরিয়াল ও এই সদস্যের সিরিয়াল একই হবে না");
              spnMoNo.requestFocus();
              return;
          }
@@ -1007,7 +1007,7 @@ import Common.Global;
          else
          {
              if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
-                 Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
+                 Connection.MessageBox(Member.this, "প্রশ্ন ৮ এবং ৯. পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
                  spnFaNo.requestFocus();
                  return;
              }

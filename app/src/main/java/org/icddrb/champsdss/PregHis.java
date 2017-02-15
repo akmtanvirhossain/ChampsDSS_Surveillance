@@ -1695,7 +1695,7 @@ import Common.Global;
            }
          else if(txtSonLivWWo.getText().toString().length()==0 & secSonLivWWo.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field:১০৬a কয়জন ছেলে আপনার সাথে থাকে?.");
+             Connection.MessageBox(PregHis.this, "Required field: ১০৬a কয়জন ছেলে আপনার সাথে থাকে?.");
              txtSonLivWWo.requestFocus(); 
              return;	
            }
@@ -1707,7 +1707,7 @@ import Common.Global;
            }
          else if(txtDaugLivWWo.getText().toString().length()==0 & secDaugLivWWo.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field:১০৬b কয়জন মেয়ে আপনার সাথে থাকে?.");
+             Connection.MessageBox(PregHis.this, "Required field: ১০৬b কয়জন মেয়ে আপনার সাথে থাকে?.");
              txtDaugLivWWo.requestFocus(); 
              return;	
            }
@@ -1859,23 +1859,14 @@ import Common.Global;
 
          if(rdoGaveBirth1.isChecked())
          {
-             if(rdoChildLivWWo1.isChecked())
+             if (rdoChildLivWWo1.isChecked())
              {
-                 Q106A=Integer.valueOf(txtSonLivWWo.getText().toString());
-                 Q106B=Integer.valueOf(txtDaugLivWWo.getText().toString());
+                 Q106A = Integer.valueOf(txtSonLivWWo.getText().toString());
+                 Q106B = Integer.valueOf(txtDaugLivWWo.getText().toString());
+             } else {
+                 Q106A = 0;
+                 Q106B = 0;
              }
-             else
-             {
-                 Q106A=0;
-                 Q106B=0;
-             }
-         }
-         else
-         {
-             Q106A=0;
-             Q106B=0;
-//             Q108A=0;
-//             Q108B=0;
          }
          if(rdoGaveBirth1.isChecked())
          {
@@ -1908,12 +1899,10 @@ import Common.Global;
              if(rdoNotLivBrth1.isChecked())
              {
                  Q112=Integer.valueOf(txtTotLB.getText().toString());
-
              }
              else
              {
                  Q112=0;
-
              }
          }
 
@@ -1921,7 +1910,7 @@ import Common.Global;
          {
              if(Q106A+Q106B+Q108A+Q108B+Q110A+Q110B+Q112 !=Integer.valueOf(txtTotPregOut.getText().toString()))
              {
-                 Connection.MessageBox(PregHis.this, "(১১৪) - সর্বমোট জন্মদানের সংখ্যা সঠিক নয় ।");
+                 Connection.MessageBox(PregHis.this, "১১৩-সর্বমোট জন্মদানের সংখ্যা সঠিক নয় ।");
                  return;
              }
          }

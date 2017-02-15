@@ -1077,6 +1077,8 @@ import Common.Global;
                     secDaugLivWWo.setVisibility(View.GONE);
                     lineDaugLivWWo.setVisibility(View.GONE);
                     txtDaugLivWWo.setText("");
+                    secChldLivOut.setVisibility(View.VISIBLE);
+                    lineChldLivOut.setVisibility(View.VISIBLE);
              }
              else
              {
@@ -1139,6 +1141,10 @@ import Common.Global;
                     secDaugLivOut.setVisibility(View.GONE);
                     lineDaugLivOut.setVisibility(View.GONE);
                     txtDaugLivOut.setText("");
+                    seclbl109.setVisibility(View.VISIBLE);
+                    linelbl109.setVisibility(View.VISIBLE);
+                    secChldDie.setVisibility(View.VISIBLE);
+                    lineChldDie.setVisibility(View.VISIBLE);
              }
              else
              {
@@ -1207,8 +1213,10 @@ import Common.Global;
                     secGirlDied.setVisibility(View.GONE);
                     lineGirlDied.setVisibility(View.GONE);
                     txtGirlDied.setText("");
-//                    seclbl109.setVisibility(View.GONE);
-//                    linelbl109.setVisibility(View.GONE);
+                    seclbl111.setVisibility(View.VISIBLE);
+                    linelbl111.setVisibility(View.VISIBLE);
+                    secNotLivBrth.setVisibility(View.VISIBLE);
+                    lineNotLivBrth.setVisibility(View.VISIBLE);
              }
              else
              {
@@ -1649,15 +1657,15 @@ import Common.Global;
            }
          else if(txtMarMon.getText().toString().length()==0 & secMarMon.isShown() )
            {
-             Connection.MessageBox(PregHis.this, "Required field:১০৩. মাস.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৩. বিবাহের মাস.");
              txtMarMon.requestFocus(); 
              return;	
            }
-         if (Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "99" : txtMarMon.getText().toString()) == 99)
+         /*if (Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "99" : txtMarMon.getText().toString()) == 99)
          {
 
-         }
-         else if(Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "1" : txtMarMon.getText().toString()) < 1 || Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "12" : txtMarMon.getText().toString()) > 12)
+         }*/
+         else if(!chkMarDK.isChecked() & (Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "1" : txtMarMon.getText().toString()) < 1 || Integer.valueOf(txtMarMon.getText().toString().length()==0 ? "12" : txtMarMon.getText().toString()) > 12))
            {
              Connection.MessageBox(PregHis.this, "১০৩. মাস অবশ্যই ১ থেকে ১২ এর ভিতর হতে হবে.");
              txtMarMon.requestFocus(); 
@@ -1669,18 +1677,31 @@ import Common.Global;
 //         }
          else if(txtMarYear.getText().toString().length()==0 & secMarMon.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field:১০৩. বছর.");
+             Connection.MessageBox(PregHis.this, "Required field:১০৩. বিবাহের বছর.");
              txtMarYear.requestFocus(); 
              return;	
            }
-         else if(Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "1960" : txtMarYear.getText().toString()) < 1960 || Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "2004" : txtMarYear.getText().toString()) > 2004)
+         /*else if(!chkMarDK.isChecked() & (Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "1960" : txtMarYear.getText().toString()) < 1960 || Integer.valueOf(txtMarYear.getText().toString().length()==0 ? "2004" : txtMarYear.getText().toString()) > 2004))
            {
              Connection.MessageBox(PregHis.this, "১০৩. বছর অবশ্যই ১৯৬০ থেকে ২০০৪ এর ভিতর হতে হবে.");
              txtMarYear.requestFocus(); 
              return;	
-           }
-         
-         else if(!rdoGaveBirth1.isChecked() & !rdoGaveBirth2.isChecked() & secGaveBirth.isShown())
+           }*/
+         String MSL = spnMSlNo.getSelectedItemPosition()==0?"":Global.Left(spnMSlNo.getSelectedItem().toString(),2);
+         String BDate= C.ReturnSingleValue("Select BDate from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSL +"'");
+         if(!chkMarDK.isChecked() & Global.DateDifferenceDays("01/"+txtMarMon.getText().toString()+"/"+txtMarYear.getText().toString(),Global.DateConvertDMY(BDate))<0){
+             Connection.MessageBox(PregHis.this, "১০৩. বিবাহের তারিখ জন্ম তারিখ["+ Global.DateConvertDMY(BDate) +"] থেকে বড় হবে।");
+             txtMarMon.requestFocus();
+             return;
+         }
+         else if(!chkMarDK.isChecked() & Global.DateDifferenceDays(Global.DateNowDMY(),"01/"+txtMarMon.getText().toString()+"/"+txtMarYear.getText().toString())<0){
+             Connection.MessageBox(PregHis.this, "১০৩. বিবাহের তারিখ আজকের তারিখ["+ Global.DateConvertDMY(Global.DateNowYMD()) +"] থেকে ছোট হবে।");
+             txtMarMon.requestFocus();
+             return;
+         }
+
+
+         if(!rdoGaveBirth1.isChecked() & !rdoGaveBirth2.isChecked() & secGaveBirth.isShown())
            {
               Connection.MessageBox(PregHis.this, "১০৪. আপনার কি কখনও কোন ছেলেমেয়ে হয়েছে একটি অপশন নির্বাচন করুন.");
               rdoGaveBirth1.requestFocus();
@@ -1695,25 +1716,25 @@ import Common.Global;
            }
          else if(txtSonLivWWo.getText().toString().length()==0 & secSonLivWWo.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: ১০৬a কয়জন ছেলে আপনার সাথে থাকে?.");
+             Connection.MessageBox(PregHis.this, "Required field: ১০৬ a) কয়জন ছেলে আপনার সাথে থাকে?.");
              txtSonLivWWo.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtSonLivWWo.getText().toString().length()==0 ? "0" : txtSonLivWWo.getText().toString()) < 0 || Integer.valueOf(txtSonLivWWo.getText().toString().length()==0 ? "30" : txtSonLivWWo.getText().toString()) > 30)
            {
-             Connection.MessageBox(PregHis.this, "১০৬a. কয়জন ছেলে আপনার সাথে থাকে অবশ্যই ০ থেকে ৩০ এর ভিতর হতে হবে.");
+             Connection.MessageBox(PregHis.this, "১০৬ a) কয়জন ছেলে আপনার সাথে থাকে অবশ্যই ০ থেকে ৩০ এর ভিতর হতে হবে.");
              txtSonLivWWo.requestFocus(); 
              return;	
            }
          else if(txtDaugLivWWo.getText().toString().length()==0 & secDaugLivWWo.isShown())
            {
-             Connection.MessageBox(PregHis.this, "Required field: ১০৬b কয়জন মেয়ে আপনার সাথে থাকে?.");
+             Connection.MessageBox(PregHis.this, "Required field: ১০৬ b) কয়জন মেয়ে আপনার সাথে থাকে?.");
              txtDaugLivWWo.requestFocus(); 
              return;	
            }
          else if(Integer.valueOf(txtDaugLivWWo.getText().toString().length()==0 ? "00" : txtDaugLivWWo.getText().toString()) < 00 || Integer.valueOf(txtDaugLivWWo.getText().toString().length()==0 ? "30" : txtDaugLivWWo.getText().toString()) > 30)
            {
-             Connection.MessageBox(PregHis.this, "১০৬b. কয়জন মেয়ে আপনার সাথে থাকে অবশ্যই ০ থেকে ৩০ এর ভিতর হতে হবে.");
+             Connection.MessageBox(PregHis.this, "১০৬ b) কয়জন মেয়ে আপনার সাথে থাকে অবশ্যই ০ থেকে ৩০ এর ভিতর হতে হবে.");
              txtDaugLivWWo.requestFocus(); 
              return;	
            }
@@ -1831,7 +1852,7 @@ import Common.Global;
              return;
          }
 
-         try
+         /*try
          {
              Calendar c = Calendar.getInstance();
              //SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
@@ -1853,57 +1874,89 @@ import Common.Global;
          catch(ParseException ex)
          {
              ex.printStackTrace();
-         }
+         }*/
+
+
 
          Integer Q106A=0,Q106B=0,Q108A=0,Q108B=0,Q110A=0,Q110B=0,Q112=0;
 
-         if(rdoGaveBirth1.isChecked())
+         Q106A = Integer.valueOf(txtSonLivWWo.getText().toString().length() == 0 ? "0" : txtSonLivWWo.getText().toString());
+         Q106B = Integer.valueOf(txtDaugLivWWo.getText().toString().length() == 0 ? "0" : txtDaugLivWWo.getText().toString());
+
+         Q108A = Integer.valueOf(txtSonLivOut.getText().toString().length() == 0 ? "0" : txtSonLivOut.getText().toString());
+         Q108B = Integer.valueOf(txtDaugLivOut.getText().toString().length() == 0 ? "0" : txtDaugLivOut.getText().toString());
+
+         Q110A = Integer.valueOf(txtBoyDied.getText().toString().length() == 0 ? "0" : txtBoyDied.getText().toString());
+         Q110B = Integer.valueOf(txtGirlDied.getText().toString().length() == 0 ? "0" : txtGirlDied.getText().toString());
+
+         Q112 = Integer.valueOf(txtTotLB.getText().toString().length() == 0 ? "0" : txtTotLB.getText().toString());
+
+
+         if(Q106A+Q106B+Q108A+Q108B+Q110A+Q110B+Q112 !=Integer.valueOf(txtTotPregOut.getText().toString().length()==0?"0":txtTotPregOut.getText().toString()))
+         {
+             Connection.MessageBox(PregHis.this, "১১৩ - মোট গর্ভ ফলাফলের সংখ্যা সঠিক নয় (প্রশ্ন ১০৬, ১০৮, ১১০, এবং ১১২ উত্তর গুলো যাচাই করুন।) ।");
+             return;
+         }
+
+
+         /*if(rdoGaveBirth1.isChecked())
          {
              if (rdoChildLivWWo1.isChecked())
              {
-                 Q106A = Integer.valueOf(txtSonLivWWo.getText().toString());
-                 Q106B = Integer.valueOf(txtDaugLivWWo.getText().toString());
-             } else {
-                 Q106A = 0;
-                 Q106B = 0;
+//                 Q106A = Integer.valueOf(txtSonLivWWo.getText().toString());
+//                 Q106B = Integer.valueOf(txtDaugLivWWo.getText().toString());
+                 Q106A = Integer.valueOf(txtSonLivWWo.getText().toString().length() == 0 ? "0" : txtSonLivWWo.getText().toString());
+                 Q106B = Integer.valueOf(txtDaugLivWWo.getText().toString().length() == 0 ? "0" : txtDaugLivWWo.getText().toString());
+
              }
+//             else
+//             {
+//                 Q106A = 0;
+//                 Q106B = 0;
+//             }
          }
          if(rdoGaveBirth1.isChecked())
          {
              if(rdoChldLivOut1.isChecked())
              {
-                 Q108A=Integer.valueOf(txtSonLivOut.getText().toString());
-                 Q108B=Integer.valueOf(txtDaugLivOut.getText().toString());
+//                 Q108A=Integer.valueOf(txtSonLivOut.getText().toString());
+//                 Q108B=Integer.valueOf(txtDaugLivOut.getText().toString());
+                 Q108A = Integer.valueOf(txtSonLivOut.getText().toString().length() == 0 ? "0" : txtSonLivOut.getText().toString());
+                 Q108B = Integer.valueOf(txtDaugLivOut.getText().toString().length() == 0 ? "0" : txtDaugLivOut.getText().toString());
              }
-             else
-             {
-                 Q108A=0;
-                 Q108B=0;
-             }
+//             else
+//             {
+//                 Q108A=0;
+//                 Q108B=0;
+//             }
          }
          if(rdoGaveBirth1.isChecked())
          {
              if(rdoChldDie1.isChecked())
              {
-                 Q110A=Integer.valueOf(txtBoyDied.getText().toString());
-                 Q110B=Integer.valueOf(txtGirlDied.getText().toString());
+//                 Q110A=Integer.valueOf(txtBoyDied.getText().toString());
+//                 Q110B=Integer.valueOf(txtGirlDied.getText().toString());
+                 Q110A = Integer.valueOf(txtBoyDied.getText().toString().length() == 0 ? "0" : txtBoyDied.getText().toString());
+                 Q110B = Integer.valueOf(txtGirlDied.getText().toString().length() == 0 ? "0" : txtGirlDied.getText().toString());
              }
-             else
-             {
-                 Q110A=0;
-                 Q110B=0;
-             }
+//             else
+//             {
+//                 Q110A=0;
+//                 Q110B=0;
+//             }
          }
          if(rdoGaveBirth1.isChecked())
          {
              if(rdoNotLivBrth1.isChecked())
              {
-                 Q112=Integer.valueOf(txtTotLB.getText().toString());
+//                 Q112=Integer.valueOf(txtTotLB.getText().toString());
+                 Q112 = Integer.valueOf(txtTotLB.getText().toString().length() == 0 ? "0" : txtTotLB.getText().toString());
+
              }
-             else
-             {
-                 Q112=0;
-             }
+//             else
+//             {
+//                 Q112=0;
+//             }
          }
 
          if(rdoGaveBirth1.isChecked())
@@ -1913,7 +1966,7 @@ import Common.Global;
                  Connection.MessageBox(PregHis.this, "১১৩-সর্বমোট জন্মদানের সংখ্যা সঠিক নয় ।");
                  return;
              }
-         }
+         }*/
 
          String SQL = "";
          RadioButton rb;

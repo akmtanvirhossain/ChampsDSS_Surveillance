@@ -36,11 +36,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -1841,7 +1838,7 @@ import Common.Global;
          DV = Global.DateValidate(dtpLMPDate.getText().toString());
          if(DV.length()!=0 & secLMPDate.isShown())
            {
-             Connection.MessageBox(PregHis.this, DV);
+             Connection.MessageBox(PregHis.this, "শেষ মাসিকের তারিখ সঠিক নয়।");
              dtpLMPDate.requestFocus(); 
              return;	
            }
@@ -1891,6 +1888,23 @@ import Common.Global;
 
          Q112 = Integer.valueOf(txtTotLB.getText().toString().length() == 0 ? "0" : txtTotLB.getText().toString());
 
+         if(rdoChildLivWWo1.isChecked() & Q106A+Q106B==0){
+             Connection.MessageBox(PregHis.this, "১0৫ হ্যাঁ হলে, ১০৬ এর যোগফল ০ হবে না।");
+             txtSonLivWWo.requestFocus();
+             return;
+         }else if(rdoChldLivOut1.isChecked() & Q108A+Q108B==0){
+             Connection.MessageBox(PregHis.this, "১0৭ হ্যাঁ হলে, ১০৮ এর যোগফল ০ হবে না।");
+             txtSonLivOut.requestFocus();
+             return;
+         }else if(rdoChldDie1.isChecked() & Q110A+Q110B==0){
+             Connection.MessageBox(PregHis.this, "১0৯ হ্যাঁ হলে, ১১০ এর যোগফল ০ হবে না।");
+             txtBoyDied.requestFocus();
+             return;
+         }else if(rdoNotLivBrth1.isChecked() & Q112==0){
+             Connection.MessageBox(PregHis.this, "১১১ হ্যাঁ হলে, ১১২ ০ হবে না।");
+             txtTotLB.requestFocus();
+             return;
+         }
 
          if(Q106A+Q106B+Q108A+Q108B+Q110A+Q110B+Q112 !=Integer.valueOf(txtTotPregOut.getText().toString().length()==0?"0":txtTotPregOut.getText().toString()))
          {
@@ -1898,6 +1912,11 @@ import Common.Global;
              return;
          }
 
+         if(rdoCurPreg1.isChecked() & Global.DateDifferenceDays(dtpLMPDate.getText().toString(),Global.DateConvertDMY(BDate))<0){
+             Connection.MessageBox(PregHis.this, "১১৫. শেষ মাসিকের তারিখ জন্ম তারিখ["+ Global.DateConvertDMY(BDate) +"] থেকে বড় হবে।");
+             dtpLMPDate.requestFocus();
+             return;
+         }
 
          /*if(rdoGaveBirth1.isChecked())
          {

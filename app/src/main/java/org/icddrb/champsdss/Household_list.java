@@ -584,6 +584,7 @@ public class Household_list extends Activity  {
          final TextView HHHead = (TextView)convertView.findViewById(R.id.HHHead);
          final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
          final TextView Visit  = (TextView)convertView.findViewById(R.id.Visit);
+         final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
 
          HH.setText(o.get("HH"));
@@ -591,11 +592,13 @@ public class Household_list extends Activity  {
          TotMem.setText(o.get("TotMem"));
          Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+ VILL +"' AND Bari='"+ BARI +"' AND HH='"+ o.get("HH") +"'"));
 
+         delHousehold.setVisibility(View.INVISIBLE);
          if(o.get("TotMem").length() == 0 && Visit.getText().length()==0) {
              HH.setTextColor(Color.RED);
              HHHead.setTextColor(Color.RED);
              TotMem.setTextColor(Color.RED);
              Visit.setTextColor(Color.RED);
+             delHousehold.setVisibility(View.VISIBLE);
          }
          else if(!Visit.getText().equals("1"))
          {
@@ -617,10 +620,14 @@ public class Household_list extends Activity  {
              Visit.setTextColor(Color.BLACK);
          }
 
-         if(Integer.valueOf(o.get("sl"))%2==0)
+         if(Integer.valueOf(o.get("sl"))%2==0) {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
-         else
+             delHousehold.setBackgroundColor(Color.parseColor("#F3F3F3"));
+         }
+         else {
              secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+             delHousehold.setBackgroundColor(Color.parseColor("#FFFFFF"));
+         }
 
 
          secListRow.setOnClickListener(new View.OnClickListener() {
@@ -638,7 +645,22 @@ public class Household_list extends Activity  {
             }
           });
 
+         delHousehold.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+                 AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
+                 adb.setTitle("মুছে ফেলা");
+                 adb.setMessage("আপনি কি খানা প্রধান "+ o.get("HHHead") +" এর খানার তথ্য  মুছে ফেলতে চান[হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int which) {
+                         C.Save("Delete from Household where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "'");
+                         DataSearch(o.get("Vill"),o.get("Bari"));
+                     }
+                 });
+                 adb.show();
 
+             }
+         });
          return convertView;
        }
  }

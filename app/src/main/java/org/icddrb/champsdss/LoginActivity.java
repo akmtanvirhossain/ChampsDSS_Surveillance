@@ -95,8 +95,8 @@ public class LoginActivity extends Activity {
             {
                 //Reqular data sync
                 C.Sync_DatabaseStructure(UniqueID);
-                C.Sync_Download("DataCollector",UniqueID,"");
-                C.Sync_Download("Unions",UniqueID,"");
+                C.Sync_Download("DataCollector",UniqueID,"Status='d'");
+                //C.Sync_Download("Unions",UniqueID,"");
 
             }
             //**************************************************************************************

@@ -18,12 +18,9 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
- import android.view.Gravity;
- import android.view.KeyEvent;
+import android.view.KeyEvent;
 import android.view.View;
- import android.view.Window;
- import android.view.WindowManager;
- import android.widget.ArrayAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -157,12 +154,14 @@ import Common.Global;
          lineBari=(View)findViewById(R.id.lineBari);
          VlblBari=(TextView) findViewById(R.id.VlblBari);
          txtBari=(EditText) findViewById(R.id.txtBari);
-         if(BARI.length()==0)
+         if(BARI.length()==0) {
              txtBari.setText(NewBariNo(VILL));
-         else
+             txtBari.setEnabled(true);
+         }
+         else {
              txtBari.setText(BARI);
-
-         txtBari.setEnabled(false);
+             txtBari.setEnabled(false);
+         }
 
          secCluster=(LinearLayout)findViewById(R.id.secCluster);
          lineCluster=(View)findViewById(R.id.lineCluster);
@@ -227,6 +226,18 @@ import Common.Global;
              txtBari.requestFocus(); 
              return;	
            }
+         else if(txtBari.getText().toString().length()!=4 & secBari.isShown() & txtBari.isEnabled())
+         {
+             Connection.MessageBox(Baris.this, "বাড়ি নম্বর ৪ সংখ্যার হতে হবে।");
+             txtBari.requestFocus();
+             return;
+         }
+         else if(secBari.isShown() & txtBari.isEnabled() & C.Existence("Select vill from Baris where Vill='"+ txtVill.getText().toString() +"' and Bari='"+ txtBari.getText().toString() +"'"))
+         {
+             Connection.MessageBox(Baris.this, "বাড়ি নম্বর "+ txtBari.getText().toString() +" ডাটাবেজে আছে।");
+             txtBari.requestFocus();
+             return;
+         }
          /*else if(txtCluster.getText().toString().length()==0 & secCluster.isShown())
            {
              Connection.MessageBox(Baris.this, "Required field: Cluster.");

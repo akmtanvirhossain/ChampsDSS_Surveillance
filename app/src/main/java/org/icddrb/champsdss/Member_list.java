@@ -511,6 +511,7 @@ public class Member_list extends Activity {
          final TextView EnDate = (TextView)convertView.findViewById(R.id.EnDate);
          final TextView ExType = (TextView)convertView.findViewById(R.id.ExType);
          final TextView ExDate = (TextView)convertView.findViewById(R.id.ExDate);
+         final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
 
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
          Vill.setText(o.get("Vill"));
@@ -545,10 +546,14 @@ public class Member_list extends Activity {
              Name.setTextColor(Color.BLACK);
          }
 
-         if(Integer.valueOf(o.get("sl"))%2==0)
+         if(Integer.valueOf(o.get("sl"))%2==0) {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
-         else
+             delMember.setBackgroundColor(Color.parseColor("#F3F3F3"));
+         }
+         else {
              secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+             delMember.setBackgroundColor(Color.parseColor("#FFFFFF"));
+         }
 
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -566,7 +571,7 @@ public class Member_list extends Activity {
             }
           });
 
-         final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
+
          delMember.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);

@@ -1031,7 +1031,7 @@ public class Connection extends SQLiteOpenHelper {
             Res = DownloadJSON(SQLStr, TableName, VariableList, UniqueField);
 
             this.Sync_Download_Rebuild("DeviceList", "DeviceId='" + DeviceID + "'");
-            this.Sync_Download_Rebuild("DataCollector", "");
+            this.Sync_Download_Rebuild("DataCollector", "Status='d'");
 
             //Project Specific Database Sync
             //--------------------------------------------------------------------------------------

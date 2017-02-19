@@ -129,6 +129,19 @@ public class Member_list extends Activity {
                      return;
                  }
 
+                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                     Connection.MessageBox(Member_list.this, "কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
+                     return;
+                 }
+                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 {
+                     Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
+                     return;
+                 }
+                 if (!C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                     Connection.MessageBox(Member_list.this, "Required: খানার তথ্য  খালি রাখা যাবেনা ");
+                     return;
+                 }
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                  adb.setTitle("Close");
                  adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
@@ -417,10 +430,11 @@ public class Member_list extends Activity {
                  public void onClick(View arg0) {
 
                      if (txtName.getText().toString().length() == 0) {
-                         Connection.MessageBox(Member_list.this, "Required field: সদস্যের নাম।");
+                         Connection.MessageBox(Member_list.this, "Required field: সদস্যের নাম খালি রাখা যাবেনা ।");
                          txtName.requestFocus();
                          return;
                      }
+                     
                      //***
                      Member_DataModel objSave = new Member_DataModel();
                      objSave.setVill(txtVill.getText().toString());

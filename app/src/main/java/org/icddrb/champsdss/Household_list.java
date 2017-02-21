@@ -637,8 +637,9 @@ public class Household_list extends Activity  {
                IDbundle.putString("Vill", o.get("Vill"));
                IDbundle.putString("Bari", o.get("Bari"));
                IDbundle.putString("HH", o.get("HH"));
-               String B =(spnBari.getSelectedItem().toString().substring(5,spnBari.getSelectedItem().toString().length()));
-               IDbundle.putString("bariname",B);
+
+//               String B =(spnBari.getSelectedItem().toString().substring(5,spnBari.getSelectedItem().toString().length()));
+               IDbundle.putString("HHHead",o.get("HHHead"));
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);
                f1.putExtras(IDbundle);

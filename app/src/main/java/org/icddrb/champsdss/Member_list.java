@@ -83,13 +83,14 @@ public class Member_list extends Activity {
     static String BARI = "";
     static String HH = "";
     static String MSLNO = "";
+
+    Button btnMemberName;
     Button btnSES;
     Button btnPregHis;
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
    try
      {
-
          setContentView(R.layout.member_list);
          C = new Connection(this);
          g = Global.getInstance();
@@ -108,8 +109,8 @@ public class Member_list extends Activity {
          final TextView txtBari = (TextView) findViewById(R.id.txtBari);
          final TextView txtHH = (TextView) findViewById(R.id.txtHH);
 
-         TextView lblBariName=(TextView)findViewById(R.id.lblBariName);
-         lblBariName.setText(": "+IDbundle.getString("bariname"));
+         TextView lblHHHead=(TextView)findViewById(R.id.lblHHHead);
+         lblHHHead.setText(": "+IDbundle.getString("HHHead"));
 
          txtVill.setText(VILL);
          txtBari.setText(BARI);
@@ -199,7 +200,7 @@ public class Member_list extends Activity {
                      return;
                  }
 
-                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
+//                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
                  Intent f1;
                  f1 = new Intent(getApplicationContext(), SES.class);
                  IDbundle.putString("Vill", VILL);
@@ -407,7 +408,6 @@ public class Member_list extends Activity {
              txtName.requestFocus();
              final  TextView txtNameHint=(TextView)dialog.findViewById(R.id.txtNameHint);
 
-
              txtVill.setText(VILL);
              txtBari.setText(BARI);
              txtHH.setText(HH);
@@ -421,6 +421,7 @@ public class Member_list extends Activity {
 
              if(txtMSlNo.getText().toString().equals("01"))
              {
+                 txtName.setText(IDbundle.getString("HHHead"));
                  txtNameHint.setVisibility(View.VISIBLE);
              }else
              {
@@ -432,12 +433,32 @@ public class Member_list extends Activity {
              cmdContactNoSave.setOnClickListener(new View.OnClickListener() {
                  public void onClick(View arg0) {
 
-                     if (txtName.getText().toString().length() == 0) {
+                     if (txtName.getText().toString().length() == 0)
+                     {
                          Connection.MessageBox(Member_list.this, "Required field: সদস্যের নাম খালি রাখা যাবেনা ।");
                          txtName.requestFocus();
                          return;
                      }
-                     
+
+                     String TotalMember = C.ReturnSingleValue("Select TotMem from Household Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+
+                     if(txtMSlNo.getText().toString().equals(TotalMember))
+                     {
+                         AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+                         adb.setTitle("Close");
+                         adb.setMessage("খানা ফর্মে মোট সদস্য  " + TotalMember +  " জন আপনি কি আরো সদস্য  অন্তর্ভুক্ত করতে চান [হ্যাঁ/না]?");
+                         adb.setPositiveButton("হ্যাঁ", null);
+                         adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 finish();
+                                 Intent intent = new Intent(getApplicationContext(),Member_list.class);
+                                 intent.putExtras(IDbundle);
+                                 startActivityForResult(intent, 1);
+
+                             }});
+                         adb.show();
+
+                     }
                      //***
                      Member_DataModel objSave = new Member_DataModel();
                      objSave.setVill(txtVill.getText().toString());
@@ -459,6 +480,7 @@ public class Member_list extends Activity {
                      if(txtMSlNo.getText().toString().equals("01"))
                      {
                          txtNameHint.setVisibility(View.VISIBLE);
+//
                      }else
                      {
                          txtNameHint.setVisibility(View.GONE);

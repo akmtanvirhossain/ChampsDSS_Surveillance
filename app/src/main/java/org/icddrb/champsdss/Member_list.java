@@ -108,6 +108,9 @@ public class Member_list extends Activity {
          final TextView txtBari = (TextView) findViewById(R.id.txtBari);
          final TextView txtHH = (TextView) findViewById(R.id.txtHH);
 
+         TextView lblBariName=(TextView)findViewById(R.id.lblBariName);
+         lblBariName.setText(": "+IDbundle.getString("bariname"));
+
          txtVill.setText(VILL);
          txtBari.setText(BARI);
          txtHH.setText(HH);

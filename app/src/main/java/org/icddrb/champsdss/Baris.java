@@ -156,7 +156,7 @@ import Common.Global;
          txtBari=(EditText) findViewById(R.id.txtBari);
          if(BARI.length()==0) {
              txtBari.setText(NewBariNo(VILL));
-             txtBari.setEnabled(true);
+             txtBari.setEnabled(false);
          }
          else {
              txtBari.setText(BARI);
@@ -252,7 +252,7 @@ import Common.Global;
            }*/
          else if(txtBariName.getText().toString().length()==0 & secBariName.isShown())
            {
-             Connection.MessageBox(Baris.this, "Required field: Bari Name.");
+             Connection.MessageBox(Baris.this, "Required field: বাড়ির নাম খালি রাখা যাবেনা.");
              txtBariName.requestFocus(); 
              return;	
            }

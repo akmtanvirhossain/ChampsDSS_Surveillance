@@ -864,11 +864,12 @@ import Common.Global;
          String[] MS = spnMS.getSelectedItem().toString().split("-");
          String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
 
-         if ((RTH[0].equals("2") | RTH[0].equals("4") | RTH[0].equals("7") | RTH[0].equals("10") | RTH[0].equals("11") | RTH[0].equals("15") | RTH[0].equals("17")) & MS[0].equals("30")) {
-             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক ২,৪,৭,১০,১১,১৫,১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
+         if ((RTH[0].equals("02") | RTH[0].equals("04") | RTH[0].equals("07") | RTH[0].equals("10") | RTH[0].equals("11") | RTH[0].equals("15") | RTH[0].equals("17")) & MS[0].equals("30")) {
+             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ২,৪,৭,১০,১১,১৫,১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
              spnRth.requestFocus();
              return;
          }
+
          else if(txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-")))
          {
              Connection.MessageBox(Member.this, "প্রশ্ন ৯. বাবার সিরিয়াল ও এই সদস্যের সিরিয়াল একই হবে না");

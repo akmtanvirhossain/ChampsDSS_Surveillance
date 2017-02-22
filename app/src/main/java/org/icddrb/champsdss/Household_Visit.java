@@ -623,6 +623,13 @@ import Common.Global;
              return;
          }
 
+         if (txtMobileNo1.getText().toString().equals(txtMobileNo2.getText().toString()) & txtMobileNo2.isShown() & txtMobileNo1.getText().toString().length() != 0)
+         {
+             Connection.MessageBox(Household_Visit.this, "১ম মোবাইল নম্বর এবং ২য় মোবাইল নম্বর একই হবেনা");
+             txtMobileNo2.requestFocus();
+             return;
+         }
+
 //         Integer TotMem = Integer.valueOf(txtTotMem.getText().toString().length() == 0 ? "0" : txtTotMem.getText().toString());
 //         Integer TotRWo = Integer.valueOf(txtTotRWo.getText().toString().length() == 0 ? "0" : txtTotRWo.getText().toString());
 //

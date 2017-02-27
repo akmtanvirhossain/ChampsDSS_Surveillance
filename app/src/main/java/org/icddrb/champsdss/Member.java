@@ -869,7 +869,6 @@ import Common.Global;
              spnRth.requestFocus();
              return;
          }
-
          else if(txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-")))
          {
              Connection.MessageBox(Member.this, "প্রশ্ন ৯. বাবার সিরিয়াল ও এই সদস্যের সিরিয়াল একই হবে না");
@@ -882,19 +881,19 @@ import Common.Global;
              spnMoNo.requestFocus();
              return;
          }
-         else if ((RTH[0].equals("4") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         else if ((RTH[0].equals("04") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
          {
-             Connection.MessageBox(Member.this, "খানা প্রধানের বাবা/মা এর বয়স অবশ্যই ১৫ বছরের বেশী হবে");
+             Connection.MessageBox(Member.this, "খানা প্রধানের মা/বাবা এর বয়স অবশ্যই ১৫ বছরের বেশী হবে");
              txtAgeY.requestFocus();
              return;
          }
-         else if ((RTH[0].equals("2") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         else if ((RTH[0].equals("02") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
          {
              Connection.MessageBox(Member.this, "খানা প্রধানের স্বামী অথবা স্ত্রী  বয়স অবশ্যই ১৫ বছরের বেশী হবে");
              txtAgeY.requestFocus();
              return;
          }
-         else if ((RTH[0].equals("7") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         else if ((RTH[0].equals("07") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
          {
              Connection.MessageBox(Member.this, "খানা প্রধানের দাদা/দাদি/নানা/নানি এর বয়স অবশ্যই ১৫ বছরের বেশী হবে");
              txtAgeY.requestFocus();
@@ -906,6 +905,12 @@ import Common.Global;
              txtAgeY.requestFocus();
              return;
          }
+         else if ((RTH[0].equals("01") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 12))
+         {
+             Connection.MessageBox(Member.this, "খানা প্রধানের এর বয়স অবশ্যই ১২ বছরের বেশী হবে");
+             txtAgeY.requestFocus();
+             return;
+         }
          else if (!isAgeDifferenceWithParentsValid(txtVill.getText().toString(),txtBari.getText().toString(),txtHH.getText().toString(),
                  Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-"),
                  Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-"),
@@ -914,7 +919,29 @@ import Common.Global;
                  txtAgeY.requestFocus();
                  return;
          }
+         else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("01") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
+             Connection.MessageBox(Member.this, "খানা প্রধান ২ জন হতে পারেনা");
+             txtName.requestFocus();
+             return;
+         }
+         else if(txtPNo.getText().length()!=11)
+         {
+             Connection.MessageBox(Member.this, "PNo অবশ্যই ১১ ডিজিট হতে হবে।");
+             txtPNo.requestFocus();
+             return;
+         }
+         if(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00") ||(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00")))
+         {
 
+         }
+         else
+         {
+             if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
+                 Connection.MessageBox(Member.this, "প্রশ্ন ৮ এবং ৯. পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
+                 spnFaNo.requestFocus();
+                 return;
+             }
+         }
          /*else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
              Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
              spnSp1.requestFocus();
@@ -990,29 +1017,7 @@ import Common.Global;
              spnSp1.requestFocus();
              return;
          }*/
-         else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("10") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
-             Connection.MessageBox(Member.this, "খানা প্রধান ২ জন হতে পারবেনা");
-             txtName.requestFocus();
-             return;
-         }
-         else if(txtPNo.getText().length()!=11)
-         {
-             Connection.MessageBox(Member.this, "PNo অবশ্যই ১১ ডিজিট হতে হবে।");
-             txtPNo.requestFocus();
-             return;
-         }
-         if(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00") ||(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00")))
-         {
 
-         }
-         else
-         {
-             if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
-                 Connection.MessageBox(Member.this, "প্রশ্ন ৮ এবং ৯. পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
-                 spnFaNo.requestFocus();
-                 return;
-             }
-         }
 //         if(Global.DateDifferenceDays(dtpVDate.getText().toString(), dtpBDate.getText().toString())<0)
 //         {
 //             Connection.MessageBox(Member.this, "জন্ম তারিখ ভিজিটের তারিখের আগে হতে হবে।");
@@ -1174,7 +1179,7 @@ import Common.Global;
      }
      private boolean isHhHeadValid(String VILL, String BARI,String HH, String MSLNO) {
          Cursor cursor;
-         cursor = C.ReadData("select * from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and Rth =01 and MSlNo !='" + MSLNO + "'");
+         cursor = C.ReadData("select * from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and Rth ='01' and MSlNo !='" + MSLNO + "'");
          if (cursor.getCount() > 0) {
 
              cursor.close();

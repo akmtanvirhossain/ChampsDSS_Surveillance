@@ -720,20 +720,20 @@ import Common.Global;
            }
          else if(txtName.getText().toString().length()==0 & secName.isShown())
            {
-             Connection.MessageBox(Member.this, "Required field: খানার সদস্যদের নাম (খানা প্রধানের নাম দিয়ে শুরু করুন).");
+             Connection.MessageBox(Member.this, "প্রশ্ন ৩: খানার সদস্যদের নাম খালি রাখা যাবেনা.");
              txtName.requestFocus(); 
              return;	
            }
          else if(spnRth.getSelectedItemPosition()==0  & secRth.isShown())
            {
-             Connection.MessageBox(Member.this, "Required field: খানা প্রধানের সাথে সম্পর্ক.");
+             Connection.MessageBox(Member.this, "প্রশ্ন ৪: খানা প্রধানের সাথে সম্পর্ক. খালি রাখা যাবেনা");
              spnRth.requestFocus(); 
              return;	
            }
          
          else if(!rdoSex1.isChecked() & !rdoSex2.isChecked() & secSex.isShown())
            {
-              Connection.MessageBox(Member.this, "লিঙ্গ থেকে একটি অপশন নির্বাচন করুন");
+              Connection.MessageBox(Member.this, "প্রশ্ন ৫: পুরুষ/মহিলা থেকে একটি অপশন নির্বাচন করুন");
               rdoSex1.requestFocus();
               return;
            }
@@ -746,7 +746,7 @@ import Common.Global;
            }
          else if(txtAgeY.getText().toString().length()==0 & secAgeY.isShown())
            {
-             Connection.MessageBox(Member.this, "Required field: বয়স (পূর্ণ বছরে).");
+             Connection.MessageBox(Member.this, "প্রশ্ন ৭: বয়স (পূর্ণ বছরে) খালি রাখা যাবেনা.");
              txtAgeY.requestFocus(); 
              return;	
            }
@@ -759,23 +759,6 @@ import Common.Global;
              return;
          }
 
-         /*SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-         Date date = format1.parse(dtpBDate.getText().toString());
-         String intMonth = (String) android.text.format.DateFormat.format("MM", date); //06
-         String year = (String) android.text.format.DateFormat.format("yyyy", date); //2013
-         String day = (String) android.text.format.DateFormat.format("dd", date); //20
-         LocalDate birthdate = new LocalDate(Integer.valueOf(year), Integer.valueOf(intMonth), Integer.valueOf(day));
-         LocalDate now = new LocalDate();
-         // Years age = Years.yearsBetween(birthdate, now);
-         int months = Months.monthsBetween(birthdate, now).getMonths();
-         int days = Days.daysBetween(birthdate, now).getDays();
-         // int xMonths = Integer.parseInt(months.toString());
-         int mDays = (365 * Integer.valueOf(txtAgeY.getText().toString()));
-         if (abs(days - mDays) > 30) {
-             Connection.MessageBox(Member.this, "Required field: বয়স এর সাথে জন্মতারিখ মিল নেই");
-             txtAgeY.requestFocus();
-             return;
-         }*/
          else if(Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "0" : txtAgeY.getText().toString()) < 0 || Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "110" : txtAgeY.getText().toString()) > 110)
            {
              Connection.MessageBox(Member.this, "সদস্যের বয়স ০ থেকে ১১০ এর ভিতরে হতে হবে।");
@@ -786,37 +769,37 @@ import Common.Global;
 
          else if(spnMoNo.getSelectedItemPosition()==0  & spnMoNo.isShown())
          {
-             Connection.MessageBox(Member.this, "Required field: মায়ের সিরিয়াল নম্বর");
+             Connection.MessageBox(Member.this, "প্রশ্ন ৮: মায়ের সিরিয়াল নম্বর খালি রাখা যাবেনা");
              spnMoNo.requestFocus();
              return;
          }
          else if(spnFaNo.getSelectedItemPosition()==0  & spnFaNo.isShown())
          {
-             Connection.MessageBox(Member.this, "Required field: বাবার সিরিয়াল নম্বর");
+             Connection.MessageBox(Member.this, "প্রশ্ন ৯: বাবার সিরিয়াল নম্বর খালি রাখা যাবেনা");
              spnFaNo.requestFocus();
              return;
          }
          else if(spnEdu.getSelectedItemPosition()==0  & secEdu.isShown())
            {
-             Connection.MessageBox(Member.this, "Required field: সর্বোচ্চ শ্রেণি পাশ.");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১০: সর্বোচ্চ শ্রেণি পাশ খালি রাখা যাবেনা.");
              spnEdu.requestFocus(); 
              return;	
            }
          else if(spnMS.getSelectedItemPosition()==0  & secMS.isShown())
            {
-             Connection.MessageBox(Member.this, "Required field: বৈবাহিক অবস্থা.");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১১: বৈবাহিক অবস্থা খালি রাখা যাবেনা.");
              spnMS.requestFocus(); 
              return;	
            }
          else if(spnOcp.getSelectedItemPosition()==0  & secOcp.isShown())
            {
-             Connection.MessageBox(Member.this, "Required field: পেশা.");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১২: পেশা খালি রাখা যাবেনা.");
              spnOcp.requestFocus(); 
              return;	
            }
          else if(spnSp1.getSelectedItemPosition()==0  & spnSp1.isShown())
          {
-             Connection.MessageBox(Member.this, "Required field: সিরিয়াল নম্বর ১.");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৩: সিরিয়াল নম্বর ১ খালি রাখা যাবেনা.");
              spnSp1.requestFocus();
              return;
          }
@@ -924,6 +907,7 @@ import Common.Global;
              txtName.requestFocus();
              return;
          }
+
          else if(txtPNo.getText().length()!=11)
          {
              Connection.MessageBox(Member.this, "PNo অবশ্যই ১১ ডিজিট হতে হবে।");
@@ -942,6 +926,15 @@ import Common.Global;
                  return;
              }
          }
+//         String MSstatus= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and Sp1='"+ MS + "'");
+//
+//         if ((MSstatus.equals("30")))
+//         {
+//             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী "+ spnSp1.getSelectedItem().toString().split("-") +" বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
+//             spnRth.requestFocus();
+//             return;
+//         }
+
          /*else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
              Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
              spnSp1.requestFocus();

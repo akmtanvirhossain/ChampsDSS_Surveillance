@@ -1334,13 +1334,13 @@
            }
          else if(spnVStatus.getSelectedItemPosition()==0  & secVStatus.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: সাক্ষাতকারের ফলাফল.");
+             Connection.MessageBox(SES.this, "সাক্ষাতকারের ফলাফল খালি রাখা যাবেনা.");
              spnVStatus.requestFocus(); 
              return;	
            }
          else if(txtVStatusOth.getText().toString().length()==0 & secVStatusOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtVStatusOth.requestFocus(); 
              return;	
            }
@@ -1358,49 +1358,49 @@
            }
          else if(spnWSDrink.getSelectedItemPosition()==0  & secWSDrink.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ০১৫. খাবার পানি.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৫ a: খাবার পানি খালি রাখা যাবেনা.");
              spnWSDrink.requestFocus(); 
              return;	
            }
          else if(txtWSDrinkOth.getText().toString().length()==0 & secWSDrinkOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৫ a: অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtWSDrinkOth.requestFocus(); 
              return;	
            }
          else if(spnWSCook.getSelectedItemPosition()==0  & secWSCook.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ০১৫. রান্নার পানি.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৫ b: রান্নার পানি খালি রাখা যাবেনা.");
              spnWSCook.requestFocus(); 
              return;	
            }
          else if(txtWSCookOth.getText().toString().length()==0 & secWSCookOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৫ b: অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtWSCookOth.requestFocus(); 
              return;	
            }
          else if(spnWSWash.getSelectedItemPosition()==0  & secWSWash.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ০১৫. থালা বাসন ধোয়ার পানি.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৫ c: থালা বাসন ধোয়ার পানি খালি রাখা যাবেনা.");
              spnWSWash.requestFocus(); 
              return;	
            }
          else if(txtWSWashOth.getText().toString().length()==0 & secWSWashOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৫ c: অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtWSWashOth.requestFocus(); 
              return;	
            }
          else if(spnLatrine.getSelectedItemPosition()==0  & secLatrine.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ০১৬. আপনার খানার সদস্যরা সাধারণত কি ধরণের পায়খানা/ল্যাট্রিন ব্যবহার করে?.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৬: আপনার খানার সদস্যরা সাধারণত কি ধরণের পায়খানা/ল্যাট্রিন ব্যবহার করে খালি রাখা যাবেনা.");
              spnLatrine.requestFocus(); 
              return;	
            }
          else if(txtLatrineOth.getText().toString().length()==0 & secLatrineOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৬: অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtLatrineOth.requestFocus(); 
              return;	
            }
@@ -1490,7 +1490,7 @@
            }
          else if(txtBuffalo.getText().toString().length()==0 & secBuffalo.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ১৮ a) মহিষ.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ১৮ a) মহিষ/ঘোড়া খালি রাখা যাবেনা.");
              txtBuffalo.requestFocus(); 
              return;	
            }
@@ -1502,7 +1502,7 @@
            }
          else if(txtBull.getText().toString().length()==0 & secBull.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ১৮ b) ষাঁড়/পরম্ন.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ১৮ b) ষাঁড়/পরম্ন খালি রাখা যাবেনা.");
              txtBull.requestFocus(); 
              return;	
            }
@@ -1514,7 +1514,7 @@
            }
          else if(txtGoat.getText().toString().length()==0 & secGoat.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ১৮ c) ছাগল/ভেড়া.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ১৮ c) ছাগল/ভেড়া খালি রাখা যাবেনা.");
              txtGoat.requestFocus(); 
              return;	
            }
@@ -1526,7 +1526,7 @@
            }
          else if(txtChicken.getText().toString().length()==0 & secChicken.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ১৮ d) মুরগি/হাঁস.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ১৮ d) মুরগি/হাঁস খালি রাখা যাবেনা.");
              txtChicken.requestFocus(); 
              return;	
            }
@@ -1538,7 +1538,7 @@
            }
          else if(txtPigeon.getText().toString().length()==0 & secPigeon.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ১৮ e) কবুতর/কোয়েল পাখি.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ১৮ e) কবুতর/কোয়েল পাখি খালি রাখা যাবেনা.");
              txtPigeon.requestFocus(); 
              return;	
            }
@@ -1550,44 +1550,44 @@
            }
          else if(spnRoof.getSelectedItemPosition()==0  & secRoof.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ০১৯. বসত ঘরের চালের  প্রধান নির্মাণ সামগ্রী.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৯. বসত ঘরের চালের  প্রধান নির্মাণ সামগ্রী. খালি রাখা যাবেনা");
              spnRoof.requestFocus(); 
              return;	
            }
          else if(txtRoofOth.getText().toString().length()==0 & secRoofOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৯. অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtRoofOth.requestFocus(); 
              return;	
            }
          else if(spnWall.getSelectedItemPosition()==0  & secWall.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ০১৯. বসত ঘরের দেয়ালের প্রধান নির্মাণ সামগ্রী:.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৯. বসত ঘরের দেয়ালের প্রধান নির্মাণ সামগ্রী: খালি রাখা যাবেনা.");
              spnWall.requestFocus(); 
              return;	
            }
          else if(txtWallOth.getText().toString().length()==0 & secWallOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtWallOth.requestFocus(); 
              return;	
            }
          else if(spnFloor.getSelectedItemPosition()==0  & secFloor.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: ০১৯. বসত ঘরের মেঝের প্রধান নির্মাণ সামগ্রী:.");
+             Connection.MessageBox(SES.this, "প্রশ্ন ০১৯. বসত ঘরের মেঝের প্রধান নির্মাণ সামগ্রী: খালি রাখা যাবেনা.");
              spnFloor.requestFocus(); 
              return;	
            }
          else if(txtFloorOth.getText().toString().length()==0 & secFloorOth.isShown())
            {
-             Connection.MessageBox(SES.this, "Required field: অন্যান্য উল্লেখ করুন.");
+             Connection.MessageBox(SES.this, "অন্যান্য উল্লেখ করুন খালি রাখা যাবেনা.");
              txtFloorOth.requestFocus(); 
              return;	
            }
          
          else if(!rdoHomestead1.isChecked() & !rdoHomestead2.isChecked() & secHomestead.isShown())
            {
-              Connection.MessageBox(SES.this, "০২০. আপনাদের খানার মালিকানায় বসত ভিটা আছে কি ? থেকে একটি অপশন নির্বাচন করুন .");
+              Connection.MessageBox(SES.this, "প্রশ্ন ০২০. আপনাদের খানার মালিকানায় বসত ভিটা আছে কি ? থেকে একটি অপশন নির্বাচন করুন .");
               rdoHomestead1.requestFocus();
               return;
            }
@@ -1601,7 +1601,7 @@
          
          else if(!rdoOthLand1.isChecked() & !rdoOthLand2.isChecked() & secOthLand.isShown())
            {
-              Connection.MessageBox(SES.this, "০২১. খানার বসত ভিটা ছাড়া আপনাদের কোন জমি আছে কি ? থেকে একটি অপশন নির্বাচন করুন.");
+              Connection.MessageBox(SES.this, "প্রশ্ন ০২১. খানার বসত ভিটা ছাড়া আপনাদের কোন জমি আছে কি ? থেকে একটি অপশন নির্বাচন করুন.");
               rdoOthLand1.requestFocus();
               return;
            }

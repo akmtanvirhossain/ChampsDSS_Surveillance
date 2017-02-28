@@ -91,15 +91,15 @@ public class MainMenu extends Activity {
                     //Check for Internet connectivity
                     if (Connection.haveNetworkConnection(MainMenu.this)) {
                     } else {
-                        Connection.MessageBox(MainMenu.this, "Internet connection is not available for Data Sync.");
+                        Connection.MessageBox(MainMenu.this, "ডেটা সিঙ্ক করার জন্য  ইন্টারনেট সংযোগ নাই.");
                         return;
                     }
 
                     AlertDialog.Builder adb = new AlertDialog.Builder(MainMenu.this);
                     adb.setTitle("Data Sync");
-                    adb.setMessage("Do you want to Sync Data[Yes/No]?");
-                    adb.setNegativeButton("No", null);
-                    adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                    adb.setMessage("আপনি ডেটা সিঙ্ক করতে চান[হ্যাঁ/না]?");
+                    adb.setNegativeButton("না", null);
+                    adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             C = new Connection(MainMenu.this);
                             final ProgressDialog progDailog = ProgressDialog.show(MainMenu.this, "", "Please Wait . . .", true);
@@ -140,9 +140,9 @@ public class MainMenu extends Activity {
                 public void onClick(View view) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(MainMenu.this);
                     adb.setTitle("Exit");
-                    adb.setMessage("Do you want to exit from the system[Yes/No]?");
-                    adb.setNegativeButton("No", null);
-                    adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                    adb.setMessage("আপনি কি এই সিস্টেম থেকে বের হতে চান [হ্যাঁ/না]?");
+                    adb.setNegativeButton("না", null);
+                    adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
                         }

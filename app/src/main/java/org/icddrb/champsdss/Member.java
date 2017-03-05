@@ -372,10 +372,10 @@ import Common.Global;
          
          listMS.add("");
          listMS.add("30-কখনও বিয়ে হয়নি");
-         listMS.add("31-বর্তমানে বিবাহিতা");
-         listMS.add("32-তালাকপ্রাপ্তা (আইনগত ভাবে তালাকপ্রাপ্তা)");
-         listMS.add("33-বিধবা (স্বামী মৃত-বর্তমানে কোন বৈবাহিক সম্পর্ক নাই)");
-         listMS.add("34-বিচ্ছিন্না");
+         listMS.add("31-বর্তমানে বিবাহিতা/বিবাহিত");
+         listMS.add("32-তালাকপ্রাপ্তা/তালাকপ্রাপ্ত (আইনগত ভাবে তালাকপ্রাপ্তা)");
+         listMS.add("33-বিধবা/বিপত্নীক (স্বামী/স্ত্রী মৃত-বর্তমানে কোন বৈবাহিক সম্পর্ক নাই)");
+         listMS.add("34-বিচ্ছিন্না/বিচ্ছন্ন");
          ArrayAdapter<String> adptrMS= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listMS);
          spnMS.setAdapter(adptrMS);
 
@@ -449,7 +449,7 @@ import Common.Global;
          
          listOcp.add("");
          listOcp.add("01-বেকার");
-         listOcp.add("02-ছাত্র (চাকুরী করে না)");
+         listOcp.add("02-ছাত্র /ছাত্রী (চাকুরী করে না)");
          listOcp.add("03-গৃহিনী/গৃহস্থালীর কাজকর্ম করে (চাকুরী করে না)");
          listOcp.add("04-ভিক্ষুক (চাকুরী করে না)");
          listOcp.add("05-প্রতিবন্ধী (চাকুরী করে না)");
@@ -846,6 +846,7 @@ import Common.Global;
          String[] RTH = spnRth.getSelectedItem().toString().split("-");
          String[] MS = spnMS.getSelectedItem().toString().split("-");
          String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
+         String[] Sp1 = spnSp1.getSelectedItem().toString().split("-");
 
          if ((RTH[0].equals("02") | RTH[0].equals("04") | RTH[0].equals("07") | RTH[0].equals("10") | RTH[0].equals("11") | RTH[0].equals("15") | RTH[0].equals("17")) & MS[0].equals("30")) {
              Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ২,৪,৭,১০,১১,১৫,১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
@@ -898,12 +899,12 @@ import Common.Global;
                  Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-"),
                  Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-"),
                  txtAgeY.getText().toString())) {
-                 Connection.MessageBox(Member.this, "পিতা মাতার সাথে বয়স মিল নেই");
+                 Connection.MessageBox(Member.this, "পিতা মাতার সাথে এই সদস্যের বয়স এর পার্থক্য  ঠিক নেই, পিতা আথবা মাতার বয়স দেখুন");
                  txtAgeY.requestFocus();
                  return;
          }
          else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("01") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
-             Connection.MessageBox(Member.this, "খানা প্রধান ২ জন হতে পারেনা");
+             Connection.MessageBox(Member.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
              txtName.requestFocus();
              return;
          }
@@ -926,7 +927,7 @@ import Common.Global;
                  return;
              }
          }
-//         String MSstatus= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and Sp1='"+ MS + "'");
+//         String MSstatus= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ Sp1 + "'");
 //
 //         if ((MSstatus.equals("30")))
 //         {
@@ -935,81 +936,82 @@ import Common.Global;
 //             return;
 //         }
 
-         /*else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
-             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
+         if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৩) ১ম স্বামী/স্ত্রী  সিরিয়াল এবং এই সদস্যের সিরিয়াল একই হবে না");
              spnSp1.requestFocus();
              return;
          }
          else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
-             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৪) ২য় স্বামী/স্ত্রী  এবং এই সদস্যের সিরিয়াল একই হবে না");
              spnSp2.requestFocus();
              return;
          }
          else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
-             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৫) ৩য় স্বামী/স্ত্রী  এবং এই সদস্যের সিরিয়াল একই হবে না");
              spnSp3.requestFocus();
              return;
          }
          else if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
-             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী  ও সদস্যের সিরিয়াল একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৬) ৪র্থ স্বামী/স্ত্রী  এবং এই সদস্যের সিরিয়াল একই হবে না");
              spnSp4.requestFocus();
              return;
          }
          else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
-                 Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+                 Connection.MessageBox(Member.this, "প্রশ্ন ৯) বাবার সিরিয়াল এবং ১ম স্বামী/স্ত্রী  সিরিয়াল একই হবে না");
                  spnFaNo.requestFocus();
                  return;
          }
-         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
-             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
-             spnFaNo.requestFocus();
-             return;
-         }
-         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
-             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
-             spnFaNo.requestFocus();
-             return;
-         }
-         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
-             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
-             spnFaNo.requestFocus();
-             return;
-         }
          else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
-                 Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+                 Connection.MessageBox(Member.this, "প্রশ্ন ৮) মায়ের সিরিয়াল এবং ১ম স্বামী/স্ত্রী  সিরিয়াল একই হবে না");
                  spnSp1.requestFocus();
                  return;
          }
-         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
-             Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
-             spnSp2.requestFocus();
-             return;
-         }
-         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
-             Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
-             spnSp3.requestFocus();
-             return;
-         }
-         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
-             Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
-             spnSp4.requestFocus();
-             return;
-         }
+//         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
+//             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+//             spnFaNo.requestFocus();
+//             return;
+//         }
+//         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
+//             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+//             spnFaNo.requestFocus();
+//             return;
+//         }
+//         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
+//             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+//             spnFaNo.requestFocus();
+//             return;
+//         }
+
+//         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
+//             Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+//             spnSp2.requestFocus();
+//             return;
+//         }
+//         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
+//             Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+//             spnSp3.requestFocus();
+//             return;
+//         }
+//         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
+//             Connection.MessageBox(Member.this, "মাতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
+//             spnSp4.requestFocus();
+//             return;
+//         }
          else if (Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
-             Connection.MessageBox(Member.this, "১ম স্বামী/স্ত্রী সিরিয়াল নং  এবং ২য় স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৩) ১ম স্বামী/স্ত্রী সিরিয়াল নং  এবং প্রশ্ন ১৪) ২য় স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
              spnSp1.requestFocus();
              return;
          }
          else if (Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-"))& spnSp3.isShown()) {
-             Connection.MessageBox(Member.this, "২য় স্বামী/স্ত্রী সিরিয়াল নং  এবং ৩য় স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৪) ২য় স্বামী/স্ত্রী সিরিয়াল নং  এবং প্রশ্ন ১৫) ৩য় স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
              spnSp1.requestFocus();
              return;
          }
          else if (Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
-             Connection.MessageBox(Member.this, "৩য় স্বামী/স্ত্রী সিরিয়াল নং  এবং ৪র্থ স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
+             Connection.MessageBox(Member.this, "প্রশ্ন ১৫) ৩য় স্বামী/স্ত্রী সিরিয়াল নং  এবং প্রশ্ন ১৬) ৪র্থ স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
              spnSp1.requestFocus();
              return;
-         }*/
+         }
 
 //         if(Global.DateDifferenceDays(dtpVDate.getText().toString(), dtpBDate.getText().toString())<0)
 //         {

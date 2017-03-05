@@ -446,7 +446,7 @@ public class Member_list extends Activity {
                      {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                          adb.setTitle("Close");
-                         adb.setMessage("খানা ফর্মে মোট সদস্য  " + TotalMember +  " জন, আপনি কি আরো সদস্য  অন্তর্ভুক্ত করতে চান [হ্যাঁ/না]?");
+                         adb.setMessage("খানা নিবন্ধন ফর্মে মোট সদস্য  " + TotalMember +  " জন, আপনি কি আরো সদস্য  অন্তর্ভুক্ত করতে চান [হ্যাঁ/না]?");
                          adb.setPositiveButton("হ্যাঁ", null);
                          adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
                              public void onClick(DialogInterface dialog, int which) {

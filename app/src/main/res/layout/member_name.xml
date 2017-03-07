@@ -34,7 +34,7 @@
 
             <LinearLayout android:id="@+id/secVill" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
                 <!--<TextView android:id="@+id/lblVill" android:text="" android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />-->
-                <TextView android:id="@+id/VlblVill" android:text="খানা নম্বর" android:layout_width="137sp" android:layout_height="wrap_content" android:textSize="20sp" />
+                <TextView android:id="@+id/VlblVill" android:text="খানা নম্বর" android:layout_width="155sp" android:layout_height="wrap_content" android:textSize="20sp" />
                 <EditText android:id="@+id/txtVill" android:maxLength="3" android:layout_width="80sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
                 <EditText android:id="@+id/txtBari" android:maxLength="4" android:layout_width="80sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
                 <EditText android:id="@+id/txtHH" android:maxLength="2" android:layout_width="80sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
@@ -49,9 +49,9 @@
 
                 <TextView
                     android:id="@+id/VlblMSlNo"
-                    android:layout_width="137sp"
+                    android:layout_width="155sp"
                     android:layout_height="wrap_content"
-                    android:text="সিরিয়াল নম্বর"
+                    android:text="সদস্যের সিরিয়াল"
                     android:textSize="20sp" />
 
                 <EditText
@@ -80,9 +80,9 @@
 
                 <TextView
                     android:id="@+id/VlblName"
-                    android:layout_width="137sp"
+                    android:layout_width="155sp"
                     android:layout_height="wrap_content"
-                    android:text="নাম"
+                    android:text="সদস্যের নাম"
                     android:textSize="20sp" />
 
                 <EditText

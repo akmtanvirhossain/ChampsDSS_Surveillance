@@ -222,7 +222,6 @@ public class Household_list extends Activity  {
                  Bundle IDbundle = new Bundle();
                  IDbundle.putString("Vill", V);
                  IDbundle.putString("Bari", B);
-
                  Intent intent = new Intent(getApplicationContext(),Baris.class);
                  intent.putExtras(IDbundle);
                  startActivityForResult(intent, 1);

@@ -1825,4 +1825,36 @@ public class Connection extends SQLiteOpenHelper {
         }
     }
 
+    public static void SyncDataService(String UniqueID)
+    {
+        try {
+            Connection C = new Connection(ud_context);
+
+            //Reqular data sync
+            //--------------------------------------------------------------------------------------
+            C.Sync_DatabaseStructure(UniqueID);
+            C.Sync_Download("DataCollector", UniqueID, "");
+            //C.Sync_Download("Country", UniqueID, "");
+
+            //Sync_Download
+            // Parameter 1: table Name
+            // Parameter 2: UniqueID of Device
+            // Parameter 3: Where Condition
+            //--------------------------------------------------------------------------------------
+            C.Sync_Download("Baris", UniqueID, "");
+
+
+            //Sync_Upload
+            // Parameter 1: table list
+            //--------------------------------------------------------------------------------------
+            //C.Sync_Upload(ProjectSetting.TableList_Upload());
+
+
+        }
+        catch(Exception ex)
+        {
+        }
+
+    }
+
 }

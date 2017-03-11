@@ -54,6 +54,7 @@
         <EditText android:id="@+id/txtName" android:maxLength="50" android:layout_width="250sp" android:inputType="text|textCapWords" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
 
     </LinearLayout>
+    <View android:id="@+id/lineRth1" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secRth" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblRth" android:text="৪." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblRth" android:text="খানা প্রধানের সাথে সম্পর্ক"
@@ -66,7 +67,7 @@
         <TextView android:id="@+id/lblSex" android:text="৫." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblSex" android:text="লিঙ্গ" android:layout_width="230sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <RadioGroup android:id="@+id/rdogrpSex" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp">
-         
+
            <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dp" android:textSize="20sp" android:id="@+id/rdoSex1" android:text="পুরুষ"/>
            <RadioButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingRight="10dp" android:textSize="20sp" android:id="@+id/rdoSex2" android:text="মহিলা"/>
         </RadioGroup>

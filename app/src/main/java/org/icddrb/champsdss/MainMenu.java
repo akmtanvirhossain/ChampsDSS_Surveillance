@@ -3,9 +3,14 @@ package org.icddrb.champsdss;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 
@@ -34,6 +39,10 @@ public class MainMenu extends Activity {
             setContentView(R.layout.main_menu);
             C = new Connection(this);
             g = Global.getInstance();
+
+            turnGPSOn();
+            Intent gpsService = new Intent(this, GPSService.class);
+            startService(gpsService);
 
             DEVICEID = g.getDeviceNo();
             /*
@@ -144,6 +153,25 @@ public class MainMenu extends Activity {
                     adb.setNegativeButton("না", null);
                     adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            /*BroadcastReceiver rec = new BroadcastReceiver()
+                            {
+                                String lat = "";
+                                String lon = "";
+                                @Override
+                                public void onReceive(Context context, Intent intent)
+                                {
+                                    String action = intent.getAction();
+                                    if(action.equals("gps_data")){
+                                        lat = intent.getExtras().getString("Latitude");
+                                        lon = intent.getExtras().getString("Longitude");
+                                    }
+                                }
+                            };
+                            IntentFilter filter = new IntentFilter("gps_data");
+                            registerReceiver(rec, filter);*/
+
+                            Intent gpsService = new Intent(MainMenu.this, GPSService.class);
+                            stopService(gpsService);
                             finish();
                         }
                     });
@@ -196,5 +224,44 @@ public class MainMenu extends Activity {
         {
             Connection.MessageBox(MainMenu.this,ex.getMessage());
         }
+    }
+
+
+    // Method to turn on GPS
+    public void turnGPSOn(){
+        try
+        {
+            String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            if(!provider.contains("gps")){ //if gps is disabled
+                final Intent poke = new Intent();
+                poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+                poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+                poke.setData(Uri.parse("3"));
+                sendBroadcast(poke);
+            }
+        }
+        catch (Exception e) {
+        }
+    }
+
+    // Method to turn off the GPS
+    public void turnGPSOff(){
+        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+        if(provider.contains("gps")){ //if gps is enabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            sendBroadcast(poke);
+        }
+    }
+
+    // turning off the GPS if its in on state. to avoid the battery drain.
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        turnGPSOff();
     }
 }

@@ -12,24 +12,24 @@ import android.os.IBinder;
 import android.os.PowerManager;
 
 import Common.Connection;
-import Common.Global;
+import Utility.MySharedPreferences;
 
 /*
  * Created by TanvirHossain on 08/03/2015.
  */
-public class DataSyncService extends Service
-{
-    public DataSyncService m_service;
+public class Sync_Service extends Service {
+    public Sync_Service m_service;
+    MySharedPreferences sp;
 
     public class MyBinder extends Binder {
-        public DataSyncService getService() {
-            return DataSyncService.this;
+        public Sync_Service getService() {
+            return Sync_Service.this;
         }
     }
 
     private ServiceConnection m_serviceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            m_service = ((DataSyncService.MyBinder) service).getService();
+            m_service = ((Sync_Service.MyBinder) service).getService();
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -37,11 +37,6 @@ public class DataSyncService extends Service
         }
     };
 
-    Connection C;
-    Global g;
-    String PType;
-    String PCode;
-    String SQL = "";
     private NotificationManager mManager;
     PowerManager.WakeLock wakeLock;
     PowerManager c;
@@ -56,11 +51,10 @@ public class DataSyncService extends Service
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-
         // obtain the wake lock
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
-        //wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "My Tag");
+        //wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "MyWakelockTag");
     }
 
     private void handleIntent(Intent intent) {
@@ -71,11 +65,8 @@ public class DataSyncService extends Service
             return;
         }
 
-        C = new Connection(this);
-        g = Global.getInstance();
-
         // do the actual work, in a separate thread
-        new DataSyncTask().execute();
+        new DataSyncTask().execute(MySharedPreferences.getValue(this,"deviceid"));
     }
 
 
@@ -112,13 +103,12 @@ public class DataSyncService extends Service
 
         @Override
         protected Void doInBackground(String... params) {
-            final String DEVICEID = params[0].toString();
-
+            final String DevID = params[0].toString();
             try {
                 new Thread() {
                     public void run() {
                         try {
-                            //Connection.Sync_BackgroundData(DEVICEID);
+                            Connection.SyncDataService(DevID);
                         } catch (Exception e) {
 
                         }

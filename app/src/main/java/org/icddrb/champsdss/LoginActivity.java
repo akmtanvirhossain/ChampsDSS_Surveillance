@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import java.net.URL;
 import Common.Connection;
 import Common.Global;
 import Common.ProjectSetting;
+import Utility.MySharedPreferences;
 
 public class LoginActivity extends Activity {
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
@@ -36,6 +38,7 @@ public class LoginActivity extends Activity {
     String   SystemUpdateDT="";
     private ProgressDialog dialog;
     private  String Password="";
+    MySharedPreferences sp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class LoginActivity extends Activity {
             setContentView(R.layout.login_activity);
             C = new Connection(this);
             g = Global.getInstance();
+            sp = new MySharedPreferences();
+            sp.save(this,"deviceid","");
+            sp.save(this,"userid","");
 
             final TextView UniqueUserId      = (TextView)findViewById(R.id.UniqueUserId);
             final Spinner uid      = (Spinner)findViewById(R.id.userId);
@@ -54,7 +60,7 @@ public class LoginActivity extends Activity {
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
-            SystemUpdateDT = "15022017";  //Format: DDMMYYYY
+            SystemUpdateDT = "11032017";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
 
             //Check for Internet connectivity
@@ -89,6 +95,20 @@ public class LoginActivity extends Activity {
             final String UniqueID = C.ReturnSingleValue("Select DeviceId from DeviceList");
             UniqueUserId.setText("Unique ID :"+ UniqueID);
             g.setDeviceNo(UniqueID);
+            sp.save(this,"deviceid",UniqueID);
+
+            //Only for removing the data of training: 17 Nov 2015
+            if(Global.DateNowDMY().equals("11/03/2017") | Global.DateNowDMY().equals("12/03/2017")  | Global.DateNowDMY().equals("13/03/2017") | Global.DateNowDMY().equals("14/03/2017") | Global.DateNowDMY().equals("15/03/2017"))
+            {
+                C.Save("Delete from DataCollector where date(endt) <= '2017-03-10'");
+                C.Save("Delete from Baris where date(endt)         <= '2017-03-10'");
+                C.Save("Delete from Household where date(endt)     <= '2017-03-10'");
+                C.Save("Delete from Visits where date(endt)        <= '2017-03-10'");
+                C.Save("Delete from SES where date(endt)           <= '2017-03-10'");
+                C.Save("Delete from PregHis where date(endt)       <= '2017-03-10'");
+                C.Save("Delete from Member where date(endt)        <= '2017-03-10'");
+            }
+
 
             //**************************************************************************************
             if (networkAvailable)
@@ -98,6 +118,8 @@ public class LoginActivity extends Activity {
                 C.Sync_Download("DataCollector",UniqueID,"Status='d'");
                 //C.Sync_Download("Unions",UniqueID,"");
 
+                //Intent syncService = new Intent(this, Sync_Service.class);
+                //startService(syncService);
             }
             //**************************************************************************************
 
@@ -108,6 +130,7 @@ public class LoginActivity extends Activity {
             Button btnClose=(Button)findViewById(R.id.btnClose);
             btnClose.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
+                    //Connection.MessageBox(LoginActivity.this,MySharedPreferences.getValue(LoginActivity.this,"lat"));
                     finish();
                     System.exit(0);
                 }

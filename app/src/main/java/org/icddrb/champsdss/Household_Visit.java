@@ -42,6 +42,7 @@ import java.util.List;
 
 import Common.Connection;
 import Common.Global;
+ import Utility.MySharedPreferences;
 
  public class Household_Visit extends Activity {
     boolean networkAvailable=false;
@@ -737,8 +738,8 @@ import Common.Global;
          objSave1.setEndTime(g.CurrentTime24());
          objSave1.setDeviceID(DEVICEID);
          objSave1.setEntryUser(ENTRYUSER); //from data entry user list
-         //objSave.setLat(Double.toString(currentLatitude));
-         //objSave.setLon(Double.toString(currentLongitude));
+         objSave1.setLat(MySharedPreferences.getValue(Household_Visit.this,"lat"));
+         objSave1.setLon(MySharedPreferences.getValue(Household_Visit.this,"lon"));
 
          String status1 = objSave1.SaveUpdateData(this);
 

@@ -36,7 +36,7 @@ public class MySharedPreferences {
         editor.apply(); //4
     }
 
-    public String getValue(Context context, String key) {
+    public static String getValue(Context context, String key) {
         SharedPreferences settings;
         String text;
 

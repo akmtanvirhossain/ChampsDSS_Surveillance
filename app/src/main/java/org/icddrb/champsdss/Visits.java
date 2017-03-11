@@ -53,6 +53,7 @@
  import android.widget.ArrayAdapter;
  import android.widget.CompoundButton;
  import Common.*;
+ import Utility.*;
 
  public class Visits extends Activity {
     boolean networkAvailable=false;
@@ -362,8 +363,8 @@
          objSave.setEndTime(g.CurrentTime24());
          objSave.setDeviceID(DEVICEID);
          objSave.setEntryUser(ENTRYUSER); //from data entry user list
-         //objSave.setLat(Double.toString(currentLatitude));
-         //objSave.setLon(Double.toString(currentLongitude));
+         objSave.setLat(MySharedPreferences.getValue(Visits.this,"lat"));
+         objSave.setLon(MySharedPreferences.getValue(Visits.this,"lon"));
 
          String status = objSave.SaveUpdateData(this);
          if(status.length()==0) {

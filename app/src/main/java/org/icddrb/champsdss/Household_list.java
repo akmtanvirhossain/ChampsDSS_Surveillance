@@ -356,11 +356,11 @@ public class Household_list extends Activity  {
                     objSave.setEntryUser(ENTRYUSER); //from data entry user list
                     String status = objSave.SaveUpdateData(Household_list.this);
 
-                    DataSearch(VILL,BARI);
-                    txtHH.setText(HHSerial(VILL,BARI));
-                    txtName.setText("");
-                    txtName.requestFocus();
-
+                    DataSearch(VILL, BARI);
+                    //txtHH.setText(HHSerial(VILL,BARI));
+                    //txtName.setText("");
+                    //txtName.requestFocus();
+                    dialog.dismiss();
                 }
             });
 

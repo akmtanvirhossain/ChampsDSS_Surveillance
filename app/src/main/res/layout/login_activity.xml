@@ -42,7 +42,7 @@
 
     </LinearLayout>
 
-    <LinearLayout android:layout_marginLeft="50sp" android:layout_marginRight="50sp" android:layout_marginTop="20sp" android:layout_marginBottom="0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_gravity="center">
+    <LinearLayout android:orientation="vertical" android:layout_marginLeft="50sp" android:layout_marginRight="50sp" android:layout_marginTop="20sp" android:layout_marginBottom="0sp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_gravity="center">
         <TextView
             android:layout_height="30sp"
             android:layout_width="fill_parent"

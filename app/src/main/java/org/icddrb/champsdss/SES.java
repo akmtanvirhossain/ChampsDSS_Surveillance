@@ -411,15 +411,10 @@
          List<String> listVStatus = new ArrayList<String>();
          
          listVStatus.add("");
-         listVStatus.add("1-ইন্টারভিউ সফল হয়েছে");
-         listVStatus.add("2-বাড়ি পরিদর্শনের সময় খানার কোন সদস্যকে বা উপযুক্ত কাউকে পাওয়া যায় নাই");
-         listVStatus.add("3-অনেক দিনের জন্য খানার সকল সদস্য অনুপস্থিত");
-         listVStatus.add("4-ইন্টারভিউ বাতিল");
-         listVStatus.add("5-ইন্টারভিউ দিতে রাজী নয়");
-         listVStatus.add("6-বাসা খালি অথবা ঠিকানাটি কোন বাসস্থানের নয়");
-         listVStatus.add("7-বাসস্থানটি ধংসপ্রাপ্ত");
-         listVStatus.add("8-বাসস্থানটি খুঁজে পাওয়া যায় নাই");
-         listVStatus.add("9-অন্যান");
+         listVStatus.add("1-ইন্টারভিউ সম্পন্ন");
+         listVStatus.add("2-তথ্য  দানে অসন্মতি");
+         //listVStatus.add("3-সদস্য অনুপস্থিত");
+         listVStatus.add("9-অন্যান্য");
          ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, R.layout.multiline_spinner_dropdown_item, listVStatus);
          spnVStatus.setAdapter(adptrVStatus);
 

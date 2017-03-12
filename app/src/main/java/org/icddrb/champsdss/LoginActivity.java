@@ -98,16 +98,19 @@ public class LoginActivity extends Activity {
             sp.save(this,"deviceid",UniqueID);
 
             //Only for removing the data of training: 17 Nov 2015
-            if(Global.DateNowDMY().equals("11/03/2017") | Global.DateNowDMY().equals("12/03/2017")  | Global.DateNowDMY().equals("13/03/2017") | Global.DateNowDMY().equals("14/03/2017") | Global.DateNowDMY().equals("15/03/2017"))
+            /*if(Global.DateNowDMY().equals("11/03/2017") | Global.DateNowDMY().equals("12/03/2017")  | Global.DateNowDMY().equals("13/03/2017") | Global.DateNowDMY().equals("14/03/2017") | Global.DateNowDMY().equals("15/03/2017"))
             {
-                C.Save("Delete from DataCollector where date(endt) <= '2017-03-10'");
-                C.Save("Delete from Baris where date(endt)         <= '2017-03-10'");
+                String Count = C.ReturnSingleValue("select count(*) total from DataCollector");
+                if(Integer.valueOf(Count)>87) {
+                    C.Save("Delete from DataCollector");
+                    C.Save("Delete from Baris");
+                }
                 C.Save("Delete from Household where date(endt)     <= '2017-03-10'");
                 C.Save("Delete from Visits where date(endt)        <= '2017-03-10'");
                 C.Save("Delete from SES where date(endt)           <= '2017-03-10'");
                 C.Save("Delete from PregHis where date(endt)       <= '2017-03-10'");
                 C.Save("Delete from Member where date(endt)        <= '2017-03-10'");
-            }
+            }*/
 
 
             //**************************************************************************************
@@ -122,7 +125,6 @@ public class LoginActivity extends Activity {
                 //startService(syncService);
             }
             //**************************************************************************************
-
             uid.setAdapter(C.getArrayAdapter("select UserId||'-'||UserName User from DataCollector order by UserName"));
             String[] CL = uid.getSelectedItem().toString().split("-");
             uid.setSelection(Global.SpinnerItemPosition(uid,CL[0].length(),C.ReturnSingleValue("Select UserId from LastLogin")));

@@ -1057,7 +1057,7 @@
          listFloor.add("11-খড়/পাতা");
          listFloor.add("12-ছড়ি/পাতা/গাছের কান্ড");
          listFloor.add("21-মাটি");
-         listFloor.add("22-বাঁশ");
+         listFloor.add("22-বাঁশ/পাটকাঠি");
          listFloor.add("23-কাঠের তক্তা");
          listFloor.add("24-পাথর");
          listFloor.add("31-টিন");

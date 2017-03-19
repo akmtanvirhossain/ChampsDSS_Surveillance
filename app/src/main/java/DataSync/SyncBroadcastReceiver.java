@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import Common.Connection;
-import org.icddrb.champsdss.DataSyncService;
+import org.icddrb.champsdsssur.DataSyncService;
 
 import static DataSync.Log.logInfo;
 

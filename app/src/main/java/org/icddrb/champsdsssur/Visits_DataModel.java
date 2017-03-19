@@ -1,11 +1,11 @@
-package org.icddrb.champsdss;
+package org.icddrb.champsdsssur;
 
 import android.content.Context;
  import android.database.Cursor;
  import Common.Connection;
  import java.util.ArrayList;
  import java.util.List;
- public class Baris_DataModel{
+ public class Visits_DataModel{
 
         private String _Vill = "";
         public String getVill(){
@@ -21,33 +21,47 @@ import android.content.Context;
         public void setBari(String newValue){
               _Bari = newValue;
          }
-        private String _Cluster = "";
-        public String getCluster(){
-              return _Cluster;
+        private String _HH = "";
+        public String getHH(){
+              return _HH;
          }
-        public void setCluster(String newValue){
-              _Cluster = newValue;
+        public void setHH(String newValue){
+              _HH = newValue;
          }
-        private String _Block = "";
-        public String getBlock(){
-              return _Block;
+        private String _VDate = "";
+        public String getVDate(){
+              return _VDate;
          }
-        public void setBlock(String newValue){
-              _Block = newValue;
+        public void setVDate(String newValue){
+              _VDate = newValue;
          }
-        private String _BariName = "";
-        public String getBariName(){
-              return _BariName;
+        private String _VStatus = "";
+        public String getVStatus(){
+              return _VStatus;
          }
-        public void setBariName(String newValue){
-              _BariName = newValue;
+        public void setVStatus(String newValue){
+              _VStatus = newValue;
          }
-        private String _BariLoc = "";
-        public String getBariLoc(){
-              return _BariLoc;
+        private String _VStatusOth = "";
+        public String getVStatusOth(){
+              return _VStatusOth;
          }
-        public void setBariLoc(String newValue){
-              _BariLoc = newValue;
+        public void setVStatusOth(String newValue){
+              _VStatusOth = newValue;
+         }
+        private String _Resp = "";
+        public String getResp(){
+              return _Resp;
+         }
+        public void setResp(String newValue){
+              _Resp = newValue;
+         }
+        private String _Rnd = "";
+        public String getRnd(){
+              return _Rnd;
+         }
+        public void setRnd(String newValue){
+              _Rnd = newValue;
          }
         private String _StartTime = "";
         public void setStartTime(String newValue){
@@ -79,7 +93,7 @@ import android.content.Context;
          }
         private String _Upload = "2";
 
-        String TableName = "Baris";
+        String TableName = "Visits";
 
         public String SaveUpdateData(Context context)
         {
@@ -88,7 +102,7 @@ import android.content.Context;
             String SQL = "";
             try
             {
-                 if(C.Existence("Select * from "+ TableName +"  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' "))
+                 if(C.Existence("Select * from "+ TableName +"  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and Rnd='"+ _Rnd +"' "))
                     response = UpdateData(context);
                  else
                     response = SaveData(context);
@@ -108,7 +122,7 @@ import android.content.Context;
             String SQL = "";
             try
               {
-                 SQL = "Insert into "+ TableName +" (Vill,Bari,Cluster,Block,BariName,BariLoc,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _Cluster +"', '"+ _Block +"', '"+ _BariName +"', '"+ _BariLoc +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
+                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,VDate,VStatus,VStatusOth,Resp,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _VDate +"', '"+ _VStatus +"', '"+ _VStatusOth +"', '"+ _Resp +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
                  C.Save(SQL);
                  C.close();
               }
@@ -126,7 +140,7 @@ import android.content.Context;
             String SQL = "";
             try
               {
-                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',Cluster = '"+ _Cluster +"',Block = '"+ _Block +"',BariName = '"+ _BariName +"',BariLoc = '"+ _BariLoc +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"'";
+                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',VDate = '"+ _VDate +"',VStatus = '"+ _VStatus +"',VStatusOth = '"+ _VStatusOth +"',Resp = '"+ _Resp +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and Rnd='"+ _Rnd +"'";
                  C.Save(SQL);
                  C.close();
               }
@@ -138,23 +152,25 @@ import android.content.Context;
         }
 
 
-        public List<Baris_DataModel> SelectAll(Context context, String SQL)
+        public List<Visits_DataModel> SelectAll(Context context, String SQL)
         {
             Connection C = new Connection(context);
-            List<Baris_DataModel> data = new ArrayList<Baris_DataModel>();
-            Baris_DataModel d = new Baris_DataModel();
+            List<Visits_DataModel> data = new ArrayList<Visits_DataModel>();
+            Visits_DataModel d = new Visits_DataModel();
             Cursor cur = C.ReadData(SQL);
 
             cur.moveToFirst();
             while(!cur.isAfterLast())
             {
-                d = new Baris_DataModel();
+                d = new Visits_DataModel();
                 d._Vill = cur.getString(cur.getColumnIndex("Vill"));
                 d._Bari = cur.getString(cur.getColumnIndex("Bari"));
-                d._Cluster = cur.getString(cur.getColumnIndex("Cluster"));
-                d._Block = cur.getString(cur.getColumnIndex("Block"));
-                d._BariName = cur.getString(cur.getColumnIndex("BariName"));
-                d._BariLoc = cur.getString(cur.getColumnIndex("BariLoc"));
+                d._HH = cur.getString(cur.getColumnIndex("HH"));
+                d._VDate = cur.getString(cur.getColumnIndex("VDate"));
+                d._VStatus = cur.getString(cur.getColumnIndex("VStatus"));
+                d._VStatusOth = cur.getString(cur.getColumnIndex("VStatusOth"));
+                d._Resp = cur.getString(cur.getColumnIndex("Resp"));
+                d._Rnd = cur.getString(cur.getColumnIndex("Rnd"));
                 data.add(d);
 
                 cur.moveToNext();

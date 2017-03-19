@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.icddrb.champsdss.R;
+import org.icddrb.champsdsssur.R;
 
 /**
  * IconGenerator generates icons that contain text (or custom content) within an info

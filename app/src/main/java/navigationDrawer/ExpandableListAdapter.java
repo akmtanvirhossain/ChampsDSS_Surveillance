@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 
-import org.icddrb.champsdss.*;
+import org.icddrb.champsdsssur.*;
 
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {

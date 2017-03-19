@@ -1,5 +1,5 @@
 
- package org.icddrb.champsdss;
+ package org.icddrb.champsdsssur;
 
 
  //Android Manifest Code

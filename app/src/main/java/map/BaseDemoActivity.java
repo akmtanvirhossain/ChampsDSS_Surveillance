@@ -23,7 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
-import org.icddrb.champsdss.R;
+import org.icddrb.champsdsssur.R;
 
 public abstract class BaseDemoActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;

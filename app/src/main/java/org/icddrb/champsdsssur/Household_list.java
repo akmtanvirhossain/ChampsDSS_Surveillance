@@ -1,4 +1,4 @@
-package org.icddrb.champsdss;
+package org.icddrb.champsdsssur;
 //Android Manifest Code
  //<activity android:name=".Household_list" android:label="Household: List" />
  import android.app.Activity;

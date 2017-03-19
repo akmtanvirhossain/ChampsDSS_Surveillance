@@ -1,4 +1,4 @@
-package org.icddrb.champsdss;
+package org.icddrb.champsdsssur;
 //Android Manifest Code
  //<activity android:name=".Member_list" android:label="Member: List" />
  import android.app.Activity;

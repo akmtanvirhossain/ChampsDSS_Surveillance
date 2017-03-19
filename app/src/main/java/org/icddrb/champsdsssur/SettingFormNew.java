@@ -1,4 +1,4 @@
-package org.icddrb.champsdss;
+package org.icddrb.champsdsssur;
 
 import android.app.Activity;
 import android.app.AlertDialog;

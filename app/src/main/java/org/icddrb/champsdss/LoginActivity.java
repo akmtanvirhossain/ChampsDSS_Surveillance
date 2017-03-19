@@ -60,7 +60,7 @@ public class LoginActivity extends Activity {
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
-            SystemUpdateDT = "11032017";  //Format: DDMMYYYY
+            SystemUpdateDT = "18032017";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
 
             //Check for Internet connectivity
@@ -105,11 +105,11 @@ public class LoginActivity extends Activity {
                     C.Save("Delete from DataCollector");
                     C.Save("Delete from Baris");
                 }
-                C.Save("Delete from Household where date(endt)     <= '2017-03-10'");
-                C.Save("Delete from Visits where date(endt)        <= '2017-03-10'");
-                C.Save("Delete from SES where date(endt)           <= '2017-03-10'");
-                C.Save("Delete from PregHis where date(endt)       <= '2017-03-10'");
-                C.Save("Delete from Member where date(endt)        <= '2017-03-10'");
+                C.Save("Delete from Household where date(endt)     <= '2017-03-15'");
+                C.Save("Delete from Visits where date(endt)        <= '2017-03-15'");
+                C.Save("Delete from SES where date(endt)           <= '2017-03-15'");
+                C.Save("Delete from PregHis where date(endt)       <= '2017-03-15'");
+                C.Save("Delete from Member where date(endt)        <= '2017-03-15'");
             }*/
 
 

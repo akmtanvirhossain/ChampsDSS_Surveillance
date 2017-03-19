@@ -156,7 +156,7 @@ import Common.Global;
          txtBari=(EditText) findViewById(R.id.txtBari);
          if(BARI.length()==0) {
              txtBari.setText(NewBariNo(VILL));
-             txtBari.setEnabled(false);
+             txtBari.setEnabled(true);
          }
          else {
              txtBari.setText(BARI);

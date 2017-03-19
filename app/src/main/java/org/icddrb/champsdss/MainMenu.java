@@ -116,6 +116,8 @@ public class MainMenu extends Activity {
                             new Thread() {
                                 public void run() {
                                     try {
+                                        String r = C.ExecuteCommandOnServer("Insert into UploadMonitor(DeviceID)Values('"+ DEVICEID +"')");
+
                                         Tran_Download td = new Tran_Download(MainMenu.this);
 
                                         //GPS Bari List

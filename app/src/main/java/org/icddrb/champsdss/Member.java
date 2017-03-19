@@ -927,11 +927,11 @@ import Common.Global;
          }
          else
          {
-             if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
+             /*if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
                  Connection.MessageBox(Member.this, "প্রশ্ন ৮ এবং ৯. পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
                  spnFaNo.requestFocus();
                  return;
-             }
+             }*/
          }
 //         String MSstatus= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ Sp1 + "'");
 //
@@ -962,16 +962,21 @@ import Common.Global;
              spnSp4.requestFocus();
              return;
          }
-         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
+
+
+         //17 Mar 2017
+         else if (!Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-").equals("00") & Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
                  Connection.MessageBox(Member.this, "প্রশ্ন ৯) বাবার সিরিয়াল এবং ১ম স্বামী/স্ত্রী  সিরিয়াল একই হবে না");
                  spnFaNo.requestFocus();
                  return;
          }
-         else if (Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
+         else if (!Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-").equals("00") & Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
                  Connection.MessageBox(Member.this, "প্রশ্ন ৮) মায়ের সিরিয়াল এবং ১ম স্বামী/স্ত্রী  সিরিয়াল একই হবে না");
                  spnSp1.requestFocus();
                  return;
          }
+
+
 //         else if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-"))& spnSp2.isShown()) {
 //             Connection.MessageBox(Member.this, "পিতার সিরিয়াল ও সদস্যের স্বামী অথবা স্ত্রী  সিরিয়াল একই হবে না");
 //             spnFaNo.requestFocus();

@@ -1043,6 +1043,7 @@
              public void onNothingSelected(AdapterView<?> parentView) {
              }
          });
+
          secWallOth=(LinearLayout)findViewById(R.id.secWallOth);
          lineWallOth=(View)findViewById(R.id.lineWallOth);
          VlblWallOth=(TextView) findViewById(R.id.VlblWallOth);

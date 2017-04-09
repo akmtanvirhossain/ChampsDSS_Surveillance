@@ -40,7 +40,6 @@ public class Household_list extends Activity  {
     boolean networkAvailable=false;
     Location currentLocation;
     double currentLatitude,currentLongitude;
-     Spinner spnUnion;
      Spinner spnVill;
      Spinner spnBari;
     //Disabled Back/Home key
@@ -82,6 +81,9 @@ public class Household_list extends Activity  {
     static String DEVICEID  = "";
     static String ENTRYUSER = "";
 
+    static String ROUNDNO = "";
+    static String CLUSTER = "";
+    static String BLOCK   = "";
  public void onCreate(Bundle savedInstanceState)
  {
          super.onCreate(savedInstanceState);
@@ -98,6 +100,11 @@ public class Household_list extends Activity  {
          CurrentVillage = IDbundle.getString("Village");
          CurrentVCode   = IDbundle.getString("VCode");
          HH = IDbundle.getString("HH");
+
+         ROUNDNO        = IDbundle.getString("roundno");
+         CLUSTER        = IDbundle.getString("cluster");
+         BLOCK          = IDbundle.getString("block");
+
 
          TableName = "Household";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
@@ -122,41 +129,13 @@ public class Household_list extends Activity  {
                  adb.show();
              }});
 
-         spnUnion = (Spinner) findViewById(R.id.spnUnion);
-         spnVill = (Spinner) findViewById(R.id.spnVill);
-         spnBari = (Spinner) findViewById(R.id.spnBari);
-         List<String> listBari = new ArrayList<String>();
-         listBari.add("");
-         ArrayAdapter<String> adptrBari= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listBari);
-         spnBari.setAdapter(adptrBari);
 
-         spnUnion.setAdapter(C.getArrayAdapter("Select UnCode||'-'||UnName from Unions order by UnCode"));
-         spnUnion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-             @Override
-             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                 String D = Connection.SelectedSpinnerValue(spnUnion.getSelectedItem().toString(), "-");
-                 spnVill.setAdapter(C.getArrayAdapter("Select '' union Select distinct VCode||'-'||VName from Village where UnCode='" + D + "'"));
-                 spnVill.setSelection(Global.SpinnerItemPositionAnyLength(spnVill,VILL));
-             }
-
-             @Override
-             public void onNothingSelected(AdapterView<?> parent) {
-
-             }
-         });
-
-
+         spnVill = (Spinner)findViewById(R.id.spnVill);
+         spnVill.setAdapter(C.getArrayAdapter("Select distinct v.VCode||'-'||v.VName from Baris b inner join Village v on b.Vill=v.VCode where b.Cluster='"+ CLUSTER +"' and b.Block='"+ BLOCK +"'"));
          spnVill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                 if (spnVill.getSelectedItemPosition()==0){
-                     spnBari.setAdapter(C.getArrayAdapter("Select ''"));
-                 }else{
-                     String[] V = Connection.split(spnVill.getSelectedItem().toString(),'-');
-                     VILL = V[0];
-                     spnBari.setAdapter(C.getArrayAdapter("Select '' union select Bari||'-'||BariName from Baris b where b.Vill='"+ V[0] +"'"));
-                     spnBari.setSelection(Global.SpinnerItemPositionAnyLength(spnBari,BARI));
-                 }
+                 spnBari.setAdapter(C.getArrayAdapter("Select '.All Bari' union Select Bari||'-'||BariName from Baris where Vill='"+ spnVill.getSelectedItem().toString().split("-")[0] +"' and Cluster='"+ CLUSTER +"' and Block='"+ BLOCK +"'"));
              }
 
              @Override
@@ -165,23 +144,20 @@ public class Household_list extends Activity  {
              }
          });
 
+         spnBari = (Spinner)findViewById(R.id.spnBari);
          spnBari.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                 if(spnBari.getSelectedItemPosition()==0)
+                 if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari"))
                  {
-                     DataSearch(VILL, "");
-                 }
-                 else if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase("all bari"))
-                 {
-                     DataSearch(VILL, "");
+                     DataSearch(CLUSTER, BLOCK,"");
                  }
                  else
                  {
                      String[] B = Connection.split(spnBari.getSelectedItem().toString(),'-');
                      BARI = B[0];
-                     DataSearch(VILL,BARI);
+                     DataSearch(CLUSTER,BLOCK,BARI);
                  }
              }
 
@@ -195,10 +171,7 @@ public class Household_list extends Activity  {
          Button cmdBari = (Button)findViewById(R.id.cmdBari);
          cmdBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
-                 if(spnVill.getSelectedItemPosition()==0){
-                     Connection.MessageBox(Household_list.this,"গ্রামের তালিকা থেকে সঠিক গ্রামের নাম নির্বাচন করুন.");
-                     return;
-                 }
+
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
                  Bundle IDbundle = new Bundle();
                  IDbundle.putString("Vill", V);
@@ -232,10 +205,10 @@ public class Household_list extends Activity  {
          cmdHH.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 if(spnBari.getSelectedItemPosition()==0){
+                 /*if(spnBari.getSelectedItemPosition()==0){
                      Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
-                 }
+                 }*/
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
                  String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
                  IDbundle.putString("Vill", V);
@@ -248,11 +221,11 @@ public class Household_list extends Activity  {
              }
          });
 
-         Button cmdHHList= (Button) findViewById((R.id.cmdHHList));
+         /*Button cmdHHList= (Button) findViewById((R.id.cmdHHList));
          cmdHHList.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 if(spnBari.getSelectedItemPosition()==0){
+                 if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari")){
                      Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
                  }
@@ -263,7 +236,7 @@ public class Household_list extends Activity  {
                  IDbundle.putString("HH", "");
                  HHListForm(VILL, BARI);
              }
-         });
+         });*/
 
          Button cmdGPS= (Button) findViewById((R.id.cmdGPS));
          cmdGPS.setOnClickListener(new View.OnClickListener() {
@@ -288,13 +261,7 @@ public class Household_list extends Activity  {
              }
          });
 
-         /*String VillBari = C.ReturnSingleValue("Select Vill||'-'||Bari from LastVillBari");
-         String[] VB = (VillBari.length()==0?" - ":VillBari).toString().split("-");
-         VILL = VB[0];
-         BARI = VB[1];*/
-         //spnVill.setSelection(Global.SpinnerItemPositionAnyLength(spnVill,VB[0]));
-         //spnBari.setSelection(Global.SpinnerItemPositionAnyLength(spnBari,VB[1]));
-         DataSearch(VILL,BARI);
+         DataSearch(CLUSTER,BLOCK,"");
 
      }
      catch(Exception  e)
@@ -356,7 +323,7 @@ public class Household_list extends Activity  {
                     objSave.setEntryUser(ENTRYUSER); //from data entry user list
                     String status = objSave.SaveUpdateData(Household_list.this);
 
-                    DataSearch(VILL, BARI);
+                    DataSearch(CLUSTER, BLOCK,"");
                     //txtHH.setText(HHSerial(VILL,BARI));
                     //txtName.setText("");
                     //txtName.requestFocus();
@@ -497,27 +464,22 @@ public class Household_list extends Activity  {
              if (spnVill.getSelectedItemPosition() == 0 | spnBari.getSelectedItemPosition() == 0) return;
              String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
              String[] B = Connection.split(spnBari.getSelectedItem().toString(), '-');
-             DataSearch(V[0],B[0]);
+             DataSearch(CLUSTER, BLOCK, "");
          }
      }
  }
 
 
- public void DataSearch(String Vill, String Bari)
+ public void DataSearch(String Cluster, String Block, String Bari)
      {
        try
         {
            Household_DataModel d = new Household_DataModel();
             String SQL ;
-            /*if(Bari.equals(""))
-            {
-                SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' ";
-            }else
-            {
-                SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' ";
-            }*/
 
-            SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari like('"+ Bari +"')";
+            //SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari like('"+ Bari +"')";
+            SQL = "Select h.Vill, h.Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd";
+            SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari and b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Bari Like('%"+ Bari +"%')";
 
             List<Household_DataModel> data = d.SelectAll(this, SQL);
             dataList.clear();
@@ -656,7 +618,7 @@ public class Household_list extends Activity  {
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          C.Save("Delete from Household where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "'");
-                         DataSearch(o.get("Vill"),o.get("Bari"));
+                         DataSearch(CLUSTER, BLOCK,o.get("Bari"));
                      }
                  });
                  adb.show();

@@ -1042,23 +1042,81 @@ public class Connection extends SQLiteOpenHelper {
 
             //Download data from server
             //------------------------------------------------------------------------------
-            Sync_Download("Baris", DeviceID, "");
-
             //for surveillance
-            //Sync_Download("Baris", DeviceID, "Cluster='"+ Cluster +"' and Block='"+ Block +"'");
+            Sync_Download_Rebuild("Baris", "Cluster='"+ Cluster +"' and Block='"+ Block +"'");
+
+            //Household
+            SQLStr  = "Select h.Vill, h.Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd,";
+            SQLStr += " h.StartTime, h.EndTime, h.DeviceID, h.EntryUser, h.Lat, h.Lon, h.EnDt, h.Upload, h.modifyDate";
+            SQLStr += " from Baris b";
+            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+            SQLStr += " where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"'";
+
+            TableName    = "Household";
+            VariableList = "Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+            UniqueField  = "Vill, Bari, HH";
+            Res = DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+
+            //SES
+            SQLStr  = " Select s.Vill, s.Bari, s.HH, SESNo, VDate, VStatus, VStatusOth, s.Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
+            SQLStr += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
+            SQLStr += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, s.StartTime, s.EndTime, s.DeviceID, s.EntryUser, s.Lat, s.Lon, s.EnDt, s.Upload, s.modifyDate";
+            SQLStr += " from Baris b";
+            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+            SQLStr += " inner join SES s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+            SQLStr += " where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"'";
+            TableName    = "SES";
+            VariableList = "Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth, Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon, Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+            UniqueField  = "Vill, Bari, HH, SESNo";
+            Res = DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+
+            //Member
+            SQLStr  = " Select m.Vill, m.Bari, m.HH, m.MSlNo, m.PNo, m.Name, m.Rth, m.Sex, m.BDate, m.AgeY, m.MoNo, m.FaNo, m.Edu, m.MS, m.Ocp,";
+            SQLStr += " m.Sp1, m.Sp2, m.Sp3, m.Sp4, m.EnType, m.EnDate, m.ExType, m.ExDate, m.NeedReview,";
+            SQLStr += " m.StartTime, m.EndTime, m.DeviceID, m.EntryUser, m.Lat, m.Lon, m.EnDt, m.Upload, m.modifyDate";
+            SQLStr += " from Baris b";
+            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+            SQLStr += " inner join Member m on h.Vill=m.vill and h.Bari=m.Bari and h.hh=m.hh";
+            SQLStr += " where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"'";
+
+            TableName    = "Member";
+            VariableList = "Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+            UniqueField  = "Vill, Bari, HH, MSlNo";
+            Res = DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+
+            //PregHis
+            SQLStr  = " Select s.Vill, s.Bari, s.HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo, SonLivWWo, DaugLivWWo,";
+            SQLStr += " ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut, CurPreg, LMPDate, s.StartTime, s.EndTime, s.DeviceID,";
+            SQLStr += " s.EntryUser, s.Lat, s.Lon, s.EnDt, s.Upload, s.modifyDate";
+            SQLStr += " from Baris b";
+            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+            SQLStr += " inner join PregHis s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+            SQLStr += " where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"'";
+            TableName    = "PregHis";
+            VariableList = "Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo, SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut, CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+            UniqueField  = "Vill, Bari, HH, MSlNo";
+            Res = DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+
+            //Visits
+            SQLStr  = " Select s.Vill, s.Bari, s.HH, VDate, VStatus, VStatusOth, VisitNo, Resp, s.Rnd, s.StartTime, s.EndTime, s.DeviceID, s.EntryUser, s.Lat, s.Lon, s.EnDt, s.Upload, s.modifyDate";
+            SQLStr += " from Baris b";
+            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+            SQLStr += " inner join Visits s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+            SQLStr += " where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"'";
+            TableName    = "PregHis";
+            VariableList = "Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+            UniqueField  = "Vill, Bari, HH, Rnd";
+            Res = DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+
+            //Events
+
+            //Round Visit
+            this.Sync_Download_Rebuild("RoundVisit", "CurrRound='1'");
 
             //Update status on server
             //--------------------------------------------------------------------------------------
             ExecuteCommandOnServer("Update DeviceList set Setting='2' where DeviceId='" + DeviceID + "'");
 
-            //Download data from server
-            //------------------------------------------------------------------------------
-            /*String[] TableList = new String[]{
-                    "Screening",
-            };
-
-            for (int i = 0; i < TableList.length; i++)
-                Sync_Download(TableList[i], DeviceID, "");*/
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1372,7 +1430,7 @@ public class Connection extends SQLiteOpenHelper {
         while (!cur_H.isAfterLast()) {
             type = cur_H.getString(cur_H.getColumnIndex("type"));
             name = cur_H.getString(cur_H.getColumnIndex("name")).toLowerCase();
-            if ((type.equalsIgnoreCase("date") | type.equalsIgnoreCase("datetime")) & !name.equalsIgnoreCase("endt") & !name.equalsIgnoreCase("modifydate")) {
+            if (type.equalsIgnoreCase("date") | type.equalsIgnoreCase("datetime")) {
                 dateVariable += dateVariable.length() == 0 ? cur_H.getString(cur_H.getColumnIndex("name")) : "," + cur_H.getString(cur_H.getColumnIndex("name"));
             }
 

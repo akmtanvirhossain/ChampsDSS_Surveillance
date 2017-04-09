@@ -10,4 +10,7 @@
     <color name="HeadingBackground">#F3F3F3</color>
 
     <color name="navigationBar">#FFC4005F</color>
+
+    <color name="theme_color">#FFC4005F</color>
+    <color name="save_button_color">#69CB3F</color>
 </resources>

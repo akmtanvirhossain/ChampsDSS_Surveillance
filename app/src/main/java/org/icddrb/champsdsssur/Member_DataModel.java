@@ -198,6 +198,13 @@ import android.content.Context;
          }
         private String _Upload = "2";
 
+     private String _NeedReview = "";
+     public String getNeedReview(){
+         return _NeedReview;
+     }
+     public void setNeedReview(String newValue){
+         _NeedReview = newValue;
+     }
         String TableName = "Member";
 
         public String SaveUpdateData(Context context)

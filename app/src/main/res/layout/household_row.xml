@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scrollbars="vertical">
     <LinearLayout android:id="@+id/secListRow" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <ImageButton android:layout_width="50sp" android:layout_marginLeft="0sp"
-            android:layout_height="45sp" android:background="#ffffff" android:src="@drawable/discard"
-            android:id="@+id/delHousehold"/>
-        <TextView android:id="@+id/HH" android:layout_width="80sp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
-        <TextView android:id="@+id/HHHead" android:layout_width="250sp" android:gravity="left"  android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
-        <TextView android:id="@+id/TotMem" android:layout_width="120sp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
-        <TextView android:id="@+id/Visit" android:layout_width="120sp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:text="Status" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
+        <ImageButton android:layout_width="50sp" android:layout_marginLeft="0sp" android:layout_height="45sp" android:background="#ffffff" android:src="@drawable/discard" android:id="@+id/delHousehold"/>
+        <TextView android:id="@+id/Bari" android:layout_width="50sp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
+        <TextView android:id="@+id/BariN" android:layout_width="185sp" android:gravity="left" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
+        <TextView android:id="@+id/HH" android:layout_width="80dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="50sp"/>
+        <TextView android:id="@+id/HHHead" android:layout_width="190sp" android:gravity="left"  android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
+        <TextView android:id="@+id/TotMem" android:layout_width="170dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
+        <TextView android:id="@+id/Visit" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:text="Status" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
     </LinearLayout>
  </LinearLayout>

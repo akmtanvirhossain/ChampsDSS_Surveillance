@@ -4,45 +4,47 @@
 
  //Android Manifest Code
  //<activity android:name=".Member" android:label="Member" />
+
  import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.Settings;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
+ import android.app.AlertDialog;
+ import android.app.DatePickerDialog;
+ import android.app.Dialog;
+ import android.app.TimePickerDialog;
+ import android.content.Context;
+ import android.content.DialogInterface;
+ import android.content.Intent;
+ import android.database.Cursor;
+ import android.location.Location;
+ import android.location.LocationListener;
+ import android.location.LocationManager;
+ import android.net.Uri;
+ import android.os.Bundle;
+ import android.provider.Settings;
+ import android.view.KeyEvent;
+ import android.view.MotionEvent;
+ import android.view.View;
+ import android.widget.AdapterView;
+ import android.widget.ArrayAdapter;
+ import android.widget.Button;
+ import android.widget.CheckBox;
+ import android.widget.DatePicker;
+ import android.widget.EditText;
+ import android.widget.ImageButton;
+ import android.widget.LinearLayout;
+ import android.widget.RadioButton;
+ import android.widget.RadioGroup;
+ import android.widget.SimpleAdapter;
+ import android.widget.Spinner;
+ import android.widget.TextView;
+ import android.widget.TimePicker;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+ import java.util.ArrayList;
+ import java.util.Calendar;
+ import java.util.HashMap;
+ import java.util.List;
 
-import Common.Connection;
-import Common.Global;
+ import Common.Connection;
+ import Common.Global;
 
  public class Member extends Activity {
     boolean networkAvailable=false;
@@ -180,6 +182,7 @@ import Common.Global;
          TextView VlblExDate;
          EditText dtpExDate;
          TextView dtpVDate;
+        CheckBox chkNeedReview;
 
     static String TableName;
 
@@ -230,6 +233,7 @@ import Common.Global;
                  adb.show();
              }});
 
+         chkNeedReview = (CheckBox)findViewById(R.id.chkNeedReview);
          seclbl1=(LinearLayout)findViewById(R.id.seclbl1);
          linelbl1=(View)findViewById(R.id.linelbl1);
          secVill=(LinearLayout)findViewById(R.id.secVill);
@@ -265,7 +269,7 @@ import Common.Global;
          txtPNo.setText(VILL.toString()+BARI.toString()+HH.toString()+txtMSlNo.getText().toString());
 
          secName=(LinearLayout)findViewById(R.id.secName);
-         lineName=(View)findViewById(R.id.lineName);
+//         lineName=(View)findViewById(R.id.lineName);
          VlblName=(TextView) findViewById(R.id.VlblName);
          txtName=(EditText) findViewById(R.id.txtName);
          secRth=(LinearLayout)findViewById(R.id.secRth);
@@ -283,7 +287,7 @@ import Common.Global;
          listRth.add("05-খানা প্রধানের ভাই/বোন");
          listRth.add("06-খানা প্রধানের চাচা/ফুফু/মামা/খালা");
          listRth.add("07-খানা প্রধানের দাদা/দাদি/নানা/নানি");
-         listRth.add("08-খানা প্রধানের নাতি/নাতটি");
+         listRth.add("08-খানা প্রধানের নাতি/নাতনি");
          listRth.add("09-খানা প্রধানের শ্যালক/শ্যালিকা/দেবর/ননদ");
          listRth.add("10-খানা প্রধানের শ্বশুর/শাশুড়ী");
          listRth.add("11-খানা প্রধানের সৎ মা/বাবা");
@@ -360,7 +364,7 @@ import Common.Global;
          listEdu.add("14-বিএ/বিকম/বিএসসি /ফাজিল/ ডিপ্লোমা পাশ");
          listEdu.add("16-বিএ/বিকম/বিএসসি (সম্মান) অথবা বিএসসি ইঞ্জিনিয়ারিং পাশ");
          listEdu.add("17-এমএ/এমএসসি/এমকম/এমএসএস/এমবিবিএস /কামিল পাশ");
-         listEdu.add("30–ব্রাক শিশু শ্রেণী পাশ");
+         listEdu.add("30-ব্রাক শিশু শ্রেণী পাশ");
          listEdu.add("31-ব্র্যাক প্রথম শ্রেণি পাশ");
          listEdu.add("32-ব্র্যাক ২য় শ্রেণি পাশ");
          listEdu.add("33-ব্র্যাক ৩য় শ্রেণি পাশ");
@@ -489,6 +493,7 @@ import Common.Global;
          VlblSp2=(TextView) findViewById(R.id.VlblSp2);
          spnSp2=(Spinner) findViewById(R.id.spnSp2);
          spnSp2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
+
 
          secSp3=(LinearLayout)findViewById(R.id.secSp3);
          lineSp3=(View)findViewById(R.id.lineSp3);
@@ -853,9 +858,30 @@ import Common.Global;
          String[] MS = spnMS.getSelectedItem().toString().split("-");
          String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
          String[] Sp1 = spnSp1.getSelectedItem().toString().split("-");
+         String[] MoSl = spnMoNo.getSelectedItem().toString().split("-");
 
          if ((RTH[0].equals("02") | RTH[0].equals("04") | RTH[0].equals("07") | RTH[0].equals("10") | RTH[0].equals("11") | RTH[0].equals("15") | RTH[0].equals("17")) & MS[0].equals("30")) {
-             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ২,৪,৭,১০,১১,১৫,১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
+             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ০২, ০৪, ০৭, ১০, ১১, ১৫, ১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
+             spnRth.requestFocus();
+             return;
+         }
+         else if ((RTH[0].equals("02")) & MS[0].equals("32")) {
+             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ০২-খানা প্রধানের স্বামী/স্ত্রী হলে বৈবাহিক অবস্থা ৩১-বর্তমানে বিবাহিতা/বিবাহিত হবে.");
+             spnRth.requestFocus();
+             return;
+         }
+         else if ((RTH[0].equals("02")) & MS[0].equals("33")) {
+             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ০২-খানা প্রধানের স্বামী/স্ত্রী হলে বৈবাহিক অবস্থা ৩১-বর্তমানে বিবাহিতা/বিবাহিত হবে.");
+             spnRth.requestFocus();
+             return;
+         }
+         else if ((RTH[0].equals("02")) & MS[0].equals("34")) {
+             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ০২-খানা প্রধানের স্বামী/স্ত্রী হলে বৈবাহিক অবস্থা ৩১-বর্তমানে বিবাহিতা/বিবাহিত হবে.");
+             spnRth.requestFocus();
+             return;
+         }
+         else if ((RTH[0].equals("02")) & Sp1[0].equals("00")) {
+             Connection.MessageBox(Member.this, "প্রশ্ন ৪. খানা প্রধানের স্বামী/স্ত্রী হলে, প্রশ্ন ১৩. ১ম স্বামী/স্ত্রী  সিরিয়াল 00 হবেনা.");
              spnRth.requestFocus();
              return;
          }
@@ -877,7 +903,7 @@ import Common.Global;
              txtAgeY.requestFocus();
              return;
          }
-         else if ((RTH[0].equals("02") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 15))
+         else if ((RTH[0].equals("02") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 12))
          {
              Connection.MessageBox(Member.this, "খানা প্রধানের স্বামী অথবা স্ত্রী  বয়স অবশ্যই ১৫ বছরের বেশী হবে");
              txtAgeY.requestFocus();
@@ -927,21 +953,47 @@ import Common.Global;
          }
          else
          {
-             /*if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
+             if (Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-")) & spnMoNo.isShown()) {
                  Connection.MessageBox(Member.this, "প্রশ্ন ৮ এবং ৯. পিতার সিরিয়াল ও মাতার সিরিয়াল একই হবে না");
                  spnFaNo.requestFocus();
                  return;
-             }*/
+             }
          }
-//         String MSstatus= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ Sp1 + "'");
-//
-//         if ((MSstatus.equals("30")))
-//         {
-//             Connection.MessageBox(Member.this, "স্বামী অথবা স্ত্রী "+ spnSp1.getSelectedItem().toString().split("-") +" বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
-//             spnRth.requestFocus();
-//             return;
-//         }
+//      ---------------Add Saleheen on 03_04_2017--------------------------------------------------------
+         String s[]=spnMoNo.getSelectedItem().toString().split("-");
+         String MoSex= C.ReturnSingleValue("Select Sex from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
+         String MoMS= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
 
+         if ((MoSex.equals("1")))
+         {
+             Connection.MessageBox(Member.this, "সদস্যের মা পুরুষ হবে না ");
+             spnRth.requestFocus();
+             return;
+         }
+         if ((MoMS.equals("30")))
+         {
+             Connection.MessageBox(Member.this, "সদস্যের মা '"+ spnMoNo.getSelectedItem() +"' এর বৈবাহিক অবস্থা  ৩০-কখনও বিয়ে হয়নি দেয়া আছে");
+             spnRth.requestFocus();
+             return;
+         }
+
+         String f[]=spnFaNo.getSelectedItem().toString().split("-");
+         String FoSex= C.ReturnSingleValue("Select Sex from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
+         String FaMS= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
+
+         if ((FoSex.equals("2")))
+         {
+             Connection.MessageBox(Member.this, "সদস্যের বাবা মহিলা হবে না ");
+             spnRth.requestFocus();
+             return;
+         }
+         if ((FaMS.equals("30")))
+         {
+             Connection.MessageBox(Member.this, "সদস্যের বাবা '"+ spnFaNo.getSelectedItem() +"' এর বৈবাহিক অবস্থা  ৩০-কখনও বিয়ে হয়নি দেয়া আছে");
+             spnRth.requestFocus();
+             return;
+         }
+//-----------------------------------------------------------------------------------------------------
          if (txtMSlNo.getText().toString().equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
              Connection.MessageBox(Member.this, "প্রশ্ন ১৩) ১ম স্বামী/স্ত্রী  সিরিয়াল এবং এই সদস্যের সিরিয়াল একই হবে না");
              spnSp1.requestFocus();
@@ -962,7 +1014,6 @@ import Common.Global;
              spnSp4.requestFocus();
              return;
          }
-
 
          //17 Mar 2017
          else if (!Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-").equals("00") & Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
@@ -1075,6 +1126,8 @@ import Common.Global;
          objSave.setEndTime(g.CurrentTime24());
          objSave.setDeviceID(DEVICEID);
          objSave.setEntryUser(ENTRYUSER); //from data entry user list
+
+         objSave.setNeedReview(chkNeedReview.isChecked()?"1":"2");
          //objSave.setLat(Double.toString(currentLatitude));
          //objSave.setLon(Double.toString(currentLongitude));
 
@@ -1155,6 +1208,7 @@ import Common.Global;
              dtpEnDate.setText(item.getEnDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getEnDate()));
              txtExType.setText(item.getExType());
              dtpExDate.setText(item.getExDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getExDate()));
+               if(item.getNeedReview().equals("1")) chkNeedReview.setChecked(true); else chkNeedReview.setChecked(false);
            }
         }
         catch(Exception  e)

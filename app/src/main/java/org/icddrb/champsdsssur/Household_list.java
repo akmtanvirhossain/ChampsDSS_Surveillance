@@ -28,8 +28,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+ import android.widget.Toast;
 
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -541,12 +542,29 @@ public class Household_list extends Activity  {
          }
          LinearLayout   secListRow = (LinearLayout)convertView.findViewById(R.id.secListRow);
 
+//         final TextView Bari= (TextView) convertView.findViewById(R.id.Bari);
+//         final TextView BariN= (TextView) convertView.findViewById(R.id.BariN);
          final TextView HH     = (TextView)convertView.findViewById(R.id.HH);
          final TextView HHHead = (TextView)convertView.findViewById(R.id.HHHead);
          final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
          final TextView Visit  = (TextView)convertView.findViewById(R.id.Visit);
          final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
+
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
+
+//         String bari="",bariname="";
+//         Toast.makeText(context, ""+spnBari.getSelectedItemPosition(), Toast.LENGTH_SHORT).show();
+//         if (spnBari.getSelectedItemPosition()!=1) {
+//             String B[]=spnBari.getSelectedItem().toString().split("-");
+//             bari=B[0];
+//             bariname=B[1];
+//         }
+//         String B[]=spnBari.getSelectedItem().toString().split("-");
+//         bari=B[0];
+//         bariname=B[1];
+
+//         Bari.setText(bari);
+//         BariN.setText(bariname);
 
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
@@ -590,7 +608,6 @@ public class Household_list extends Activity  {
              delHousehold.setBackgroundColor(Color.parseColor("#FFFFFF"));
          }
 
-
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                //Write your code here
@@ -598,8 +615,6 @@ public class Household_list extends Activity  {
                IDbundle.putString("Vill", o.get("Vill"));
                IDbundle.putString("Bari", o.get("Bari"));
                IDbundle.putString("HH", o.get("HH"));
-
-//               String B =(spnBari.getSelectedItem().toString().substring(5,spnBari.getSelectedItem().toString().length()));
                IDbundle.putString("HHHead",o.get("HHHead"));
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);

@@ -391,20 +391,20 @@ import Common.Global;
          lineResp=(View)findViewById(R.id.lineResp);
          VlblResp=(TextView) findViewById(R.id.VlblResp);
          spnResp=(Spinner) findViewById(R.id.spnResp);
-         //***********************sakib********************************************************
+         spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
 
-         List<String> listResp = new ArrayList<String>();
-
-         listResp.add("");
-         listResp.add("1-Member1");
-         listResp.add("2-Member2");
-         listResp.add("3-Member3");
-         listResp.add("4-Member4");
-         listResp.add("5-Member5");
-         listResp.add("6-Member6");
-
-         ArrayAdapter<String> adptrResp= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listResp);
-         spnResp.setAdapter(adptrResp);
+//         //***********************sakib********************************************************
+//
+//         List<String> listResp = new ArrayList<String>();//
+//         listResp.add("");
+//         listResp.add("1-Member1");
+//         listResp.add("2-Member2");
+//         listResp.add("3-Member3");
+//         listResp.add("4-Member4");
+//         listResp.add("5-Member5");
+//         listResp.add("6-Member6");//
+//         ArrayAdapter<String> adptrResp= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listResp);
+//         spnResp.setAdapter(adptrResp);
 
          txtVill.setText(VILL);
          txtVill.setFocusable(false);
@@ -574,18 +574,18 @@ import Common.Global;
              return;
            }
 
-         else if(txtTotMem.getText().toString().length()==0 & secTotMem.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: মোট সদস্য সংখ্যা.");
-             txtTotMem.requestFocus(); 
-             return;	
-           }
-         else if(Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "01" : txtTotMem.getText().toString()) < 01 || Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "30" : txtTotMem.getText().toString()) > 30)
-           {
-             Connection.MessageBox(Household_Visit.this, "সদস্য  সংখ্যা  অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে(মোট সদস্য সংখ্যা).");
-             txtTotMem.requestFocus(); 
-             return;	
-           }
+//         else if(txtTotMem.getText().toString().length()==0 & secTotMem.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: মোট সদস্য সংখ্যা.");
+//             txtTotMem.requestFocus();
+//             return;
+//           }
+//         else if(Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "01" : txtTotMem.getText().toString()) < 01 || Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "30" : txtTotMem.getText().toString()) > 30)
+//           {
+//             Connection.MessageBox(Household_Visit.this, "সদস্য  সংখ্যা  অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে(মোট সদস্য সংখ্যা).");
+//             txtTotMem.requestFocus();
+//             return;
+//           }
 //         else if(txtTotRWo.getText().toString().length()==0 & secTotRWo.isShown())
 //           {
 //             Connection.MessageBox(Household_Visit.this, "Required field: মোট মহিলা.");
@@ -807,7 +807,7 @@ import Common.Global;
              txtMobileNo1.setText(item.getMobileNo1());
              txtMobileNo2.setText(item.getMobileNo2());
              txtHHHead.setText(item.getHHHead());
-             txtTotMem.setText(item.getTotMem());
+//             txtTotMem.setText(item.getTotMem());
 //             txtTotRWo.setText(item.getTotRWo());
 
              //*********************************************sakib*********************************************
@@ -824,7 +824,6 @@ import Common.Global;
                    txtVStatusOth.setText(item1.getVStatusOth());
                    spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item1.getResp()));
                }
-
 
             //*********************************************sakib**********************************************
 //             txtEnType.setText(item.getEnType());

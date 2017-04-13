@@ -63,7 +63,6 @@
             android:theme="@style/CustomTheme" />
         <activity android:name="org.icddrb.champsdsssur.Household_list" />
         <activity android:name="org.icddrb.champsdsssur.Household" />
-        <activity android:name="org.icddrb.champsdsssur.Member" />
         <activity android:name="org.icddrb.champsdsssur.Member_list" />
         <activity android:name="org.icddrb.champsdsssur.SES" />
         <activity android:name="org.icddrb.champsdsssur.SES_list" />

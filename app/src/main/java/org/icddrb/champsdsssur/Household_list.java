@@ -549,7 +549,6 @@ public class Household_list extends Activity  {
          final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
          final TextView Visit  = (TextView)convertView.findViewById(R.id.Visit);
          final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
-
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
 
 //         String bari="",bariname="";
@@ -637,7 +636,6 @@ public class Household_list extends Activity  {
                      }
                  });
                  adb.show();
-
              }
          });
          return convertView;

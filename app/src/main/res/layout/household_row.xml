@@ -7,6 +7,6 @@
         <TextView android:id="@+id/HH" android:layout_width="80dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="50sp"/>
         <TextView android:id="@+id/HHHead" android:layout_width="190sp" android:gravity="left"  android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
         <TextView android:id="@+id/TotMem" android:layout_width="170dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
-        <TextView android:id="@+id/Visit" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:text="Status" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
+        <TextView android:id="@+id/Visit" android:layout_width="80sp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:text="Status" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
     </LinearLayout>
  </LinearLayout>

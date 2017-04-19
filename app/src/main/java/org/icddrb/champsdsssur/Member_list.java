@@ -7,24 +7,29 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+ import android.database.Cursor;
+ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.Gravity;
+ import android.text.Editable;
+ import android.text.TextWatcher;
+ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.BaseAdapter;
+ import android.widget.AdapterView;
+ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
+ import android.widget.Spinner;
+ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -244,7 +249,7 @@ public class Member_list extends Activity {
 
                      return;
                  }
-                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
+//                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/Bari:"+BARI+"/HH:"+HH, Toast.LENGTH_SHORT).show();
                  Intent f1;
                  f1 = new Intent(getApplicationContext(), PregHis.class);
                  IDbundle.putString("Vill", VILL);
@@ -256,16 +261,18 @@ public class Member_list extends Activity {
              }
          });
 
-         Button btnMemberName = (Button) findViewById(R.id.btnMemberName);
+         btnMemberName = (Button) findViewById(R.id.btnMemberName);
          btnMemberName.setOnClickListener(new View.OnClickListener() {
-
-             public void onClick(View view) {
-//                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/n Bari:"+BARI+"/n HH:"+HH, Toast.LENGTH_SHORT).show();
-
+             @Override
+             public void onClick(View v) {
+                 Intent f2;
+                 f2 = new Intent(getApplicationContext(), Events.class);
                  IDbundle.putString("Vill", VILL);
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
-                 MemberNameForm(VILL, BARI,HH);
+                 IDbundle.putString("MSlNo", MSLNO);
+                 f2.putExtras(IDbundle);
+                 startActivityForResult(f2, 1);
              }
 
          });
@@ -275,19 +282,6 @@ public class Member_list extends Activity {
          txtHH.setEnabled(false);
          DataSearch(VILL,BARI,HH);
          DataStatus();
-         /*if (C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
-             btnSES.setBackgroundColor(Color.GREEN);
-         }
-
-         //String TotRh = C.ReturnSingleValue("Select TotRWO from Household Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
-         String TotRh = C.ReturnSingleValue("Select Count(*)TotRWO from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'");
-         String PregHis = C.ReturnSingleValue("Select count(*)Total from PregHis Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
-
-//         Toast.makeText(this, ""+Integer.valueOf(TotRh), Toast.LENGTH_LONG).show();
-         if (Integer.valueOf(TotRh) == Integer.valueOf(PregHis))
-         {
-             btnPregHis.setBackgroundColor(Color.GREEN);
-         }*/
 
      }
      catch(Exception  e)
@@ -296,8 +290,7 @@ public class Member_list extends Activity {
          return;
      }
  }
- 
-@Override
+    @Override
  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
      super.onActivityResult(requestCode, resultCode, data);
      if (resultCode == Activity.RESULT_CANCELED) {
@@ -603,7 +596,7 @@ public class Member_list extends Activity {
                IDbundle.putString("HH", o.get("HH"));
                IDbundle.putString("MSlNo", o.get("MSlNo"));
                Intent f1;
-               f1 = new Intent(getApplicationContext(), Member.class);
+               f1 = new Intent(getApplicationContext(), Events.class);
                f1.putExtras(IDbundle);
                //startActivity(f1);
                 startActivityForResult(f1, 1);
@@ -630,6 +623,7 @@ public class Member_list extends Activity {
 
          return convertView;
        }
+
  }
 
 

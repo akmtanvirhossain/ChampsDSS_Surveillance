@@ -68,6 +68,7 @@
         <activity android:name="org.icddrb.champsdsssur.SES_list" />
         <activity android:name="org.icddrb.champsdsssur.PregHis" />
         <activity android:name="org.icddrb.champsdsssur.PregHis_list" />
+        <activity android:name="org.icddrb.champsdsssur.Events" />
         <activity
             android:name="org.icddrb.champsdsssur.Baris"
             android:label="Bari Form"

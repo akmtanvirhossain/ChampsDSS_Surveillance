@@ -65,6 +65,7 @@ import Common.Global;
     private int mYear;
     static final int DATE_DIALOG = 1;
     static final int TIME_DIALOG = 2;
+    String OldNewHH;
 
     Connection C;
     Global g;
@@ -393,19 +394,6 @@ import Common.Global;
          spnResp=(Spinner) findViewById(R.id.spnResp);
          spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
 
-//         //***********************sakib********************************************************
-//
-//         List<String> listResp = new ArrayList<String>();//
-//         listResp.add("");
-//         listResp.add("1-Member1");
-//         listResp.add("2-Member2");
-//         listResp.add("3-Member3");
-//         listResp.add("4-Member4");
-//         listResp.add("5-Member5");
-//         listResp.add("6-Member6");//
-//         ArrayAdapter<String> adptrResp= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listResp);
-//         spnResp.setAdapter(adptrResp);
-
          txtVill.setText(VILL);
          txtVill.setFocusable(false);
          txtBari.setText(BARI);
@@ -574,30 +562,6 @@ import Common.Global;
              return;
            }
 
-//         else if(txtTotMem.getText().toString().length()==0 & secTotMem.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Required field: মোট সদস্য সংখ্যা.");
-//             txtTotMem.requestFocus();
-//             return;
-//           }
-//         else if(Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "01" : txtTotMem.getText().toString()) < 01 || Integer.valueOf(txtTotMem.getText().toString().length()==0 ? "30" : txtTotMem.getText().toString()) > 30)
-//           {
-//             Connection.MessageBox(Household_Visit.this, "সদস্য  সংখ্যা  অবশ্যই ১ থেকে ৩০ এর ভিতর হতে হবে(মোট সদস্য সংখ্যা).");
-//             txtTotMem.requestFocus();
-//             return;
-//           }
-//         else if(txtTotRWo.getText().toString().length()==0 & secTotRWo.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Required field: মোট মহিলা.");
-//             txtTotRWo.requestFocus();
-//             return;
-//           }
-//         else if(Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "0" : txtTotRWo.getText().toString()) < 0 || Integer.valueOf(txtTotRWo.getText().toString().length()==0 ? "10" : txtTotRWo.getText().toString()) > 10)
-//           {
-//             Connection.MessageBox(Household_Visit.this, "মোট মহিলার সংখ্যা  অবশ্যই ০ থেকে ১০ এর ভিতর হতে হবে (মোট মহিলা).");
-//             txtTotRWo.requestFocus();
-//             return;
-//           }
          DV = Global.DateValidate(dtpVDate.getText().toString());
          if(DV.length()!=0 & secVDate.isShown())
            {
@@ -630,16 +594,6 @@ import Common.Global;
              txtMobileNo2.requestFocus();
              return;
          }
-
-//         Integer TotMem = Integer.valueOf(txtTotMem.getText().toString().length() == 0 ? "0" : txtTotMem.getText().toString());
-//         Integer TotRWo = Integer.valueOf(txtTotRWo.getText().toString().length() == 0 ? "0" : txtTotRWo.getText().toString());
-//
-//         if (TotMem < TotRWo) {
-//             Connection.MessageBox(Household_Visit.this, "কতজন মহিলা আছে অবশ্যই মোট সদস্য  সংখ্যার সমান অথবা কম হবে");
-//             txtTotMem.requestFocus();
-//             return;
-//         }
-
 
 //         else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
 //           {
@@ -704,7 +658,6 @@ import Common.Global;
          objSave.setMobileNo2(txtMobileNo2.getText().toString());
          objSave.setHHHead(txtHHHead.getText().toString());
          objSave.setTotMem(txtTotMem.getText().toString());
-//         objSave.setTotRWo(txtTotRWo.getText().toString());
          objSave.setTotRWo("");
          objSave.setEnType("20");
          objSave.setEnDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
@@ -720,7 +673,7 @@ import Common.Global;
          //objSave.setLon(Double.toString(currentLongitude));
          String status = objSave.SaveUpdateData(this);
 
-         //*************************************visit save by sakib************************************************
+         //************************************************************************************
          Visits_DataModel objSave1 = new Visits_DataModel();
          objSave1.setVill(txtVill.getText().toString());
          objSave1.setBari(txtBari.getText().toString());
@@ -729,7 +682,7 @@ import Common.Global;
          objSave1.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
          objSave1.setVStatusOth(txtVStatusOth.getText().toString());
 
-         //objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
+         objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
          objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
 
          objSave1.setRnd("00");
@@ -743,34 +696,41 @@ import Common.Global;
 
          String status1 = objSave1.SaveUpdateData(this);
 
-         //*************************************visit save by sakib************************************************
+         //*************************************************************************************
 
          if(status1.length()==0) {
              if(status.length()==0)
              {
-                 String VS = spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
-                 if(VS.equals("1")){
-                     Intent returnIntent = new Intent();
-                     returnIntent.putExtra("res", "hh");
-                     setResult(Activity.RESULT_OK, returnIntent);
-
-                     finish();
-                     /*Intent f1;
-                     f1 = new Intent(getApplicationContext(), Member_list.class);
-                     f1.putExtras(IDbundle);
-                     startActivity(f1);*/
-
-                     Intent f1;
-                     f1 = new Intent(getApplicationContext(), Member_list.class);
-                     f1.putExtras(IDbundle);
-                     startActivityForResult(f1, 1);
-                 }else
+                 AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
+                 adb.setTitle("Close");
+                 adb.setMessage("এই খানায় কি কোন ধরনের ইভেন্ট পরিবর্তন হয়েছে[হ্যাঁ/না]?");
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
                  {
-                     Intent returnIntent = new Intent();
-                     returnIntent.putExtra("res", "hh");
-                     setResult(Activity.RESULT_OK, returnIntent);
-                     Connection.MessageBox(Household_Visit.this, "Saved Successfully");
-                 }
+                     public void onClick(DialogInterface dialog, int which) {
+                         String VS = spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
+                         if(VS.equals("1")){
+                             Intent returnIntent = new Intent();
+                             returnIntent.putExtra("res", "hh");
+                             setResult(Activity.RESULT_OK, returnIntent);
+
+                             finish();
+                             Intent f1;
+                             f1 = new Intent(getApplicationContext(), Member_list.class);
+                             f1.putExtras(IDbundle);
+                             startActivityForResult(f1, 1);
+                         }
+                     }});
+                 adb.show();
+                 adb.setNegativeButton("না", new AlertDialog.OnClickListener()
+                 {
+                     public void onClick(DialogInterface dialog, int which) {
+
+                             Intent returnIntent = new Intent();
+                             returnIntent.putExtra("res", "hh");
+                             setResult(Activity.RESULT_OK, returnIntent);
+                             Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                     }});
+                 adb.show();
              }
              else{
                  Connection.MessageBox(Household_Visit.this, status1);

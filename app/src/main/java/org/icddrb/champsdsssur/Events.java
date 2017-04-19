@@ -212,14 +212,24 @@
          lineHH=(View)findViewById(R.id.lineHH);
          VlblHH=(TextView) findViewById(R.id.VlblHH);
          txtHH=(EditText) findViewById(R.id.txtHH);
+
          secMSlNo=(LinearLayout)findViewById(R.id.secMSlNo);
          lineMSlNo=(View)findViewById(R.id.lineMSlNo);
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          txtMSlNo=(EditText) findViewById(R.id.txtMSlNo);
+
+         if(MSLNO.length()==0)
+             txtMSlNo.setText(MemNo(VILL,BARI,HH));
+         else
+             txtMSlNo.setText(MSLNO);
+
+         txtMSlNo.setEnabled(false);
+
          secPNo=(LinearLayout)findViewById(R.id.secPNo);
          linePNo=(View)findViewById(R.id.linePNo);
          VlblPNo=(TextView) findViewById(R.id.VlblPNo);
          txtPNo=(EditText) findViewById(R.id.txtPNo);
+
          secEvType=(LinearLayout)findViewById(R.id.secEvType);
          lineEvType=(View)findViewById(R.id.lineEvType);
          VlblEvType=(TextView) findViewById(R.id.VlblEvType);
@@ -361,6 +371,16 @@
          secRnd.setVisibility(View.GONE);
          lineRnd.setVisibility(View.GONE);
 
+         txtVill.setEnabled(false);
+         txtBari.setEnabled(false);
+         txtHH.setEnabled(false);
+         txtMSlNo.setEnabled(false);
+
+         txtVill.setText(VILL);
+         txtVill.setFocusable(false);
+         txtBari.setText(BARI);
+         txtBari.setFocusable(false);
+         txtHH.setText(HH);
 
          Button cmdSave = (Button) findViewById(R.id.cmdSave);
          cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -609,7 +629,7 @@
              public void onProviderDisabled(String provider) {
              }
          };
-         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+//         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
      }
 
      void updateLocation(Location location) {
@@ -655,5 +675,11 @@
          // TODO Auto-generated method stub
          super.onDestroy();
          turnGPSOff();
+     }
+     private String MemNo(String Vill,String Bari,String HH)
+     {
+         String M = C.ReturnSingleValue("Select cast(ifnull(max(MSlNo),0)+1 as varchar(2))MemNo from Member where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'");
+         M = Global.Right("0"+M,2);
+         return M;
      }
  }

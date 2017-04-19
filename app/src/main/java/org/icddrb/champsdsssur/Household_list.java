@@ -117,7 +117,8 @@ public class Household_list extends Activity  {
                  adb.setTitle("Close");
                  adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
-                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
+                 {
                      public void onClick(DialogInterface dialog, int which) {
                          String V = spnVill.getSelectedItemPosition()==0?"": Global.Left(spnVill.getSelectedItem().toString(),3);
                          String B = spnBari.getSelectedItemPosition()==0?"": Global.Left(spnBari.getSelectedItem().toString(),4);
@@ -551,27 +552,13 @@ public class Household_list extends Activity  {
          final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
 
-//         String bari="",bariname="";
-//         Toast.makeText(context, ""+spnBari.getSelectedItemPosition(), Toast.LENGTH_SHORT).show();
-//         if (spnBari.getSelectedItemPosition()!=1) {
-//             String B[]=spnBari.getSelectedItem().toString().split("-");
-//             bari=B[0];
-//             bariname=B[1];
-//         }
-//         String B[]=spnBari.getSelectedItem().toString().split("-");
-//         bari=B[0];
-//         bariname=B[1];
-
-//         Bari.setText(bari);
-//         BariN.setText(bariname);
-
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
          TotMem.setText(o.get("TotMem"));
          Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+ VILL +"' AND Bari='"+ BARI +"' AND HH='"+ o.get("HH") +"'"));
 
          delHousehold.setVisibility(View.INVISIBLE);
-         if(o.get("TotMem").length() == 0 && Visit.getText().length()==0) {
+         if(Visit.getText().length()==0) {
              HH.setTextColor(Color.RED);
              HHHead.setTextColor(Color.RED);
              TotMem.setTextColor(Color.RED);

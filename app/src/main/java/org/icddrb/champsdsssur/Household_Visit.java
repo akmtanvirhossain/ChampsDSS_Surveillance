@@ -13,7 +13,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
+ import android.graphics.Color;
+ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -29,7 +30,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
+ import android.widget.ListView;
+ import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,11 +46,16 @@ import Common.Connection;
 import Common.Global;
  import Utility.MySharedPreferences;
 
+ import static org.icddrb.champsdsssur.R.id.Bari;
+ import static org.icddrb.champsdsssur.R.id.Vill;
+
  public class Household_Visit extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
-    double currentLatitude,currentLongitude; 
-    //Disabled Back/Home key
+    double currentLatitude,currentLongitude;
+     private String RsNo;
+
+     //Disabled Back/Home key
     //--------------------------------------------------------------------------------------------------
     @Override 
     public boolean onKeyDown(int iKeyCode, KeyEvent event)
@@ -65,13 +72,14 @@ import Common.Global;
     private int mYear;
     static final int DATE_DIALOG = 1;
     static final int TIME_DIALOG = 2;
-    String OldNewHH;
 
     Connection C;
     Global g;
     SimpleAdapter dataAdapter;
     ArrayList<HashMap<String, String>> dataList = new ArrayList<HashMap<String, String>>();
          TextView lblHeading;
+         TextView lblHeading1;
+
          LinearLayout seclbl02;
          View linelbl02;
          LinearLayout seclbl01;
@@ -100,18 +108,20 @@ import Common.Global;
          View lineMobileNo2;
          TextView VlblMobileNo2;
          EditText txtMobileNo2;
+
          LinearLayout secHHHead;
          View lineHHHead;
          TextView VlblHHHead;
          EditText txtHHHead;
-         LinearLayout secTotMem;
-         View lineTotMem;
-         TextView VlblTotMem;
-         EditText txtTotMem;
-         LinearLayout secTotRWo;
-         View lineTotRWo;
-         TextView VlblTotRWo;
-         EditText txtTotRWo;
+
+//         LinearLayout secTotMem;
+//         View lineTotMem;
+//         TextView VlblTotMem;
+//         EditText txtTotMem;
+//         LinearLayout secTotRWo;
+//         View lineTotRWo;
+//         TextView VlblTotRWo;
+//         EditText txtTotRWo;
 
 //         LinearLayout secEnType;
 //         View lineEnType;
@@ -137,6 +147,7 @@ import Common.Global;
      //***********************sakib****************************************
          Button btnPlusMobile1;
          Button btnMinusMobile1;
+         EditText dtpVDt;
 
          LinearLayout secVDate;
          View lineVDate;
@@ -151,10 +162,16 @@ import Common.Global;
          View lineVStatusOth;
          TextView VlblVStatusOth;
          EditText txtVStatusOth;
+
          LinearLayout secResp;
          View lineResp;
          TextView VlblResp;
          Spinner spnResp;
+
+         LinearLayout secVisitNote;
+         View lineVisitNote;
+         TextView VlblVisitNote;
+         EditText txtVisitNote;
      //***********************sakib********************************************
 
     static String TableName;
@@ -167,7 +184,14 @@ import Common.Global;
     static String VILL = "";
     static String BARI = "";
     static String HH = "";
+    static String ROUNDNO = "";
+    static String CLUSTER = "";
+    static String BLOCK   = "";
 
+     ListView list;
+     ImageButton btnVDate;
+     EditText VisitDate;
+     Spinner BariList;
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
    try
@@ -186,6 +210,11 @@ import Common.Global;
          BARI = IDbundle.getString("Bari");
          HH = IDbundle.getString("HH");
 
+         ROUNDNO        = IDbundle.getString("roundno");
+         CLUSTER        = IDbundle.getString("cluster");
+         BLOCK          = IDbundle.getString("block");
+
+
          TableName = "Household";
 
          //turnGPSOn();
@@ -194,7 +223,9 @@ import Common.Global;
          //FindLocation();
          // Double.toString(currentLatitude);
          // Double.toString(currentLongitude);
+
          lblHeading = (TextView)findViewById(R.id.lblHeading);
+         lblHeading1 = (TextView)findViewById(R.id.lblHeading1);
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +262,7 @@ import Common.Global;
          VlblReligion=(TextView) findViewById(R.id.VlblReligion);
          spnReligion=(Spinner) findViewById(R.id.spnReligion);
          List<String> listReligion = new ArrayList<String>();
-         
+
          listReligion.add("");
          listReligion.add("1-মুসলিম");
          listReligion.add("2-হিন্দু");
@@ -250,20 +281,20 @@ import Common.Global;
          VlblMobileNo2=(TextView) findViewById(R.id.VlblMobileNo2);
          txtMobileNo2=(EditText) findViewById(R.id.txtMobileNo2);
 
-
-
          secHHHead=(LinearLayout)findViewById(R.id.secHHHead);
          lineHHHead=(View)findViewById(R.id.lineHHHead);
          VlblHHHead=(TextView) findViewById(R.id.VlblHHHead);
          txtHHHead=(EditText) findViewById(R.id.txtHHHead);
-         secTotMem=(LinearLayout)findViewById(R.id.secTotMem);
-         lineTotMem=(View)findViewById(R.id.lineTotMem);
-         VlblTotMem=(TextView) findViewById(R.id.VlblTotMem);
-         txtTotMem=(EditText) findViewById(R.id.txtTotMem);
-         secTotRWo=(LinearLayout)findViewById(R.id.secTotRWo);
+
+
+//         secTotMem=(LinearLayout)findViewById(R.id.secTotMem);
+//         lineTotMem=(View)findViewById(R.id.lineTotMem);
+//         VlblTotMem=(TextView) findViewById(R.id.VlblTotMem);
+//         txtTotMem=(EditText) findViewById(R.id.txtTotMem);
+//         secTotRWo=(LinearLayout)findViewById(R.id.secTotRWo);
 //         lineTotRWo=(View)findViewById(R.id.lineTotRWo);
-         VlblTotRWo=(TextView) findViewById(R.id.VlblTotRWo);
-         txtTotRWo=(EditText) findViewById(R.id.txtTotRWo);
+//         VlblTotRWo=(TextView) findViewById(R.id.VlblTotRWo);
+//         txtTotRWo=(EditText) findViewById(R.id.txtTotRWo);
 //         secEnType=(LinearLayout)findViewById(R.id.secEnType);
 //         lineEnType=(View)findViewById(R.id.lineEnType);
 //         VlblEnType=(TextView) findViewById(R.id.VlblEnType);
@@ -292,6 +323,8 @@ import Common.Global;
          VlblVDate=(TextView) findViewById(R.id.VlblVDate);
          dtpVDate=(EditText) findViewById(R.id.dtpVDate);
          dtpVDate.setText(Global.DateNowDMY());
+
+
          secVStatus=(LinearLayout)findViewById(R.id.secVStatus);
          lineVStatus=(View)findViewById(R.id.lineVStatus);
          VlblVStatus=(TextView) findViewById(R.id.VlblVStatus);
@@ -334,11 +367,11 @@ import Common.Global;
                      secHHHead.setVisibility(View.VISIBLE);
                      lineHHHead.setVisibility(View.VISIBLE);
 
-                     secTotMem.setVisibility(View.VISIBLE);
-                     lineTotMem.setVisibility(View.VISIBLE);
+                     secResp.setVisibility(View.VISIBLE);
+                     lineResp.setVisibility(View.VISIBLE);
 
-                     secTotRWo.setVisibility(View.VISIBLE);
-
+//                     secVisitNote.setVisibility(View.VISIBLE);
+//                     lineVisitNote.setVisibility(View.VISIBLE);
                  }
                  else
                  {
@@ -354,18 +387,14 @@ import Common.Global;
                      lineMobileNo2.setVisibility(View.GONE);
                      txtMobileNo2.setText("");
 
-//                     secHHHead.setVisibility(View.GONE);
-//                     lineHHHead.setVisibility(View.GONE);
-//                     txtHHHead.setText("");
+                     secResp.setVisibility(View.GONE);
+                     lineResp.setVisibility(View.GONE);
+                     spnResp.setSelection(0);
 
-                     secTotMem.setVisibility(View.GONE);
-                     lineTotMem.setVisibility(View.GONE);
-                     txtTotMem.setText("");
-
-                     secTotRWo.setVisibility(View.GONE);
-                     txtTotRWo.setText("");
+//                     secVisitNote.setVisibility(View.GONE);
+//                     lineVisitNote.setVisibility(View.GONE);
+//                     txtVisitNote.setText("");
                  }
-
                  if(!spnData.equalsIgnoreCase("9"))
                  {
                      secVStatusOth.setVisibility(View.GONE);
@@ -392,12 +421,19 @@ import Common.Global;
          lineResp=(View)findViewById(R.id.lineResp);
          VlblResp=(TextView) findViewById(R.id.VlblResp);
          spnResp=(Spinner) findViewById(R.id.spnResp);
-         spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'"));
+         spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and ((julianday(date('now'))-julianday(bdate))/365.25)>10 and (extype is null or length(extype)=0)"));
+
+         secVisitNote=(LinearLayout)findViewById(R.id.secVisitNote);
+         lineVisitNote=(View)findViewById(R.id.lineVisitNote);
+         VlblVisitNote=(TextView) findViewById(R.id.VlblVisitNote);
+         txtVisitNote=(EditText) findViewById(R.id.txtVisitNote);
+
 
          txtVill.setText(VILL);
          txtVill.setFocusable(false);
          txtBari.setText(BARI);
          txtBari.setFocusable(false);
+
          if(HH.equals(""))
          {
              HH=HHSerial();
@@ -449,16 +485,14 @@ import Common.Global;
              }
          });
 
-
-
          //Hide all skip variables
          secVStatusOth.setVisibility(View.GONE);
          secReligion.setVisibility(View.GONE);
          secMobileNo1.setVisibility(View.GONE);
          secMobileNo2.setVisibility(View.GONE);
 //         secHHHead.setVisibility(View.GONE);
-         secTotMem.setVisibility(View.GONE);
-         secTotRWo.setVisibility(View.GONE);
+//         secTotMem.setVisibility(View.GONE);
+//         secTotRWo.setVisibility(View.GONE);
 
          //***********************added by sakib********************************************
          secMobileNo2.setVisibility(View.GONE);
@@ -482,15 +516,83 @@ import Common.Global;
                  txtMobileNo2.setVisibility(View.GONE);
              }
          });
-         //***********************added by sakib********************************************
+         //***********************************************************************************************************
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave);
         cmdSave.setOnClickListener(new View.OnClickListener() {
-        public void onClick(View v) { 
+        public void onClick(View v) {
             DataSave();
         }});
 
          DataSearch(VILL,BARI,HH);
+         String SQL="";
+         g.setRsNo("");
+
+         if (txtHHHead.getText().toString().length() != 0)
+         {
+             lblHeading1.setVisibility(View.GONE);
+             lblHeading.setVisibility(View.VISIBLE);
+
+             Visits_DataModel d1 = new Visits_DataModel();
+             String SQL1 = "Select * from Visits Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+
+             List<Visits_DataModel> data1 = d1.SelectAll(this, SQL1);
+             for (Visits_DataModel item1 : data1)
+             {
+                 dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));
+                 spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item1.getVStatus()));
+                 txtVStatusOth.setText(item1.getVStatusOth());
+                 txtVisitNote.setText(item1.getVisitNote());
+             }
+
+//             final TextView Resp = (TextView)findViewById(R.id.Resp);
+//             String Resp=C.ReturnSingleValue("Select Resp from Visits where Vill='"+  Vill +"' AND Bari='"+  BARI  +"' AND HH='"+ HH +"'");
+//             Resp.setText(Resp);
+
+//             txtVisitNote.setText(C.ReturnSingleValue("Select VisitNote from Visits where Vill='" + VILL + "' AND Bari='" + BARI + "' AND HH='" + HH +"' and Rnd='"+ ROUNDNO +"'"));
+
+//             Household_DataModel d = new Household_DataModel();
+//             String SQL2 = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH + "'";
+//             List<Household_DataModel> data = d.SelectAll(this, SQL2);
+//             for(Household_DataModel item : data)
+//             {
+//                 spnReligion.setSelection(Global.SpinnerItemPositionAnyLength(spnReligion, item.getReligion()));
+//                 txtMobileNo1.setText(item.getMobileNo1());
+//                 txtMobileNo2.setText(item.getMobileNo2());
+//                 spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item.getReligion()));
+//             }
+         }
+         else if (txtHHHead.getText().toString().length() == 0)
+         {
+                 lblHeading1.setVisibility(View.VISIBLE);
+                 lblHeading.setVisibility(View.GONE);
+
+                 SQL = " Select ' ' union";
+                 SQL += " Select '01-Member 1' union";
+                 SQL += " Select '02-Member 2' union";
+                 SQL += " Select '03-Member 3' union";
+                 SQL += " Select '04-Member 4' union";
+                 SQL += " Select '05-Member 5' union";
+                 SQL += " Select '06-Member 6'";
+         }
+
+//         txtVill.setText(Vill+"-"+Bari+"-"+HH);
+
+         final EditText txtRnd = (EditText)findViewById(R.id.txtRnd);
+         txtRnd.setText(ROUNDNO);
+
+         spnResp.setAdapter(C.getArrayAdapter(SQL));
+
+         for(int i=1;i<spnResp.getCount();i++)
+         {
+             if(Global.Left(spnResp.getItemAtPosition(i).toString(), 2).equals(RsNo))
+             {
+                 spnResp.setSelection(i);
+                 i=spnResp.getCount();
+             }
+         }
+//         spnRel.setSelection(Integer.parseInt(Religion.length()==0?"0":Religion));
+
      }
      catch(Exception  e)
      {
@@ -516,7 +618,6 @@ import Common.Global;
  {
    try
      {
- 
          String DV="";
 
          if(txtVill.getText().toString().length()==0 & secVill.isShown())
@@ -657,13 +758,13 @@ import Common.Global;
          objSave.setMobileNo1(txtMobileNo1.getText().toString());
          objSave.setMobileNo2(txtMobileNo2.getText().toString());
          objSave.setHHHead(txtHHHead.getText().toString());
-         objSave.setTotMem(txtTotMem.getText().toString());
+//         objSave.setTotMem(txtTotMem.getText().toString());
          objSave.setTotRWo("");
          objSave.setEnType("20");
          objSave.setEnDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
          objSave.setExType("");
          objSave.setExDate("");
-         objSave.setRnd("00");
+         objSave.setRnd(ROUNDNO);
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
          objSave.setStartTime(STARTTIME);
          objSave.setEndTime(g.CurrentTime24());
@@ -673,19 +774,20 @@ import Common.Global;
          //objSave.setLon(Double.toString(currentLongitude));
          String status = objSave.SaveUpdateData(this);
 
-         //************************************************************************************
+         //******************************************************************************************************************
          Visits_DataModel objSave1 = new Visits_DataModel();
          objSave1.setVill(txtVill.getText().toString());
          objSave1.setBari(txtBari.getText().toString());
          objSave1.setHH(txtHH.getText().toString());
          objSave1.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
          objSave1.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
+
          objSave1.setVStatusOth(txtVStatusOth.getText().toString());
+         objSave1.setVisitNote(txtVisitNote.getText().toString());
 
          objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
-         objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
 
-         objSave1.setRnd("00");
+         objSave1.setRnd(ROUNDNO);
          objSave1.setEnDt(Global.DateTimeNowYMDHMS());
          objSave1.setStartTime(STARTTIME);
          objSave1.setEndTime(g.CurrentTime24());
@@ -729,6 +831,7 @@ import Common.Global;
                              returnIntent.putExtra("res", "hh");
                              setResult(Activity.RESULT_OK, returnIntent);
                              Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                             finish();
                      }});
                  adb.show();
              }
@@ -757,7 +860,7 @@ import Common.Global;
         {
            RadioButton rb;
            Household_DataModel d = new Household_DataModel();
-           String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+           String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH + "'";
            List<Household_DataModel> data = d.SelectAll(this, SQL);
            for(Household_DataModel item : data){
              txtVill.setText(item.getVill());
@@ -773,7 +876,7 @@ import Common.Global;
              //*********************************************sakib*********************************************
 
                Visits_DataModel d1 = new Visits_DataModel();
-               String SQL1 = "Select * from Visits Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+               String SQL1 = "Select * from Visits Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and Rnd='"+ ROUNDNO +"'";
                List<Visits_DataModel> data1 = d1.SelectAll(this, SQL1);
                for(Visits_DataModel item1 : data1) {
                    txtVill.setText(item1.getVill());
@@ -782,6 +885,7 @@ import Common.Global;
                    dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));
                    spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item1.getVStatus()));
                    txtVStatusOth.setText(item1.getVStatusOth());
+                   txtVisitNote.setText(item1.getVisitNote());
                    spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item1.getResp()));
                }
 
@@ -799,8 +903,6 @@ import Common.Global;
             return;
         }
      }
-
-
 
  protected Dialog onCreateDialog(int id) {
    final Calendar c = Calendar.getInstance();

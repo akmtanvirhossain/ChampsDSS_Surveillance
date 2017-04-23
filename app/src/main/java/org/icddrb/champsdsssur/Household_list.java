@@ -7,7 +7,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+ import android.database.Cursor;
+ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -66,7 +67,8 @@ public class Household_list extends Activity  {
     SimpleAdapter dataAdapter;
     ArrayList<HashMap<String, String>> dataList = new ArrayList<HashMap<String, String>>();
     static String TableName;
-
+    ArrayList<HashMap<String, String>> mylist;
+    SimpleAdapter mSchedule;
     TextView lblHeading;
     Button btnAdd;
     Button btnRefresh;
@@ -105,7 +107,6 @@ public class Household_list extends Activity  {
          ROUNDNO        = IDbundle.getString("roundno");
          CLUSTER        = IDbundle.getString("cluster");
          BLOCK          = IDbundle.getString("block");
-
 
          TableName = "Household";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
@@ -178,6 +179,8 @@ public class Household_list extends Activity  {
                  Bundle IDbundle = new Bundle();
                  IDbundle.putString("Vill", V);
                  IDbundle.putString("Bari", "");
+                 IDbundle.putString("cluster", CLUSTER);
+                 IDbundle.putString("block", BLOCK);
 
                  Intent intent = new Intent(getApplicationContext(),Baris.class);
                  intent.putExtras(IDbundle);
@@ -207,10 +210,10 @@ public class Household_list extends Activity  {
          cmdHH.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 /*if(spnBari.getSelectedItemPosition()==0){
+                 if(spnBari.getSelectedItemPosition()==0){
                      Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
-                 }*/
+                 }
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
                  String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
                  IDbundle.putString("Vill", V);
@@ -479,8 +482,7 @@ public class Household_list extends Activity  {
            Household_DataModel d = new Household_DataModel();
             String SQL ;
 
-            //SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari like('"+ Bari +"')";
-            SQL = "Select h.Vill, h.Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd";
+            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, h.Rnd";
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari and b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Bari Like('%"+ Bari +"%')";
 
             List<Household_DataModel> data = d.SelectAll(this, SQL);
@@ -543,55 +545,61 @@ public class Household_list extends Activity  {
          }
          LinearLayout   secListRow = (LinearLayout)convertView.findViewById(R.id.secListRow);
 
-//         final TextView Bari= (TextView) convertView.findViewById(R.id.Bari);
-//         final TextView BariN= (TextView) convertView.findViewById(R.id.BariN);
+         final TextView Bari= (TextView) convertView.findViewById(R.id.Bari);
+         final TextView BariN= (TextView) convertView.findViewById(R.id.BariN);
          final TextView HH     = (TextView)convertView.findViewById(R.id.HH);
          final TextView HHHead = (TextView)convertView.findViewById(R.id.HHHead);
-         final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
          final TextView Visit  = (TextView)convertView.findViewById(R.id.Visit);
-         final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
+         final TextView VNote = (TextView)convertView.findViewById(R.id.VisitNote);
+         final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
+//         final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
 
+         Bari.setText(o.get("Bari"));
+         String BName=C.ReturnSingleValue("Select BariName from Baris where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"'");
+         BariN.setText(BName);
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
+         String VisitNote=C.ReturnSingleValue("Select VisitNote from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
+         VNote.setText(VisitNote);
+         String visit=C.ReturnSingleValue("Select VStatus from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
+         Visit.setText(visit);
          TotMem.setText(o.get("TotMem"));
-         Visit.setText(C.ReturnSingleValue("Select VStatus from Visits where Vill='"+ VILL +"' AND Bari='"+ BARI +"' AND HH='"+ o.get("HH") +"'"));
 
-         delHousehold.setVisibility(View.INVISIBLE);
-         if(Visit.getText().length()==0) {
-             HH.setTextColor(Color.RED);
-             HHHead.setTextColor(Color.RED);
-             TotMem.setTextColor(Color.RED);
-             Visit.setTextColor(Color.RED);
-             delHousehold.setVisibility(View.VISIBLE);
+         if(visit.equals("1"))
+         {
+             Bari.setTextColor(Color.GREEN);
+             BariN.setTextColor(Color.BLACK);
+             HH.setTextColor(Color.BLACK);
+             HHHead.setTextColor(Color.BLACK);
+             Visit.setTextColor(Color.BLACK);
          }
          else if(!Visit.getText().equals("1"))
          {
-             HH.setTextColor(Color.BLUE);
-             HHHead.setTextColor(Color.BLUE);
-             TotMem.setTextColor(Color.BLUE);
-             Visit.setTextColor(Color.BLUE);
-         }
-         else  if(Visit.getText().equals("1"))
-         {
+             Bari.setTextColor(Color.BLUE);
+             BariN.setTextColor(Color.BLACK);
              HH.setTextColor(Color.BLACK);
              HHHead.setTextColor(Color.BLACK);
-             TotMem.setTextColor(Color.BLACK);
-             Visit.setTextColor(Color.BLACK);
-         }else{
+         }
+         if(Visit.getText().length()==0) {
+             Bari.setTextColor(Color.RED);
+             BariN.setTextColor(Color.BLACK);
              HH.setTextColor(Color.BLACK);
              HHHead.setTextColor(Color.BLACK);
-             TotMem.setTextColor(Color.BLACK);
-             Visit.setTextColor(Color.BLACK);
          }
+//         else if(TotMem.getText().length()==0)
+//         {
+//             Bari.setTextColor(Color.LTGRAY);
+//             BariN.setTextColor(Color.LTGRAY);
+//             HH.setTextColor(Color.LTGRAY);
+//             HHHead.setTextColor(Color.LTGRAY);
+//         }
 
          if(Integer.valueOf(o.get("sl"))%2==0) {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
-             delHousehold.setBackgroundColor(Color.parseColor("#F3F3F3"));
          }
          else {
              secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
-             delHousehold.setBackgroundColor(Color.parseColor("#FFFFFF"));
          }
 
          secListRow.setOnClickListener(new View.OnClickListener() {
@@ -602,6 +610,9 @@ public class Household_list extends Activity  {
                IDbundle.putString("Bari", o.get("Bari"));
                IDbundle.putString("HH", o.get("HH"));
                IDbundle.putString("HHHead",o.get("HHHead"));
+               IDbundle.putString("roundno",ROUNDNO);
+               IDbundle.putString("cluster",CLUSTER);
+               IDbundle.putString("block",BLOCK);
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);
                f1.putExtras(IDbundle);
@@ -610,23 +621,130 @@ public class Household_list extends Activity  {
             }
           });
 
-         delHousehold.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View v) {
-                 AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
-                 adb.setTitle("মুছে ফেলা");
-                 adb.setMessage("আপনি কি খানা প্রধান "+ o.get("HHHead") +" এর খানার তথ্য  মুছে ফেলতে চান[হ্যাঁ/না]?");
-                 adb.setNegativeButton("না", null);
-                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
-                     public void onClick(DialogInterface dialog, int which) {
-                         C.Save("Delete from Household where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "'");
-                         DataSearch(CLUSTER, BLOCK,o.get("Bari"));
-                     }
-                 });
-                 adb.show();
-             }
-         });
+//         delHousehold.setOnClickListener(new View.OnClickListener() {
+//             public void onClick(View v) {
+//                 AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
+//                 adb.setTitle("মুছে ফেলা");
+//                 adb.setMessage("আপনি কি খানা প্রধান "+ o.get("HHHead") +" এর খানার তথ্য  মুছে ফেলতে চান[হ্যাঁ/না]?");
+//                 adb.setNegativeButton("না", null);
+//                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+//                     public void onClick(DialogInterface dialog, int which) {
+//                         C.Save("Delete from Household where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "'");
+//                         DataSearch(CLUSTER, BLOCK,o.get("Bari"));
+//                     }
+//                 });
+//                 adb.show();
+//             }
+//         });
          return convertView;
        }
+     public void BlockList(Boolean heading, String BariCode)
+     {
+         final ListView list = (ListView) findViewById(R.id.lstData);
+         mylist = new ArrayList<HashMap<String, String>>();
+         HashMap<String, String> map;
+
+         try
+         {
+             String BCode = ""; //BariCode.length()==0?"%":BariCode;
+             String SQL = "";
+
+             if(BariCode.length()!=0)
+             {
+                 SQL +="select b.bari,ifnull(h.hh,'')as hh,ifnull(h.hhhead,'')hhhead,count(m.vill)totalMem,b.vill,b.bariname,(case when v.rnd is null then '2' else '1' end)RoundVisit,";
+                 SQL +=" ifnull(h.rel,'')rel,ifnull(v.rsno,'')rsno,ifnull(v.vdate,'')vdate,count(case when m.posmig='54' then '1' else null end)posmig from ";
+                 SQL +=" Baris b";
+                 SQL +=" left outer join Household h on b.vill||b.bari=h.vill||h.bari";
+                 SQL +=" left outer join Member m on h.vill||h.bari||h.hh=m.Vill||m.Bari||m.hh and length(m.extype)=0";
+                 SQL +=" left outer join visits_temp v on h.vill||h.bari||h.hh=v.Vill||v.Bari||v.hh";
+                 //SQL +=" inner join mdssvill vl on (b.vill=vl.vill)";
+                 SQL +=" where ";//vl.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.block='"+ g.getBlockCode() +"' and b.bari ='"+ BariCode +"'";
+                 SQL +=" group by h.vill,h.bari,h.hh";
+                 SQL +=" order by h.vill, h.Bari, h.HH";
+
+					/*SQL +="Select b.bari,ifnull(h.hh,'')hh,ifnull(h.hhhead,'')hhhead,0 totalmem,b.vill,b.bariname, (case when v1.vill is null then '2' else '1' end)RoundVisit,Rel,ifnull(v1.rsno,'')rsno,ifnull(v1.vdate,'')vdate";
+					SQL +=" from Baris b";
+					SQL +=" left outer join Household h on (b.vill=h.vill and b.bari=h.bari)";
+					SQL +=" inner join mdssvill v on (b.vill=v.vill)";
+					SQL +=" left outer join visits_temp v1 on (h.vill||h.bari||h.HH=v1.vill||v1.bari||v1.hh)";
+					SQL +=" where";
+					SQL +=" v.Cluster='"+ g.getClusterCode() +"' and";
+					SQL +=" b.block='"+ g.getBlockCode() +"' and b.bari ='"+ BariCode +"'";
+					SQL +=" order by h.vill, h.Bari, h.HH";*/
+             }
+             else
+             {
+                 SQL +="select b.bari,ifnull(h.hh,'')as hh,ifnull(h.hhhead,'')hhhead,count(m.vill)totalMem,b.vill,b.bariname,(case when v.rnd is null then '2' else '1' end)RoundVisit,";
+                 SQL +=" ifnull(h.rel,'')rel,ifnull(v.rsno,'')rsno,ifnull(v.vdate,'')vdate,count(case when m.posmig='54' then '1' else null end)posmig from ";
+                 SQL +=" Baris b";
+                 SQL +=" left outer join Household h on b.vill||b.bari=h.vill||h.bari";
+                 SQL +=" left outer join Member m on h.vill||h.bari||h.hh=m.Vill||m.Bari||m.hh and length(m.extype)=0";
+                 SQL +=" left outer join visits_temp v on h.vill||h.bari||h.hh=v.Vill||v.Bari||v.hh";
+                 //SQL +=" inner join mdssvill vl on (b.vill=vl.vill)";
+                 SQL +=" where ";//vl.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.block='"+ g.getBlockCode() +"'";
+                 SQL +=" group by h.vill,h.bari,h.hh";
+                 SQL +=" order by h.vill, h.Bari, h.HH";
+
+					/*SQL +="Select b.bari,ifnull(h.hh,'')hh,ifnull(h.hhhead,'')hhhead,0 totalmem,b.vill,b.bariname, (case when v1.vill is null then '2' else '1' end)RoundVisit,Rel,ifnull(v1.rsno,'')rsno,ifnull(v1.vdate,'')vdate";
+					SQL +=" from Baris b";
+					SQL +=" left outer join Household h on (b.vill=h.vill and b.bari=h.bari)";
+					SQL +=" inner join mdssvill v on (b.vill=v.vill)";
+					SQL +=" left outer join visits_temp v1 on (h.vill||h.bari||h.HH=v1.vill||v1.bari||v1.hh)";
+					SQL +=" where";
+					SQL +=" v.Cluster='"+ g.getClusterCode() +"' and";
+					SQL +=" b.block='"+ g.getBlockCode() +"'";
+					SQL +=" order by h.vill, h.Bari, h.HH";*/
+             }
+             Cursor cur=C.ReadData(SQL);
+
+             cur.moveToFirst();
+             if(heading==true)
+             {
+                 View header = getLayoutInflater().inflate(R.layout.household_list, null);
+                 list.addHeaderView(header);
+             }
+
+             while(!cur.isAfterLast())
+             {
+                 map = new HashMap<String, String>();
+                 map.put("bari", cur.getString(0));
+                 map.put("hh",cur.getString(1));
+                 map.put("hhhead", cur.getString(2));
+                 map.put("totalmem", cur.getString(3));
+                 map.put("vcode", cur.getString(4));
+                 map.put("bariname", cur.getString(5));
+                 map.put("visit", cur.getString(6));
+                 map.put("rel", cur.getString(7));
+                 map.put("rsno", cur.getString(8));
+                 map.put("vdate", cur.getString(9));
+                 map.put("posmig", cur.getString(10));
+
+                 mylist.add(map);
+
+                 cur.moveToNext();
+             }
+             cur.close();
+//             mSchedule = new SimpleAdapter(this, mylist, R.layout.household_row,
+//                     new String[] {"bari","hh", "hhhead"},
+//                     new int[] {R.id.Bari, R.id.HH, R.id.HHHead});
+
+//             list.setAdapter(new DataListAdapter(this));
+
+         }
+         catch(Exception e)
+         {
+             AlertDialog.Builder adb=new AlertDialog.Builder(Household_list.this);
+             adb.setTitle("Message");
+             adb.setMessage(e.getMessage());
+             adb.setPositiveButton("Ok", null);
+             adb.show();
+         }
+
+     }
  }
 
 

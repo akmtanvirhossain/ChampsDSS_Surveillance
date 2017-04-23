@@ -101,6 +101,9 @@ import Common.Global;
     Bundle IDbundle;
     static String VILL = "";
     static String BARI = "";
+     static String ROUNDNO = "";
+     static String CLUSTER = "";
+     static String BLOCK   = "";
 
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -118,6 +121,9 @@ import Common.Global;
          IDbundle = getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
+         ROUNDNO = IDbundle.getString("roundno");
+         CLUSTER = IDbundle.getString("cluster");
+         BLOCK   = IDbundle.getString("block");
 
          TableName = "Baris";
 
@@ -269,10 +275,8 @@ import Common.Global;
          Baris_DataModel objSave = new Baris_DataModel();
          objSave.setVill(txtVill.getText().toString());
          objSave.setBari(txtBari.getText().toString());
-         //objSave.setCluster(txtCluster.getText().toString());
-         //objSave.setBlock((spnBlock.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnBlock.getSelectedItem().toString(), "-")));
-         objSave.setCluster("");
-         objSave.setBlock("");
+         objSave.setCluster(CLUSTER);
+         objSave.setBlock(BLOCK);
          objSave.setBariName(txtBariName.getText().toString());
          objSave.setBariLoc(txtBariLoc.getText().toString());
          objSave.setEnDt(Global.DateTimeNowYMDHMS());

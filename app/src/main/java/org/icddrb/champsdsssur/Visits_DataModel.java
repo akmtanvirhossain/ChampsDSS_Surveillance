@@ -42,6 +42,7 @@ import android.content.Context;
         public void setVStatus(String newValue){
               _VStatus = newValue;
          }
+
         private String _VStatusOth = "";
         public String getVStatusOth(){
               return _VStatusOth;
@@ -49,7 +50,16 @@ import android.content.Context;
         public void setVStatusOth(String newValue){
               _VStatusOth = newValue;
          }
-        private String _Resp = "";
+
+         private String _VisitNote = "";
+         public String getVisitNote(){
+             return _VisitNote;
+         }
+         public void setVisitNote(String newValue){
+             _VisitNote = newValue;
+         }
+
+         private String _Resp = "";
         public String getResp(){
               return _Resp;
          }
@@ -122,7 +132,7 @@ import android.content.Context;
             String SQL = "";
             try
               {
-                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,VDate,VStatus,VStatusOth,Resp,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _VDate +"', '"+ _VStatus +"', '"+ _VStatusOth +"', '"+ _Resp +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
+                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,VDate,VStatus,VStatusOth,VisitNote,Resp,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _VDate +"', '"+ _VStatus +"', '"+ _VStatusOth +"', '"+ _VisitNote +"','"+ _Resp +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
                  C.Save(SQL);
                  C.close();
               }
@@ -140,7 +150,7 @@ import android.content.Context;
             String SQL = "";
             try
               {
-                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',VDate = '"+ _VDate +"',VStatus = '"+ _VStatus +"',VStatusOth = '"+ _VStatusOth +"',Resp = '"+ _Resp +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and Rnd='"+ _Rnd +"'";
+                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',VDate = '"+ _VDate +"',VStatus = '"+ _VStatus +"',VStatusOth = '"+ _VStatusOth +"',VisitNote = '"+ _VisitNote +"',Resp = '"+ _Resp +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and Rnd='"+ _Rnd +"'";
                  C.Save(SQL);
                  C.close();
               }
@@ -169,6 +179,7 @@ import android.content.Context;
                 d._VDate = cur.getString(cur.getColumnIndex("VDate"));
                 d._VStatus = cur.getString(cur.getColumnIndex("VStatus"));
                 d._VStatusOth = cur.getString(cur.getColumnIndex("VStatusOth"));
+                d._VisitNote = cur.getString(cur.getColumnIndex("VisitNote"));
                 d._Resp = cur.getString(cur.getColumnIndex("Resp"));
                 d._Rnd = cur.getString(cur.getColumnIndex("Rnd"));
                 data.add(d);

@@ -895,7 +895,7 @@ import Common.Global;
                              SQL += "'"+ HH +"',";
                              SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
                              SQL += "'"+ g.getUserId() +"',"; //DC code
-                             SQL += "'"+ Global.DateTimeNowYMDHMS() +"',"; //Enter Date
+                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //Enter Date
                              SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
                              SQL += "'"+ ROUNDNO +"',"; //round
                              SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
@@ -972,7 +972,7 @@ import Common.Global;
                              SQL += "'"+ HH +"',";
                              SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
                              SQL += "'"+ g.getUserId() +"',"; //DC code
-                             SQL += "'"+ Global.DateTimeNowYMDHMS() +"',"; //Enter date
+                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //Enter date
                              SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
                              SQL += "'"+ ROUNDNO +"',"; //round
                              SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
@@ -1016,10 +1016,9 @@ import Common.Global;
                  adb.show();
           }
 
-         //For new household
+         //For New household--------------------------------------------------------------
          else  if (txtHHHead.getText().toString().length() != 0)
          {
-
                  String SQL = "";
                  try
                  {

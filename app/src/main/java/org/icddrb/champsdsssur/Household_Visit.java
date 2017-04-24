@@ -900,8 +900,6 @@ import Common.Global;
                              SQL += "'"+ ROUNDNO +"',"; //round
                              SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
                              SQL += "'"+ Double.toString(currentLongitude) +"',";   //lon
-//                             SQL += "'"+ Double.toString(currentLatitudeNet) +"',"; //latnet
-//                             SQL += "'"+ Double.toString(currentLongitudeNet) +"','2',";//lonnet
                              SQL += "'"+ txtNote.getText() +"')";
                          }
                          else

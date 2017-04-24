@@ -1033,9 +1033,9 @@ import Common.Global;
                          SQL += "'"+ HH +"',";
                          SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
                          SQL += "'"+ g.getUserId() +"',"; //DC code
-                         SQL += "'"+ Global.DateTimeNowYMDHMS() +"',"; //enter date
+                         SQL += "'"+ Global.DateConvertYMD(VisitDate.getText().toString()) +"',"; //enter date
                          SQL += "'"+ Global.DateConvertYMD(VisitDate.getText().toString()) +"',"; //date of visit
-                         SQL += "'"+ Rnd +"',"; //round
+                         SQL += "'"+ ROUNDNO +"',"; //round
                          SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
                          SQL += "'"+ Double.toString(currentLongitude) +"',";   //lon
                          SQL += "'"+ txtNote.getText() +"')";

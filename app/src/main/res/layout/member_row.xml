@@ -23,9 +23,9 @@
         <TextView android:id="@+id/Sp2" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1"   />
         <TextView android:id="@+id/Sp3" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1"   />
         <TextView android:id="@+id/Sp4" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1"   />
-        <TextView android:id="@+id/EnType" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:id="@+id/EnDate" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:id="@+id/ExType" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:id="@+id/ExDate" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
+        <TextView android:id="@+id/EnType" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" />
+        <TextView android:id="@+id/EnDate" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" />
+        <TextView android:id="@+id/ExType" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" />
+        <TextView android:id="@+id/ExDate" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" />
     </LinearLayout>
  </LinearLayout>

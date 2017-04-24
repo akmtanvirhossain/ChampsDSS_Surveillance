@@ -672,7 +672,7 @@
          secSp3.setVisibility(View.GONE);
          secSp4.setVisibility(View.GONE);
 
-        Button cmdSave = (Button) findViewById(R.id.cmdSave);
+        Button cmdSave = (Button) findViewById(R.id.cmdSave1);
         cmdSave.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
             DataSave();

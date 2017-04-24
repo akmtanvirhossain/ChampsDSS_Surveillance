@@ -84,6 +84,7 @@ public class Household_list extends Activity  {
     static String DEVICEID  = "";
     static String ENTRYUSER = "";
 
+    static String BName = "";
     static String ROUNDNO = "";
     static String CLUSTER = "";
     static String BLOCK   = "";
@@ -102,6 +103,7 @@ public class Household_list extends Activity  {
          IDbundle = getIntent().getExtras();
          CurrentVillage = IDbundle.getString("Village");
          CurrentVCode   = IDbundle.getString("VCode");
+         BName=IDbundle.getString("BariName");
          HH = IDbundle.getString("HH");
 
          ROUNDNO        = IDbundle.getString("roundno");
@@ -482,8 +484,9 @@ public class Household_list extends Activity  {
            Household_DataModel d = new Household_DataModel();
             String SQL ;
 
-            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, h.Rnd";
+            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, h.Rnd,b.BariName";
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari and b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Bari Like('%"+ Bari +"%')";
+
 
             List<Household_DataModel> data = d.SelectAll(this, SQL);
             dataList.clear();
@@ -556,14 +559,18 @@ public class Household_list extends Activity  {
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
 
          Bari.setText(o.get("Bari"));
-         String BName=C.ReturnSingleValue("Select BariName from Baris where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"'");
+
+         final String BName=C.ReturnSingleValue("Select BariName from Baris where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"'");
          BariN.setText(BName);
+
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
-         String VisitNote=C.ReturnSingleValue("Select VisitNote from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
+         String VisitNote=C.ReturnSingleValue("Select Note from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
          VNote.setText(VisitNote);
+
          String visit=C.ReturnSingleValue("Select VStatus from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
          Visit.setText(visit);
+
          TotMem.setText(o.get("TotMem"));
 
          if(visit.equals("1"))
@@ -610,6 +617,7 @@ public class Household_list extends Activity  {
                IDbundle.putString("Bari", o.get("Bari"));
                IDbundle.putString("HH", o.get("HH"));
                IDbundle.putString("HHHead",o.get("HHHead"));
+               IDbundle.putString("BariName",BName);
                IDbundle.putString("roundno",ROUNDNO);
                IDbundle.putString("cluster",CLUSTER);
                IDbundle.putString("block",BLOCK);

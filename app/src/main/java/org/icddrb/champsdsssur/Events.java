@@ -151,7 +151,7 @@
     static String HH = "";
     static String MSLNO = "";
     static String EVDATE = "";
-    static String RND = "";
+    static String ROUNDNO = "";
     static String EVTYPE = "";
 
  public void onCreate(Bundle savedInstanceState) {
@@ -173,7 +173,7 @@
          MSLNO = IDbundle.getString("MSlNo");
          EVTYPE = IDbundle.getString("EvType");
          EVDATE = IDbundle.getString("EvDate");
-         RND = IDbundle.getString("Rnd");
+         ROUNDNO = IDbundle.getString("roundno");
 
          TableName = "Events";
 
@@ -229,6 +229,7 @@
          linePNo=(View)findViewById(R.id.linePNo);
          VlblPNo=(TextView) findViewById(R.id.VlblPNo);
          txtPNo=(EditText) findViewById(R.id.txtPNo);
+         txtPNo.setText(VILL.toString()+BARI.toString()+HH.toString()+txtMSlNo.getText().toString());
 
          secEvType=(LinearLayout)findViewById(R.id.secEvType);
          lineEvType=(View)findViewById(R.id.lineEvType);
@@ -353,8 +354,6 @@
              }
          });
 
-
-
          //Hide all skip variables
          secEvDate.setVisibility(View.GONE);
          lineEvDate.setVisibility(View.GONE);
@@ -375,14 +374,18 @@
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
          txtMSlNo.setEnabled(false);
+         txtRnd.setEnabled(false);
+         txtPNo.setEnabled(false);
 
          txtVill.setText(VILL);
          txtVill.setFocusable(false);
          txtBari.setText(BARI);
          txtBari.setFocusable(false);
          txtHH.setText(HH);
+         txtRnd.setText(ROUNDNO);
+         txtRnd.setFocusable(false);
 
-         Button cmdSave = (Button) findViewById(R.id.cmdSave);
+         Button cmdSave = (Button) findViewById(R.id.cmdSave1);
          cmdSave.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  DataSave();
@@ -394,9 +397,6 @@
        return;
    }
  }
-
-
-
 
      private void DataSave()
      {

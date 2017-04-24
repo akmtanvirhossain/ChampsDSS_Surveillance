@@ -25,10 +25,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+ import android.widget.ImageView;
+ import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+ import android.widget.RadioGroup;
+ import android.widget.SimpleAdapter;
  import android.widget.Spinner;
+ import android.widget.TableLayout;
  import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +46,9 @@ import Common.Utility;
 public class Member_list extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
-    double currentLatitude,currentLongitude; 
+    double currentLatitude,currentLongitude;
+    SimpleAdapter eList;
+    SimpleAdapter mSchedule;
     //Disabled Back/Home key
     //--------------------------------------------------------------------------------------------------
     @Override 
@@ -66,6 +71,8 @@ public class Member_list extends Activity {
     Global g;
     SimpleAdapter dataAdapter;
     ArrayList<HashMap<String, String>> dataList = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>> mylist   = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>> evmylist = new ArrayList<HashMap<String, String>>();
     static String TableName;
 
     TextView lblHeading;
@@ -86,8 +93,12 @@ public class Member_list extends Activity {
     static String STARTTIME = "";
     static String VILL = "";
     static String BARI = "";
+    static String BName = "";
     static String HH = "";
     static String MSLNO = "";
+    static String ROUNDNO = "";
+    static String CLUSTER = "";
+    static String BLOCK   = "";
 
     Button btnMemberName;
     Button btnSES;
@@ -107,8 +118,12 @@ public class Member_list extends Activity {
          IDbundle=getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
+         BName=IDbundle.getString("BariName");
          HH = IDbundle.getString("HH");
          MSLNO = IDbundle.getString("MSlNo");
+         ROUNDNO        = IDbundle.getString("roundno");
+         CLUSTER        = IDbundle.getString("cluster");
+         BLOCK          = IDbundle.getString("block");
 
          final TextView txtVill = (TextView) findViewById(R.id.txtVill);
          final TextView txtBari = (TextView) findViewById(R.id.txtBari);
@@ -116,6 +131,14 @@ public class Member_list extends Activity {
 
          TextView lblHHHead=(TextView)findViewById(R.id.lblHHHead);
          lblHHHead.setText(": "+IDbundle.getString("HHHead"));
+
+         TextView lblVillName=(TextView)findViewById(R.id.lblVillName);
+         TextView lblBariName=(TextView)findViewById(R.id.lblBariName);
+
+         final String VillName=C.ReturnSingleValue("Select VName from Village where VCode='"+  VILL  +"'");
+         lblVillName.setText(": "+ VillName);
+//         lblVillName.setText(": "+IDbundle.getString("VillName"));
+         lblBariName.setText(": "+BARI+", "+IDbundle.getString("BariName"));
 
          txtVill.setText(VILL);
          txtBari.setText(BARI);
@@ -265,16 +288,33 @@ public class Member_list extends Activity {
          btnMemberName.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent f2;
-                 f2 = new Intent(getApplicationContext(), Events.class);
+                 Intent f1;
+                 f1 = new Intent(getApplicationContext(), Events.class);
                  IDbundle.putString("Vill", VILL);
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
-                 IDbundle.putString("MSlNo", MSLNO);
-                 f2.putExtras(IDbundle);
-                 startActivityForResult(f2, 1);
+                 IDbundle.putString("roundno",ROUNDNO);
+                 f1.putExtras(IDbundle);
+                 startActivityForResult(f1, 1);
              }
 
+         });
+         Button cmdEvList = (Button)findViewById(R.id.cmdEvList);
+         Button cmdVisitList = (Button)findViewById(R.id.cmdVisitList);
+
+
+         cmdEvList.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View arg0) {
+                 ShowEventList(VILL,BARI,HH);
+                 //Intent f11 = new Intent(getApplicationContext(),EventList.class);
+                 //startActivity(f11);
+             }
+         });
+
+         cmdVisitList.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View arg0) {
+                 VisitList(VILL,BARI,HH);
+             }
          });
 
          txtVill.setEnabled(false);
@@ -282,7 +322,6 @@ public class Member_list extends Activity {
          txtHH.setEnabled(false);
          DataSearch(VILL,BARI,HH);
          DataStatus();
-
      }
      catch(Exception  e)
      {
@@ -300,6 +339,833 @@ public class Member_list extends Activity {
          DataStatus();
      }
  }
+
+    //***************************************************************************************************************************
+    private void VisitList(final String Vill, final String Bari, final String HH)
+    {
+        try
+        {
+            final Dialog dialog = new Dialog(Member_list.this);
+
+            dialog .requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.visitlist);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(true);
+
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+
+            wlp.gravity = Gravity.TOP;
+            wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            window.setAttributes(wlp);
+
+            final ListView evlist = (ListView)dialog.findViewById(R.id.lstVisit);
+            View header = getLayoutInflater().inflate(R.layout.visitlistheading, null);
+            evlist.addHeaderView(header);
+            Cursor cur1 = C.ReadData("select Rnd , Resp, VDate from Visits Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' order by cast(Rnd as int) desc");
+
+            cur1.moveToFirst();
+            evmylist.clear();
+            eList = null;
+            evlist.setAdapter(null);
+
+            while(!cur1.isAfterLast())
+            {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("rnd", cur1.getString(cur1.getColumnIndex("Rnd")));
+                map.put("Resp", cur1.getString(cur1.getColumnIndex("Resp")));
+                map.put("VDate", Global.DateConvertDMY(cur1.getString(cur1.getColumnIndex("VDate"))));
+
+                evmylist.add(map);
+
+                eList = new SimpleAdapter(Member_list.this, evmylist, R.layout.visitlistrow,
+                        new String[] {"rnd","Resp","VDate"},
+                        new int[] {R.id.v_rnd,R.id.v_rsno,R.id.v_vdate});
+                evlist.setAdapter(eList);
+
+                cur1.moveToNext();
+            }
+            cur1.close();
+
+            Button cmdVisitListClose = (Button)dialog.findViewById(R.id.cmdVisitListClose);
+            cmdVisitListClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+        catch(Exception  e)
+        {
+            Connection.MessageBox(Member_list.this, e.getMessage());
+            return;
+        }
+    }
+
+    private void ShowEventList(final String Vill, final String Bari, final String HH)
+    {
+        try
+        {
+
+            final Dialog dialog = new Dialog(Member_list.this);
+            dialog.setTitle("Events List");
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.eventlistpopup);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(true);
+
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+
+            wlp.gravity = Gravity.TOP;
+            wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            window.setAttributes(wlp);
+
+
+            final ListView evlist = (ListView)dialog.findViewById(R.id.lstEvent);
+            View header = getLayoutInflater().inflate(R.layout.eventlistheading, null);
+            evlist.addHeaderView(header);
+
+            final RadioGroup roEventList =(RadioGroup)dialog.findViewById(R.id.roEventList);
+            roEventList.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                public void onCheckedChanged(RadioGroup arg0, int id) {
+                    if(id == R.id.roCurrentEvent)
+                    {
+                        EventDataList(dialog, Vill+Bari+HH, "current",evlist);
+                    }
+                    else if(id == R.id.roAllEvent)
+                    {
+                        EventDataList(dialog, Vill+Bari+HH, "all",evlist);
+                    }
+                }});
+            EventDataList(dialog, Vill+Bari+HH, "current",evlist);
+
+
+
+            Button cmdEvListClose = (Button)dialog.findViewById(R.id.cmdEvListClose);
+            cmdEvListClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+        catch(Exception  e)
+        {
+            Connection.MessageBox(Member_list.this, e.getMessage());
+            return;
+        }
+    }
+
+    private void EventDataList(Dialog d, String Household,String Status, ListView evList)
+    {
+        Cursor cur1 = null;
+
+        if(Status.equals("current"))
+        {
+            cur1 = C.ReadData("select sno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from ttrans where status='e' and Vill||Bari||HH='"+ Household +"' order by sno,Rnd,evtype");
+        }
+        else if(Status.equals("all"))
+        {
+            cur1 = C.ReadData("select sno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from Events where Vill||Bari||HH='"+ Household +"' order by sno,Rnd,evtype");
+        }
+
+        if(cur1.getCount()==0)
+        {
+            evList.setAdapter(null);
+            cur1.close();
+            return;
+        }
+
+        cur1.moveToFirst();
+        evmylist.clear();
+
+        int i=0;
+
+        while(!cur1.isAfterLast())
+        {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("sno", cur1.getString(cur1.getColumnIndex("Sno")));
+            map.put("pno", cur1.getString(cur1.getColumnIndex("pno")));
+            map.put("evtype", cur1.getString(cur1.getColumnIndex("EvType")));
+            map.put("evdate", cur1.getString(cur1.getColumnIndex("EvDate")));
+            map.put("info1", cur1.getString(cur1.getColumnIndex("info1")));
+            map.put("info2", cur1.getString(cur1.getColumnIndex("info2")));
+            map.put("info3", cur1.getString(cur1.getColumnIndex("info3")));
+            map.put("info4", cur1.getString(cur1.getColumnIndex("info4")));
+            map.put("rnd", cur1.getString(cur1.getColumnIndex("Rnd")));
+            map.put("status", Status);
+
+            evmylist.add(map);
+
+            eList = new SimpleAdapter(Member_list.this, evmylist, R.layout.eventlistrow,
+                    new String[] {"sno"},
+                    new int[] {R.id.e_sno});
+            evList.setAdapter(new EventListAdapter(this,d,evList));
+            i+=1;
+            cur1.moveToNext();
+        }
+        cur1.close();
+    }
+
+    public class EventListAdapter extends BaseAdapter
+    {
+        private Context context;
+        Dialog dg;
+        ListView lv;
+        public EventListAdapter(Context c,Dialog d,ListView evlist){
+            context = c;
+            dg=d;
+            lv=evlist;
+        }
+
+        public int getCount() {
+            return eList.getCount();
+        }
+
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.eventlistrow, null);
+            }
+
+            final HashMap<String, String> o = (HashMap<String, String>) eList.getItem(position);
+
+            TextView e_sno=(TextView)convertView.findViewById(R.id.e_sno);
+            TextView e_evtype=(TextView)convertView.findViewById(R.id.e_evtype);
+            TextView e_evdate=(TextView)convertView.findViewById(R.id.e_evdate);
+            TextView e_info1=(TextView)convertView.findViewById(R.id.e_info1);
+            TextView e_info2=(TextView)convertView.findViewById(R.id.e_info2);
+            TextView e_info3=(TextView)convertView.findViewById(R.id.e_info3);
+            TextView e_info4=(TextView)convertView.findViewById(R.id.e_info4);
+            TextView e_round=(TextView)convertView.findViewById(R.id.e_round);
+
+            e_sno.setText(o.get("sno").toString());
+            e_evtype.setText(o.get("evtype").toString());
+            e_evdate.setText(Global.DateConvertDMY(o.get("evdate").toString()));
+            e_info1.setText(o.get("info1").toString());
+            e_info2.setText(o.get("info2").toString());
+            e_info3.setText(o.get("info3").toString());
+            e_info4.setText(o.get("info4").toString().trim().length()==0?o.get("info4").toString():Global.DateConvertDMY(o.get("info4").toString()));
+            e_round.setText(o.get("rnd"));
+
+            Button cmdEvListDel = (Button)convertView.findViewById(R.id.cmdEvListDel);
+            Button cmdEvListEdit = (Button)convertView.findViewById(R.id.cmdEvListEdit);
+
+            cmdEvListDel.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+                    adb.setTitle("Event Delete");
+                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("sno").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি মুছে ফেলতে চান [Yes/No]?");
+
+                    adb.setNegativeButton("No", new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog1, int which) {
+
+                        }});
+
+                    adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog1, int which) {
+                            String HH = VILL+BARI;
+                            String SN = o.get("sno").toString();
+                            String EV = o.get("evtype").toString();
+                            String EVD= o.get("evdate").toString();
+
+                            //event specific update
+                            if(EV.equals("12"))
+                            {
+                                C.Save("Delete from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                            }
+                            else if(EV.equals("21") | EV.equals("22") | EV.equals("23"))
+                            {
+                                //C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Delete from tTrans where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("Delete from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("25"))
+                            {
+                                //C.Save("Delete from tTrans where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("31") | EV.equals("32") | EV.equals("33") | EV.equals("34"))
+                            {
+                                String PMS = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set MS='"+ PMS +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("40") | EV.equals("49"))
+                            {
+                                C.Save("Delete from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                            }
+                            else if(EV.equals("41"))
+                            {
+                                //Check 42 event available or not
+                                if(C.Existence("select vill from tTrans where status='e' and EvType='42' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and info4='"+ EVD +"'"))
+                                {
+                                    Connection.MessageBox(Member_list.this, "এই গর্ভের ডেলিভারি হয়ে গেছে, প্রথমে ইভেন্ট ৪২ মুছতে হবে এবং তারপর ৪১। ।।  .");
+                                    return;
+                                }
+
+                                //Update from temporary table
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set PStat='',LMPDt='' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+
+                                //Transfer events from main to UpdateEvents table
+                                String SQL = "Insert into UpdateEvents(Vill, Bari, Hh, Pno, Sno, EvType, EvDate, Info1, Info2, Info3, Info4, Vdate, Rnd, Upload)";
+                                SQL += "Select Vill, Bari, Hh, Pno, Sno, EvType, EvDate, Info1, Info2, Info3, Info4, Vdate, Rnd, Upload from Events where";
+                                SQL += " Vill||Bari||HH = '"+ HH +"' and ";
+                                SQL += " SNo = '"+ SN +"' and EvType='41' and EvDate='"+ EVD +"'";
+                                C.Save(SQL);
+
+                                //Update from main table
+                                C.Save("delete from Events where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='41' and EvDate='"+ EVD +"'");
+                                C.Save("Update Member set PStat='',LMPDt='' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+
+                            }
+                            else if(EV.equals("42"))
+                            {
+                                String LMP = o.get("info4");
+                                //Update from main table
+                                //C.Save("Update Member set PStat='41',LMPDt='"+ LMP +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                //C.Save("delete from Events where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='42' and EvDate='"+ EVD +"'");
+                            }
+                            else if(EV.equals("51") | EV.equals("52") | EV.equals("53") | EV.equals("55"))
+                            {
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set ExType='',ExDate='' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("54") | EV.equals("57"))
+                            {
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set PosMig='',PosMigDate='' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("61"))
+                            {
+                                String PMono = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set MoNo='"+ PMono +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("62"))
+                            {
+                                String PFano = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set FaNo='"+ PFano +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("63"))
+                            {
+                                //String PFano = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                //C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                //C.Save("Update tTrans set FaNo='"+ PFano +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("64"))
+                            {
+                                String PRth = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set Rth='"+ PRth +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("71"))
+                            {
+                                String PEdu = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set Edu='"+ PEdu +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+                            else if(EV.equals("72"))
+                            {
+                                String POcp = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tTrans set Ocp='"+ POcp +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                            }
+
+                            EventDataList(dg, HH, "current",lv);
+                            DataRetrieve(VILL+BARI+HH,false,"active");
+                        }});
+
+                    adb.show();
+                }
+            });
+
+//            cmdEvListEdit.setOnClickListener(new View.OnClickListener() {
+//                public void onClick(View v) {
+//                    AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+//                    adb.setTitle("Event Update");
+//                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("sno").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি আপডেট করতে চান [Yes/No]?");
+//
+//                    adb.setNegativeButton("No", new AlertDialog.OnClickListener() {
+//                        public void onClick(DialogInterface dialog1, int which) {
+//
+//                        }});
+//
+//                    adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+//                        public void onClick(DialogInterface dialog1, int which) {
+//                            //Show event update form
+//                            UpdateEventForm(o.get("evtype"),o.get("evdate"), VILL, BARI, HH, o.get("sno"),o.get("pno"),lv,o.get("info3"));
+//	  		            	  /*String HH = vill+bari+hhno;
+//	  		            	  EventDataList(dg, HH, "current",lv);*/
+//                        }});
+//                    adb.show();
+//                }});
+
+
+            if(o.get("status").equals("current"))
+            {
+                cmdEvListDel.setEnabled(true);
+                cmdEvListEdit.setEnabled(false);
+            }
+            else
+            {
+                if(o.get("evtype").toString().equals("41"))
+                {
+                    cmdEvListDel.setEnabled(true);
+                    cmdEvListEdit.setEnabled(true);
+                }
+                else if(o.get("evtype").toString().equals("31"))
+                {
+                    cmdEvListDel.setEnabled(false);
+                    cmdEvListEdit.setEnabled(true);
+
+                }
+                else if(o.get("evtype").toString().equals("32"))
+                {
+                    cmdEvListDel.setEnabled(false);
+                    cmdEvListEdit.setEnabled(true);
+
+                }
+                else if(o.get("evtype").toString().equals("33"))
+                {
+                    cmdEvListDel.setEnabled(false);
+                    cmdEvListEdit.setEnabled(true);
+
+                }
+                else if(o.get("evtype").toString().equals("34"))
+                {
+                    cmdEvListDel.setEnabled(false);
+                    cmdEvListEdit.setEnabled(true);
+
+                }
+                else
+                {
+                    cmdEvListDel.setEnabled(false);
+                    cmdEvListEdit.setEnabled(false);
+                }
+            }
+
+            return convertView;
+        }
+
+    }
+
+    //Retrieve member list
+    //***************************************************************************************************************************
+    public void DataRetrieve(String HH, Boolean heading, String ActiveOrAll)
+    {
+        try
+        {
+            String SQLStr = "";
+
+            if(ActiveOrAll.equalsIgnoreCase("active"))
+            {
+                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.Sno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age,Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
+                SQLStr += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
+                SQLStr += " (case when cast(strftime('%Y', ifnull(t.ExDate,'')) as int)>=2014 and t.ExType='55' then '1' else '2' end)as deathrep,";
+                SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tTrans t";
+                SQLStr += " left outer join member m on t.vill||t.bari||t.hh||t.sno = m.vill||m.bari||m.hh||m.sno";
+                SQLStr += " where t.status='m' and t.vill||t.bari||t.hh='"+ HH +"' and (length(t.extype)=0 or t.extype is null) order by cast(t.SNo as int) asc";
+            }
+            else if(ActiveOrAll.equalsIgnoreCase("all"))
+            {
+                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.Sno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age, Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
+                SQLStr += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
+                SQLStr += " (case when cast(strftime('%Y', ifnull(t.ExDate,'')) as int)>=2014 and t.ExType='55' then '1' else '2' end)as deathrep,";
+                SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tTrans t";
+                SQLStr += " left outer join member m on t.vill||t.bari||t.hh||t.sno = m.vill||m.bari||m.hh||m.sno";
+                SQLStr += " where t.status='m' and t.vill||t.bari||t.hh='"+ HH +"' order by cast(t.SNo as int) asc";
+            }
+
+
+            Cursor cur1 = C.ReadData(SQLStr);
+
+            cur1.moveToFirst();
+            mylist.clear();
+
+            ListView list = (ListView) findViewById(R.id.lstData);
+            if(heading ==true)
+            {
+                View header = getLayoutInflater().inflate(R.layout.membereventsheading, null);
+                list.addHeaderView(header);
+            }
+
+            int i=0;
+            while(!cur1.isAfterLast())
+            {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                if(i==0)
+                {
+                    //View header = getLayoutInflater().inflate(R.layout.membereventsheading, null);
+                    //list.addHeaderView(header);
+                }
+                map.put("newold", cur1.getString(cur1.getColumnIndex("NewOld")));
+                map.put("vill", cur1.getString(cur1.getColumnIndex("Vill")));
+                map.put("bari", cur1.getString(cur1.getColumnIndex("Bari")));
+                map.put("hh", cur1.getString(cur1.getColumnIndex("Hh")));
+                map.put("sno", cur1.getString(cur1.getColumnIndex("Sno")));
+                map.put("pno", cur1.getString(cur1.getColumnIndex("Pno")));
+                map.put("name", cur1.getString(cur1.getColumnIndex("Name")));
+                map.put("rth", cur1.getString(cur1.getColumnIndex("Rth")));
+                map.put("sex", cur1.getString(cur1.getColumnIndex("Sex")));
+                map.put("dob", cur1.getString(cur1.getColumnIndex("BDate")));
+                map.put("age", cur1.getString(cur1.getColumnIndex("Age")));
+                map.put("mono", cur1.getString(cur1.getColumnIndex("Mono")));
+                map.put("fano", cur1.getString(cur1.getColumnIndex("Fano")));
+                map.put("edu", cur1.getString(cur1.getColumnIndex("Edu")));
+                map.put("ms", cur1.getString(cur1.getColumnIndex("Ms")));
+                map.put("pstat", cur1.getString(cur1.getColumnIndex("Pstat")));
+                map.put("lmpdt", cur1.getString(cur1.getColumnIndex("LmpDt")));
+                map.put("sp1", cur1.getString(cur1.getColumnIndex("Sp1")));
+                map.put("sp2", cur1.getString(cur1.getColumnIndex("Sp2")));
+                map.put("sp3", cur1.getString(cur1.getColumnIndex("Sp3")));
+                map.put("sp4", cur1.getString(cur1.getColumnIndex("Sp4")));
+                map.put("ocp", cur1.getString(cur1.getColumnIndex("Ocp")));
+                map.put("entype", cur1.getString(cur1.getColumnIndex("EnType")));
+                map.put("endate", cur1.getString(cur1.getColumnIndex("EnDate")));
+                map.put("extype", cur1.getString(cur1.getColumnIndex("ExType")));
+                map.put("exdate", cur1.getString(cur1.getColumnIndex("ExDate")));
+                map.put("posmig", cur1.getString(cur1.getColumnIndex("PosMig")));
+                map.put("posmigdate", cur1.getString(cur1.getColumnIndex("PosMigDate")));
+                map.put("exyear", cur1.getString(cur1.getColumnIndex("ExYear")));
+                map.put("deathage", cur1.getString(cur1.getColumnIndex("DeathAge")));
+                map.put("deathrep", cur1.getString(cur1.getColumnIndex("deathrep")));
+
+                mylist.add(map);
+                mSchedule = new SimpleAdapter(Member_list.this, mylist, R.layout.membereventsrow,new String[] {"sno","name","rth","dob","mono","fano","edu","ms","sp1","ocp"},
+                        new int[] {R.id.sno,R.id.name,R.id.rth,R.id.bdate,R.id.mono,R.id.fano,R.id.edu,R.id.ms,R.id.sp1,R.id.ocp});
+                list.setAdapter(new MemberListAdapter(this));
+
+                i+=1;
+                cur1.moveToNext();
+            }
+            cur1.close();
+
+
+        }
+        catch(Exception  e)
+        {
+            Connection.MessageBox(Member_list.this, e.getMessage());
+        }
+    }
+
+    public class MemberListAdapter extends BaseAdapter
+    {
+        private Context context;
+
+        public MemberListAdapter(Context c){
+            context = c;
+        }
+
+        public int getCount() {
+            return mSchedule.getCount();
+        }
+
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.membereventsrow, null);
+            }
+
+
+            TextView sno= (TextView) convertView.findViewById(R.id.sno);
+            TextView pno= (TextView) convertView.findViewById(R.id.pno);
+            TextView name= (TextView) convertView.findViewById(R.id.name);
+            TextView rth= (TextView) convertView.findViewById(R.id.rth);
+            TextView sex= (TextView) convertView.findViewById(R.id.sex);
+            TextView bdate= (TextView) convertView.findViewById(R.id.bdate);
+            TextView mono= (TextView) convertView.findViewById(R.id.mono);
+            TextView fano= (TextView) convertView.findViewById(R.id.fano);
+            TextView edu= (TextView) convertView.findViewById(R.id.edu);
+            TextView ms= (TextView) convertView.findViewById(R.id.ms);
+            TextView pstat= (TextView) convertView.findViewById(R.id.pstat);
+            TextView lmpdt= (TextView) convertView.findViewById(R.id.lmpdt);
+            TextView sp1= (TextView) convertView.findViewById(R.id.sp1);
+            TextView sp2= (TextView) convertView.findViewById(R.id.sp2);
+            TextView sp3= (TextView) convertView.findViewById(R.id.sp3);
+            TextView sp4= (TextView) convertView.findViewById(R.id.sp4);
+            TextView ocp= (TextView) convertView.findViewById(R.id.ocp);
+            TextView entype= (TextView) convertView.findViewById(R.id.entype);
+            TextView endate= (TextView) convertView.findViewById(R.id.endate);
+            TextView extype= (TextView) convertView.findViewById(R.id.extype);
+            TextView exdate= (TextView) convertView.findViewById(R.id.exdate);
+
+            TextView posmig= (TextView) convertView.findViewById(R.id.posmig);
+            TextView posmigdate= (TextView) convertView.findViewById(R.id.posmigdate);
+
+            final HashMap<String, String> o = (HashMap<String, String>) mSchedule.getItem(position);
+
+            sno.setText(o.get("sno"));
+            pno.setText(o.get("pno"));
+            name.setText(o.get("name"));
+            rth.setText(o.get("rth"));
+            sex.setText(o.get("sex"));
+            bdate.setText(Global.DateConvertDMY(o.get("dob")));
+            mono.setText(o.get("mono"));
+            fano.setText(o.get("fano"));
+            edu.setText(o.get("edu"));
+            ms.setText(o.get("ms"));
+            pstat.setText(o.get("pstat"));
+            if(o.get("lmpdt")==null | o.get("lmpdt").trim().length()==0)
+                lmpdt.setText(o.get("lmpdt"));
+            else
+                lmpdt.setText(Global.DateConvertDMY(o.get("lmpdt")));
+
+            sp1.setText(o.get("sp1"));
+            sp2.setText(o.get("sp2"));
+            sp3.setText(o.get("sp3"));
+            sp4.setText(o.get("sp4"));
+            ocp.setText(o.get("ocp"));
+            entype.setText(o.get("entype"));
+            endate.setText(Global.DateConvertDMY(o.get("endate")));
+            extype.setText(o.get("extype"));
+            if(o.get("exdate")==null | o.get("exdate").trim().length()==0)
+                exdate.setText(o.get("exdate"));
+            else
+                exdate.setText(Global.DateConvertDMY(o.get("exdate")));
+
+            //show only if possible migration
+            if(o.get("posmig").equals("54"))
+                posmig.setText(o.get("posmig"));
+            else
+                posmig.setText("");
+
+            if(o.get("posmigdate")==null | o.get("posmigdate").trim().length()==0)
+                posmigdate.setText(o.get("posmigdate"));
+            else
+                posmigdate.setText(Global.DateConvertDMY(o.get("posmigdate")));
+
+            if(o.get("extype").trim().length()==0 & (o.get("posmig").trim().length()==0 | !o.get("posmig").trim().equals("54")))
+            {
+                sno.setTextColor(Color.BLACK);
+                pno.setTextColor(Color.BLACK);
+                name.setTextColor(Color.BLACK);
+                rth.setTextColor(Color.BLACK);
+                sex.setTextColor(Color.BLACK);
+                bdate.setTextColor(Color.BLACK);
+                mono.setTextColor(Color.BLACK);
+                fano.setTextColor(Color.BLACK);
+                edu.setTextColor(Color.BLACK);
+                ms.setTextColor(Color.BLACK);
+                pstat.setTextColor(Color.BLACK);
+                lmpdt.setTextColor(Color.BLACK);
+                sp1.setTextColor(Color.BLACK);
+                sp2.setTextColor(Color.BLACK);
+                sp3.setTextColor(Color.BLACK);
+                sp4.setTextColor(Color.BLACK);
+                ocp.setTextColor(Color.BLACK);
+                entype.setTextColor(Color.BLACK);
+                endate.setTextColor(Color.BLACK);
+                extype.setTextColor(Color.BLACK);
+                exdate.setTextColor(Color.BLACK);
+            }
+            else if(o.get("extype").trim().length()==0 & o.get("posmig").trim().equals("54"))
+            {
+                sno.setTextColor(Color.BLUE);
+                pno.setTextColor(Color.BLUE);
+                name.setTextColor(Color.BLUE);
+                rth.setTextColor(Color.BLUE);
+                sex.setTextColor(Color.BLUE);
+                bdate.setTextColor(Color.BLUE);
+                mono.setTextColor(Color.BLUE);
+                fano.setTextColor(Color.BLUE);
+                edu.setTextColor(Color.BLUE);
+                ms.setTextColor(Color.BLUE);
+                pstat.setTextColor(Color.BLUE);
+                lmpdt.setTextColor(Color.BLUE);
+                sp1.setTextColor(Color.BLUE);
+                sp2.setTextColor(Color.BLUE);
+                sp3.setTextColor(Color.BLUE);
+                sp4.setTextColor(Color.BLUE);
+                ocp.setTextColor(Color.BLUE);
+                entype.setTextColor(Color.BLUE);
+                endate.setTextColor(Color.BLUE);
+                extype.setTextColor(Color.BLUE);
+                exdate.setTextColor(Color.BLUE);
+                posmig.setTextColor(Color.BLUE);
+                posmigdate.setTextColor(Color.BLUE);
+
+            }
+            else
+            {
+                sno.setTextColor(Color.RED);
+                pno.setTextColor(Color.RED);
+                name.setTextColor(Color.RED);
+                rth.setTextColor(Color.RED);
+                sex.setTextColor(Color.RED);
+                bdate.setTextColor(Color.RED);
+                mono.setTextColor(Color.RED);
+                fano.setTextColor(Color.RED);
+                edu.setTextColor(Color.RED);
+                ms.setTextColor(Color.RED);
+                pstat.setTextColor(Color.RED);
+                lmpdt.setTextColor(Color.RED);
+                sp1.setTextColor(Color.RED);
+                sp2.setTextColor(Color.RED);
+                sp3.setTextColor(Color.RED);
+                sp4.setTextColor(Color.RED);
+                ocp.setTextColor(Color.RED);
+                entype.setTextColor(Color.RED);
+                endate.setTextColor(Color.RED);
+                extype.setTextColor(Color.RED);
+                exdate.setTextColor(Color.RED);
+            }
+
+            if(o.get("newold").equals("n"))
+            {
+                sno.setTextColor(Color.GREEN);
+                pno.setTextColor(Color.GREEN);
+                name.setTextColor(Color.GREEN);
+                rth.setTextColor(Color.GREEN);
+                sex.setTextColor(Color.GREEN);
+                bdate.setTextColor(Color.GREEN);
+                mono.setTextColor(Color.GREEN);
+                fano.setTextColor(Color.GREEN);
+                edu.setTextColor(Color.GREEN);
+                ms.setTextColor(Color.GREEN);
+                pstat.setTextColor(Color.GREEN);
+                lmpdt.setTextColor(Color.GREEN);
+                sp1.setTextColor(Color.GREEN);
+                sp2.setTextColor(Color.GREEN);
+                sp3.setTextColor(Color.GREEN);
+                sp4.setTextColor(Color.GREEN);
+                ocp.setTextColor(Color.GREEN);
+                entype.setTextColor(Color.GREEN);
+                endate.setTextColor(Color.GREEN);
+                extype.setTextColor(Color.GREEN);
+                exdate.setTextColor(Color.GREEN);
+            }
+
+
+            if(o.get("extype").trim().equals("55"))
+            {
+                if(o.get("deathrep").equals("1"))
+                {
+                    name.setBackgroundColor(Color.RED);
+                    name.setTextColor( Color.WHITE );
+                }
+                else
+                {
+                    name.setBackgroundColor(Color.WHITE);
+                    name.setTextColor( Color.RED );
+                }
+			    /*if(o.get("exdate")==null | o.get("exdate").trim().length()==0)
+			    {
+
+			    }
+			    else if(Integer.valueOf(o.get("exyear"))>=2014)
+			    {
+			        name.setBackgroundColor(Color.RED);
+			        name.setTextColor( Color.WHITE );
+			    }
+			    else
+			    {
+			        name.setBackgroundColor(Color.WHITE);
+			        name.setTextColor( Color.RED );
+			    }*/
+            }
+
+
+            final AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+            final TableLayout memtab = (TableLayout)convertView.findViewById(R.id.memtab);
+            final EditText lblsno = (EditText)convertView.findViewById(R.id.txtMSlNo);
+            final TextView lblName = (TextView)convertView.findViewById(R.id.lblName);
+
+
+
+            memtab.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if(o.get("extype").trim().length()==0)
+                    {
+                        if(o.get("posmigdate")==null | o.get("posmigdate").trim().length()==0)
+                        {
+//                            ShowEventForm(o.get("vill"),o.get("bari"),o.get("hh"),o.get("sno"),o.get("pno"),o.get("name"));
+                        }
+                        else
+                        {
+                            //21 May 2014
+                            AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+                            adb.setTitle("Possible Migration");
+                            adb.setMessage("আপনি কি ["+ o.get("name") +"]এর 54 Event এর তথ্য মুছে ফেলতে চান [Yes/No]?");
+
+                            adb.setNegativeButton("No", new AlertDialog.OnClickListener() {
+                                public void onClick(DialogInterface dialog1, int which) {
+
+                                }});
+
+                            adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                                public void onClick(DialogInterface dialog1, int which) {
+                                    C.Save("Update ttrans Set PosMig='',PosMigDate='' where status='m' and vill||bari||hh='"+ (o.get("vill")+o.get("bari")+o.get("hh")) +"' and SNo='"+ o.get("sno") +"'");
+
+                                    DataRetrieve((o.get("vill")+o.get("bari")+o.get("hh")),false,"active");
+                                }});
+
+                            adb.show();
+                        }
+
+                    }
+                    else
+                    {
+                        if(o.get("extype").trim().equals("55") & Integer.valueOf(o.get("exyear"))>=2014)
+                        {
+                            if(Integer.valueOf(o.get("deathage"))>=13 & Integer.valueOf(o.get("deathage"))<=49 & o.get("sex").equals("2"))
+                            {
+                                g.setPregOnDeath("1");
+                            }
+                            else
+                            {
+                                g.setPregOnDeath("2");
+                            }
+                            g.setmemSlNo( o.get("sno") );
+//                            Intent f = new Intent(getApplicationContext(),Death.class);
+//                            startActivity( f );
+                        }
+                        else
+                        {
+                            Connection.MessageBox(Member_list.this, "সদস্য এ খানায় সক্রিয় নয়.");
+                            return;
+                        }
+                    }
+                }
+            });
+
+            //21 may 2016
+            ImageView imgPreg = (ImageView)convertView.findViewById(R.id.imgPreg);
+            if(o.get("pstat").equals("41"))
+                imgPreg.setVisibility(View.VISIBLE);
+            else
+                imgPreg.setVisibility(View.INVISIBLE);
+
+            return convertView;
+        }
+    }
 
     private void DataStatus()
     {
@@ -573,9 +1439,11 @@ public class Member_list extends Activity {
          if (o.get("PNo").length() == 0) {
              MSlNo.setTextColor(Color.RED);
              Name.setTextColor(Color.RED);
+             delMember.setVisibility(View.VISIBLE);
          } else {
              MSlNo.setTextColor(Color.BLACK);
              Name.setTextColor(Color.BLACK);
+             delMember.setVisibility(View.INVISIBLE);
          }
 
          if(Integer.valueOf(o.get("sl"))%2==0) {
@@ -595,6 +1463,7 @@ public class Member_list extends Activity {
                IDbundle.putString("Bari", o.get("Bari"));
                IDbundle.putString("HH", o.get("HH"));
                IDbundle.putString("MSlNo", o.get("MSlNo"));
+               IDbundle.putString("roundno",ROUNDNO);
                Intent f1;
                f1 = new Intent(getApplicationContext(), Events.class);
                f1.putExtras(IDbundle);

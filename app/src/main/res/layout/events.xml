@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:scrollbars="vertical">
     <LinearLayout android:layout_width="fill_parent" android:layout_height="@dimen/heading_height" android:orientation="horizontal" android:background="@color/pageHeadingBack">
         <ImageButton android:id="@+id/cmdBack" android:background="@color/pageHeadingBack" android:src="@drawable/back" android:layout_width="50sp" android:layout_height="match_parent"/>
-        <TextView android:id="@+id/lblHeading" android:text="Events Form"  android:paddingLeft="10sp" android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
+        <TextView android:id="@+id/lblHeading" android:text="Events Form"  android:paddingLeft="10sp" android:layout_width="300sp" android:layout_height="match_parent" android:gravity="center_vertical" android:textSize="20sp" android:textColor="@color/pageHeading"/>
         <TextView android:id="@+id/VlblRnd" android:text="Round No" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="#FFFFFF" android:layout_marginLeft="50sp"/>
         <EditText android:id="@+id/txtRnd" android:maxLength="3" android:layout_width="60sp" android:inputType="number" android:layout_marginLeft="10sp" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" />
     </LinearLayout>
@@ -33,20 +33,20 @@
                     android:id="@+id/lblVill"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="1."
+                    android:text="১."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblVill"
-                    android:layout_width="60sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="খানা"
+                    android:text="খানা নম্বর"
                     android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/txtVill"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="60sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
@@ -56,7 +56,7 @@
                 <EditText
                     android:id="@+id/txtBari"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="60sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
@@ -66,7 +66,7 @@
                 <EditText
                     android:id="@+id/txtHH"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
@@ -76,7 +76,7 @@
                 <EditText
                     android:id="@+id/txtMSlNo"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
@@ -191,14 +191,14 @@
                     android:id="@+id/lblPNo"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="5."
+                    android:text="২."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblPNo"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="PNo"
+                    android:text="স্থায়ী নম্বর"
                     android:textSize="20sp" />
 
                 <EditText
@@ -229,14 +229,14 @@
                     android:id="@+id/lblEvType"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="6."
+                    android:text="৩."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblEvType"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="Event Type"
+                    android:text="ঘটনার ধরণ"
                     android:textSize="20sp" />
 
                 <Spinner
@@ -266,14 +266,14 @@
                     android:id="@+id/lblEvDate"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="7."
+                    android:text="৪."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblEvDate"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="Event Date"
+                    android:text="ঘটনার তারিখ"
                     android:textSize="20sp" />
 
                 <EditText
@@ -305,20 +305,20 @@
                     android:id="@+id/lblInfo1"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="8."
+                    android:text="৫."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblInfo1"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="Info1"
+                    android:text="তথ্য ১"
                     android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/txtInfo1"
                     style="@style/customEdit"
-                    android:layout_width="250sp"
+                    android:layout_width="100sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
@@ -343,14 +343,14 @@
                     android:id="@+id/lblInfo2"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="9."
+                    android:text="৬."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblInfo2"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="Info2"
+                    android:text="তথ্য ২"
                     android:textSize="20sp" />
 
                 <EditText
@@ -381,14 +381,14 @@
                     android:id="@+id/lblInfo3"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="10."
+                    android:text="৭."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblInfo3"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="Info3"
+                    android:text="তথ্য ৩"
                     android:textSize="20sp" />
 
                 <EditText
@@ -419,14 +419,14 @@
                     android:id="@+id/lblInfo4"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="11."
+                    android:text="৮."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblInfo4"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="Info4"
+                    android:text="তথ্য ৪"
                     android:textSize="20sp" />
 
                 <EditText
@@ -457,14 +457,14 @@
                     android:id="@+id/lblVDate"
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
-                    android:text="12."
+                    android:text="৯."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/VlblVDate"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="Visit Date"
+                    android:text="পরিদর্শনের তারিখ"
                     android:textSize="20sp" />
 
                 <EditText
@@ -497,12 +497,25 @@
                     android:layout_width="40sp"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
             </LinearLayout>
-            <LinearLayout android:layout_width="fill_parent" android:paddingTop="20sp" android:layout_height="wrap_content" android:orientation="horizontal">
-                <Button android:id="@+id/cmdSave" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/button_style"
-                    android:textSize="20sp" android:text=" Save -> Continue "  android:layout_marginBottom="10sp"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="20sp">
+
+                <Button
+                    android:id="@+id/cmdSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:background="@drawable/button_style"
+                    android:text=" Save -> Continue "
+                    android:textSize="20sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/formMember"
                 android:layout_width="fill_parent"
@@ -521,6 +534,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
                 android:background="#CCCCCC" />
+
             <!--<LinearLayout android:layout_width="fill_parent" android:paddingTop="20sp" android:layout_height="wrap_content" android:orientation="horizontal">-->
             <!--<Button android:id="@+id/cmdSave" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/button_style_green"-->
             <!--android:textSize="20sp" android:text=" Save -> Continue " android:textColor="#FFFFFF" android:layout_marginBottom="20sp" android:layout_marginLeft="20sp" android:layout_marginRight="20sp"/>-->

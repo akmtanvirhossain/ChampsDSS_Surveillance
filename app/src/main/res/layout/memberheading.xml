@@ -20,9 +20,9 @@
         <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 2" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 3" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 4" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
-        <TextView android:text="EnType" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone"  android:textSize="16sp"/>
-        <TextView android:text="EnDate" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" android:textSize="16sp"/>
-        <TextView android:text="ExType" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" android:textSize="16sp"/>
-        <TextView android:text="ExDate" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" android:textSize="16sp"/>
+        <TextView android:text="EnType" android:layout_width="60dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible"  android:textSize="16sp"/>
+        <TextView android:text="EnDate" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" android:textSize="16sp"/>
+        <TextView android:text="ExType" android:layout_width="60dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" android:textSize="16sp"/>
+        <TextView android:text="ExDate" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" android:textSize="16sp"/>
     </LinearLayout>
  </LinearLayout>

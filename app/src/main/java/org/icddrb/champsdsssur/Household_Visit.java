@@ -13,6 +13,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+ import android.database.Cursor;
  import android.graphics.Color;
  import android.location.Location;
 import android.location.LocationListener;
@@ -47,7 +48,9 @@ import Common.Global;
  import Utility.MySharedPreferences;
 
  import static org.icddrb.champsdsssur.R.id.Bari;
+ import static org.icddrb.champsdsssur.R.id.Rnd;
  import static org.icddrb.champsdsssur.R.id.Vill;
+// import static org.icddrb.champsdsssur.R.id.Note;
 
  public class Household_Visit extends Activity {
     boolean networkAvailable=false;
@@ -77,6 +80,7 @@ import Common.Global;
     Global g;
     SimpleAdapter dataAdapter;
     ArrayList<HashMap<String, String>> dataList = new ArrayList<HashMap<String, String>>();
+     ArrayList<HashMap<String, String>> mylist;
          TextView lblHeading;
          TextView lblHeading1;
 
@@ -139,10 +143,10 @@ import Common.Global;
 //         View lineExDate;
 //         TextView VlblExDate;
 //         EditText dtpExDate;
-//         LinearLayout secRnd;
-//         View lineRnd;
-//         TextView VlblRnd;
-//         EditText txtRnd;
+         LinearLayout secRnd;
+         View lineRnd;
+         TextView VlblRnd;
+         EditText txtRnd;
 
      //***********************sakib****************************************
          Button btnPlusMobile1;
@@ -168,10 +172,10 @@ import Common.Global;
          TextView VlblResp;
          Spinner spnResp;
 
-         LinearLayout secVisitNote;
-         View lineVisitNote;
-         TextView VlblVisitNote;
-         EditText txtVisitNote;
+         LinearLayout secNote;
+         View lineNote;
+         TextView VlblNote;
+         EditText txtNote;
      //***********************sakib********************************************
 
     static String TableName;
@@ -183,6 +187,7 @@ import Common.Global;
     Bundle IDbundle;
     static String VILL = "";
     static String BARI = "";
+    static String BName = "";
     static String HH = "";
     static String ROUNDNO = "";
     static String CLUSTER = "";
@@ -208,6 +213,7 @@ import Common.Global;
          IDbundle = getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
          BARI = IDbundle.getString("Bari");
+         BName=IDbundle.getString("BariName");
          HH = IDbundle.getString("HH");
 
          ROUNDNO        = IDbundle.getString("roundno");
@@ -311,10 +317,10 @@ import Common.Global;
 //         lineExDate=(View)findViewById(R.id.lineExDate);
 //         VlblExDate=(TextView) findViewById(R.id.VlblExDate);
 //         dtpExDate=(EditText) findViewById(R.id.dtpExDate);
-//         secRnd=(LinearLayout)findViewById(R.id.secRnd);
-//         lineRnd=(View)findViewById(R.id.lineRnd);
-//         VlblRnd=(TextView) findViewById(R.id.VlblRnd);
-//         txtRnd=(EditText) findViewById(R.id.txtRnd);
+         secRnd=(LinearLayout)findViewById(R.id.secRnd);
+         lineRnd=(View)findViewById(R.id.lineRnd);
+         VlblRnd=(TextView) findViewById(R.id.VlblRnd);
+         txtRnd=(EditText) findViewById(R.id.txtRnd);
 
 
          //***********************sakib********************************************************
@@ -370,8 +376,8 @@ import Common.Global;
                      secResp.setVisibility(View.VISIBLE);
                      lineResp.setVisibility(View.VISIBLE);
 
-//                     secVisitNote.setVisibility(View.VISIBLE);
-//                     lineVisitNote.setVisibility(View.VISIBLE);
+//                     secNote.setVisibility(View.VISIBLE);
+//                     lineNote.setVisibility(View.VISIBLE);
                  }
                  else
                  {
@@ -391,9 +397,9 @@ import Common.Global;
                      lineResp.setVisibility(View.GONE);
                      spnResp.setSelection(0);
 
-//                     secVisitNote.setVisibility(View.GONE);
-//                     lineVisitNote.setVisibility(View.GONE);
-//                     txtVisitNote.setText("");
+//                     secNote.setVisibility(View.GONE);
+//                     lineNote.setVisibility(View.GONE);
+//                     txtNote.setText("");
                  }
                  if(!spnData.equalsIgnoreCase("9"))
                  {
@@ -423,10 +429,10 @@ import Common.Global;
          spnResp=(Spinner) findViewById(R.id.spnResp);
          spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and ((julianday(date('now'))-julianday(bdate))/365.25)>10 and (extype is null or length(extype)=0)"));
 
-         secVisitNote=(LinearLayout)findViewById(R.id.secVisitNote);
-         lineVisitNote=(View)findViewById(R.id.lineVisitNote);
-         VlblVisitNote=(TextView) findViewById(R.id.VlblVisitNote);
-         txtVisitNote=(EditText) findViewById(R.id.txtVisitNote);
+         secNote=(LinearLayout)findViewById(R.id.secNote);
+         lineNote=(View)findViewById(R.id.lineNote);
+         VlblNote=(TextView) findViewById(R.id.VlblNote);
+         txtNote=(EditText) findViewById(R.id.txtNote);
 
 
          txtVill.setText(VILL);
@@ -542,25 +548,9 @@ import Common.Global;
                  dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));
                  spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item1.getVStatus()));
                  txtVStatusOth.setText(item1.getVStatusOth());
-                 txtVisitNote.setText(item1.getVisitNote());
+                 txtNote.setText(item1.getNote());
              }
 
-//             final TextView Resp = (TextView)findViewById(R.id.Resp);
-//             String Resp=C.ReturnSingleValue("Select Resp from Visits where Vill='"+  Vill +"' AND Bari='"+  BARI  +"' AND HH='"+ HH +"'");
-//             Resp.setText(Resp);
-
-//             txtVisitNote.setText(C.ReturnSingleValue("Select VisitNote from Visits where Vill='" + VILL + "' AND Bari='" + BARI + "' AND HH='" + HH +"' and Rnd='"+ ROUNDNO +"'"));
-
-//             Household_DataModel d = new Household_DataModel();
-//             String SQL2 = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH + "'";
-//             List<Household_DataModel> data = d.SelectAll(this, SQL2);
-//             for(Household_DataModel item : data)
-//             {
-//                 spnReligion.setSelection(Global.SpinnerItemPositionAnyLength(spnReligion, item.getReligion()));
-//                 txtMobileNo1.setText(item.getMobileNo1());
-//                 txtMobileNo2.setText(item.getMobileNo2());
-//                 spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item.getReligion()));
-//             }
          }
          else if (txtHHHead.getText().toString().length() == 0)
          {
@@ -576,8 +566,6 @@ import Common.Global;
                  SQL += " Select '06-Member 6'";
          }
 
-//         txtVill.setText(Vill+"-"+Bari+"-"+HH);
-
          final EditText txtRnd = (EditText)findViewById(R.id.txtRnd);
          txtRnd.setText(ROUNDNO);
 
@@ -591,7 +579,6 @@ import Common.Global;
                  i=spnResp.getCount();
              }
          }
-//         spnRel.setSelection(Integer.parseInt(Religion.length()==0?"0":Religion));
 
      }
      catch(Exception  e)
@@ -613,7 +600,91 @@ import Common.Global;
          SL=s+SL;
          return SL;
      }
+     public void BlockList(Boolean heading, String BariCode)
+     {
+         final ListView list = (ListView) findViewById(R.id.lstData);
+         mylist = new ArrayList<HashMap<String, String>>();
+         HashMap<String, String> map;
 
+         try
+         {
+             String BCode = ""; //BariCode.length()==0?"%":BariCode;
+             String SQL = "";
+
+             if(BariCode.length()!=0)
+             {
+                 SQL +="select b.bari,ifnull(h.hh,'')as hh,ifnull(h.hhhead,'')hhhead,count(m.vill)totalMem,b.vill,b.bariname,(case when v.rnd is null then '2' else '1' end)RoundVisit,";
+                 SQL +=" ifnull(h.Religion,'')rel,ifnull(v.Resp,'')rsno,ifnull(v.vdate,'')vdate,count(case when m.posmig='54' then '1' else null end)posmig from ";
+                 SQL +=" Baris b";
+                 SQL +=" left outer join Household h on b.vill||b.bari=h.vill||h.bari";
+                 SQL +=" left outer join Member m on h.vill||h.bari||h.hh=m.Vill||m.Bari||m.hh and length(m.extype)=0";
+                 SQL +=" left outer join tmpVisits v on h.vill||h.bari||h.hh=v.Vill||v.Bari||v.hh";
+                 SQL +=" where ";//vl.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.block='"+ g.getBlockCode() +"' and b.bari ='"+ BariCode +"'";
+                 SQL +=" group by h.vill,h.bari,h.hh";
+                 SQL +=" order by h.vill, h.Bari, h.HH";
+             }
+             else
+             {
+                 SQL +="select b.bari,ifnull(h.hh,'')as hh,ifnull(h.hhhead,'')hhhead,count(m.vill)totalMem,b.vill,b.bariname,(case when v.rnd is null then '2' else '1' end)RoundVisit,";
+                 SQL +=" ifnull(h.Religion,'')rel,ifnull(v.Resp,'')rsno,ifnull(v.vdate,'')vdate,count(case when m.posmig='54' then '1' else null end)posmig from ";
+                 SQL +=" Baris b";
+                 SQL +=" left outer join Household h on b.vill||b.bari=h.vill||h.bari";
+                 SQL +=" left outer join Member m on h.vill||h.bari||h.hh=m.Vill||m.Bari||m.hh and length(m.extype)=0";
+                 SQL +=" left outer join tmpVisits v on h.vill||h.bari||h.hh=v.Vill||v.Bari||v.hh";
+                 SQL +=" where ";//vl.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.Cluster='"+ g.getClusterCode() +"' and";
+                 SQL +=" b.block='"+ g.getBlockCode() +"'";
+                 SQL +=" group by h.vill,h.bari,h.hh";
+                 SQL +=" order by h.vill, h.Bari, h.HH";
+             }
+             Cursor cur=C.ReadData(SQL);
+
+             cur.moveToFirst();
+             if(heading==true)
+             {
+                 View header = getLayoutInflater().inflate(R.layout.household_list, null);
+                 list.addHeaderView(header);
+             }
+
+             while(!cur.isAfterLast())
+             {
+                 map = new HashMap<String, String>();
+                 map.put("bari", cur.getString(0));
+                 map.put("hh",cur.getString(1));
+                 map.put("hhhead", cur.getString(2));
+                 map.put("totalmem", cur.getString(3));
+                 map.put("vcode", cur.getString(4));
+                 map.put("bariname", cur.getString(5));
+                 map.put("visit", cur.getString(6));
+                 map.put("rel", cur.getString(7));
+                 map.put("rsno", cur.getString(8));
+                 map.put("vdate", cur.getString(9));
+                 map.put("posmig", cur.getString(10));
+
+                 mylist.add(map);
+
+                 cur.moveToNext();
+             }
+             cur.close();
+//             mSchedule = new SimpleAdapter(this, mylist, R.layout.household_row,
+//                     new String[] {"bari","hh", "hhhead"},
+//                     new int[] {R.id.Bari, R.id.HH, R.id.HHHead});
+
+//             list.setAdapter(new DataListAdapter(this));
+
+         }
+         catch(Exception e)
+         {
+             AlertDialog.Builder adb=new AlertDialog.Builder(Household_Visit.this);
+             adb.setTitle("Message");
+             adb.setMessage(e.getMessage());
+             adb.setPositiveButton("Ok", null);
+             adb.show();
+         }
+
+     }
  private void DataSave()
  {
    try
@@ -623,20 +694,20 @@ import Common.Global;
          if(txtVill.getText().toString().length()==0 & secVill.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: গ্রাম.");
-             txtVill.requestFocus(); 
-             return;	
+             txtVill.requestFocus();
+             return;
            }
          else if(txtBari.getText().toString().length()==0 & secBari.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: বাড়ি.");
-             txtBari.requestFocus(); 
-             return;	
+             txtBari.requestFocus();
+             return;
            }
          else if(txtHH.getText().toString().length()==0 & secHH.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: খানা.");
-             txtHH.requestFocus(); 
-             return;	
+             txtHH.requestFocus();
+             return;
            }
          else if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
          {
@@ -647,14 +718,14 @@ import Common.Global;
          else if(spnReligion.getSelectedItemPosition()==0  & secReligion.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: ধর্ম.");
-             spnReligion.requestFocus(); 
-             return;	
+             spnReligion.requestFocus();
+             return;
            }
          else if(txtMobileNo1.getText().toString().length()!=0 & txtMobileNo1.getText().toString().length()!=11 & secMobileNo1.isShown())
            {
              Connection.MessageBox(Household_Visit.this, "Required field: ১ম মোবাইল নম্বর ১১ সংখ্যা হতে হবে.");
-             txtMobileNo1.requestFocus(); 
-             return;	
+             txtMobileNo1.requestFocus();
+             return;
            }
          else if(txtMobileNo2.getText().toString().length()!=0 &txtMobileNo2.getText().toString().length()!=11  & secMobileNo2.isShown())
            {
@@ -746,71 +817,192 @@ import Common.Global;
 //             txtRnd.requestFocus();
 //             return;
 //           }
- 
-         String SQL = "";
-         RadioButton rb;
-
-         Household_DataModel objSave = new Household_DataModel();
-         objSave.setVill(txtVill.getText().toString());
-         objSave.setBari(txtBari.getText().toString());
-         objSave.setHH(txtHH.getText().toString());
-         objSave.setReligion((spnReligion.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnReligion.getSelectedItem().toString(), "-")));
-         objSave.setMobileNo1(txtMobileNo1.getText().toString());
-         objSave.setMobileNo2(txtMobileNo2.getText().toString());
-         objSave.setHHHead(txtHHHead.getText().toString());
-//         objSave.setTotMem(txtTotMem.getText().toString());
-         objSave.setTotRWo("");
-         objSave.setEnType("20");
-         objSave.setEnDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
-         objSave.setExType("");
-         objSave.setExDate("");
-         objSave.setRnd(ROUNDNO);
-         objSave.setEnDt(Global.DateTimeNowYMDHMS());
-         objSave.setStartTime(STARTTIME);
-         objSave.setEndTime(g.CurrentTime24());
-         objSave.setDeviceID(DEVICEID);
-         objSave.setEntryUser(ENTRYUSER); //from data entry user list
-         //objSave.setLat(Double.toString(currentLatitude));
-         //objSave.setLon(Double.toString(currentLongitude));
-         String status = objSave.SaveUpdateData(this);
-
-         //******************************************************************************************************************
-         Visits_DataModel objSave1 = new Visits_DataModel();
-         objSave1.setVill(txtVill.getText().toString());
-         objSave1.setBari(txtBari.getText().toString());
-         objSave1.setHH(txtHH.getText().toString());
-         objSave1.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
-         objSave1.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
-
-         objSave1.setVStatusOth(txtVStatusOth.getText().toString());
-         objSave1.setVisitNote(txtVisitNote.getText().toString());
-
-         objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
-
-         objSave1.setRnd(ROUNDNO);
-         objSave1.setEnDt(Global.DateTimeNowYMDHMS());
-         objSave1.setStartTime(STARTTIME);
-         objSave1.setEndTime(g.CurrentTime24());
-         objSave1.setDeviceID(DEVICEID);
-         objSave1.setEntryUser(ENTRYUSER); //from data entry user list
-         objSave1.setLat(MySharedPreferences.getValue(Household_Visit.this,"lat"));
-         objSave1.setLon(MySharedPreferences.getValue(Household_Visit.this,"lon"));
-
-         String status1 = objSave1.SaveUpdateData(this);
+// ****************************************************************************************************************************
+//         String SQL = "";
+//         RadioButton rb;
+//
+//         Household_DataModel objSave = new Household_DataModel();
+//         objSave.setVill(txtVill.getText().toString());
+//         objSave.setBari(txtBari.getText().toString());
+//         objSave.setHH(txtHH.getText().toString());
+//         objSave.setReligion((spnReligion.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnReligion.getSelectedItem().toString(), "-")));
+//         objSave.setMobileNo1(txtMobileNo1.getText().toString());
+//         objSave.setMobileNo2(txtMobileNo2.getText().toString());
+//         objSave.setHHHead(txtHHHead.getText().toString());
+//         objSave.setTotRWo("");
+//         objSave.setEnType("20");
+//         objSave.setEnDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
+//         objSave.setExType("");
+//         objSave.setExDate("");
+//         objSave.setRnd(ROUNDNO);
+//         objSave.setEnDt(Global.DateTimeNowYMDHMS());
+//         objSave.setStartTime(STARTTIME);
+//         objSave.setEndTime(g.CurrentTime24());
+//         objSave.setDeviceID(DEVICEID);
+//         objSave.setEntryUser(ENTRYUSER); //from data entry user list
+//
+//         String status = objSave.SaveUpdateData(this);
+//
+//         //******************************************************************************************************************
+//         Visits_DataModel objSave1 = new Visits_DataModel();
+//         objSave1.setVill(txtVill.getText().toString());
+//         objSave1.setBari(txtBari.getText().toString());
+//         objSave1.setHH(txtHH.getText().toString());
+//         objSave1.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
+//         objSave1.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
+//
+//         objSave1.setVStatusOth(txtVStatusOth.getText().toString());
+//         objSave1.setNote(txtNote.getText().toString());
+//
+//         objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
+//
+//         objSave1.setRnd(ROUNDNO);
+//         objSave1.setEnDt(Global.DateTimeNowYMDHMS());
+//         objSave1.setStartTime(STARTTIME);
+//         objSave1.setEndTime(g.CurrentTime24());
+//         objSave1.setDeviceID(DEVICEID);
+//         objSave1.setEntryUser(ENTRYUSER); //from data entry user list
+//         objSave1.setLat(MySharedPreferences.getValue(Household_Visit.this,"lat"));
+//         objSave1.setLon(MySharedPreferences.getValue(Household_Visit.this,"lon"));
+//
+//         String status1 = objSave1.SaveUpdateData(this);
 
          //*************************************************************************************
 
-         if(status1.length()==0) {
-             if(status.length()==0)
-             {
+         if (txtHHHead.getText().toString().length() != 0)
+         {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
                  adb.setTitle("Close");
                  adb.setMessage("এই খানায় কি কোন ধরনের ইভেন্ট পরিবর্তন হয়েছে[হ্যাঁ/না]?");
+
+             //have no events
+             //-----------------------------------------------------------------
+             adb.setNegativeButton("না", new AlertDialog.OnClickListener()
+             {
+                 public void onClick(DialogInterface dialog, int which)
+                 {
+
+                     //save visit then close
+                     String SQL = "";
+                     try
+                     {
+                         if(!C.Existence("Select * from Visits where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
+                         {
+                             SQL = "Insert into Visits(Vill, Bari, HH, Resp, EntryUser, EnDt, VDate, Rnd, Lat, Lon,Upload,Note)Values(";
+                             SQL += "'"+ VILL +"',";
+                             SQL += "'"+ BARI +"',";
+                             SQL += "'"+ HH +"',";
+                             SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
+                             SQL += "'"+ g.getUserId() +"',"; //DC code
+                             SQL += "'"+ Global.DateTimeNowYMDHMS() +"',"; //Enter Date
+                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
+                             SQL += "'"+ ROUNDNO +"',"; //round
+                             SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
+                             SQL += "'"+ Double.toString(currentLongitude) +"',";   //lon
+//                             SQL += "'"+ Double.toString(currentLatitudeNet) +"',"; //latnet
+//                             SQL += "'"+ Double.toString(currentLongitudeNet) +"','2',";//lonnet
+                             SQL += "'"+ txtNote.getText() +"')";
+                         }
+                         else
+                         {
+                             SQL = "Update Visits set upload='2',";
+                             SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
+                             SQL += " VDate='"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
+                             SQL += " Note='"+ txtNote.getText() +"',";
+                             SQL += " EntryUser='"+ g.getUserId() +"'"; //DC code
+                             SQL += " where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
+                         }
+                         C.Save(SQL);
+
+                         C.Save("Update Household set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH ) +"'");
+
+                         //Update temp table: 16 may 2016
+                         if(!C.Existence("Select * from tmpVisits where vill||bari||hh='"+ VILL+BARI+HH  +"' and Rnd='"+ ROUNDNO +"'"))
+                         {
+                             SQL = "Insert into tmpVisits(Vill, Bari, Hh, Resp, VDate, Rnd)Values(";
+                             SQL += "'"+ VILL +"',";
+                             SQL += "'"+ BARI +"',";
+                             SQL += "'"+ HH +"',";
+                             SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
+                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
+                             SQL += "'"+ ROUNDNO +"')"; //round
+                         }
+                         else
+                         {
+                             SQL = "Update tmpVisits set ";
+                             SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
+                             SQL += " VDate='"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"'"; //date of visit
+                             SQL += " where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
+                         }
+                         C.Save(SQL);
+
+//                         BlockList(false, Global.Left(BariList.getSelectedItem().toString(),4));
+                     }
+                     catch(Exception ex)
+                     {
+                         Connection.MessageBox(Household_Visit.this, ex.getMessage());
+                         return;
+                     }
+//                     dialog1.cancel();
+                     dialog.cancel();
+
+                     Intent returnIntent = new Intent();
+                     returnIntent.putExtra("res", "hh");
+                     setResult(Activity.RESULT_OK, returnIntent);
+                     Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                     finish();
+                 }
+             });
+//             adb.show();
+
+             //have events
+             //-----------------------------------------------------------------
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
                  {
-                     public void onClick(DialogInterface dialog, int which) {
+                     public void onClick(DialogInterface dialog, int which)
+                     {
+
+                         String SQL = "";
+                         //save visit then continue
+                         if(!C.Existence("Select * from tmpVisits where Vill||Bari||HH='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
+                         {
+                             SQL = "Insert into tmpVisits(Vill, Bari, HH, Resp, EntryUser, EnDt, VDate, Rnd,Lat,Lon,upload,Note)Values(";
+                             SQL += "'"+ VILL +"',";
+                             SQL += "'"+ Bari +"',";
+                             SQL += "'"+ HH +"',";
+                             SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
+                             SQL += "'"+ g.getUserId() +"',"; //DC code
+                             SQL += "'"+ Global.DateTimeNowYMDHMS() +"',"; //Enter date
+                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
+                             SQL += "'"+ ROUNDNO +"',"; //round
+                             SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
+                             SQL += "'"+ Double.toString(currentLongitude) +"',";   //lon
+//                             SQL += "'"+ Double.toString(currentLatitudeNet) +"',"; //latnet
+//                             SQL += "'"+ Double.toString(currentLongitudeNet) +"','2',";//lonnet
+                             SQL += "'"+ txtNote.getText() +"')";
+
+                         }
+                         else
+                         {
+                             SQL = "Update tmpVisits set upload='2',";
+                             SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
+                             SQL += " VDate='"+ Global.DateConvertYMD(VisitDate.getText().toString()) +"',"; //date of visit
+                             SQL += " Note='"+ txtNote.getText() +"',";
+                             SQL += " EntryUser='"+ g.getUserId() +"'"; //DC code
+                             SQL += " where vill||bari||hh='"+ Vill+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
+                         }
+                         C.Save(SQL);
+                         C.Save("Update tmpHousehold set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Update Household set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH) +"'");
+
+
+                         //finish();
+//                         dialog1.cancel();
+                         dialog.cancel();
+
                          String VS = spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
-                         if(VS.equals("1")){
+                         if(VS.equals("1"))
+                         {
                              Intent returnIntent = new Intent();
                              returnIntent.putExtra("res", "hh");
                              setResult(Activity.RESULT_OK, returnIntent);
@@ -821,30 +1013,11 @@ import Common.Global;
                              f1.putExtras(IDbundle);
                              startActivityForResult(f1, 1);
                          }
-                     }});
-                 adb.show();
-                 adb.setNegativeButton("না", new AlertDialog.OnClickListener()
-                 {
-                     public void onClick(DialogInterface dialog, int which) {
+                     }
+                 });
 
-                             Intent returnIntent = new Intent();
-                             returnIntent.putExtra("res", "hh");
-                             setResult(Activity.RESULT_OK, returnIntent);
-                             Connection.MessageBox(Household_Visit.this, "Saved Successfully");
-                             finish();
-                     }});
                  adb.show();
-             }
-             else{
-                 Connection.MessageBox(Household_Visit.this, status1);
-                 return;
-             }
-         }
-         else{
-             Connection.MessageBox(Household_Visit.this, status);
-             return;
-         }
-
+          }
      }
      catch(Exception  e)
      {
@@ -885,7 +1058,7 @@ import Common.Global;
                    dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));
                    spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item1.getVStatus()));
                    txtVStatusOth.setText(item1.getVStatusOth());
-                   txtVisitNote.setText(item1.getVisitNote());
+                   txtNote.setText(item1.getNote());
                    spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item1.getResp()));
                }
 

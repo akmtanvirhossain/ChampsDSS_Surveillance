@@ -58,6 +58,7 @@ import Common.Global;
     Location currentLocation; 
     double currentLatitude,currentLongitude;
      private String RsNo;
+     private String OldNewHH;
 
      //Disabled Back/Home key
     //--------------------------------------------------------------------------------------------------
@@ -200,98 +201,99 @@ import Common.Global;
      Spinner BariList;
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
-   try
-     {
-         setContentView(R.layout.household_visit);
+   try {
+       setContentView(R.layout.household_visit);
 
-         C = new Connection(this);
-         g = Global.getInstance();
+       C = new Connection(this);
+       g = Global.getInstance();
 
-         STARTTIME = g.CurrentTime24();
-         DEVICEID  = g.getDeviceNo();
-         ENTRYUSER = g.getUserId();
+       STARTTIME = g.CurrentTime24();
+       DEVICEID = g.getDeviceNo();
+       ENTRYUSER = g.getUserId();
 
-         IDbundle = getIntent().getExtras();
-         VILL = IDbundle.getString("Vill");
-         BARI = IDbundle.getString("Bari");
-         BName=IDbundle.getString("BariName");
-         HH = IDbundle.getString("HH");
+       IDbundle = getIntent().getExtras();
+       VILL = IDbundle.getString("Vill");
+       BARI = IDbundle.getString("Bari");
+       BName = IDbundle.getString("BariName");
+       HH = IDbundle.getString("HH");
 
-         ROUNDNO        = IDbundle.getString("roundno");
-         CLUSTER        = IDbundle.getString("cluster");
-         BLOCK          = IDbundle.getString("block");
+       ROUNDNO = IDbundle.getString("roundno");
+       CLUSTER = IDbundle.getString("cluster");
+       BLOCK = IDbundle.getString("block");
 
 
-         TableName = "Household";
+       TableName = "Household";
 
-         //turnGPSOn();
+       //turnGPSOn();
 
-         //GPS Location
-         //FindLocation();
-         // Double.toString(currentLatitude);
-         // Double.toString(currentLongitude);
+       //GPS Location
+       //FindLocation();
+       // Double.toString(currentLatitude);
+       // Double.toString(currentLongitude);
 
-         lblHeading = (TextView)findViewById(R.id.lblHeading);
-         lblHeading1 = (TextView)findViewById(R.id.lblHeading1);
+       lblHeading = (TextView) findViewById(R.id.lblHeading);
+       lblHeading1 = (TextView) findViewById(R.id.lblHeading1);
 
-         ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
-         cmdBack.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View v) {
-                 AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
-                 adb.setTitle("Close");
-                 adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
-                 adb.setNegativeButton("না", null);
-                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
-                     public void onClick(DialogInterface dialog, int which) {
-                         finish();
-                     }});
-                 adb.show();
-             }});
+       ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
+       cmdBack.setOnClickListener(new View.OnClickListener() {
+           public void onClick(View v) {
+               AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
+               adb.setTitle("Close");
+               adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+               adb.setNegativeButton("না", null);
+               adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int which) {
+                       finish();
+                   }
+               });
+               adb.show();
+           }
+       });
 
-         seclbl02=(LinearLayout)findViewById(R.id.seclbl02);
-         linelbl02=(View)findViewById(R.id.linelbl02);
-         seclbl01=(LinearLayout)findViewById(R.id.seclbl01);
-         linelbl01=(View)findViewById(R.id.linelbl01);
-         secVill=(LinearLayout)findViewById(R.id.secVill);
-         lineVill=(View)findViewById(R.id.lineVill);
-         VlblVill=(TextView) findViewById(R.id.VlblVill);
-         txtVill=(EditText) findViewById(R.id.txtVill);
-         secBari=(LinearLayout)findViewById(R.id.secBari);
-         lineBari=(View)findViewById(R.id.lineBari);
-         VlblBari=(TextView) findViewById(R.id.VlblBari);
-         txtBari=(EditText) findViewById(R.id.txtBari);
-         secHH=(LinearLayout)findViewById(R.id.secHH);
-         lineHH=(View)findViewById(R.id.lineHH);
-         VlblHH=(TextView) findViewById(R.id.VlblHH);
-         txtHH=(EditText) findViewById(R.id.txtHH);
-         secReligion=(LinearLayout)findViewById(R.id.secReligion);
-         lineReligion=(View)findViewById(R.id.lineReligion);
-         VlblReligion=(TextView) findViewById(R.id.VlblReligion);
-         spnReligion=(Spinner) findViewById(R.id.spnReligion);
-         List<String> listReligion = new ArrayList<String>();
+       seclbl02 = (LinearLayout) findViewById(R.id.seclbl02);
+       linelbl02 = (View) findViewById(R.id.linelbl02);
+       seclbl01 = (LinearLayout) findViewById(R.id.seclbl01);
+       linelbl01 = (View) findViewById(R.id.linelbl01);
+       secVill = (LinearLayout) findViewById(R.id.secVill);
+       lineVill = (View) findViewById(R.id.lineVill);
+       VlblVill = (TextView) findViewById(R.id.VlblVill);
+       txtVill = (EditText) findViewById(R.id.txtVill);
+       secBari = (LinearLayout) findViewById(R.id.secBari);
+       lineBari = (View) findViewById(R.id.lineBari);
+       VlblBari = (TextView) findViewById(R.id.VlblBari);
+       txtBari = (EditText) findViewById(R.id.txtBari);
+       secHH = (LinearLayout) findViewById(R.id.secHH);
+       lineHH = (View) findViewById(R.id.lineHH);
+       VlblHH = (TextView) findViewById(R.id.VlblHH);
+       txtHH = (EditText) findViewById(R.id.txtHH);
+       secReligion = (LinearLayout) findViewById(R.id.secReligion);
+       lineReligion = (View) findViewById(R.id.lineReligion);
+       VlblReligion = (TextView) findViewById(R.id.VlblReligion);
+       spnReligion = (Spinner) findViewById(R.id.spnReligion);
+       List<String> listReligion = new ArrayList<String>();
 
-         listReligion.add("");
-         listReligion.add("1-মুসলিম");
-         listReligion.add("2-হিন্দু");
-         listReligion.add("3-খ্রীষ্ট");
-         listReligion.add("4-বুদ্ধ");
-         listReligion.add("5-অন্যান্য");
-         ArrayAdapter<String> adptrReligion= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listReligion);
-         spnReligion.setAdapter(adptrReligion);
+       listReligion.add("");
+       listReligion.add("1-মুসলিম");
+       listReligion.add("2-হিন্দু");
+       listReligion.add("3-খ্রীষ্ট");
+       listReligion.add("4-বুদ্ধ");
+       listReligion.add("5-অন্যান্য");
+       ArrayAdapter<String> adptrReligion = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listReligion);
+       spnReligion.setAdapter(adptrReligion);
 
-         secMobileNo1=(LinearLayout)findViewById(R.id.secMobileNo1);
-         lineMobileNo1=(View)findViewById(R.id.lineMobileNo1);
-         VlblMobileNo1=(TextView) findViewById(R.id.VlblMobileNo1);
-         txtMobileNo1=(EditText) findViewById(R.id.txtMobileNo1);
-         secMobileNo2=(LinearLayout)findViewById(R.id.secMobileNo2);
-         lineMobileNo2=(View)findViewById(R.id.lineMobileNo2);
-         VlblMobileNo2=(TextView) findViewById(R.id.VlblMobileNo2);
-         txtMobileNo2=(EditText) findViewById(R.id.txtMobileNo2);
+       secMobileNo1 = (LinearLayout) findViewById(R.id.secMobileNo1);
+       lineMobileNo1 = (View) findViewById(R.id.lineMobileNo1);
+       VlblMobileNo1 = (TextView) findViewById(R.id.VlblMobileNo1);
+       txtMobileNo1 = (EditText) findViewById(R.id.txtMobileNo1);
+       secMobileNo2 = (LinearLayout) findViewById(R.id.secMobileNo2);
+       lineMobileNo2 = (View) findViewById(R.id.lineMobileNo2);
+       VlblMobileNo2 = (TextView) findViewById(R.id.VlblMobileNo2);
+       txtMobileNo2 = (EditText) findViewById(R.id.txtMobileNo2);
 
-         secHHHead=(LinearLayout)findViewById(R.id.secHHHead);
-         lineHHHead=(View)findViewById(R.id.lineHHHead);
-         VlblHHHead=(TextView) findViewById(R.id.VlblHHHead);
-         txtHHHead=(EditText) findViewById(R.id.txtHHHead);
+       secHHHead = (LinearLayout) findViewById(R.id.secHHHead);
+       lineHHHead = (View) findViewById(R.id.lineHHHead);
+       VlblHHHead = (TextView) findViewById(R.id.VlblHHHead);
+       txtHHHead = (EditText) findViewById(R.id.txtHHHead);
 
 
 //         secTotMem=(LinearLayout)findViewById(R.id.secTotMem);
@@ -318,135 +320,127 @@ import Common.Global;
 //         lineExDate=(View)findViewById(R.id.lineExDate);
 //         VlblExDate=(TextView) findViewById(R.id.VlblExDate);
 //         dtpExDate=(EditText) findViewById(R.id.dtpExDate);
-         secRnd=(LinearLayout)findViewById(R.id.secRnd);
-         lineRnd=(View)findViewById(R.id.lineRnd);
-         VlblRnd=(TextView) findViewById(R.id.VlblRnd);
-         txtRnd=(EditText) findViewById(R.id.txtRnd);
+       secRnd = (LinearLayout) findViewById(R.id.secRnd);
+       lineRnd = (View) findViewById(R.id.lineRnd);
+       VlblRnd = (TextView) findViewById(R.id.VlblRnd);
+       txtRnd = (EditText) findViewById(R.id.txtRnd);
 
 
-         //***********************sakib********************************************************
-         secVDate=(LinearLayout)findViewById(R.id.secVDate);
-         lineVDate=(View)findViewById(R.id.lineVDate);
-         VlblVDate=(TextView) findViewById(R.id.VlblVDate);
-         dtpVDate=(EditText) findViewById(R.id.dtpVDate);
-         dtpVDate.setText(Global.DateNowDMY());
+       //***********************sakib********************************************************
+       secVDate = (LinearLayout) findViewById(R.id.secVDate);
+       lineVDate = (View) findViewById(R.id.lineVDate);
+       VlblVDate = (TextView) findViewById(R.id.VlblVDate);
+       dtpVDate = (EditText) findViewById(R.id.dtpVDate);
+       dtpVDate.setText(Global.DateNowDMY());
 
 
-         secVStatus=(LinearLayout)findViewById(R.id.secVStatus);
-         lineVStatus=(View)findViewById(R.id.lineVStatus);
-         VlblVStatus=(TextView) findViewById(R.id.VlblVStatus);
-         spnVStatus=(Spinner) findViewById(R.id.spnVStatus);
-         List<String> listVStatus = new ArrayList<String>();
+       secVStatus = (LinearLayout) findViewById(R.id.secVStatus);
+       lineVStatus = (View) findViewById(R.id.lineVStatus);
+       VlblVStatus = (TextView) findViewById(R.id.VlblVStatus);
+       spnVStatus = (Spinner) findViewById(R.id.spnVStatus);
+       List<String> listVStatus = new ArrayList<String>();
 
-         listVStatus.add("");
-         listVStatus.add("1-ইন্টারভিউ সফল হয়েছে");
-         listVStatus.add("2-বাড়ি পরিদর্শনের সময় খানার কোন সদস্যকে বা উপযুক্ত কাউকে পাওয়া যায় নাই");
-         listVStatus.add("3-অনেক দিনের জন্য খানার সকল সদস্য অনুপস্থিত");
-         listVStatus.add("4-ইন্টারভিউ বাতিল");
-         listVStatus.add("5-ইন্টারভিউ দিতে রাজী নয়");
-         listVStatus.add("6-বাসা খালি অথবা ঠিকানাটি কোন বাসস্থানের নয়");
-         listVStatus.add("7-বাসস্থানটি ধংসপ্রাপ্ত");
-         listVStatus.add("8-বাসস্থানটি খুঁজে পাওয়া যায় নাই");
-         listVStatus.add("9-অন্যান");
-         ArrayAdapter<String> adptrVStatus= new ArrayAdapter<String>(this, R.layout.multiline_spinner_dropdown_item, listVStatus);
-         spnVStatus.setAdapter(adptrVStatus);
+       listVStatus.add("");
+       listVStatus.add("1-ইন্টারভিউ সফল হয়েছে");
+       listVStatus.add("2-বাড়ি পরিদর্শনের সময় খানার কোন সদস্যকে বা উপযুক্ত কাউকে পাওয়া যায় নাই");
+       listVStatus.add("3-অনেক দিনের জন্য খানার সকল সদস্য অনুপস্থিত");
+       listVStatus.add("4-ইন্টারভিউ বাতিল");
+       listVStatus.add("5-ইন্টারভিউ দিতে রাজী নয়");
+       listVStatus.add("6-বাসা খালি অথবা ঠিকানাটি কোন বাসস্থানের নয়");
+       listVStatus.add("7-বাসস্থানটি ধংসপ্রাপ্ত");
+       listVStatus.add("8-বাসস্থানটি খুঁজে পাওয়া যায় নাই");
+       listVStatus.add("9-অন্যান");
+       ArrayAdapter<String> adptrVStatus = new ArrayAdapter<String>(this, R.layout.multiline_spinner_dropdown_item, listVStatus);
+       spnVStatus.setAdapter(adptrVStatus);
 
-         spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-         {
-             @Override
-             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
-             {
-                 if (spnVStatus.getSelectedItem().toString().length() == 0) return;
-                 String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(),"-");
+       spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+               if (spnVStatus.getSelectedItem().toString().length() == 0) return;
+               String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
 
-                 if(spnData.equalsIgnoreCase("1"))
-                 {
-                     secReligion.setVisibility(View.VISIBLE);
-                     lineReligion.setVisibility(View.VISIBLE);
+               if (spnData.equalsIgnoreCase("1")) {
+                   secReligion.setVisibility(View.VISIBLE);
+                   lineReligion.setVisibility(View.VISIBLE);
 
-                     secMobileNo1.setVisibility(View.VISIBLE);
-                     lineMobileNo1.setVisibility(View.VISIBLE);
+                   secMobileNo1.setVisibility(View.VISIBLE);
+                   lineMobileNo1.setVisibility(View.VISIBLE);
 
-                     secMobileNo2.setVisibility(View.GONE);
-                     lineMobileNo2.setVisibility(View.GONE);
-                     txtMobileNo2.setVisibility(View.GONE);
+                   secMobileNo2.setVisibility(View.GONE);
+                   lineMobileNo2.setVisibility(View.GONE);
+                   txtMobileNo2.setVisibility(View.GONE);
 
-                     secHHHead.setVisibility(View.VISIBLE);
-                     lineHHHead.setVisibility(View.VISIBLE);
+                   secHHHead.setVisibility(View.VISIBLE);
+                   lineHHHead.setVisibility(View.VISIBLE);
 
-                     secResp.setVisibility(View.VISIBLE);
-                     lineResp.setVisibility(View.VISIBLE);
+                   secResp.setVisibility(View.VISIBLE);
+                   lineResp.setVisibility(View.VISIBLE);
 
 //                     secNote.setVisibility(View.VISIBLE);
 //                     lineNote.setVisibility(View.VISIBLE);
-                 }
-                 else
-                 {
-                     secReligion.setVisibility(View.GONE);
-                     lineReligion.setVisibility(View.GONE);
-                     spnReligion.setSelection(0);
+               } else {
+                   secReligion.setVisibility(View.GONE);
+                   lineReligion.setVisibility(View.GONE);
+                   spnReligion.setSelection(0);
 
-                     secMobileNo1.setVisibility(View.GONE);
-                     lineMobileNo1.setVisibility(View.GONE);
-                     txtMobileNo1.setText("");
+                   secMobileNo1.setVisibility(View.GONE);
+                   lineMobileNo1.setVisibility(View.GONE);
+                   txtMobileNo1.setText("");
 
-                     secMobileNo2.setVisibility(View.GONE);
-                     lineMobileNo2.setVisibility(View.GONE);
-                     txtMobileNo2.setText("");
+                   secMobileNo2.setVisibility(View.GONE);
+                   lineMobileNo2.setVisibility(View.GONE);
+                   txtMobileNo2.setText("");
 
-                     secResp.setVisibility(View.GONE);
-                     lineResp.setVisibility(View.GONE);
-                     spnResp.setSelection(0);
+                   secResp.setVisibility(View.GONE);
+                   lineResp.setVisibility(View.GONE);
+                   spnResp.setSelection(0);
 
 //                     secNote.setVisibility(View.GONE);
 //                     lineNote.setVisibility(View.GONE);
 //                     txtNote.setText("");
-                 }
-                 if(!spnData.equalsIgnoreCase("9"))
-                 {
-                     secVStatusOth.setVisibility(View.GONE);
-                     lineVStatusOth.setVisibility(View.GONE);
-                     txtVStatusOth.setText("");
-                 }
-                 else
-                 {
-                     secVStatusOth.setVisibility(View.VISIBLE);
-                     lineVStatusOth.setVisibility(View.VISIBLE);
-                 }
-             }
-             @Override
-             public void onNothingSelected(AdapterView<?> parentView) {
-             }
-         });
+               }
+               if (!spnData.equalsIgnoreCase("9")) {
+                   secVStatusOth.setVisibility(View.GONE);
+                   lineVStatusOth.setVisibility(View.GONE);
+                   txtVStatusOth.setText("");
+               } else {
+                   secVStatusOth.setVisibility(View.VISIBLE);
+                   lineVStatusOth.setVisibility(View.VISIBLE);
+               }
+           }
 
-         secVStatusOth=(LinearLayout)findViewById(R.id.secVStatusOth);
-         lineVStatusOth=(View)findViewById(R.id.lineVStatusOth);
-         VlblVStatusOth=(TextView) findViewById(R.id.VlblVStatusOth);
-         txtVStatusOth=(EditText) findViewById(R.id.txtVStatusOth);
+           @Override
+           public void onNothingSelected(AdapterView<?> parentView) {
+           }
+       });
 
-         secResp=(LinearLayout)findViewById(R.id.secResp);
-         lineResp=(View)findViewById(R.id.lineResp);
-         VlblResp=(TextView) findViewById(R.id.VlblResp);
-         spnResp=(Spinner) findViewById(R.id.spnResp);
-         spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and ((julianday(date('now'))-julianday(bdate))/365.25)>10 and (extype is null or length(extype)=0)"));
+       secVStatusOth = (LinearLayout) findViewById(R.id.secVStatusOth);
+       lineVStatusOth = (View) findViewById(R.id.lineVStatusOth);
+       VlblVStatusOth = (TextView) findViewById(R.id.VlblVStatusOth);
+       txtVStatusOth = (EditText) findViewById(R.id.txtVStatusOth);
 
-         secNote=(LinearLayout)findViewById(R.id.secNote);
-         lineNote=(View)findViewById(R.id.lineNote);
-         VlblNote=(TextView) findViewById(R.id.VlblNote);
-         txtNote=(EditText) findViewById(R.id.txtNote);
+       secResp = (LinearLayout) findViewById(R.id.secResp);
+       lineResp = (View) findViewById(R.id.lineResp);
+       VlblResp = (TextView) findViewById(R.id.VlblResp);
+       spnResp = (Spinner) findViewById(R.id.spnResp);
+       spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and ((julianday(date('now'))-julianday(bdate))/365.25)>10 and (extype is null or length(extype)=0)"));
+
+       secNote = (LinearLayout) findViewById(R.id.secNote);
+       lineNote = (View) findViewById(R.id.lineNote);
+       VlblNote = (TextView) findViewById(R.id.VlblNote);
+       txtNote = (EditText) findViewById(R.id.txtNote);
 
 
-         txtVill.setText(VILL);
-         txtVill.setFocusable(false);
-         txtBari.setText(BARI);
-         txtBari.setFocusable(false);
+       txtVill.setText(VILL);
+       txtVill.setFocusable(false);
+       txtBari.setText(BARI);
+       txtBari.setFocusable(false);
 
-         if(HH.equals(""))
-         {
-             HH=HHSerial();
-         }
-         txtHH.setText(HH);
-         txtHH.setFocusable(false);
+       if (HH.equals("")) {
+           HH = HHSerial();
+       }
+       txtHH.setText(HH);
+       txtHH.setFocusable(false);
 
 
 //         dtpEnDate.setOnTouchListener(new View.OnTouchListener() {
@@ -476,64 +470,68 @@ import Common.Global;
 //             }
 //         });
 
-         dtpVDate.setOnTouchListener(new View.OnTouchListener() {
-             @Override
-             public boolean onTouch(View v, MotionEvent event) {
+       dtpVDate.setOnTouchListener(new View.OnTouchListener() {
+           @Override
+           public boolean onTouch(View v, MotionEvent event) {
 
-                 final int DRAWABLE_RIGHT  = 2;
-                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                     if(event.getRawX() >= (dtpVDate.getRight() - dtpVDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                         VariableID = "dtpVDate"; showDialog(DATE_DIALOG);
+               final int DRAWABLE_RIGHT = 2;
+               if (event.getAction() == MotionEvent.ACTION_UP) {
+                   if (event.getRawX() >= (dtpVDate.getRight() - dtpVDate.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                       VariableID = "dtpVDate";
+                       showDialog(DATE_DIALOG);
 
-                      return true;
-                     }
-                 }
-                 return false;
-             }
-         });
+                       return true;
+                   }
+               }
+               return false;
+           }
+       });
 
-         //Hide all skip variables
-         secVStatusOth.setVisibility(View.GONE);
-         secReligion.setVisibility(View.GONE);
-         secMobileNo1.setVisibility(View.GONE);
-         secMobileNo2.setVisibility(View.GONE);
+       //Hide all skip variables
+       secVStatusOth.setVisibility(View.GONE);
+       secReligion.setVisibility(View.GONE);
+       secMobileNo1.setVisibility(View.GONE);
+       secMobileNo2.setVisibility(View.GONE);
 //         secHHHead.setVisibility(View.GONE);
 //         secTotMem.setVisibility(View.GONE);
 //         secTotRWo.setVisibility(View.GONE);
 
-         //***********************added by sakib********************************************
-         secMobileNo2.setVisibility(View.GONE);
-         txtMobileNo2.setVisibility(View.GONE);
+       //***********************added by sakib********************************************
+       secMobileNo2.setVisibility(View.GONE);
+       txtMobileNo2.setVisibility(View.GONE);
 
-         btnPlusMobile1= (Button) findViewById(R.id.btnPlusMobile1);
-         btnPlusMobile1.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 secMobileNo2.setVisibility(View.VISIBLE);
-                 txtMobileNo2.setVisibility(View.VISIBLE);
-             }
-         });
+       btnPlusMobile1 = (Button) findViewById(R.id.btnPlusMobile1);
+       btnPlusMobile1.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               secMobileNo2.setVisibility(View.VISIBLE);
+               txtMobileNo2.setVisibility(View.VISIBLE);
+           }
+       });
 
-         btnMinusMobile1= (Button) findViewById(R.id.btnMinusMobile1);
-         btnMinusMobile1.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 secMobileNo2.setVisibility(View.GONE);
-                 txtMobileNo2.setText("");
-                 txtMobileNo2.setVisibility(View.GONE);
-             }
-         });
-         //***********************************************************************************************************
+       btnMinusMobile1 = (Button) findViewById(R.id.btnMinusMobile1);
+       btnMinusMobile1.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               secMobileNo2.setVisibility(View.GONE);
+               txtMobileNo2.setText("");
+               txtMobileNo2.setVisibility(View.GONE);
+           }
+       });
+       //***********************************************************************************************************
 
-        Button cmdSave = (Button) findViewById(R.id.cmdSave);
-        cmdSave.setOnClickListener(new View.OnClickListener() {
-        public void onClick(View v) {
-            DataSave();
-        }});
+       Button cmdSave = (Button) findViewById(R.id.cmdSave);
+       cmdSave.setOnClickListener(new View.OnClickListener() {
+           public void onClick(View v) {
+               DataSave();
+           }
+       });
 
-         DataSearch(VILL,BARI,HH);
-         String SQL="";
-         g.setRsNo("");
+       DataSearch(VILL, BARI, HH);
+       String SQL = "";
+       g.setRsNo("");
+
+
 
          if (txtHHHead.getText().toString().length() != 0)
          {
@@ -870,7 +868,7 @@ import Common.Global;
 
          //*************************************************************************************
 
-         if (txtHHHead.getText().toString().length() != 0)
+         if(OldNewHH.equalsIgnoreCase("o"))
          {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
                  adb.setTitle("Close");
@@ -1015,7 +1013,7 @@ import Common.Global;
           }
 
          //For New household--------------------------------------------------------------
-         else  if (txtHHHead.getText().toString().length() != 0)
+         else  if(OldNewHH.equalsIgnoreCase("n"))
          {
                  String SQL = "";
                  try

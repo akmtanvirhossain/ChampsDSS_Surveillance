@@ -568,7 +568,7 @@ import Common.Global;
 
          for(int i=1;i<spnResp.getCount();i++)
          {
-             if(Global.Left(spnResp.getItemAtPosition(i).toString(), 2).equals(RsNo))
+             if(RsNo.equals(Global.Left(spnResp.getItemAtPosition(i).toString(),2)))
              {
                  spnResp.setSelection(i);
                  i=spnResp.getCount();
@@ -758,7 +758,8 @@ import Common.Global;
              final int Resp = Integer.parseInt(Global.Left(spnResp.getSelectedItem().toString(),2));
              g.setRsNo(Global.Left(spnResp.getSelectedItem().toString(),2));
 
-             if(Resp >= 1 & Resp <= 76) {
+             if(Resp >= 1 & Resp <= 76)
+             {
 
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
                  adb.setTitle("Close");
@@ -766,8 +767,10 @@ import Common.Global;
 
                  //have no events
                  //-----------------------------------------------------------------
-                 adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
-                     public void onClick(DialogInterface dialog, int which) {
+                 adb.setNegativeButton("না", new AlertDialog.OnClickListener()
+                 {
+                     public void onClick(DialogInterface dialog, int which)
+                     {
                          //save visit then close
                          String SQL = "";
                          try {
@@ -821,32 +824,33 @@ import Common.Global;
                  //-----------------------------------------------------------------
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
                  {
-                     public void onClick(DialogInterface dialog, int which) {
+                     public void onClick(DialogInterface dialog, int which)
+                     {
                          C.Save("Delete from tmpHousehold");
                          C.Save("Delete from tmpVisits");
                          C.Save("Delete from tmpMember");
                          C.Save("Delete from tmpSES");
                          C.Save("Delete from tmpPregHis");
-                         C.Save("Delete from tmpEvents");
+//                         C.Save("Delete from tmpEvents");
 
                          //-- -tmpHousehold Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                          String SQL = "";
-                         SQL = "Insert into tmpHousehold(Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate, Note)";
-                         SQL += " Select Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate, Note from Household";
+                         SQL = "Insert into tmpHousehold(Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)";
+                         SQL += " Select Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note from Household";
                          SQL += " where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
                          C.Save(SQL);
 
                          //-- -tmpVisits Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                          SQL = " Insert into tmpVisits";
-                         SQL += " (Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
-                         SQL += " Select Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Visits";
+                         SQL += " (Vill, Bari, HH, VDate, VStatus, VStatusOth, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+                         SQL += " Select Vill, Bari, HH, VDate, VStatus, VStatusOth, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Visits";
                          SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
                          C.Save(SQL);
 
                          //-- -tmpMember Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                          SQL = " Insert into tmpMember";
-                         SQL += " (Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
-                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Member";
+                         SQL += " (Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Member";
                          SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
                          C.Save(SQL);
 
@@ -855,12 +859,12 @@ import Common.Global;
                          SQL += " (Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
                          SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
                          SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
-                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
+                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
 
                          SQL += " Select Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
                          SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
                          SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
-                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from SES";
+                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload from SES";
                          SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
                          C.Save(SQL);
 
@@ -868,21 +872,21 @@ import Common.Global;
                          SQL = " Insert into tmpPregHis";
                          SQL += " (Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
                          SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
-                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
+                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
 
                          SQL += " Select Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
                          SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
-                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from PregHis";
+                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from PregHis";
                          SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
 
                          C.Save(SQL);
 
                          //-- -tmpEvents Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                         SQL = " Insert into tmpEvents";
-                         SQL += " (Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
-                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Events";
-                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-                         C.Save(SQL);
+//                         SQL = " Insert into tmpEvents";
+//                         SQL += " (Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
+//                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Events";
+//                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+//                         C.Save(SQL);
 
 //                         dialog.cancel();
 
@@ -956,7 +960,6 @@ import Common.Global;
 
                      C.Save(SQLSTR);
                      //------------------------------------------------------------------
-
                      g.setHouseholdNo(HH);
                  }
                  catch(Exception ex)

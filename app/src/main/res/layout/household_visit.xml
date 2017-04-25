@@ -487,7 +487,8 @@
                 style="@style/rowStyle0"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/lblVStatus"
@@ -526,7 +527,8 @@
                 style="@style/rowStyle0"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/lblVStatusOth"
@@ -570,7 +572,7 @@
                     android:id="@+id/lblResp"
                     android:layout_width="60sp"
                     android:layout_height="wrap_content"
-                    android:text="৮."
+                    android:text="৭."
                     android:textSize="20sp"
                     android:visibility="visible" />
 
@@ -608,7 +610,7 @@
                     android:id="@+id/lblNote"
                     android:layout_width="60sp"
                     android:layout_height="wrap_content"
-                    android:text="৯."
+                    android:text="৮."
                     android:textSize="20sp"
                     android:visibility="visible" />
 

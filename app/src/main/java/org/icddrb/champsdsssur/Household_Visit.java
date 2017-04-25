@@ -355,66 +355,61 @@ import Common.Global;
        ArrayAdapter<String> adptrVStatus = new ArrayAdapter<String>(this, R.layout.multiline_spinner_dropdown_item, listVStatus);
        spnVStatus.setAdapter(adptrVStatus);
 
-       spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-               if (spnVStatus.getSelectedItem().toString().length() == 0) return;
-               String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
+//       spnVStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//           @Override
+//           public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//               if (spnVStatus.getSelectedItem().toString().length() == 0) return;
+//               String spnData = Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
 
-               if (spnData.equalsIgnoreCase("1")) {
-                   secReligion.setVisibility(View.VISIBLE);
-                   lineReligion.setVisibility(View.VISIBLE);
-
-                   secMobileNo1.setVisibility(View.VISIBLE);
-                   lineMobileNo1.setVisibility(View.VISIBLE);
-
-                   secMobileNo2.setVisibility(View.GONE);
-                   lineMobileNo2.setVisibility(View.GONE);
-                   txtMobileNo2.setVisibility(View.GONE);
-
-                   secHHHead.setVisibility(View.VISIBLE);
-                   lineHHHead.setVisibility(View.VISIBLE);
-
-                   secResp.setVisibility(View.VISIBLE);
-                   lineResp.setVisibility(View.VISIBLE);
-
-//                     secNote.setVisibility(View.VISIBLE);
-//                     lineNote.setVisibility(View.VISIBLE);
-               } else {
-                   secReligion.setVisibility(View.GONE);
-                   lineReligion.setVisibility(View.GONE);
-                   spnReligion.setSelection(0);
-
-                   secMobileNo1.setVisibility(View.GONE);
-                   lineMobileNo1.setVisibility(View.GONE);
-                   txtMobileNo1.setText("");
-
-                   secMobileNo2.setVisibility(View.GONE);
-                   lineMobileNo2.setVisibility(View.GONE);
-                   txtMobileNo2.setText("");
-
-                   secResp.setVisibility(View.GONE);
-                   lineResp.setVisibility(View.GONE);
-                   spnResp.setSelection(0);
-
-//                     secNote.setVisibility(View.GONE);
-//                     lineNote.setVisibility(View.GONE);
-//                     txtNote.setText("");
-               }
-               if (!spnData.equalsIgnoreCase("9")) {
-                   secVStatusOth.setVisibility(View.GONE);
-                   lineVStatusOth.setVisibility(View.GONE);
-                   txtVStatusOth.setText("");
-               } else {
-                   secVStatusOth.setVisibility(View.VISIBLE);
-                   lineVStatusOth.setVisibility(View.VISIBLE);
-               }
-           }
-
-           @Override
-           public void onNothingSelected(AdapterView<?> parentView) {
-           }
-       });
+//               if (spnData.equalsIgnoreCase("1")) {
+//                   secReligion.setVisibility(View.VISIBLE);
+//                   lineReligion.setVisibility(View.VISIBLE);
+//
+//                   secMobileNo1.setVisibility(View.VISIBLE);
+//                   lineMobileNo1.setVisibility(View.VISIBLE);
+//
+//                   secMobileNo2.setVisibility(View.GONE);
+//                   lineMobileNo2.setVisibility(View.GONE);
+//                   txtMobileNo2.setVisibility(View.GONE);
+//
+//                   secHHHead.setVisibility(View.VISIBLE);
+//                   lineHHHead.setVisibility(View.VISIBLE);
+//
+//                   secResp.setVisibility(View.VISIBLE);
+//                   lineResp.setVisibility(View.VISIBLE);
+//
+//               } else {
+//                   secReligion.setVisibility(View.GONE);
+//                   lineReligion.setVisibility(View.GONE);
+//                   spnReligion.setSelection(0);
+//
+//                   secMobileNo1.setVisibility(View.GONE);
+//                   lineMobileNo1.setVisibility(View.GONE);
+//                   txtMobileNo1.setText("");
+//
+//                   secMobileNo2.setVisibility(View.GONE);
+//                   lineMobileNo2.setVisibility(View.GONE);
+//                   txtMobileNo2.setText("");
+//
+//                   secResp.setVisibility(View.GONE);
+//                   lineResp.setVisibility(View.GONE);
+//                   spnResp.setSelection(0);
+//
+//               }
+//               if (!spnData.equalsIgnoreCase("9")) {
+//                   secVStatusOth.setVisibility(View.GONE);
+//                   lineVStatusOth.setVisibility(View.GONE);
+//                   txtVStatusOth.setText("");
+//               } else {
+//                   secVStatusOth.setVisibility(View.VISIBLE);
+//                   lineVStatusOth.setVisibility(View.VISIBLE);
+//               }
+//           }
+//
+//           @Override
+//           public void onNothingSelected(AdapterView<?> parentView) {
+//           }
+//       });
 
        secVStatusOth = (LinearLayout) findViewById(R.id.secVStatusOth);
        lineVStatusOth = (View) findViewById(R.id.lineVStatusOth);
@@ -491,8 +486,6 @@ import Common.Global;
 
        //Hide all skip variables
        secVStatusOth.setVisibility(View.GONE);
-       secReligion.setVisibility(View.GONE);
-       secMobileNo1.setVisibility(View.GONE);
        secMobileNo2.setVisibility(View.GONE);
 //         secHHHead.setVisibility(View.GONE);
 //         secTotMem.setVisibility(View.GONE);
@@ -533,34 +526,28 @@ import Common.Global;
        String SQL = "";
        g.setRsNo("");
 
-
-
          if (OLDNEWHH.equals("old"))
          {
              lblHeading1.setVisibility(View.GONE);
              lblHeading.setVisibility(View.VISIBLE);
 
-             Visits_DataModel d1 = new Visits_DataModel();
-             String SQL1 = "Select * from Visits Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-
-             List<Visits_DataModel> data1 = d1.SelectAll(this, SQL1);
-             for (Visits_DataModel item1 : data1)
-             {
-                 dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));
-                 spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item1.getVStatus()));
-                 txtVStatusOth.setText(item1.getVStatusOth());
-                 txtNote.setText(item1.getNote());
-             }
-
              //Only eligible member from tmpMember Table
-             SQL = " Select ' ' union";
-             SQL += " Select '01-Member 1' union";
-             SQL += " Select '02-Member 2' union";
-             SQL += " Select '03-Member 3' union";
-             SQL += " Select '04-Member 4' union";
-             SQL += " Select '05-Member 5' union";
-             SQL += " Select '06-Member 6'";
+             String R = RsNo.length() == 0?"0":RsNo;
+             if(Integer.valueOf(R)>=1 & Integer.valueOf(R)<=76)
+             {
+                 SQL  =" Select ' ' union";
+                 SQL +=" Select '77-Entire household migrated-out' union";
+                 SQL +=" Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
+             }
+             else {
 
+                 SQL = " Select ' ' union";
+                 SQL += " Select '00-No Visit due to unavoidable situation' union";
+                 SQL += " Select '77-Entire household migrated-out' union";
+                 SQL += " Select '88-Refused to interview' union";
+                 SQL += " Select '99-All adult members absent' union";
+                 SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
+             }
          }
          else if (OLDNEWHH.equals("new"))
          {
@@ -575,8 +562,6 @@ import Common.Global;
                  SQL += " Select '05-Member 5' union";
                  SQL += " Select '06-Member 6'";
          }
-
-
          txtRnd.setText(ROUNDNO);
 
          spnResp.setAdapter(C.getArrayAdapter(SQL));
@@ -590,6 +575,7 @@ import Common.Global;
              }
          }
 
+
      }
      catch(Exception  e)
      {
@@ -597,7 +583,6 @@ import Common.Global;
          return;
      }
  }
-
      private String HHSerial()
      {
          String SL = C.ReturnSingleValue("Select (ifnull(max(cast(HH as int)),0)+1)SL from Household where Bari='"+BARI+"'"); //where ParticipantID='"+ ParticipantID +"'");
@@ -751,18 +736,6 @@ import Common.Global;
                dtpVDate.requestFocus();
              return;
            }
-         else if(spnVStatus.getSelectedItemPosition()==0  & spnVStatus.isShown())
-         {
-             Connection.MessageBox(Household_Visit.this, "Required field: সাক্ষাতকারের ফলাফল.");
-             spnVStatus.requestFocus();
-             return;
-         }
-         else if(txtVStatusOth.getText().toString().length()==0 & txtVStatusOth.isShown())
-         {
-             Connection.MessageBox(Household_Visit.this, "Required field: অন্যান্য উল্লেখ করুন");
-             txtVStatusOth.requestFocus();
-             return;
-         }
          else if(spnResp.getSelectedItemPosition()==0  & spnResp.isShown())
          {
              Connection.MessageBox(Household_Visit.this, "Required field: উত্তরদাতা.");
@@ -777,197 +750,78 @@ import Common.Global;
              return;
          }
 
-//         else if(txtEnType.getText().toString().length()==0 & secEnType.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Required field: তালিকাভুক্তির ধরন.");
-//             txtEnType.requestFocus();
-//             return;
-//           }
-//         else if(Integer.valueOf(txtEnType.getText().toString().length()==0 ? "20" : txtEnType.getText().toString()) < 20 || Integer.valueOf(txtEnType.getText().toString().length()==0 ? "25" : txtEnType.getText().toString()) > 25)
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Value should be between 20 and 25(তালিকাভুক্তির ধরন).");
-//             txtEnType.requestFocus();
-//             return;
-//           }
-//         DV = Global.DateValidate(dtpEnDate.getText().toString());
-//         if(DV.length()!=0 & secEnDate.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, DV);
-//             dtpEnDate.requestFocus();
-//             return;
-//           }
-//         else if(txtExType.getText().toString().length()==0 & secExType.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Required field: ExType.");
-//             txtExType.requestFocus();
-//             return;
-//           }
-//         else if(Integer.valueOf(txtExType.getText().toString().length()==0 ? "51" : txtExType.getText().toString()) < 51 || Integer.valueOf(txtExType.getText().toString().length()==0 ? "56" : txtExType.getText().toString()) > 56)
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Value should be between 51 and 56(ExType).");
-//             txtExType.requestFocus();
-//             return;
-//           }
-//         DV = Global.DateValidate(dtpExDate.getText().toString());
-//         if(DV.length()!=0 & secExDate.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, DV);
-//             dtpExDate.requestFocus();
-//             return;
-//           }
-//         else if(txtRnd.getText().toString().length()==0 & secRnd.isShown())
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Required field: রাউন্ড.");
-//             txtRnd.requestFocus();
-//             return;
-//           }
-//         else if(Integer.valueOf(txtRnd.getText().toString().length()==0 ? "1" : txtRnd.getText().toString()) < 1 || Integer.valueOf(txtRnd.getText().toString().length()==0 ? "99" : txtRnd.getText().toString()) > 99)
-//           {
-//             Connection.MessageBox(Household_Visit.this, "Value should be between 1 and 99(রাউন্ড).");
-//             txtRnd.requestFocus();
-//             return;
-//           }
-// ****************************************************************************************************************************
-//         String SQL = "";
-//         RadioButton rb;
-//
-//         Household_DataModel objSave = new Household_DataModel();
-//         objSave.setVill(txtVill.getText().toString());
-//         objSave.setBari(txtBari.getText().toString());
-//         objSave.setHH(txtHH.getText().toString());
-//         objSave.setReligion((spnReligion.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnReligion.getSelectedItem().toString(), "-")));
-//         objSave.setMobileNo1(txtMobileNo1.getText().toString());
-//         objSave.setMobileNo2(txtMobileNo2.getText().toString());
-//         objSave.setHHHead(txtHHHead.getText().toString());
-//         objSave.setTotRWo("");
-//         objSave.setEnType("20");
-//         objSave.setEnDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
-//         objSave.setExType("");
-//         objSave.setExDate("");
-//         objSave.setRnd(ROUNDNO);
-//         objSave.setEnDt(Global.DateTimeNowYMDHMS());
-//         objSave.setStartTime(STARTTIME);
-//         objSave.setEndTime(g.CurrentTime24());
-//         objSave.setDeviceID(DEVICEID);
-//         objSave.setEntryUser(ENTRYUSER); //from data entry user list
-//
-//         String status = objSave.SaveUpdateData(this);
-//
-//         //******************************************************************************************************************
-//         Visits_DataModel objSave1 = new Visits_DataModel();
-//         objSave1.setVill(txtVill.getText().toString());
-//         objSave1.setBari(txtBari.getText().toString());
-//         objSave1.setHH(txtHH.getText().toString());
-//         objSave1.setVDate(dtpVDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpVDate.getText().toString()) : dtpVDate.getText().toString());
-//         objSave1.setVStatus((spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-")));
-//
-//         objSave1.setVStatusOth(txtVStatusOth.getText().toString());
-//         objSave1.setNote(txtNote.getText().toString());
-//
-//         objSave1.setResp((spnResp.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnResp.getSelectedItem().toString(), "-")));
-//
-//         objSave1.setRnd(ROUNDNO);
-//         objSave1.setEnDt(Global.DateTimeNowYMDHMS());
-//         objSave1.setStartTime(STARTTIME);
-//         objSave1.setEndTime(g.CurrentTime24());
-//         objSave1.setDeviceID(DEVICEID);
-//         objSave1.setEntryUser(ENTRYUSER); //from data entry user list
-//         objSave1.setLat(MySharedPreferences.getValue(Household_Visit.this,"lat"));
-//         objSave1.setLon(MySharedPreferences.getValue(Household_Visit.this,"lon"));
-//
-//         String status1 = objSave1.SaveUpdateData(this);
-
          //*************************************************************************************
 
          if(OLDNEWHH.equalsIgnoreCase("old"))
          {
+
+             final int Resp = Integer.parseInt(Global.Left(spnResp.getSelectedItem().toString(),2));
+             g.setRsNo(Global.Left(spnResp.getSelectedItem().toString(),2));
+
+             if(Resp >= 1 & Resp <= 76) {
+
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
                  adb.setTitle("Close");
                  adb.setMessage("এই খানায় কি কোন ধরনের ইভেন্ট পরিবর্তন হয়েছে[হ্যাঁ/না]?");
 
-             //have no events
-             //-----------------------------------------------------------------
-             adb.setNegativeButton("না", new AlertDialog.OnClickListener()
-             {
-                 public void onClick(DialogInterface dialog, int which)
-                 {
+                 //have no events
+                 //-----------------------------------------------------------------
+                 adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int which) {
+                         //save visit then close
+                         String SQL = "";
+                         try {
+                             if (!C.Existence("Select * from Visits where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'")) {
+                                 SQL = "Insert into Visits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
+                                 SQL += "'" + VILL + "',";
+                                 SQL += "'" + BARI + "',";
+                                 SQL += "'" + HH + "',";
+                                 SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                                 SQL += "'" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',"; //RespNo
+                                 SQL += "'" + ROUNDNO + "',"; //round
+                                 SQL += "'" + STARTTIME + "',"; //StartTime
+                                 SQL += "'" + g.CurrentTime24() + "',"; //EndTime
+                                 SQL += "'" + DEVICEID + "',"; //DeviceID
+                                 SQL += "'" + ENTRYUSER + "',"; //EntryUser code
+                                 SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+                                 SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                                 SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                                 SQL += "'" + 2 + "',"; //Upload
+                                 SQL += "'" + txtNote.getText() + "')";
+                             } else {
+                                 SQL = "Update Visits set upload='2',";
+                                 SQL += " Resp='" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',";
+                                 SQL += " VDate='" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                                 SQL += " Note='" + txtNote.getText() + "',";
+                                 SQL += " EntryUser='" + ENTRYUSER + "'"; //EntryUser code
+                                 SQL += " where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'";
+                             }
+                             C.Save(SQL);
 
-                     //save visit then close
-                     String SQL = "";
-                     try
-                     {
-                         if(!C.Existence("Select * from Visits where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
-                         {
-                             SQL = "Insert into Visits(Vill, Bari, HH, Resp, EntryUser, EnDt, VDate, Rnd, Lat, Lon,Upload,Note)Values(";
-                             SQL += "'"+ VILL +"',";
-                             SQL += "'"+ BARI +"',";
-                             SQL += "'"+ HH +"',";
-                             SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                             SQL += "'"+ g.getUserId() +"',"; //DC code
-                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //Enter Date
-                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
-                             SQL += "'"+ ROUNDNO +"',"; //round
-                             SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
-                             SQL += "'"+ Double.toString(currentLongitude) +"',";   //lon
-                             SQL += "'"+ txtNote.getText() +"')";
-                         }
-                         else
-                         {
-                             SQL = "Update Visits set upload='2',";
-                             SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                             SQL += " VDate='"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
-                             SQL += " Note='"+ txtNote.getText() +"',";
-                             SQL += " EntryUser='"+ g.getUserId() +"'"; //DC code
-                             SQL += " where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
-                         }
-                         C.Save(SQL);
+                             C.Save("Update Household set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
 
-                         C.Save("Update Household set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH ) +"'");
-
-                         //Update temp table: 16 may 2016
-                         if(!C.Existence("Select * from tmpVisits where vill||bari||hh='"+ VILL+BARI+HH  +"' and Rnd='"+ ROUNDNO +"'"))
-                         {
-                             SQL = "Insert into tmpVisits(Vill, Bari, Hh, Resp, VDate, Rnd)Values(";
-                             SQL += "'"+ VILL +"',";
-                             SQL += "'"+ BARI +"',";
-                             SQL += "'"+ HH +"',";
-                             SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
-                             SQL += "'"+ ROUNDNO +"')"; //round
-                         }
-                         else
-                         {
-                             SQL = "Update tmpVisits set ";
-                             SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                             SQL += " VDate='"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"'"; //date of visit
-                             SQL += " where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
-                         }
-                         C.Save(SQL);
 //                         BlockList(false, Global.Left(BariList.getSelectedItem().toString(),4));
-                     }
-                     catch(Exception ex)
-                     {
-                         Connection.MessageBox(Household_Visit.this, ex.getMessage());
-                         return;
-                     }
-//                     dialog1.cancel();
-                     dialog.cancel();
+                         } catch (Exception ex) {
+                             Connection.MessageBox(Household_Visit.this, ex.getMessage());
+                             return;
+                         }
+                         dialog.cancel();
 
-                     Intent returnIntent = new Intent();
-                     returnIntent.putExtra("res", "hh");
-                     setResult(Activity.RESULT_OK, returnIntent);
-                     Connection.MessageBox(Household_Visit.this, "Saved Successfully");
-                     finish();
-                 }
-             });
+                         Intent returnIntent = new Intent();
+                         returnIntent.putExtra("res", "hh");
+                         setResult(Activity.RESULT_OK, returnIntent);
+                         Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                         finish();
+                     }
+                 });
+
 //             adb.show();
 
-             //have events
-             //-----------------------------------------------------------------
+                 //have events
+                 //-----------------------------------------------------------------
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
                  {
-                     public void onClick(DialogInterface dialog, int which)
-                     {
+                     public void onClick(DialogInterface dialog, int which) {
                          C.Save("Delete from tmpHousehold");
                          C.Save("Delete from tmpVisits");
                          C.Save("Delete from tmpMember");
@@ -975,63 +829,78 @@ import Common.Global;
                          C.Save("Delete from tmpPregHis");
                          C.Save("Delete from tmpEvents");
 
+                         //-- -tmpHousehold Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                          String SQL = "";
                          SQL = "Insert into tmpHousehold(Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate, Note)";
                          SQL += " Select Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate, Note from Household";
-                         SQL += " where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
+                         SQL += " where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
                          C.Save(SQL);
 
-                         /*//save visit then continue
-                         if(!C.Existence("Select * from tmpVisits where Vill||Bari||HH='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
-                         {
-                             SQL = "Insert into tmpVisits(Vill, Bari, HH, Resp, EntryUser, EnDt, VDate, Rnd,Lat,Lon,upload,Note)Values(";
-                             SQL += "'"+ VILL +"',";
-                             SQL += "'"+ Bari +"',";
-                             SQL += "'"+ HH +"',";
-                             SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                             SQL += "'"+ g.getUserId() +"',"; //DC code
-                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //Enter date
-                             SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
-                             SQL += "'"+ ROUNDNO +"',"; //round
-                             SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
-                             SQL += "'"+ Double.toString(currentLongitude) +"',";   //lon
-                             SQL += "'"+ txtNote.getText() +"')";
-
-                         }
-                         else
-                         {
-                             SQL = "Update tmpVisits set upload='2',";
-                             SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                             SQL += " VDate='"+ Global.DateConvertYMD(VisitDate.getText().toString()) +"',"; //date of visit
-                             SQL += " Note='"+ txtNote.getText() +"',";
-                             SQL += " EntryUser='"+ g.getUserId() +"'"; //DC code
-                             SQL += " where vill||bari||hh='"+ Vill+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
-                         }
+                         //-- -tmpVisits Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                         SQL = " Insert into tmpVisits";
+                         SQL += " (Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
+                         SQL += " Select Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Visits";
+                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
                          C.Save(SQL);
-                         C.Save("Update tmpHousehold set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH) +"'");
-                         C.Save("Update Household set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH) +"'");
 
-*/
-                         //finish();
-//                         dialog1.cancel();
-                         dialog.cancel();
+                         //-- -tmpMember Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                         SQL = " Insert into tmpMember";
+                         SQL += " (Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
+                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Member";
+                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+                         C.Save(SQL);
 
-                         String VS = spnVStatus.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnVStatus.getSelectedItem().toString(), "-");
-                         if(VS.equals("1"))
-                         {
-                             Intent returnIntent = new Intent();
-                             returnIntent.putExtra("res", "hh");
-                             setResult(Activity.RESULT_OK, returnIntent);
+                         //-- -tmpSES Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                         SQL = " Insert into tmpSES";
+                         SQL += " (Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
+                         SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
+                         SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
+                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
 
-                             finish();
-                             Intent f1;
-                             f1 = new Intent(getApplicationContext(), Member_list.class);
-                             f1.putExtras(IDbundle);
-                             startActivityForResult(f1, 1);
-                         }
+                         SQL += " Select Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
+                         SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
+                         SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
+                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from SES";
+                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+                         C.Save(SQL);
+
+                         //-- -tmpPregHis. History-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                         SQL = " Insert into tmpPregHis";
+                         SQL += " (Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
+                         SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
+                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
+
+                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
+                         SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
+                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from PregHis";
+                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+
+                         C.Save(SQL);
+
+                         //-- -tmpEvents Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                         SQL = " Insert into tmpEvents";
+                         SQL += " (Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
+                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Events";
+                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+                         C.Save(SQL);
+
+//                         dialog.cancel();
+
+                         Intent returnIntent = new Intent();
+                         returnIntent.putExtra("res", "hh");
+                         setResult(Activity.RESULT_OK, returnIntent);
+
+                         finish();
+                         Intent f1;
+                         f1 = new Intent(getApplicationContext(), Member_list.class);
+                         f1.putExtras(IDbundle);
+                         startActivityForResult(f1, 1);
+//
                      }
                  });
+
                  adb.show();
+             }
           }
 
          //For New household--------------------------------------------------------------

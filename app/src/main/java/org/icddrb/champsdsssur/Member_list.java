@@ -465,11 +465,11 @@ public class Member_list extends Activity {
 
         if(Status.equals("current"))
         {
-            cur1 = C.ReadData("select sno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from ttrans where status='e' and Vill||Bari||HH='"+ Household +"' order by sno,Rnd,evtype");
+            cur1 = C.ReadData("select MSlNo,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from tmpEvents where Vill||Bari||HH='"+ Household +"' order by MSlNo,Rnd,evtype");
         }
         else if(Status.equals("all"))
         {
-            cur1 = C.ReadData("select sno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from Events where Vill||Bari||HH='"+ Household +"' order by sno,Rnd,evtype");
+            cur1 = C.ReadData("select MSlNo,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from Events where Vill||Bari||HH='"+ Household +"' order by MSlNo,Rnd,evtype");
         }
 
         if(cur1.getCount()==0)
@@ -487,7 +487,7 @@ public class Member_list extends Activity {
         while(!cur1.isAfterLast())
         {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("sno", cur1.getString(cur1.getColumnIndex("Sno")));
+            map.put("MSlNo", cur1.getString(cur1.getColumnIndex("MSlNo")));
             map.put("pno", cur1.getString(cur1.getColumnIndex("pno")));
             map.put("evtype", cur1.getString(cur1.getColumnIndex("EvType")));
             map.put("evdate", cur1.getString(cur1.getColumnIndex("EvDate")));
@@ -501,8 +501,8 @@ public class Member_list extends Activity {
             evmylist.add(map);
 
             eList = new SimpleAdapter(Member_list.this, evmylist, R.layout.eventlistrow,
-                    new String[] {"sno"},
-                    new int[] {R.id.e_sno});
+                    new String[] {"MSlNo"},
+                    new int[] {R.id.e_MSlNo});
             evList.setAdapter(new EventListAdapter(this,d,evList));
             i+=1;
             cur1.moveToNext();
@@ -544,7 +544,7 @@ public class Member_list extends Activity {
 
             final HashMap<String, String> o = (HashMap<String, String>) eList.getItem(position);
 
-            TextView e_sno=(TextView)convertView.findViewById(R.id.e_sno);
+            TextView e_MSlNo=(TextView)convertView.findViewById(R.id.e_MSlNo);
             TextView e_evtype=(TextView)convertView.findViewById(R.id.e_evtype);
             TextView e_evdate=(TextView)convertView.findViewById(R.id.e_evdate);
             TextView e_info1=(TextView)convertView.findViewById(R.id.e_info1);
@@ -553,7 +553,7 @@ public class Member_list extends Activity {
             TextView e_info4=(TextView)convertView.findViewById(R.id.e_info4);
             TextView e_round=(TextView)convertView.findViewById(R.id.e_round);
 
-            e_sno.setText(o.get("sno").toString());
+            e_MSlNo.setText(o.get("MSlNo").toString());
             e_evtype.setText(o.get("evtype").toString());
             e_evdate.setText(Global.DateConvertDMY(o.get("evdate").toString()));
             e_info1.setText(o.get("info1").toString());
@@ -569,7 +569,7 @@ public class Member_list extends Activity {
                 public void onClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                     adb.setTitle("Event Delete");
-                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("sno").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি মুছে ফেলতে চান [Yes/No]?");
+                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("MSlNo").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি মুছে ফেলতে চান [Yes/No]?");
 
                     adb.setNegativeButton("No", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
@@ -579,20 +579,20 @@ public class Member_list extends Activity {
                     adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
                             String HH = VILL+BARI;
-                            String SN = o.get("sno").toString();
+                            String SN = o.get("MSlNo").toString();
                             String EV = o.get("evtype").toString();
                             String EVD= o.get("evdate").toString();
 
                             //event specific update
                             if(EV.equals("12"))
                             {
-                                C.Save("Delete from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Delete from tmpEvents where  vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                             }
                             else if(EV.equals("21") | EV.equals("22") | EV.equals("23"))
                             {
                                 //C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Delete from tTrans where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
-                                C.Save("Delete from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("Delete from tmpMember where  vill||bari||hh='"+ HH +"' and MSlNo='"+ SN +"'");
+                                C.Save("Delete from tmpEvents where  vill||bari||hh='"+ HH +"' and MSlNo='"+ SN +"'");
                             }
                             else if(EV.equals("25"))
                             {
@@ -600,9 +600,9 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("31") | EV.equals("32") | EV.equals("33") | EV.equals("34"))
                             {
-                                String PMS = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set MS='"+ PMS +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                String PMS = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MSlNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MSlNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set MS='"+ PMS +"' where  vill||bari||hh='"+ HH +"' and MSlNo='"+ SN +"'");
                             }
                             else if(EV.equals("40") | EV.equals("49"))
                             {

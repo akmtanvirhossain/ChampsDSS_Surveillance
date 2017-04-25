@@ -19,7 +19,7 @@
 					        android:layout_height="wrap_content"
 					        android:text="edit"/>
 										    
-				    <TextView android:id="@+id/e_sno" android:layout_column="2"
+				    <TextView android:id="@+id/e_MSlNo" android:layout_column="2"
 				        android:text="SNo"				
 						android:textSize="18sp" android:gravity="center"
 						android:layout_width="60sp"

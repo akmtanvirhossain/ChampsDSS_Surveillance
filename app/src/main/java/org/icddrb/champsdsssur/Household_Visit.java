@@ -887,7 +887,6 @@ import Common.Global;
 //                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Events";
 //                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
 //                         C.Save(SQL);
-
 //                         dialog.cancel();
 
                          Intent returnIntent = new Intent();
@@ -899,77 +898,201 @@ import Common.Global;
                          f1 = new Intent(getApplicationContext(), Member_list.class);
                          f1.putExtras(IDbundle);
                          startActivityForResult(f1, 1);
-//
                      }
                  });
 
                  adb.show();
              }
-          }
 
-         //For New household--------------------------------------------------------------
-         else  if(OLDNEWHH.equalsIgnoreCase("new"))
-         {
+             else if(Resp == 77)
+             {
+                 //transfer data for events
+//                 DataForEvents(Vill+Bari+HH,Rnd,OldNewHH);
+
+                 String SQL = "";
+                 //save visit then continue
+                 if(!C.Existence("Select * from tmpVisits where  vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
+                 {
+                     SQL = "Insert into Visits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
+                     SQL += "'" + VILL + "',";
+                     SQL += "'" + BARI + "',";
+                     SQL += "'" + HH + "',";
+                     SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                     SQL += "'" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',"; //RespNo
+                     SQL += "'" + ROUNDNO + "',"; //round
+                     SQL += "'" + STARTTIME + "',"; //StartTime
+                     SQL += "'" + g.CurrentTime24() + "',"; //EndTime
+                     SQL += "'" + DEVICEID + "',"; //DeviceID
+                     SQL += "'" + ENTRYUSER + "',"; //EntryUser code
+                     SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+                     SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                     SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                     SQL += "'" + 2 + "',"; //Upload
+                     SQL += "'" + txtNote.getText() + "')";
+                 } else {
+                     SQL = "Update Visits set upload='2',";
+                     SQL += " Resp='" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',";
+                     SQL += " VDate='" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                     SQL += " Note='" + txtNote.getText() + "',";
+                     SQL += " EntryUser='" + ENTRYUSER + "'"; //EntryUser code
+                     SQL += " where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'";
+                 }
+                 C.Save(SQL);
+
+                 C.Save("Update Household set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
+
+//                 dialog.cancel();
+                 //transfer data for events
+
+                 //call member event form
+                 Intent returnIntent = new Intent();
+                 returnIntent.putExtra("res", "hh");
+                 setResult(Activity.RESULT_OK, returnIntent);
+
+                 finish();
+                 Intent f1;
+                 f1 = new Intent(getApplicationContext(), Member_list.class);
+                 f1.putExtras(IDbundle);
+                 startActivityForResult(f1, 1);
+
+             }
+             else if(Resp == 0 | Resp == 88 | Resp == 99)
+             {
+                 //save visit then cancel
                  String SQL = "";
                  try
                  {
-                     C.Save("delete from tmpVisits where Vill||Bari||HH = '"+ Vill+BARI+HH +"'");
-
-                     //save visit then continue
-                     if(!C.Existence("Select * from tmpVisits where  vill||bari||hh='"+ Vill+BARI+HH+"' and Rnd='"+ ROUNDNO +"'"))
+                     if(!C.Existence("Select * from Visits where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
                      {
-                         SQL = "Insert into tmpVisits(Vill, Bari, Hh, Resp, EntryUser, EnDt, VDate, Rnd,Lat,Lon,upload,Note)Values(";
+                         SQL = "Insert into Visits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
+                         SQL += "'" + VILL + "',";
+                         SQL += "'" + BARI + "',";
+                         SQL += "'" + HH + "',";
+                         SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                         SQL += "'" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',"; //RespNo
+                         SQL += "'" + ROUNDNO + "',"; //round
+                         SQL += "'" + STARTTIME + "',"; //StartTime
+                         SQL += "'" + g.CurrentTime24() + "',"; //EndTime
+                         SQL += "'" + DEVICEID + "',"; //DeviceID
+                         SQL += "'" + ENTRYUSER + "',"; //EntryUser code
+                         SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+                         SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                         SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                         SQL += "'" + 2 + "',"; //Upload
+                         SQL += "'" + txtNote.getText() + "')";
+                     } else {
+                         SQL = "Update Visits set upload='2',";
+                         SQL += " Resp='" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',";
+                         SQL += " VDate='" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                         SQL += " Note='" + txtNote.getText() + "',";
+                         SQL += " EntryUser='" + ENTRYUSER + "'"; //EntryUser code
+                         SQL += " where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'";
+                     }
+                     C.Save(SQL);
+                     C.Save("Update Household set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
+
+
+                     //update temp table
+                     if(!C.Existence("Select * from tmpVisits where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
+                     {
+                         SQL = "Insert into Visits_temp(Vill, Bari, Hh, Resp, Vdate, Rnd)Values(";
                          SQL += "'"+ VILL +"',";
                          SQL += "'"+ BARI +"',";
                          SQL += "'"+ HH +"',";
                          SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                         SQL += "'"+ g.getUserId() +"',"; //DC code
-                         SQL += "'"+ Global.DateConvertYMD(VisitDate.getText().toString()) +"',"; //enter date
-                         SQL += "'"+ Global.DateConvertYMD(VisitDate.getText().toString()) +"',"; //date of visit
-                         SQL += "'"+ ROUNDNO +"',"; //round
-                         SQL += "'"+ Double.toString(currentLatitude) +"',";    //lat
-                         SQL += "'"+ Double.toString(currentLongitude) +"',";   //lon
-                         SQL += "'"+ txtNote.getText() +"')";
+                         SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
+                         SQL += "'"+ ROUNDNO +"')"; //round
+
                      }
                      else
                      {
-                         SQL = "Update tmpVisits set upload='2',";
+                         SQL = "Update tmpVisits set ";
                          SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                         SQL += " VDate='"+ Global.DateConvertYMD(VisitDate.getText().toString()) +"',"; //date of visit
-                         SQL += " Note='"+ txtNote.getText() +"',";
-                         SQL += " EntryUser='"+ g.getUserId() +"'"; //DC code
+                         SQL += " VDate='"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"'"; //date of visit
                          SQL += " where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
                      }
                      C.Save(SQL);
 
-                     String SQLSTR="";
-                     //------------------------------------------------------------------
-                     SQLSTR = "Insert into tmpHousehold";
-                     SQLSTR += "(Vill, Bari, HH, EnType, EnDate, ExType, ExDate, Religion, HHHead, EnDt,Rnd)Values(";
-                     SQLSTR += "'"+ Vill +"',";
-                     SQLSTR += "'"+ Bari +"',";
-                     SQLSTR += "'"+ HH +"',";
-                     SQLSTR += "'',"; //EnType
-                     SQLSTR += "'',";
-                     SQLSTR += "'',"; //ExType
-                     SQLSTR += "'',";
-                     SQLSTR += "'"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"',"; //Religion
-                     SQLSTR += "'',"; //HH Head
-                     SQLSTR += "'"+ Global.DateTimeNowYMDHMS() +"',"; //Enter Date
-                     SQLSTR += "'"+ g.getRoundNumber() +"','2','')";   //Round number
-
-                     C.Save(SQLSTR);
-                     //------------------------------------------------------------------
-                     g.setHouseholdNo(HH);
+                     Intent returnIntent = new Intent();
+                     returnIntent.putExtra("res", "hh");
+                     setResult(Activity.RESULT_OK, returnIntent);
+                     Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                     finish();
+//                     BlockList(false, Global.Left(BariList.getSelectedItem().toString(),4));
                  }
                  catch(Exception ex)
                  {
                      Connection.MessageBox(Household_Visit.this, ex.getMessage());
                      return;
                  }
+//                 dialog.cancel();
+             }
+          }
+
+         //For New household--------------------------------------------------------------
+         else  if(OLDNEWHH.equalsIgnoreCase("new"))
+         {
+             final int Resp = Integer.parseInt(Global.Left(spnResp.getSelectedItem().toString(),2));
+
+             if(Resp >= 1 & Resp <= 76)
+             {
+                 String SQL = "";
+                 try {
+                     C.Save("delete from tmpVisits where Vill||Bari||HH = '" + Vill + BARI + HH + "'");
+
+                     //save visit then continue
+                     if (!C.Existence("Select * from tmpVisits where  vill||bari||hh='" + Vill + BARI + HH + "' and Rnd='" + ROUNDNO + "'")) {
+                         SQL = "Insert into Visits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
+                         SQL += "'" + VILL + "',";
+                         SQL += "'" + BARI + "',";
+                         SQL += "'" + HH + "',";
+                         SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                         SQL += "'" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',"; //RespNo
+                         SQL += "'" + ROUNDNO + "',"; //round
+                         SQL += "'" + STARTTIME + "',"; //StartTime
+                         SQL += "'" + g.CurrentTime24() + "',"; //EndTime
+                         SQL += "'" + DEVICEID + "',"; //DeviceID
+                         SQL += "'" + ENTRYUSER + "',"; //EntryUser code
+                         SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+                         SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                         SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                         SQL += "'" + 2 + "',"; //Upload
+                         SQL += "'" + txtNote.getText() + "')";
+                     } else {
+                         SQL = "Update Visits set upload='2',";
+                         SQL += " Resp='" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',";
+                         SQL += " VDate='" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                         SQL += " Note='" + txtNote.getText() + "',";
+                         SQL += " EntryUser='" + ENTRYUSER + "'"; //EntryUser code
+                         SQL += " where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'";
+                     }
+                     C.Save(SQL);
+
+                     String SQLSTR = "";
+                     //------------------------------------------------------------------
+                     SQLSTR = "Insert into tmpHousehold";
+                     SQLSTR += "(Vill, Bari, HH, EnType, EnDate, ExType, ExDate, Religion, HHHead, EnDt,Rnd)Values(";
+                     SQLSTR += "'" + Vill + "',";
+                     SQLSTR += "'" + Bari + "',";
+                     SQLSTR += "'" + HH + "',";
+                     SQLSTR += "'',"; //EnType
+                     SQLSTR += "'',";
+                     SQLSTR += "'',"; //ExType
+                     SQLSTR += "'',";
+                     SQLSTR += "'" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "',"; //Religion
+                     SQLSTR += "'" + HHHead + "',";
+                     SQLSTR += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                     SQLSTR += "'" + ROUNDNO + "','2','')";   //Round number
+
+                     C.Save(SQLSTR);
+                     //------------------------------------------------------------------
+                     g.setHouseholdNo(HH);
+                 } catch (Exception ex) {
+                     Connection.MessageBox(Household_Visit.this, ex.getMessage());
+                     return;
+                 }
 
                  //transfer data for events
-//                 DataForEvents(Vill+Bari+HH,Rnd,OldNewHH);
 
                  //call member event form
                  Bundle IDbundle = new Bundle();
@@ -981,10 +1104,10 @@ import Common.Global;
 
                  g.setMigVillage("");
 
-                 Intent f11 = new Intent(getApplicationContext(),Member_list.class);
+                 Intent f11 = new Intent(getApplicationContext(), Member_list.class);
                  f11.putExtras(IDbundle);
                  startActivity(f11);
-
+             }
          }
      }
      catch(Exception  e)

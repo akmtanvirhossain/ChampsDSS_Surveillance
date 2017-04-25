@@ -221,6 +221,7 @@ public class Household_list extends Activity  {
                  IDbundle.putString("Vill", V);
                  IDbundle.putString("Bari", B);
                  IDbundle.putString("HH", "");
+                 IDbundle.putString("OldNew", "new");
 
                  Intent intent = new Intent(getApplicationContext(),Household_Visit.class);
                  intent.putExtras(IDbundle);
@@ -621,6 +622,7 @@ public class Household_list extends Activity  {
                IDbundle.putString("roundno",ROUNDNO);
                IDbundle.putString("cluster",CLUSTER);
                IDbundle.putString("block",BLOCK);
+                IDbundle.putString("OldNew", "old");
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);
                f1.putExtras(IDbundle);

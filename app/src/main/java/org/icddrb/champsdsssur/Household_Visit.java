@@ -57,8 +57,7 @@ import Common.Global;
     boolean networkAvailable=false;
     Location currentLocation; 
     double currentLatitude,currentLongitude;
-     private String RsNo;
-     private String OldNewHH;
+
 
      //Disabled Back/Home key
     //--------------------------------------------------------------------------------------------------
@@ -195,6 +194,9 @@ import Common.Global;
     static String CLUSTER = "";
     static String BLOCK   = "";
 
+     static String RsNo = "";
+     static String OLDNEWHH = "";
+
      ListView list;
      ImageButton btnVDate;
      EditText VisitDate;
@@ -220,7 +222,7 @@ import Common.Global;
        ROUNDNO = IDbundle.getString("roundno");
        CLUSTER = IDbundle.getString("cluster");
        BLOCK = IDbundle.getString("block");
-
+       OLDNEWHH = IDbundle.getString("OldNew");
 
        TableName = "Household";
 
@@ -533,7 +535,7 @@ import Common.Global;
 
 
 
-         if (txtHHHead.getText().toString().length() != 0)
+         if (OLDNEWHH.equals("old"))
          {
              lblHeading1.setVisibility(View.GONE);
              lblHeading.setVisibility(View.VISIBLE);
@@ -550,8 +552,17 @@ import Common.Global;
                  txtNote.setText(item1.getNote());
              }
 
+             //Only eligible member from tmpMember Table
+             SQL = " Select ' ' union";
+             SQL += " Select '01-Member 1' union";
+             SQL += " Select '02-Member 2' union";
+             SQL += " Select '03-Member 3' union";
+             SQL += " Select '04-Member 4' union";
+             SQL += " Select '05-Member 5' union";
+             SQL += " Select '06-Member 6'";
+
          }
-         else if (txtHHHead.getText().toString().length() == 0)
+         else if (OLDNEWHH.equals("new"))
          {
                  lblHeading1.setVisibility(View.VISIBLE);
                  lblHeading.setVisibility(View.GONE);
@@ -565,7 +576,7 @@ import Common.Global;
                  SQL += " Select '06-Member 6'";
          }
 
-         final EditText txtRnd = (EditText)findViewById(R.id.txtRnd);
+
          txtRnd.setText(ROUNDNO);
 
          spnResp.setAdapter(C.getArrayAdapter(SQL));
@@ -868,7 +879,7 @@ import Common.Global;
 
          //*************************************************************************************
 
-         if(OldNewHH.equalsIgnoreCase("o"))
+         if(OLDNEWHH.equalsIgnoreCase("old"))
          {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
                  adb.setTitle("Close");
@@ -957,9 +968,20 @@ import Common.Global;
                  {
                      public void onClick(DialogInterface dialog, int which)
                      {
+                         C.Save("Delete from tmpHousehold");
+                         C.Save("Delete from tmpVisits");
+                         C.Save("Delete from tmpMember");
+                         C.Save("Delete from tmpSES");
+                         C.Save("Delete from tmpPregHis");
+                         C.Save("Delete from tmpEvents");
 
                          String SQL = "";
-                         //save visit then continue
+                         SQL = "Insert into tmpHousehold(Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate, Note)";
+                         SQL += " Select Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate, Note from Household";
+                         SQL += " where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
+                         C.Save(SQL);
+
+                         /*//save visit then continue
                          if(!C.Existence("Select * from tmpVisits where Vill||Bari||HH='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
                          {
                              SQL = "Insert into tmpVisits(Vill, Bari, HH, Resp, EntryUser, EnDt, VDate, Rnd,Lat,Lon,upload,Note)Values(";
@@ -989,7 +1011,7 @@ import Common.Global;
                          C.Save("Update tmpHousehold set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH) +"'");
                          C.Save("Update Household set upload='2', Religion='"+ Global.Left(spnReligion.getSelectedItem().toString(),1) +"' where vill||bari||hh='"+ (VILL+BARI+HH) +"'");
 
-
+*/
                          //finish();
 //                         dialog1.cancel();
                          dialog.cancel();
@@ -1013,7 +1035,7 @@ import Common.Global;
           }
 
          //For New household--------------------------------------------------------------
-         else  if(OldNewHH.equalsIgnoreCase("n"))
+         else  if(OLDNEWHH.equalsIgnoreCase("new"))
          {
                  String SQL = "";
                  try

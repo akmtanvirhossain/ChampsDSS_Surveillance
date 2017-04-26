@@ -575,7 +575,7 @@ import Common.Global;
                  i=spnResp.getCount();
              }
          }
-
+//       DataSearch(VILL, BARI, HH);
 
      }
      catch(Exception  e)
@@ -832,7 +832,7 @@ import Common.Global;
                          C.Save("Delete from tmpMember");
                          C.Save("Delete from tmpSES");
                          C.Save("Delete from tmpPregHis");
-//                         C.Save("Delete from tmpEvents");
+                         C.Save("Delete from tmpEvents");
 
                          //-- -tmpHousehold Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                          String SQL = "";
@@ -883,12 +883,12 @@ import Common.Global;
                          C.Save(SQL);
 
                          //-- -tmpEvents Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//                         SQL = " Insert into tmpEvents";
-//                         SQL += " (Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate)";
-//                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate from Events";
-//                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-//                         C.Save(SQL);
-//                         dialog.cancel();
+                         SQL = " Insert into tmpEvents";
+                         SQL += " (Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Events";
+                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+                         C.Save(SQL);
+                         dialog.cancel();
 
                          Intent returnIntent = new Intent();
                          returnIntent.putExtra("res", "HH");
@@ -1130,7 +1130,6 @@ import Common.Global;
          return;
      }
  }
-
 
  private void DataSearch(String Vill, String Bari, String HH)
      {

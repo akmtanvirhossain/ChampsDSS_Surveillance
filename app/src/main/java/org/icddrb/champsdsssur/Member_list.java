@@ -137,7 +137,7 @@ public class Member_list extends Activity {
 
          final String VillName=C.ReturnSingleValue("Select VName from Village where VCode='"+  VILL  +"'");
          lblVillName.setText(": "+ VillName);
-//         lblVillName.setText(": "+IDbundle.getString("VillName"));
+
          lblBariName.setText(": "+BARI+", "+IDbundle.getString("BariName"));
 
          txtVill.setText(VILL);
@@ -407,7 +407,6 @@ public class Member_list extends Activity {
     {
         try
         {
-
             final Dialog dialog = new Dialog(Member_list.this);
             dialog.setTitle("Events List");
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

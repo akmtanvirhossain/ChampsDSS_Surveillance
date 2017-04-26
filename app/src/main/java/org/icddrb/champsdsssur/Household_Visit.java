@@ -48,6 +48,7 @@ import Common.Global;
  import Utility.MySharedPreferences;
 
  import static org.icddrb.champsdsssur.R.id.Bari;
+ import static org.icddrb.champsdsssur.R.id.BariN;
  import static org.icddrb.champsdsssur.R.id.HHHead;
  import static org.icddrb.champsdsssur.R.id.Rnd;
  import static org.icddrb.champsdsssur.R.id.Vill;
@@ -811,7 +812,7 @@ import Common.Global;
                          dialog.cancel();
 
                          Intent returnIntent = new Intent();
-                         returnIntent.putExtra("res", "hh");
+                         returnIntent.putExtra("res", "HH");
                          setResult(Activity.RESULT_OK, returnIntent);
                          Connection.MessageBox(Household_Visit.this, "Saved Successfully");
                          finish();
@@ -890,7 +891,7 @@ import Common.Global;
 //                         dialog.cancel();
 
                          Intent returnIntent = new Intent();
-                         returnIntent.putExtra("res", "hh");
+                         returnIntent.putExtra("res", "HH");
                          setResult(Activity.RESULT_OK, returnIntent);
 
                          finish();
@@ -946,7 +947,7 @@ import Common.Global;
 
                  //call member event form
                  Intent returnIntent = new Intent();
-                 returnIntent.putExtra("res", "hh");
+                 returnIntent.putExtra("res", "HH");
                  setResult(Activity.RESULT_OK, returnIntent);
 
                  finish();
@@ -995,7 +996,7 @@ import Common.Global;
                      //update temp table
                      if(!C.Existence("Select * from tmpVisits where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
                      {
-                         SQL = "Insert into Visits_temp(Vill, Bari, Hh, Resp, Vdate, Rnd)Values(";
+                         SQL = "Insert into tmpVisits(Vill, Bari, Hh, Resp, Vdate, Rnd)Values(";
                          SQL += "'"+ VILL +"',";
                          SQL += "'"+ BARI +"',";
                          SQL += "'"+ HH +"',";
@@ -1014,7 +1015,7 @@ import Common.Global;
                      C.Save(SQL);
 
                      Intent returnIntent = new Intent();
-                     returnIntent.putExtra("res", "hh");
+                     returnIntent.putExtra("res", "HH");
                      setResult(Activity.RESULT_OK, returnIntent);
                      Connection.MessageBox(Household_Visit.this, "Saved Successfully");
                      finish();
@@ -1072,19 +1073,33 @@ import Common.Global;
                      //------------------------------------------------------------------
                      SQLSTR = "Insert into tmpHousehold";
                      SQLSTR += "(Vill, Bari, HH, EnType, EnDate, ExType, ExDate, Religion, HHHead, EnDt,Rnd)Values(";
-                     SQLSTR += "'" + Vill + "',";
-                     SQLSTR += "'" + Bari + "',";
+                     SQLSTR += "'" + VILL + "',";
+                     SQLSTR += "'" + BARI + "',";
                      SQLSTR += "'" + HH + "',";
                      SQLSTR += "'',"; //EnType
                      SQLSTR += "'',";
                      SQLSTR += "'',"; //ExType
                      SQLSTR += "'',";
                      SQLSTR += "'" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "',"; //Religion
-                     SQLSTR += "'" + HHHead + "',";
+                     SQLSTR += "'" + txtHHHead.getText() + "',";
                      SQLSTR += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
-                     SQLSTR += "'" + ROUNDNO + "','2','')";   //Round number
+                     SQLSTR += "'" + ROUNDNO + "')";   //Round number
 
                      C.Save(SQLSTR);
+
+                     Bundle IDbundle = new Bundle();
+                     IDbundle.putString("Vill", VILL);
+                     IDbundle.putString("Bari", BARI);
+                     IDbundle.putString("BariName", BName);
+                     IDbundle.putString("HH", HH);
+                     IDbundle.putString("totalmember", "0");
+                     IDbundle.putString("VDate", dtpVDate.getText().toString());
+
+                     g.setMigVillage("");//
+                     Intent f2 = new Intent(getApplicationContext(),Member_list.class);
+                     f2.putExtras(IDbundle);
+                     startActivityForResult(f2, 1);
+
                      //------------------------------------------------------------------
                      g.setHouseholdNo(HH);
                  } catch (Exception ex) {
@@ -1095,18 +1110,17 @@ import Common.Global;
                  //transfer data for events
 
                  //call member event form
-                 Bundle IDbundle = new Bundle();
-                 IDbundle.putString("vill", VILL);
-                 IDbundle.putString("bari", BARI);
-                 IDbundle.putString("bariname", BName);
-                 IDbundle.putString("hhno", HH);
-                 IDbundle.putString("vdate", VisitDate.getText().toString());
 
-                 g.setMigVillage("");
+//                 Intent returnIntent = new Intent();
+//                 returnIntent.putExtra("res", "HH");
+//                 setResult(Activity.RESULT_OK, returnIntent);
+//
+//                 finish();
+//                 Intent f1;
+//                 f1 = new Intent(getApplicationContext(), Member_list.class);
+//                 f1.putExtras(IDbundle);
+//                 startActivityForResult(f1, 1);
 
-                 Intent f11 = new Intent(getApplicationContext(), Member_list.class);
-                 f11.putExtras(IDbundle);
-                 startActivity(f11);
              }
          }
      }

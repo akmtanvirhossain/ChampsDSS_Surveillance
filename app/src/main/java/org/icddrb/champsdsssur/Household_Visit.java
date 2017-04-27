@@ -523,7 +523,7 @@ import Common.Global;
            }
        });
 
-       DataSearch(VILL, BARI, HH);
+
        String SQL = "";
        g.setRsNo("");
 
@@ -567,16 +567,16 @@ import Common.Global;
 
          spnResp.setAdapter(C.getArrayAdapter(SQL));
 
-         for(int i=1;i<spnResp.getCount();i++)
+         /*for(int i=1;i<spnResp.getCount();i++)
          {
              if(RsNo.equals(Global.Left(spnResp.getItemAtPosition(i).toString(),2)))
              {
                  spnResp.setSelection(i);
                  i=spnResp.getCount();
              }
-         }
-//       DataSearch(VILL, BARI, HH);
+         }*/
 
+       DataSearch(VILL, BARI, HH);
      }
      catch(Exception  e)
      {
@@ -586,17 +586,11 @@ import Common.Global;
  }
      private String HHSerial()
      {
-         String SL = C.ReturnSingleValue("Select (ifnull(max(cast(HH as int)),0)+1)SL from Household where Bari='"+BARI+"'"); //where ParticipantID='"+ ParticipantID +"'");
-         int length=SL.length();
-         String s = "";
-         for(int i=0;i<2-length;i++)
-         {
-             s+="0";
-         }
-         SL=s+SL;
-         return SL;
+         String SL = C.ReturnSingleValue("Select (ifnull(max(cast(HH as int)),0)+1)SL from Household where Vill='"+ VILL +"' and Bari='"+BARI+"'"); //where ParticipantID='"+ ParticipantID +"'");
+         return Global.Right("00"+SL,2);
      }
-     public void BlockList(Boolean heading, String BariCode)
+
+   /*  public void BlockList(Boolean heading, String BariCode)
      {
          final ListView list = (ListView) findViewById(R.id.lstData);
          mylist = new ArrayList<HashMap<String, String>>();
@@ -680,6 +674,9 @@ import Common.Global;
          }
 
      }
+     */
+
+
  private void DataSave()
  {
    try
@@ -803,7 +800,6 @@ import Common.Global;
 
                              C.Save("Update Household set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
 
-//                         BlockList(false, Global.Left(BariList.getSelectedItem().toString(),4));
                          } catch (Exception ex) {
                              Connection.MessageBox(Household_Visit.this, ex.getMessage());
                              return;
@@ -818,7 +814,6 @@ import Common.Global;
                      }
                  });
 
-//             adb.show();
 
                  //have events
                  //-----------------------------------------------------------------
@@ -826,78 +821,45 @@ import Common.Global;
                  {
                      public void onClick(DialogInterface dialog, int which)
                      {
-                         C.Save("Delete from tmpHousehold");
-                         C.Save("Delete from tmpVisits");
-                         C.Save("Delete from tmpMember");
-                         C.Save("Delete from tmpSES");
-                         C.Save("Delete from tmpPregHis");
-                         C.Save("Delete from tmpEvents");
-
-                         //-- -tmpHousehold Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                          String SQL = "";
-                         SQL = "Insert into tmpHousehold(Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)";
-                         SQL += " Select Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note from Household";
-                         SQL += " where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-                         C.Save(SQL);
+                         TransferDataToTemp();
 
-                         //-- -tmpVisits Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                         SQL = " Insert into tmpVisits";
-                         SQL += " (Vill, Bari, HH, VDate, VStatus, VStatusOth, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
-                         SQL += " Select Vill, Bari, HH, VDate, VStatus, VStatusOth, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Visits";
-                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-                         C.Save(SQL);
+                             if (!C.Existence("Select * from tmpVisits where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'")) {
+                                 SQL = "Insert into tmpVisits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
+                                 SQL += "'" + VILL + "',";
+                                 SQL += "'" + BARI + "',";
+                                 SQL += "'" + HH + "',";
+                                 SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                                 SQL += "'" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',"; //RespNo
+                                 SQL += "'" + ROUNDNO + "',"; //round
+                                 SQL += "'" + STARTTIME + "',"; //StartTime
+                                 SQL += "'" + g.CurrentTime24() + "',"; //EndTime
+                                 SQL += "'" + DEVICEID + "',"; //DeviceID
+                                 SQL += "'" + ENTRYUSER + "',"; //EntryUser code
+                                 SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+                                 SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                                 SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                                 SQL += "'" + 2 + "',"; //Upload
+                                 SQL += "'" + txtNote.getText() + "')";
+                             } else {
+                                 SQL = "Update tmpVisits set upload='2',";
+                                 SQL += " Resp='" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',";
+                                 SQL += " VDate='" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
+                                 SQL += " Note='" + txtNote.getText() + "',";
+                                 SQL += " EntryUser='" + ENTRYUSER + "'"; //EntryUser code
+                                 SQL += " where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'";
+                             }
+                             C.Save(SQL);
 
-                         //-- -tmpMember Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                         SQL = " Insert into tmpMember";
-                         SQL += " (Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
-                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Member";
-                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-                         C.Save(SQL);
+                             C.Save("Update tmpHousehold set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
 
-                         //-- -tmpSES Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                         SQL = " Insert into tmpSES";
-                         SQL += " (Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
-                         SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
-                         SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
-                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
 
-                         SQL += " Select Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
-                         SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
-                         SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
-                         SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload from SES";
-                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-                         C.Save(SQL);
-
-                         //-- -tmpPregHis. History-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                         SQL = " Insert into tmpPregHis";
-                         SQL += " (Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
-                         SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
-                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
-
-                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
-                         SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
-                         SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from PregHis";
-                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-
-                         C.Save(SQL);
-
-                         //-- -tmpEvents Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                         SQL = " Insert into tmpEvents";
-                         SQL += " (Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
-                         SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Events";
-                         SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
-                         C.Save(SQL);
-                         dialog.cancel();
-
-                         Intent returnIntent = new Intent();
-                         returnIntent.putExtra("res", "HH");
-                         setResult(Activity.RESULT_OK, returnIntent);
-
-                         finish();
+                             finish();
                          Intent f1;
                          f1 = new Intent(getApplicationContext(), Member_list.class);
                          f1.putExtras(IDbundle);
-                         startActivityForResult(f1, 1);
+                         startActivity(f1);
+                         //startActivityForResult(f1, 1);
                      }
                  });
 
@@ -906,14 +868,11 @@ import Common.Global;
 
              else if(Resp == 77)
              {
-                 //transfer data for events
-//                 DataForEvents(Vill+Bari+HH,Rnd,OldNewHH);
-
                  String SQL = "";
-                 //save visit then continue
-                 if(!C.Existence("Select * from tmpVisits where  vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
-                 {
-                     SQL = "Insert into Visits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
+                 TransferDataToTemp();
+
+                 if (!C.Existence("Select * from tmpVisits where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'")) {
+                     SQL = "Insert into tmpVisits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
                      SQL += "'" + VILL + "',";
                      SQL += "'" + BARI + "',";
                      SQL += "'" + HH + "',";
@@ -930,7 +889,7 @@ import Common.Global;
                      SQL += "'" + 2 + "',"; //Upload
                      SQL += "'" + txtNote.getText() + "')";
                  } else {
-                     SQL = "Update Visits set upload='2',";
+                     SQL = "Update tmpVisits set upload='2',";
                      SQL += " Resp='" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',";
                      SQL += " VDate='" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
                      SQL += " Note='" + txtNote.getText() + "',";
@@ -939,31 +898,20 @@ import Common.Global;
                  }
                  C.Save(SQL);
 
-                 C.Save("Update Household set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
+                 C.Save("Update tmpHousehold set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
 
-//                 dialog.cancel();
-                 //transfer data for events
-
-                 //call member event form
-                 Intent returnIntent = new Intent();
-                 returnIntent.putExtra("res", "HH");
-                 setResult(Activity.RESULT_OK, returnIntent);
 
                  finish();
                  Intent f1;
                  f1 = new Intent(getApplicationContext(), Member_list.class);
                  f1.putExtras(IDbundle);
-                 startActivityForResult(f1, 1);
-
+                 startActivity(f1);
              }
              else if(Resp == 0 | Resp == 88 | Resp == 99)
              {
-                 //save visit then cancel
                  String SQL = "";
-                 try
-                 {
-                     if(!C.Existence("Select * from Visits where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
-                     {
+                 try {
+                     if (!C.Existence("Select * from Visits where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'")) {
                          SQL = "Insert into Visits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
                          SQL += "'" + VILL + "',";
                          SQL += "'" + BARI + "',";
@@ -989,43 +937,18 @@ import Common.Global;
                          SQL += " where vill||bari||hh='" + VILL + BARI + HH + "' and Rnd='" + ROUNDNO + "'";
                      }
                      C.Save(SQL);
+
                      C.Save("Update Household set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
 
-
-                     //update temp table
-                     if(!C.Existence("Select * from tmpVisits where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'"))
-                     {
-                         SQL = "Insert into tmpVisits(Vill, Bari, Hh, Resp, Vdate, Rnd)Values(";
-                         SQL += "'"+ VILL +"',";
-                         SQL += "'"+ BARI +"',";
-                         SQL += "'"+ HH +"',";
-                         SQL += "'"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                         SQL += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',"; //date of visit
-                         SQL += "'"+ ROUNDNO +"')"; //round
-
-                     }
-                     else
-                     {
-                         SQL = "Update tmpVisits set ";
-                         SQL += " Resp='"+ Global.Left(spnResp.getSelectedItem().toString(),2) +"',";
-                         SQL += " VDate='"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"'"; //date of visit
-                         SQL += " where vill||bari||hh='"+ VILL+BARI+HH +"' and Rnd='"+ ROUNDNO +"'";
-                     }
-                     C.Save(SQL);
-
-                     Intent returnIntent = new Intent();
-                     returnIntent.putExtra("res", "HH");
-                     setResult(Activity.RESULT_OK, returnIntent);
-                     Connection.MessageBox(Household_Visit.this, "Saved Successfully");
-                     finish();
-//                     BlockList(false, Global.Left(BariList.getSelectedItem().toString(),4));
-                 }
-                 catch(Exception ex)
-                 {
+                 } catch (Exception ex) {
                      Connection.MessageBox(Household_Visit.this, ex.getMessage());
                      return;
                  }
-//                 dialog.cancel();
+                 Intent returnIntent = new Intent();
+                 returnIntent.putExtra("res", "HH");
+                 setResult(Activity.RESULT_OK, returnIntent);
+                 Connection.MessageBox(Household_Visit.this, "Saved Successfully");
+                 finish();
              }
           }
 
@@ -1034,15 +957,11 @@ import Common.Global;
          {
              final int Resp = Integer.parseInt(Global.Left(spnResp.getSelectedItem().toString(),2));
 
-             if(Resp >= 1 & Resp <= 76)
-             {
                  String SQL = "";
                  try {
-                     C.Save("delete from tmpVisits where Vill||Bari||HH = '" + Vill + BARI + HH + "'");
-
                      //save visit then continue
                      if (!C.Existence("Select * from tmpVisits where  vill||bari||hh='" + Vill + BARI + HH + "' and Rnd='" + ROUNDNO + "'")) {
-                         SQL = "Insert into Visits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
+                         SQL = "Insert into tmpVisits(Vill, Bari, HH, VDate, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)Values(";
                          SQL += "'" + VILL + "',";
                          SQL += "'" + BARI + "',";
                          SQL += "'" + HH + "',";
@@ -1059,7 +978,7 @@ import Common.Global;
                          SQL += "'" + 2 + "',"; //Upload
                          SQL += "'" + txtNote.getText() + "')";
                      } else {
-                         SQL = "Update Visits set upload='2',";
+                         SQL = "Update tmpVisits set upload='2',";
                          SQL += " Resp='" + Global.Left(spnResp.getSelectedItem().toString(), 2) + "',";
                          SQL += " VDate='" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //date of visit
                          SQL += " Note='" + txtNote.getText() + "',";
@@ -1076,12 +995,12 @@ import Common.Global;
                      SQLSTR += "'" + BARI + "',";
                      SQLSTR += "'" + HH + "',";
                      SQLSTR += "'',"; //EnType
-                     SQLSTR += "'',";
+                     SQLSTR += "'"+ Global.DateConvertYMD(dtpVDate.getText().toString()) +"',";
                      SQLSTR += "'',"; //ExType
                      SQLSTR += "'',";
                      SQLSTR += "'" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "',"; //Religion
                      SQLSTR += "'" + txtHHHead.getText() + "',";
-                     SQLSTR += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                     SQLSTR += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                      SQLSTR += "'" + ROUNDNO + "')";   //Round number
 
                      C.Save(SQLSTR);
@@ -1090,6 +1009,7 @@ import Common.Global;
                      IDbundle.putString("Vill", VILL);
                      IDbundle.putString("Bari", BARI);
                      IDbundle.putString("BariName", BName);
+                     IDbundle.putString("HHHead",txtHHHead.getText().toString());
                      IDbundle.putString("HH", HH);
                      IDbundle.putString("totalmember", "0");
                      IDbundle.putString("VDate", dtpVDate.getText().toString());
@@ -1097,8 +1017,7 @@ import Common.Global;
                      g.setMigVillage("");//
                      Intent f2 = new Intent(getApplicationContext(),Member_list.class);
                      f2.putExtras(IDbundle);
-                     startActivityForResult(f2, 1);
-
+                     startActivity(f2);
                      //------------------------------------------------------------------
                      g.setHouseholdNo(HH);
                  } catch (Exception ex) {
@@ -1106,21 +1025,6 @@ import Common.Global;
                      return;
                  }
 
-                 //transfer data for events
-
-                 //call member event form
-
-//                 Intent returnIntent = new Intent();
-//                 returnIntent.putExtra("res", "HH");
-//                 setResult(Activity.RESULT_OK, returnIntent);
-//
-//                 finish();
-//                 Intent f1;
-//                 f1 = new Intent(getApplicationContext(), Member_list.class);
-//                 f1.putExtras(IDbundle);
-//                 startActivityForResult(f1, 1);
-
-             }
          }
      }
      catch(Exception  e)
@@ -1146,6 +1050,7 @@ import Common.Global;
              txtMobileNo1.setText(item.getMobileNo1());
              txtMobileNo2.setText(item.getMobileNo2());
              txtHHHead.setText(item.getHHHead());
+             txtNote.setText(item.getNote());
 //             txtTotMem.setText(item.getTotMem());
 //             txtTotRWo.setText(item.getTotRWo());
 
@@ -1161,7 +1066,7 @@ import Common.Global;
                    dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));
                    spnVStatus.setSelection(Global.SpinnerItemPositionAnyLength(spnVStatus, item1.getVStatus()));
                    txtVStatusOth.setText(item1.getVStatusOth());
-                   txtNote.setText(item1.getNote());
+                   //txtNote.setText(item1.getNote());
                    spnResp.setSelection(Global.SpinnerItemPositionAnyLength(spnResp, item1.getResp()));
                }
 
@@ -1294,4 +1199,72 @@ import Common.Global;
      super.onDestroy();
      turnGPSOff();
  }
+
+
+ private void TransferDataToTemp()
+ {
+     C.Save("Delete from tmpHousehold");
+     C.Save("Delete from tmpVisits");
+     C.Save("Delete from tmpMember");
+     C.Save("Delete from tmpSES");
+     C.Save("Delete from tmpPregHis");
+     C.Save("Delete from tmpEvents");
+
+     //-- -tmpHousehold Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     String SQL = "";
+     SQL = "Insert into tmpHousehold(Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note)";
+     SQL += " Select Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, Note from Household";
+     SQL += " where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+     C.Save(SQL);
+
+     //-- -tmpVisits Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     SQL = " Insert into tmpVisits";
+     SQL += " (Vill, Bari, HH, VDate, VStatus, VStatusOth, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+     SQL += " Select Vill, Bari, HH, VDate, VStatus, VStatusOth, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Visits";
+     SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+     C.Save(SQL);
+
+     //-- -tmpMember Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     SQL = " Insert into tmpMember";
+     SQL += " (Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+     SQL += " Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Member";
+     SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+     C.Save(SQL);
+
+     //-- -tmpSES Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     SQL = " Insert into tmpSES";
+     SQL += " (Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
+     SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
+     SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
+     SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+
+     SQL += " Select Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
+     SQL += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
+     SQL += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime,";
+     SQL += " DeviceID, EntryUser, Lat, Lon, EnDt, Upload from SES";
+     SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+     C.Save(SQL);
+
+     //-- -tmpPregHis. History-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     SQL = " Insert into tmpPregHis";
+     SQL += " (Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
+     SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
+     SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+
+     SQL += " Select Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo,";
+     SQL += " SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut,";
+     SQL += " CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from PregHis";
+     SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+
+     C.Save(SQL);
+
+     //-- -tmpEvents Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     SQL = " Insert into tmpEvents";
+     SQL += " (Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+     SQL += " Select Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Events";
+     SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
+     C.Save(SQL);
+ }
+
+
 }

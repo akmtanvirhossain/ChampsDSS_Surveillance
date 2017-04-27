@@ -147,7 +147,7 @@ public class Member_list extends Activity {
          secMenu= (LinearLayout) findViewById(R.id.secMenu);
          secMenu.setVisibility(View.VISIBLE);
 
-         TableName = "Member";
+         TableName = "tmpMember";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
@@ -320,6 +320,7 @@ public class Member_list extends Activity {
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
+
          DataSearch(VILL,BARI,HH);
          DataStatus();
      }

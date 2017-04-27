@@ -202,35 +202,89 @@ import android.content.Context;
 
 
         public List<Household_DataModel> SelectAll(Context context, String SQL)
-        {
-            Connection C = new Connection(context);
-            List<Household_DataModel> data = new ArrayList<Household_DataModel>();
-            Household_DataModel d = new Household_DataModel();
-            Cursor cur = C.ReadData(SQL);
+     {
+         Connection C = new Connection(context);
+         List<Household_DataModel> data = new ArrayList<Household_DataModel>();
+         Household_DataModel d = new Household_DataModel();
+         Cursor cur = C.ReadData(SQL);
 
-            cur.moveToFirst();
-            while(!cur.isAfterLast())
-            {
-                d = new Household_DataModel();
-                d._Vill = cur.getString(cur.getColumnIndex("Vill"));
-                d._Bari = cur.getString(cur.getColumnIndex("Bari"));
-                d._HH = cur.getString(cur.getColumnIndex("HH"));
-                d._Religion = cur.getString(cur.getColumnIndex("Religion"));
-                d._MobileNo1 = cur.getString(cur.getColumnIndex("MobileNo1"));
-                d._MobileNo2 = cur.getString(cur.getColumnIndex("MobileNo2"));
-                d._HHHead = cur.getString(cur.getColumnIndex("HHHead"));
-                d._TotMem = cur.getString(cur.getColumnIndex("TotMem"));
-                d._TotRWo = cur.getString(cur.getColumnIndex("TotRWo"));
-                d._EnType = cur.getString(cur.getColumnIndex("EnType"));
-                d._EnDate = cur.getString(cur.getColumnIndex("EnDate"));
-                d._ExType = cur.getString(cur.getColumnIndex("ExType"));
-                d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
-                d._Rnd = cur.getString(cur.getColumnIndex("Rnd"));
-                data.add(d);
+         cur.moveToFirst();
+         while(!cur.isAfterLast())
+         {
+             d = new Household_DataModel();
+             d._Vill = cur.getString(cur.getColumnIndex("Vill"));
+             d._Bari = cur.getString(cur.getColumnIndex("Bari"));
+             d._HH = cur.getString(cur.getColumnIndex("HH"));
+             d._Religion = cur.getString(cur.getColumnIndex("Religion"));
+             d._MobileNo1 = cur.getString(cur.getColumnIndex("MobileNo1"));
+             d._MobileNo2 = cur.getString(cur.getColumnIndex("MobileNo2"));
+             d._HHHead = cur.getString(cur.getColumnIndex("HHHead"));
+             d._TotMem = cur.getString(cur.getColumnIndex("TotMem"));
+             d._TotRWo = cur.getString(cur.getColumnIndex("TotRWo"));
+             d._EnType = cur.getString(cur.getColumnIndex("EnType"));
+             d._EnDate = cur.getString(cur.getColumnIndex("EnDate"));
+             d._ExType = cur.getString(cur.getColumnIndex("ExType"));
+             d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
+             d._Rnd = cur.getString(cur.getColumnIndex("Rnd"));
+             d._Note = cur.getString(cur.getColumnIndex("Note"));
+             data.add(d);
 
-                cur.moveToNext();
-            }
-            cur.close();
-          return data;
-        }
+             cur.moveToNext();
+         }
+         cur.close();
+         return data;
+     }
+
+     private String _VStatus = "";
+     public String getVStatus(){
+         return _VStatus;
+     }
+     private String _VStatusOth = "";
+     public String getVStatusOth(){
+         return _VStatusOth;
+     }
+     private String _Resp = "";
+     public String getResp(){
+         return _Resp;
+     }
+
+     public List<Household_DataModel> SelectAllVisit(Context context, String SQL)
+     {
+         Connection C = new Connection(context);
+         List<Household_DataModel> data = new ArrayList<Household_DataModel>();
+         Household_DataModel d = new Household_DataModel();
+         Cursor cur = C.ReadData(SQL);
+
+         cur.moveToFirst();
+         while(!cur.isAfterLast())
+         {
+             d = new Household_DataModel();
+             d._Vill = cur.getString(cur.getColumnIndex("Vill"));
+             d._Bari = cur.getString(cur.getColumnIndex("Bari"));
+             d._HH = cur.getString(cur.getColumnIndex("HH"));
+             d._Religion = cur.getString(cur.getColumnIndex("Religion"));
+             d._MobileNo1 = cur.getString(cur.getColumnIndex("MobileNo1"));
+             d._MobileNo2 = cur.getString(cur.getColumnIndex("MobileNo2"));
+             d._HHHead = cur.getString(cur.getColumnIndex("HHHead"));
+             d._TotMem = cur.getString(cur.getColumnIndex("TotMem"));
+             d._TotRWo = cur.getString(cur.getColumnIndex("TotRWo"));
+             d._EnType = cur.getString(cur.getColumnIndex("EnType"));
+             d._EnDate = cur.getString(cur.getColumnIndex("EnDate"));
+             d._ExType = cur.getString(cur.getColumnIndex("ExType"));
+             d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
+             d._Rnd = cur.getString(cur.getColumnIndex("Rnd"));
+             d._Note = cur.getString(cur.getColumnIndex("Note"));
+
+             d._VStatus = cur.getString(cur.getColumnIndex("vstatus"));
+             d._VStatusOth = cur.getString(cur.getColumnIndex("vstatusoth"));
+             d._Resp = cur.getString(cur.getColumnIndex("resp"));
+
+
+             data.add(d);
+
+             cur.moveToNext();
+         }
+         cur.close();
+         return data;
+     }
  }

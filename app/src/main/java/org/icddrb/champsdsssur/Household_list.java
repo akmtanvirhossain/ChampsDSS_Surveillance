@@ -221,29 +221,13 @@ public class Household_list extends Activity  {
                  IDbundle.putString("Bari", B);
                  IDbundle.putString("HH", "");
                  IDbundle.putString("OldNew", "new");
+                 IDbundle.putString("BariName",spnBari.getSelectedItem().toString().split("-")[1]);
 
                  Intent intent = new Intent(getApplicationContext(),Household_Visit.class);
                  intent.putExtras(IDbundle);
                  startActivityForResult(intent, 1);
              }
          });
-
-         /*Button cmdHHList= (Button) findViewById((R.id.cmdHHList));
-         cmdHHList.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari")){
-                     Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
-                     return;
-                 }
-                 String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
-                 String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
-                 IDbundle.putString("Vill", V);
-                 IDbundle.putString("Bari", B);
-                 IDbundle.putString("HH", "");
-                 HHListForm(VILL, BARI);
-             }
-         });*/
 
          Button cmdGPS= (Button) findViewById((R.id.cmdGPS));
          cmdGPS.setOnClickListener(new View.OnClickListener() {
@@ -484,11 +468,14 @@ public class Household_list extends Activity  {
            Household_DataModel d = new Household_DataModel();
             String SQL ;
 
-            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, h.Note,h.Rnd,b.BariName";
-            SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari and b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Bari Like('%"+ Bari +"%')";
+            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, ifnull(h.Note,'')Note,h.Rnd,b.BariName,";
+            SQL += " ifnull(v.VStatus,'') as vstatus,ifnull(v.vstatusoth,'') vstatusoth,ifnull(v.Resp,'') as resp";
+            SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+            SQL += " left outer join Visits v on h.Vill=v.Vill and h.Bari=v.Bari and h.HH=v.HH and v.Rnd='"+ ROUNDNO +"'";
+            SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Bari Like('%"+ Bari +"%')";
 
 
-            List<Household_DataModel> data = d.SelectAll(this, SQL);
+            List<Household_DataModel> data = d.SelectAllVisit(this, SQL);
             dataList.clear();
 
             dataAdapter = null;
@@ -515,6 +502,11 @@ public class Household_list extends Activity  {
                  map.put("Rnd", item.getRnd());
                  map.put("Note", item.getNote());
                  map.put("sl", i.toString());
+
+                 map.put("vstatus",item.getVStatus());
+                 map.put("vstatusoth",item.getVStatusOth());
+                 map.put("resp",item.getResp());
+
                  i+=1;
                  totalHH+=1;
                  dataList.add(map);
@@ -556,6 +548,10 @@ public class Household_list extends Activity  {
          final TextView Visit  = (TextView)convertView.findViewById(R.id.Visit);
          final TextView VNote = (TextView)convertView.findViewById(R.id.VisitNote);
          final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
+
+         final LinearLayout secRowVStatus = (LinearLayout)convertView.findViewById(R.id.secRowVStatus);
+         final TextView lblVStatus = (TextView)convertView.findViewById(R.id.lblVStatus);
+
 //         final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
 
@@ -569,40 +565,37 @@ public class Household_list extends Activity  {
          String VisitNote=C.ReturnSingleValue("Select Note from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
          VNote.setText(VisitNote);
 
-//         Toast.makeText(context,"Select Resp from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'"+ "", Toast.LENGTH_SHORT).show();
-         String Resp=C.ReturnSingleValue("Select Resp from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
+         secRowVStatus.setVisibility(View.GONE);
+         String resp = o.get("resp").toString().length()==0?"":o.get("resp").toString();
+         if(resp.length()==0){
+             Bari.setTextColor(Color.RED);
+             if(o.get("Note").toString().length()>0){
+                 secRowVStatus.setVisibility(View.VISIBLE);
+                 lblVStatus.setText(o.get("Note"));
+             }
+         }else if(Integer.parseInt(resp)>=1 & Integer.parseInt(resp)<=70){
+             Bari.setTextColor(Color.GREEN);
+             if(o.get("Note").toString().length()>0){
+                 secRowVStatus.setVisibility(View.VISIBLE);
+                 lblVStatus.setText(o.get("Note"));
+             }
+         }else if(resp.equals("00")){
+             Bari.setTextColor(Color.GREEN);
+             secRowVStatus.setVisibility(View.VISIBLE);
+             lblVStatus.setText("No visit due to unavoidable situation, "+ o.get("Note"));
+         }else if(resp.equals("77")){
+             secRowVStatus.setVisibility(View.VISIBLE);
+             lblVStatus.setText("Entire household migrated out, "+ o.get("Note"));
+         }else if(resp.equals("88")){
+             secRowVStatus.setVisibility(View.VISIBLE);
+             lblVStatus.setText("Regused to interview, "+ o.get("Note"));
+         }else if(resp.equals("99")){
+             secRowVStatus.setVisibility(View.VISIBLE);
+             lblVStatus.setText("All adult members absent, "+ o.get("Note"));
+         }
 
          TotMem.setText(o.get("TotMem"));
 
-//            if( Integer.valueOf(Resp) >= 01 & Integer.valueOf(Resp) <= 76)
-//            {
-//                 Bari.setTextColor(Color.GREEN);
-//                 BariN.setTextColor(Color.BLACK);
-//                 HH.setTextColor(Color.BLACK);
-//                 HHHead.setTextColor(Color.BLACK);
-//                 Visit.setTextColor(Color.BLACK);
-//             }
-//             if(Integer.valueOf(Resp) == 0 | Integer.valueOf(Resp) == 88 | Integer.valueOf(Resp) == 99)
-//             {
-//                 Bari.setTextColor(Color.BLUE);
-//                 BariN.setTextColor(Color.BLACK);
-//                 HH.setTextColor(Color.BLACK);
-//                 HHHead.setTextColor(Color.BLACK);
-//             }
-//             if (Resp.getText().length() == 0) {
-//                 Bari.setTextColor(Color.RED);
-//                 BariN.setTextColor(Color.BLACK);
-//                 HH.setTextColor(Color.BLACK);
-//                 HHHead.setTextColor(Color.BLACK);
-//             }
-    //         else if(TotMem.getText().length()==0)
-    //         {
-    //             Bari.setTextColor(Color.LTGRAY);
-    //             BariN.setTextColor(Color.LTGRAY);
-    //             HH.setTextColor(Color.LTGRAY);
-    //             HHHead.setTextColor(Color.LTGRAY);
-    //         }
-//         }
          if(Integer.valueOf(o.get("sl"))%2==0) {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
          }
@@ -627,7 +620,6 @@ public class Household_list extends Activity  {
                f1 = new Intent(getApplicationContext(), Household_Visit.class);
                f1.putExtras(IDbundle);
                 startActivityForResult(f1, 1);
-               //startActivity(f1);
             }
           });
 

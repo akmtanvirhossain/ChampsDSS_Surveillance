@@ -199,6 +199,17 @@
                  adb.show();
              }});
 
+         String NewMember="2";
+         String MsNo="";
+         //for new member
+
+         if(MsNo.length()==0)
+         {
+             NewMember = "1";
+             MsNo = C.ReturnSingleValue("select ifnull((substr('00'||cast((max(cast(MSlNo as int))+1)as text),length('00'||cast((max(cast(MSlNo as int))+1)as text))-1,2)),'01')MsNo from tmpMember where Vill||Bari||Hh='"+ (VILL+BARI+HH) +"'");
+         }
+
+
 
          secVill=(LinearLayout)findViewById(R.id.secVill);
          lineVill=(View)findViewById(R.id.lineVill);
@@ -218,7 +229,7 @@
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          txtMSlNo=(EditText) findViewById(R.id.txtMSlNo);
 
-         if(MSLNO.length()==0)
+         if(txtMSlNo.equals(""))
              txtMSlNo.setText(MemNo(VILL,BARI,HH));
          else
              txtMSlNo.setText(MSLNO);
@@ -231,10 +242,18 @@
          txtPNo=(EditText) findViewById(R.id.txtPNo);
          txtPNo.setText(VILL.toString()+BARI.toString()+HH.toString()+txtMSlNo.getText().toString());
 
+
          secEvType=(LinearLayout)findViewById(R.id.secEvType);
          lineEvType=(View)findViewById(R.id.lineEvType);
          VlblEvType=(TextView) findViewById(R.id.VlblEvType);
          spnEvType=(Spinner) findViewById(R.id.spnEvType);
+
+         //New Member
+         if(NewMember.equals("1"))
+         {
+             spnEvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
+         }
+
          List<String> listEvType = new ArrayList<String>();
 
          listEvType.add("");
@@ -402,7 +421,6 @@
      {
          try
          {
-
              String DV="";
 
              if(txtVill.getText().toString().length()==0 & secVill.isShown())
@@ -676,9 +694,9 @@
          super.onDestroy();
          turnGPSOff();
      }
-     private String MemNo(String Vill,String Bari,String HH)
+     private String MemNo(String VILL,String BARI,String HH)
      {
-         String M = C.ReturnSingleValue("Select cast(ifnull(max(MSlNo),0)+1 as varchar(2))MemNo from Member where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'");
+         String M = C.ReturnSingleValue("Select cast(ifnull(max(MSlNo),0)+1 as varchar(2))MemNo from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'");
          M = Global.Right("0"+M,2);
          return M;
      }

@@ -172,7 +172,6 @@ public class Household_list extends Activity  {
              }
          });
 
-
          Button cmdBari = (Button)findViewById(R.id.cmdBari);
          cmdBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
@@ -485,7 +484,7 @@ public class Household_list extends Activity  {
            Household_DataModel d = new Household_DataModel();
             String SQL ;
 
-            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, h.Rnd,b.BariName";
+            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, h.Note,h.Rnd,b.BariName";
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari and b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Bari Like('%"+ Bari +"%')";
 
 
@@ -514,6 +513,7 @@ public class Household_list extends Activity  {
                  map.put("ExType", item.getExType());
                  map.put("ExDate", item.getExDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getExDate()));
                  map.put("Rnd", item.getRnd());
+                 map.put("Note", item.getNote());
                  map.put("sl", i.toString());
                  i+=1;
                  totalHH+=1;
@@ -569,40 +569,40 @@ public class Household_list extends Activity  {
          String VisitNote=C.ReturnSingleValue("Select Note from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
          VNote.setText(VisitNote);
 
-         String visit=C.ReturnSingleValue("Select VStatus from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
-         Visit.setText(visit);
+//         Toast.makeText(context,"Select Resp from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'"+ "", Toast.LENGTH_SHORT).show();
+         String Resp=C.ReturnSingleValue("Select Resp from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
 
          TotMem.setText(o.get("TotMem"));
 
-         if(visit.equals("1"))
-         {
-             Bari.setTextColor(Color.GREEN);
-             BariN.setTextColor(Color.BLACK);
-             HH.setTextColor(Color.BLACK);
-             HHHead.setTextColor(Color.BLACK);
-             Visit.setTextColor(Color.BLACK);
-         }
-         else if(!Visit.getText().equals("1"))
-         {
-             Bari.setTextColor(Color.BLUE);
-             BariN.setTextColor(Color.BLACK);
-             HH.setTextColor(Color.BLACK);
-             HHHead.setTextColor(Color.BLACK);
-         }
-         if(Visit.getText().length()==0) {
-             Bari.setTextColor(Color.RED);
-             BariN.setTextColor(Color.BLACK);
-             HH.setTextColor(Color.BLACK);
-             HHHead.setTextColor(Color.BLACK);
-         }
-//         else if(TotMem.getText().length()==0)
-//         {
-//             Bari.setTextColor(Color.LTGRAY);
-//             BariN.setTextColor(Color.LTGRAY);
-//             HH.setTextColor(Color.LTGRAY);
-//             HHHead.setTextColor(Color.LTGRAY);
+//            if( Integer.valueOf(Resp) >= 01 & Integer.valueOf(Resp) <= 76)
+//            {
+//                 Bari.setTextColor(Color.GREEN);
+//                 BariN.setTextColor(Color.BLACK);
+//                 HH.setTextColor(Color.BLACK);
+//                 HHHead.setTextColor(Color.BLACK);
+//                 Visit.setTextColor(Color.BLACK);
+//             }
+//             if(Integer.valueOf(Resp) == 0 | Integer.valueOf(Resp) == 88 | Integer.valueOf(Resp) == 99)
+//             {
+//                 Bari.setTextColor(Color.BLUE);
+//                 BariN.setTextColor(Color.BLACK);
+//                 HH.setTextColor(Color.BLACK);
+//                 HHHead.setTextColor(Color.BLACK);
+//             }
+//             if (Resp.getText().length() == 0) {
+//                 Bari.setTextColor(Color.RED);
+//                 BariN.setTextColor(Color.BLACK);
+//                 HH.setTextColor(Color.BLACK);
+//                 HHHead.setTextColor(Color.BLACK);
+//             }
+    //         else if(TotMem.getText().length()==0)
+    //         {
+    //             Bari.setTextColor(Color.LTGRAY);
+    //             BariN.setTextColor(Color.LTGRAY);
+    //             HH.setTextColor(Color.LTGRAY);
+    //             HHHead.setTextColor(Color.LTGRAY);
+    //         }
 //         }
-
          if(Integer.valueOf(o.get("sl"))%2==0) {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
          }

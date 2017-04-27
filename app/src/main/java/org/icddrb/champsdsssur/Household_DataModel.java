@@ -32,6 +32,13 @@ import android.content.Context;
         public String getReligion(){
               return _Religion;
          }
+        private String _Note = "";
+        public String getNote(){
+             return _Note;
+         }
+        public void setNote(String newValue){
+         _Note = newValue;
+     }
         public void setReligion(String newValue){
               _Religion = newValue;
          }

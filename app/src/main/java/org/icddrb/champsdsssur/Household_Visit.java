@@ -421,7 +421,7 @@ import Common.Global;
        lineResp = (View) findViewById(R.id.lineResp);
        VlblResp = (TextView) findViewById(R.id.VlblResp);
        spnResp = (Spinner) findViewById(R.id.spnResp);
-       spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and ((julianday(date('now'))-julianday(bdate))/365.25)>10 and (extype is null or length(extype)=0)"));
+//       spnResp.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and ((julianday(date('now'))-julianday(bdate))/365.25)>10 and (extype is null or length(extype)=0)"));
 
        secNote = (LinearLayout) findViewById(R.id.secNote);
        lineNote = (View) findViewById(R.id.lineNote);
@@ -669,7 +669,6 @@ import Common.Global;
 //                     new int[] {R.id.Bari, R.id.HH, R.id.HHHead});
 
 //             list.setAdapter(new DataListAdapter(this));
-
          }
          catch(Exception e)
          {

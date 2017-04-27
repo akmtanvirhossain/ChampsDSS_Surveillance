@@ -236,70 +236,70 @@
          lineEvType=(View)findViewById(R.id.lineEvType);
          VlblEvType=(TextView) findViewById(R.id.VlblEvType);
          spnEvType=(Spinner) findViewById(R.id.spnEvType);
-         spnEvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
 
-//         List<String> listEvType = new ArrayList<String>();
-//
-//         listEvType.add("");
-//         listEvType.add("12-Correction");
-//         listEvType.add("21-Migration In");
-//         ArrayAdapter<String> adptrEvType= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listEvType);
-//         spnEvType.setAdapter(adptrEvType);
-//
-//         spnEvType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//             @Override
-//             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-//                 String spnData = "";
-//                 if (spnEvType.getSelectedItem().toString().length() != 0)
-//                 {
-//                     spnData = Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-");
-//                 }
-//                 if(spnData.equalsIgnoreCase("12"))
-//                 {
-//                     secEvDate.setVisibility(View.GONE);
-//                     lineEvDate.setVisibility(View.GONE);
-//                     dtpEvDate.setText("");
-//                     secInfo1.setVisibility(View.GONE);
-//                     lineInfo1.setVisibility(View.GONE);
-//                     txtInfo1.setText("");
-//                     secInfo2.setVisibility(View.GONE);
-//                     lineInfo2.setVisibility(View.GONE);
-//                     txtInfo2.setText("");
-//                     secInfo3.setVisibility(View.GONE);
-//                     lineInfo3.setVisibility(View.GONE);
-//                     txtInfo3.setText("");
-//                     secInfo4.setVisibility(View.GONE);
-//                     lineInfo4.setVisibility(View.GONE);
-//                     txtInfo4.setText("");
-//                     secVDate.setVisibility(View.GONE);
-//                     lineVDate.setVisibility(View.GONE);
-//                     dtpVDate.setText("");
-//                     secRnd.setVisibility(View.GONE);
-//                     lineRnd.setVisibility(View.GONE);
-//                     txtRnd.setText("");
-//                 }
-//                 else
-//                 {
-//                     secEvDate.setVisibility(View.VISIBLE);
-//                     lineEvDate.setVisibility(View.VISIBLE);
-//                     secInfo1.setVisibility(View.VISIBLE);
-//                     lineInfo1.setVisibility(View.VISIBLE);
-//                     secInfo2.setVisibility(View.VISIBLE);
-//                     lineInfo2.setVisibility(View.VISIBLE);
-//                     secInfo3.setVisibility(View.VISIBLE);
-//                     lineInfo3.setVisibility(View.VISIBLE);
-//                     secInfo4.setVisibility(View.VISIBLE);
-//                     lineInfo4.setVisibility(View.VISIBLE);
-//                     secVDate.setVisibility(View.VISIBLE);
-//                     lineVDate.setVisibility(View.VISIBLE);
-//                     secRnd.setVisibility(View.VISIBLE);
-//                     lineRnd.setVisibility(View.VISIBLE);
-//                 }
-//             }
-//             @Override
-//             public void onNothingSelected(AdapterView<?> parentView) {
-//             }
-//         });
+         final Spinner EvType = (Spinner)findViewById(R.id.spnEvType);
+
+         String Sex = "";
+         String MS  = "";
+         String PS  = "";
+         int MAge   = 0;
+
+         //New Member
+
+         if (OLDNEWHH.equals("new")) {
+             EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
+         }
+
+         //Old Member
+         else
+         {
+             Cursor cur = C.ReadData("Select cast(((julianday(date('now'))-julianday(bdate))/365.25)as int)MAge,sex,ms from tmpMember where  vill || bari || hh || MSLno='"+ (VILL+BARI+HH+MSLNO) +"'");
+             cur.moveToFirst();
+             while(!cur.isAfterLast())
+             {
+                 MAge = Integer.valueOf(cur.getString(0));
+                 Sex  = cur.getString(1).toString();
+                 MS   = cur.getString(2).toString();
+                 cur.moveToNext();
+             }
+             cur.close();
+
+             //1-Sex wise event
+             if(Sex.equals("1"))
+             {
+                 //MS
+                 if(MS.equals("30"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','63')"));
+                 else if(MS.equals("31"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','42','43','44','49','56','57')"));
+                 else if(MS.equals("33"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57')"));
+
+                 else
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','40','41','42','43','44','49','56','57')"));
+             }
+             else if(Sex.equals("2"))
+             {
+                 //MS
+                 if(MS.equals("30"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57','63')"));
+                     //married and pregnant
+                 else if(MS.equals("31") & PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','41','43','44','56','57')"));
+                     //married and not pregnant
+                 else if(MS.equals("31") & !PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','42','43','44','56','57')"));
+                     //widowed but pregnant
+                 else if(MS.equals("33"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','43','44','56','57')"));
+                     //widowed not pregnant
+                 else if(MS.equals("33"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57')"));
+
+                 else
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','43','44','56','57')"));
+             }
+         }
 
          secEvDate=(LinearLayout)findViewById(R.id.secEvDate);
          lineEvDate=(View)findViewById(R.id.lineEvDate);

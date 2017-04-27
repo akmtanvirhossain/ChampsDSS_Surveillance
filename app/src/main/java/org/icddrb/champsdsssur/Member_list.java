@@ -282,8 +282,6 @@ public class Member_list extends Activity {
 
              }
          });
-
-
          btnMemberName = (Button) findViewById(R.id.btnMemberName);
          btnMemberName.setOnClickListener(new View.OnClickListener() {
              @Override

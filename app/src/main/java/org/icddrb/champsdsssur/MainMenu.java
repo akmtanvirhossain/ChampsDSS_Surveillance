@@ -134,15 +134,17 @@ public class MainMenu extends Activity {
                                         Tran_Download td = new Tran_Download(MainMenu.this);
 
                                         //GPS Bari List
-                                        td.Sync_Download("Baris",DEVICEID,"");
+//                                        td.Sync_Download("Baris",DEVICEID,"");
+                                        td.Sync_Download("EventCode",DEVICEID,"");
+                                        td.Sync_Download("Visits",DEVICEID,"");
 
                                         List<String> tableList = new ArrayList<String>();
-                                        tableList.add("Baris");
-                                        tableList.add("Household");
-                                        tableList.add("Visits");
-                                        tableList.add("Member");
-                                        tableList.add("SES");
-                                        tableList.add("PregHis");
+//                                        tableList.add("Baris");
+//                                        tableList.add("Household");
+//                                        tableList.add("Visits");
+//                                        tableList.add("Member");
+//                                        tableList.add("SES");
+//                                        tableList.add("PregHis");
 
                                         C.Sync_Upload(tableList);
 

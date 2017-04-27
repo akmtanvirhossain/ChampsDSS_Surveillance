@@ -220,9 +220,6 @@
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          txtMSlNo=(EditText) findViewById(R.id.txtMSlNo);
 
-         String NewMember="2";
-         //for new member
-
          if (OLDNEWHH.equals("new"))
              txtMSlNo.setText(MemNo(VILL,BARI,HH));
          else
@@ -240,12 +237,6 @@
          VlblEvType=(TextView) findViewById(R.id.VlblEvType);
          spnEvType=(Spinner) findViewById(R.id.spnEvType);
          spnEvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
-
-         //New Member
-         if(NewMember.equals("1"))
-         {
-             spnEvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
-         }
 
 //         List<String> listEvType = new ArrayList<String>();
 //

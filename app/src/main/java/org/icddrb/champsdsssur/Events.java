@@ -248,12 +248,43 @@
 
          if (OLDNEWHH.equals("new")) {
              EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
+
+             String ECode = spnEvType.getSelectedItem().toString().substring(0, 2);
+
+             if(ECode.equals("21") )
+             {
+                 dtpEvDate.setVisibility(View.VISIBLE);
+                 txtInfo1.setVisibility(View.GONE);
+                 txtInfo2.setVisibility(View.GONE);
+                 txtInfo3.setVisibility(View.GONE);
+                 txtInfo4.setVisibility(View.GONE);
+                 dtpVDate.setVisibility(View.VISIBLE);
+             }
+             else if(ECode.equals("22"))
+             {
+                 dtpEvDate.setVisibility(View.VISIBLE);
+                 txtInfo1.setVisibility(View.GONE);
+                 txtInfo2.setVisibility(View.GONE);
+                 txtInfo3.setVisibility(View.GONE);
+                 txtInfo4.setVisibility(View.GONE);
+                 dtpVDate.setVisibility(View.VISIBLE);
+             }
+             else if(ECode.equals("23"))
+             {
+                 dtpEvDate.setVisibility(View.VISIBLE);
+                 txtInfo1.setVisibility(View.GONE);
+                 txtInfo2.setVisibility(View.GONE);
+                 txtInfo3.setVisibility(View.GONE);
+                 txtInfo4.setVisibility(View.GONE);
+                 dtpVDate.setVisibility(View.VISIBLE);
+             }
+
          }
 
          //Old Member
-         else
+         if (OLDNEWHH.equals("old"))
          {
-             Cursor cur = C.ReadData("Select cast(((julianday(date('now'))-julianday(bdate))/365.25)as int)MAge,sex,ms from tmpMember where  vill || bari || hh || MSLno='"+ (VILL+BARI+HH+MSLNO) +"'");
+             Cursor cur = C.ReadData("Select cast(((julianday(date('now'))-julianday(bdate))/365.25)as int)MAge,Sex,MS from tmpMember where  vill || bari || hh || MSLno='"+ (VILL+BARI+HH+MSLNO) +"'");
              cur.moveToFirst();
              while(!cur.isAfterLast())
              {
@@ -301,6 +332,7 @@
              }
          }
 
+
          secEvDate=(LinearLayout)findViewById(R.id.secEvDate);
          lineEvDate=(View)findViewById(R.id.lineEvDate);
          VlblEvDate=(TextView) findViewById(R.id.VlblEvDate);
@@ -331,6 +363,8 @@
          txtRnd=(EditText) findViewById(R.id.txtRnd);
 
 
+
+
          dtpEvDate.setOnTouchListener(new View.OnTouchListener() {
              @Override
              public boolean onTouch(View v, MotionEvent event) {
@@ -359,20 +393,20 @@
          });
 
          //Hide all skip variables
-//         secEvDate.setVisibility(View.GONE);
-//         lineEvDate.setVisibility(View.GONE);
-//         secInfo1.setVisibility(View.GONE);
-//         lineInfo1.setVisibility(View.GONE);
-//         secInfo2.setVisibility(View.GONE);
-//         lineInfo2.setVisibility(View.GONE);
-//         secInfo3.setVisibility(View.GONE);
-//         lineInfo3.setVisibility(View.GONE);
-//         secInfo4.setVisibility(View.GONE);
-//         lineInfo4.setVisibility(View.GONE);
-//         secVDate.setVisibility(View.GONE);
-//         lineVDate.setVisibility(View.GONE);
-//         secRnd.setVisibility(View.GONE);
-//         lineRnd.setVisibility(View.GONE);
+         secEvDate.setVisibility(View.GONE);
+         lineEvDate.setVisibility(View.GONE);
+         secInfo1.setVisibility(View.GONE);
+         lineInfo1.setVisibility(View.GONE);
+         secInfo2.setVisibility(View.GONE);
+         lineInfo2.setVisibility(View.GONE);
+         secInfo3.setVisibility(View.GONE);
+         lineInfo3.setVisibility(View.GONE);
+         secInfo4.setVisibility(View.GONE);
+         lineInfo4.setVisibility(View.GONE);
+         secVDate.setVisibility(View.GONE);
+         lineVDate.setVisibility(View.GONE);
+         secRnd.setVisibility(View.GONE);
+         lineRnd.setVisibility(View.GONE);
 
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);

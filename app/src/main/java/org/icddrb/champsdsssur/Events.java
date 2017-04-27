@@ -359,20 +359,20 @@
          });
 
          //Hide all skip variables
-         secEvDate.setVisibility(View.GONE);
-         lineEvDate.setVisibility(View.GONE);
-         secInfo1.setVisibility(View.GONE);
-         lineInfo1.setVisibility(View.GONE);
-         secInfo2.setVisibility(View.GONE);
-         lineInfo2.setVisibility(View.GONE);
-         secInfo3.setVisibility(View.GONE);
-         lineInfo3.setVisibility(View.GONE);
-         secInfo4.setVisibility(View.GONE);
-         lineInfo4.setVisibility(View.GONE);
-         secVDate.setVisibility(View.GONE);
-         lineVDate.setVisibility(View.GONE);
-         secRnd.setVisibility(View.GONE);
-         lineRnd.setVisibility(View.GONE);
+//         secEvDate.setVisibility(View.GONE);
+//         lineEvDate.setVisibility(View.GONE);
+//         secInfo1.setVisibility(View.GONE);
+//         lineInfo1.setVisibility(View.GONE);
+//         secInfo2.setVisibility(View.GONE);
+//         lineInfo2.setVisibility(View.GONE);
+//         secInfo3.setVisibility(View.GONE);
+//         lineInfo3.setVisibility(View.GONE);
+//         secInfo4.setVisibility(View.GONE);
+//         lineInfo4.setVisibility(View.GONE);
+//         secVDate.setVisibility(View.GONE);
+//         lineVDate.setVisibility(View.GONE);
+//         secRnd.setVisibility(View.GONE);
+//         lineRnd.setVisibility(View.GONE);
 
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);

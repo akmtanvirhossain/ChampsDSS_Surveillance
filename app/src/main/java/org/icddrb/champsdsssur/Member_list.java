@@ -293,6 +293,7 @@ public class Member_list extends Activity {
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
                  IDbundle.putString("roundno",ROUNDNO);
+                 IDbundle.putString("OldNew", "new");
                  f1.putExtras(IDbundle);
                  startActivityForResult(f1, 1);
              }
@@ -1463,6 +1464,7 @@ public class Member_list extends Activity {
                IDbundle.putString("HH", o.get("HH"));
                IDbundle.putString("MSlNo", o.get("MSlNo"));
                IDbundle.putString("roundno",ROUNDNO);
+               IDbundle.putString("OldNew", "old");
                Intent f1;
                f1 = new Intent(getApplicationContext(), Events.class);
                f1.putExtras(IDbundle);

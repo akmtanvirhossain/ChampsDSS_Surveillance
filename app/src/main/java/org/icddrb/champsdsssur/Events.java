@@ -153,6 +153,7 @@
     static String EVDATE = "";
     static String ROUNDNO = "";
     static String EVTYPE = "";
+    static String OLDNEWHH = "";
 
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -174,6 +175,7 @@
          EVTYPE = IDbundle.getString("EvType");
          EVDATE = IDbundle.getString("EvDate");
          ROUNDNO = IDbundle.getString("roundno");
+         OLDNEWHH = IDbundle.getString("OldNew");
 
          TableName = "Events";
 
@@ -199,17 +201,6 @@
                  adb.show();
              }});
 
-         String NewMember="2";
-         String MsNo="";
-         //for new member
-
-         if(MsNo.length()==0)
-         {
-             NewMember = "1";
-             MsNo = C.ReturnSingleValue("select ifnull((substr('00'||cast((max(cast(MSlNo as int))+1)as text),length('00'||cast((max(cast(MSlNo as int))+1)as text))-1,2)),'01')MsNo from tmpMember where Vill||Bari||Hh='"+ (VILL+BARI+HH) +"'");
-         }
-
-
 
          secVill=(LinearLayout)findViewById(R.id.secVill);
          lineVill=(View)findViewById(R.id.lineVill);
@@ -229,11 +220,13 @@
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          txtMSlNo=(EditText) findViewById(R.id.txtMSlNo);
 
-         if(txtMSlNo.equals(""))
+         String NewMember="2";
+         //for new member
+
+         if (OLDNEWHH.equals("new"))
              txtMSlNo.setText(MemNo(VILL,BARI,HH));
          else
              txtMSlNo.setText(MSLNO);
-
          txtMSlNo.setEnabled(false);
 
          secPNo=(LinearLayout)findViewById(R.id.secPNo);
@@ -242,11 +235,11 @@
          txtPNo=(EditText) findViewById(R.id.txtPNo);
          txtPNo.setText(VILL.toString()+BARI.toString()+HH.toString()+txtMSlNo.getText().toString());
 
-
          secEvType=(LinearLayout)findViewById(R.id.secEvType);
          lineEvType=(View)findViewById(R.id.lineEvType);
          VlblEvType=(TextView) findViewById(R.id.VlblEvType);
          spnEvType=(Spinner) findViewById(R.id.spnEvType);
+         spnEvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
 
          //New Member
          if(NewMember.equals("1"))
@@ -254,68 +247,69 @@
              spnEvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
          }
 
-         List<String> listEvType = new ArrayList<String>();
+//         List<String> listEvType = new ArrayList<String>();
+//
+//         listEvType.add("");
+//         listEvType.add("12-Correction");
+//         listEvType.add("21-Migration In");
+//         ArrayAdapter<String> adptrEvType= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listEvType);
+//         spnEvType.setAdapter(adptrEvType);
+//
+//         spnEvType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//             @Override
+//             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//                 String spnData = "";
+//                 if (spnEvType.getSelectedItem().toString().length() != 0)
+//                 {
+//                     spnData = Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-");
+//                 }
+//                 if(spnData.equalsIgnoreCase("12"))
+//                 {
+//                     secEvDate.setVisibility(View.GONE);
+//                     lineEvDate.setVisibility(View.GONE);
+//                     dtpEvDate.setText("");
+//                     secInfo1.setVisibility(View.GONE);
+//                     lineInfo1.setVisibility(View.GONE);
+//                     txtInfo1.setText("");
+//                     secInfo2.setVisibility(View.GONE);
+//                     lineInfo2.setVisibility(View.GONE);
+//                     txtInfo2.setText("");
+//                     secInfo3.setVisibility(View.GONE);
+//                     lineInfo3.setVisibility(View.GONE);
+//                     txtInfo3.setText("");
+//                     secInfo4.setVisibility(View.GONE);
+//                     lineInfo4.setVisibility(View.GONE);
+//                     txtInfo4.setText("");
+//                     secVDate.setVisibility(View.GONE);
+//                     lineVDate.setVisibility(View.GONE);
+//                     dtpVDate.setText("");
+//                     secRnd.setVisibility(View.GONE);
+//                     lineRnd.setVisibility(View.GONE);
+//                     txtRnd.setText("");
+//                 }
+//                 else
+//                 {
+//                     secEvDate.setVisibility(View.VISIBLE);
+//                     lineEvDate.setVisibility(View.VISIBLE);
+//                     secInfo1.setVisibility(View.VISIBLE);
+//                     lineInfo1.setVisibility(View.VISIBLE);
+//                     secInfo2.setVisibility(View.VISIBLE);
+//                     lineInfo2.setVisibility(View.VISIBLE);
+//                     secInfo3.setVisibility(View.VISIBLE);
+//                     lineInfo3.setVisibility(View.VISIBLE);
+//                     secInfo4.setVisibility(View.VISIBLE);
+//                     lineInfo4.setVisibility(View.VISIBLE);
+//                     secVDate.setVisibility(View.VISIBLE);
+//                     lineVDate.setVisibility(View.VISIBLE);
+//                     secRnd.setVisibility(View.VISIBLE);
+//                     lineRnd.setVisibility(View.VISIBLE);
+//                 }
+//             }
+//             @Override
+//             public void onNothingSelected(AdapterView<?> parentView) {
+//             }
+//         });
 
-         listEvType.add("");
-         listEvType.add("12-Correction");
-         listEvType.add("21-Migration In");
-         ArrayAdapter<String> adptrEvType= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listEvType);
-         spnEvType.setAdapter(adptrEvType);
-
-         spnEvType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-             @Override
-             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                 String spnData = "";
-                 if (spnEvType.getSelectedItem().toString().length() != 0)
-                 {
-                     spnData = Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-");
-                 }
-                 if(spnData.equalsIgnoreCase("12"))
-                 {
-                     secEvDate.setVisibility(View.GONE);
-                     lineEvDate.setVisibility(View.GONE);
-                     dtpEvDate.setText("");
-                     secInfo1.setVisibility(View.GONE);
-                     lineInfo1.setVisibility(View.GONE);
-                     txtInfo1.setText("");
-                     secInfo2.setVisibility(View.GONE);
-                     lineInfo2.setVisibility(View.GONE);
-                     txtInfo2.setText("");
-                     secInfo3.setVisibility(View.GONE);
-                     lineInfo3.setVisibility(View.GONE);
-                     txtInfo3.setText("");
-                     secInfo4.setVisibility(View.GONE);
-                     lineInfo4.setVisibility(View.GONE);
-                     txtInfo4.setText("");
-                     secVDate.setVisibility(View.GONE);
-                     lineVDate.setVisibility(View.GONE);
-                     dtpVDate.setText("");
-                     secRnd.setVisibility(View.GONE);
-                     lineRnd.setVisibility(View.GONE);
-                     txtRnd.setText("");
-                 }
-                 else
-                 {
-                     secEvDate.setVisibility(View.VISIBLE);
-                     lineEvDate.setVisibility(View.VISIBLE);
-                     secInfo1.setVisibility(View.VISIBLE);
-                     lineInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
-                     lineInfo2.setVisibility(View.VISIBLE);
-                     secInfo3.setVisibility(View.VISIBLE);
-                     lineInfo3.setVisibility(View.VISIBLE);
-                     secInfo4.setVisibility(View.VISIBLE);
-                     lineInfo4.setVisibility(View.VISIBLE);
-                     secVDate.setVisibility(View.VISIBLE);
-                     lineVDate.setVisibility(View.VISIBLE);
-                     secRnd.setVisibility(View.VISIBLE);
-                     lineRnd.setVisibility(View.VISIBLE);
-                 }
-             }
-             @Override
-             public void onNothingSelected(AdapterView<?> parentView) {
-             }
-         });
          secEvDate=(LinearLayout)findViewById(R.id.secEvDate);
          lineEvDate=(View)findViewById(R.id.lineEvDate);
          VlblEvDate=(TextView) findViewById(R.id.VlblEvDate);

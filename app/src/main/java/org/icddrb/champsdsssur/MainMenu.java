@@ -136,7 +136,7 @@ public class MainMenu extends Activity {
                                         //GPS Bari List
 //                                        td.Sync_Download("Baris",DEVICEID,"");
                                         td.Sync_Download("EventCode",DEVICEID,"");
-                                        td.Sync_Download("Visits",DEVICEID,"");
+                                        //td.Sync_Download("Visits",DEVICEID,"");
 
                                         List<String> tableList = new ArrayList<String>();
 //                                        tableList.add("Baris");

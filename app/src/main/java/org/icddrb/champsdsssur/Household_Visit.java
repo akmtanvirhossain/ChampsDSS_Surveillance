@@ -785,7 +785,7 @@ import Common.Global;
                                  SQL += "'" + ENTRYUSER + "',"; //EntryUser code
                                  SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
                                  SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
-                                 SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                                 SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                                  SQL += "'" + 2 + "',"; //Upload
                                  SQL += "'" + txtNote.getText() + "')";
                              } else {
@@ -838,7 +838,7 @@ import Common.Global;
                                  SQL += "'" + ENTRYUSER + "',"; //EntryUser code
                                  SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
                                  SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
-                                 SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                                 SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                                  SQL += "'" + 2 + "',"; //Upload
                                  SQL += "'" + txtNote.getText() + "')";
                              } else {
@@ -885,7 +885,7 @@ import Common.Global;
                      SQL += "'" + ENTRYUSER + "',"; //EntryUser code
                      SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
                      SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
-                     SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                     SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                      SQL += "'" + 2 + "',"; //Upload
                      SQL += "'" + txtNote.getText() + "')";
                  } else {
@@ -925,7 +925,7 @@ import Common.Global;
                          SQL += "'" + ENTRYUSER + "',"; //EntryUser code
                          SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
                          SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
-                         SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                         SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                          SQL += "'" + 2 + "',"; //Upload
                          SQL += "'" + txtNote.getText() + "')";
                      } else {
@@ -974,7 +974,7 @@ import Common.Global;
                          SQL += "'" + ENTRYUSER + "',"; //EntryUser code
                          SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
                          SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
-                         SQL += "'" + Global.DateConvertYMD(dtpVDate.getText().toString()) + "',"; //EnDt Date
+                         SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                          SQL += "'" + 2 + "',"; //Upload
                          SQL += "'" + txtNote.getText() + "')";
                      } else {
@@ -1057,7 +1057,7 @@ import Common.Global;
              //*********************************************sakib*********************************************
 
                Visits_DataModel d1 = new Visits_DataModel();
-               String SQL1 = "Select * from Visits Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and Rnd='"+ ROUNDNO +"'";
+               String SQL1 = "Select Vill,Bari,HH,VDate,ifnull(VStatus,'')VStatus,ifnull(VStatusOth,'')VStatusOth,Note,ifnull(Resp,'')Resp,Rnd from Visits Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and Rnd='"+ ROUNDNO +"'";
                List<Visits_DataModel> data1 = d1.SelectAll(this, SQL1);
                for(Visits_DataModel item1 : data1) {
                    txtVill.setText(item1.getVill());

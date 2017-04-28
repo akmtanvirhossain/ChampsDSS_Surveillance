@@ -678,7 +678,7 @@
             DataSave();
         }});
 
-         DataSearch(VILL,BARI,HH,MSLNO);
+         DataSearchMember(VILL,BARI,HH,MSLNO);
      }
      catch(Exception  e)
      {
@@ -1167,7 +1167,7 @@
      }
  }
 
- private void DataSearch(String Vill, String Bari, String HH, String MSlNo)
+ public void DataSearchMember(String Vill, String Bari, String HH, String MSlNo)
      {
        try
         {

@@ -57,7 +57,7 @@
  import Utility.*;
  import Common.*;
 
- public class Events extends Activity {
+ public class Events extends Member {
     boolean networkAvailable=false;
     Location currentLocation; 
     double currentLatitude,currentLongitude; 
@@ -136,6 +136,7 @@
          View lineRnd;
          TextView VlblRnd;
          EditText txtRnd;
+        LinearLayout formMember;
 
 
     static String TableName;
@@ -186,6 +187,7 @@
          // Double.toString(currentLatitude);
          // Double.toString(currentLongitude);
          lblHeading = (TextView)findViewById(R.id.lblHeading);
+         formMember = (LinearLayout)findViewById(R.id.formMember);
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
@@ -391,6 +393,28 @@
                  return false;
              }
          });
+
+
+         spnEvType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                 String EVCODE = spnEvType.getSelectedItem().toString().length()==0 ? "" : spnEvType.getSelectedItem().toString().split("-")[0];
+                 if(EVCODE.equals("12")){
+                     formMember.setVisibility(View.VISIBLE);
+                     DataSearchMember(VILL,BARI,HH,MSLNO);
+                 }else
+                 {
+                     formMember.setVisibility(View.GONE);
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parentView) {
+                 // your code here
+             }
+
+         });
+
 
          //Hide all skip variables
          secEvDate.setVisibility(View.GONE);

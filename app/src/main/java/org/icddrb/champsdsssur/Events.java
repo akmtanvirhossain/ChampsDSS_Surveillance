@@ -1960,6 +1960,7 @@
              //should be same village
              else if(EvCode.equals("53"))
              {
+//                 VillageList.setAdapter(C.getArrayAdapter("select VCode||' - '||vname from Village order by vname asc"));
                  VillageList.setAdapter(C.getArrayAdapter("select VCode||' - '||vname from Village where cluster='"+ g.getClusterCode() +"' and VCode='"+ g.getVillageCode() +"' order by vname asc"));
                  lblMigTitle.setText("Split-In");
              }

@@ -610,20 +610,20 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("40") | EV.equals("49"))
                             {
-                                C.Save("Delete from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Delete from tmpEvents where  vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                             }
                             else if(EV.equals("41"))
                             {
                                 //Check 42 event available or not
-                                if(C.Existence("select vill from tTrans where status='e' and EvType='42' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and info4='"+ EVD +"'"))
+                                if(C.Existence("select vill from tmpEvents where EvType='42' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and info4='"+ EVD +"'"))
                                 {
                                     Connection.MessageBox(Member_list.this, "এই গর্ভের ডেলিভারি হয়ে গেছে, প্রথমে ইভেন্ট ৪২ মুছতে হবে এবং তারপর ৪১। ।।  .");
                                     return;
                                 }
 
                                 //Update from temporary table
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set PStat='',LMPDt='' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where  vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set PStat='',LMPDt='' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
 
                                 //Transfer events from main to UpdateEvents table
                                 String SQL = "Insert into UpdateEvents(Vill, Bari, Hh, Pno, Sno, EvType, EvDate, Info1, Info2, Info3, Info4, Vdate, Rnd, Upload)";
@@ -646,25 +646,25 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("51") | EV.equals("52") | EV.equals("53") | EV.equals("55"))
                             {
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set ExType='',ExDate='' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set ExType='',ExDate='' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("54") | EV.equals("57"))
                             {
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set PosMig='',PosMigDate='' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set PosMig='',PosMigDate='' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("61"))
                             {
                                 String PMono = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set MoNo='"+ PMono +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set MoNo='"+ PMono +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("62"))
                             {
                                 String PFano = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set FaNo='"+ PFano +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set FaNo='"+ PFano +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("63"))
                             {
@@ -675,20 +675,20 @@ public class Member_list extends Activity {
                             else if(EV.equals("64"))
                             {
                                 String PRth = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set Rth='"+ PRth +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set Rth='"+ PRth +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("71"))
                             {
                                 String PEdu = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set Edu='"+ PEdu +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set Edu='"+ PEdu +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("72"))
                             {
                                 String POcp = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from ttrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("Update tTrans set Ocp='"+ POcp +"' where status='m' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Update tmpMember set Ocp='"+ POcp +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
 
                             EventDataList(dg, HH, "current",lv);
@@ -783,7 +783,7 @@ public class Member_list extends Activity {
                 SQLStr += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
                 SQLStr += " (case when cast(strftime('%Y', ifnull(t.ExDate,'')) as int)>=2014 and t.ExType='55' then '1' else '2' end)as deathrep,";
                 SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tTrans t";
-                SQLStr += " left outer join member m on t.vill||t.bari||t.hh||t.sno = m.vill||m.bari||m.hh||m.sno";
+                SQLStr += " left outer join Member m on t.vill||t.bari||t.hh||t.sno = m.vill||m.bari||m.hh||m.sno";
                 SQLStr += " where t.status='m' and t.vill||t.bari||t.hh='"+ HH +"' and (length(t.extype)=0 or t.extype is null) order by cast(t.SNo as int) asc";
             }
             else if(ActiveOrAll.equalsIgnoreCase("all"))

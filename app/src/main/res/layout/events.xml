@@ -324,14 +324,16 @@
                     android:inputType="text"
                     android:maxLength="50"
                     android:textSize="20sp" />
-                <Spinner android:visibility="gone"
+
+                <Spinner
                     android:id="@+id/spnInfo1"
                     android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:drawSelectorOnTop="true"
                     android:prompt="@string/planet_prompt"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View
@@ -370,14 +372,16 @@
                     android:inputType="text"
                     android:maxLength="10"
                     android:textSize="20sp" />
-                <Spinner android:visibility="gone"
+
+                <Spinner
                     android:id="@+id/spnInfo2"
                     android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:drawSelectorOnTop="true"
                     android:prompt="@string/planet_prompt"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View
@@ -416,14 +420,16 @@
                     android:inputType="text"
                     android:maxLength="10"
                     android:textSize="20sp" />
-                <Spinner android:visibility="gone"
+
+                <Spinner
                     android:id="@+id/spnInfo3"
                     android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:drawSelectorOnTop="true"
                     android:prompt="@string/planet_prompt"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View
@@ -462,14 +468,16 @@
                     android:inputType="text"
                     android:maxLength="10"
                     android:textSize="20sp" />
-                <Spinner android:visibility="gone"
+
+                <Spinner
                     android:id="@+id/spnInfo4"
                     android:layout_width="300sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:drawSelectorOnTop="true"
                     android:prompt="@string/planet_prompt"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View
@@ -531,6 +539,7 @@
                     android:text=""
                     android:textSize="20sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/formMember"
                 android:layout_width="fill_parent"
@@ -543,6 +552,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -558,7 +568,6 @@
                     android:text=" Save -> Continue "
                     android:textSize="20sp" />
             </LinearLayout>
-
 
 
             <View

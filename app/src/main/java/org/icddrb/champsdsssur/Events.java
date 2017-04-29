@@ -363,7 +363,7 @@
          //New Member
 
          if (OLDNEWHH.equals("new")) {
-             EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('21','22','23','25')"));
+             EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('20','21','22','23','25')"));
 
              String ECode = spnEvType.getSelectedItem().toString().substring(0, 2);
 
@@ -532,7 +532,9 @@
                      dtpEvDate.setText(Global.DateNowDMY());
                      formMember.setVisibility(View.VISIBLE);
                      secInfo1.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("Reason/Spouse's Age");
                      secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo2.setText("Reason");
                      //Clear Member Form
                  }
 
@@ -540,10 +542,12 @@
                  else if(EVCODE.equals("22")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("পূর্বের খানা নাম্বার");
                      MigrationForm(dialog,"52");
                  }else if(EVCODE.equals("23")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("মূর্বের খানা নাম্বার");
                      MigrationForm(dialog,"53");
                  }
 
@@ -551,52 +555,58 @@
                  else if(EVCODE.equals("25")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE); //Mother serial no
+                     VlblInfo1.setText("মায়ের সিরিয়াল নম্বর");
                      formMember.setVisibility(View.VISIBLE);
                     //Clear Member Form
                  }
                  //Marital Status
                  else if(EVCODE.equals("31")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
+//                     secInfo2.setVisibility(View.VISIBLE);
+
                  }else if(EVCODE.equals("32")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
+//                     secInfo2.setVisibility(View.VISIBLE);
                  }else if(EVCODE.equals("33")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
+//                     secInfo2.setVisibility(View.VISIBLE);
                  }else if(EVCODE.equals("34")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
+//                     secInfo2.setVisibility(View.VISIBLE);
                  }
                  //Pregnancy Information
                  else if(EVCODE.equals("40")){
                      dtpEvDate.setText(Global.DateNowDMY());
                  }else if(EVCODE.equals("41")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                  }else if(EVCODE.equals("42")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
                      secInfo3.setVisibility(View.VISIBLE);
                      secInfo4.setVisibility(View.VISIBLE);
+
                  }else if(EVCODE.equals("49")){
                      dtpEvDate.setText(Global.DateNowDMY());
                  }
                  //Migration out
                  else if(EVCODE.equals("51")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                  }else if(EVCODE.equals("52")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                  }else if(EVCODE.equals("53")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
                  }else if(EVCODE.equals("55")){
                      dtpEvDate.setText("");
                  }
-
                  else if(EVCODE.equals("61")){
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
@@ -627,6 +637,14 @@
                      secInfo2.setVisibility(View.VISIBLE);
                  }else{
                      formMember.setVisibility(View.GONE);
+                 }
+                 if(EVCODE.equals("12") | EVCODE.equals("40") | EVCODE.equals("49"))
+                 {
+                     secEvDate.setVisibility(View.GONE);
+                 }
+                 else
+                 {
+                     secEvDate.setVisibility(View.VISIBLE);
                  }
              }
 
@@ -1093,16 +1111,19 @@
              String SQL = "";
              RadioButton rb;
              String MSL = "";
+
              Events_DataModel objSave = new Events_DataModel();
              objSave.setVill(txtVill.getText().toString());
              objSave.setBari(txtBari.getText().toString());
              objSave.setHH(txtHH.getText().toString());
+
              if(EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23")|EVTYPE.equals("25")) {
                  MSL = MemNo(VILL, BARI, HH);
              }
              else {
                  MSL = txtMSlNo.getText().toString();
              }
+
              objSave.setMSlNo(MSL);
              objSave.setPNo(txtPNo.getText().toString());
              objSave.setEvType((spnEvType.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-")));
@@ -1127,7 +1148,7 @@
 
              SQL1 = objSave.TransactionSQL(this);
              //Save Member
-             if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23")) {
+             if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23") |EVTYPE.equals("25")) {
                  SQL2 = DataSaveMember(MSL);
              }
 
@@ -1373,7 +1394,6 @@
              }
          });
 
-
          secOcp=(LinearLayout)findViewById(R.id.secOcp);
          lineOcp=(View)findViewById(R.id.lineOcp);
          VlblOcp=(TextView) findViewById(R.id.VlblOcp);
@@ -1609,7 +1629,6 @@
      {
          try
          {
-
              RadioButton rb;
              Events_DataModel d = new Events_DataModel();
              String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"' and EvType='"+ EvType +"' and EvDate='"+ EvDate +"' and Rnd='"+ Rnd +"'";
@@ -1801,7 +1820,7 @@
              objSave.setSp3((spnSp3.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-")));
              objSave.setSp4((spnSp4.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-")));
              objSave.setEnType(spnEvType.getSelectedItem().toString().split("-")[0]);
-             objSave.setEnDate(dtpEnDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEnDate.getText().toString()) : dtpEnDate.getText().toString());
+             objSave.setEnDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
              objSave.setExType("");
              objSave.setExDate("");
              objSave.setEnDt(Global.DateTimeNowYMDHMS());
@@ -1910,8 +1929,6 @@
      }
 
 
-
-
      private void MigrationForm(final Dialog d, final String EvCode)
      {
          try
@@ -1943,10 +1960,9 @@
              //should be same village
              else if(EvCode.equals("53"))
              {
-                 VillageList.setAdapter(C.getArrayAdapter("select VCode||' - '||vname from Village where cluster='"+ g.getClusterCode() +"' and vill='"+ g.getVillageCode() +"' order by vname asc"));
+                 VillageList.setAdapter(C.getArrayAdapter("select VCode||' - '||vname from Village where cluster='"+ g.getClusterCode() +"' and VCode='"+ g.getVillageCode() +"' order by vname asc"));
                  lblMigTitle.setText("Split-In");
              }
-
 
              final EditText txtMember = (EditText)dialog.findViewById(R.id.txtMember);
 

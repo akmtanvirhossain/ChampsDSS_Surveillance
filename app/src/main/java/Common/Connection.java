@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
@@ -1900,7 +1901,7 @@ public class Connection extends SQLiteOpenHelper {
             // Parameter 3: Where Condition
             //--------------------------------------------------------------------------------------
             C.Sync_Download("Baris", UniqueID, "");
-
+            C.Sync_Download("migMember", UniqueID, "");
 
             //Sync_Upload
             // Parameter 1: table list
@@ -1915,4 +1916,26 @@ public class Connection extends SQLiteOpenHelper {
 
     }
 
+    public String TransactionDataInsert(String SQL1,String SQL2,String SQL3,String SQL4) {
+        String response = "";
+        SQLiteDatabase database = this.getWritableDatabase();
+        //db.execSQL(SQL);
+        //db.close();
+        database.beginTransaction();
+        try {
+            if(SQL1.length()>0) database.execSQL(SQL1);
+            if(SQL2.length()>0) database.execSQL(SQL2);
+            if(SQL3.length()>0) database.execSQL(SQL3);
+            if(SQL4.length()>0) database.execSQL(SQL4);
+
+            database.setTransactionSuccessful();
+        } catch (Exception e) {
+            response = e.getMessage();
+        } finally {
+            database.endTransaction();
+
+            database.close();
+        }
+        return response;
+    }
 }

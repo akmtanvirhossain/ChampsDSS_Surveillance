@@ -318,11 +318,19 @@
                 <EditText
                     android:id="@+id/txtInfo1"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="50"
+                    android:textSize="20sp" />
+                <Spinner android:visibility="gone"
+                    android:id="@+id/spnInfo1"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:drawSelectorOnTop="true"
+                    android:prompt="@string/planet_prompt"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -356,11 +364,19 @@
                 <EditText
                     android:id="@+id/txtInfo2"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="10"
+                    android:textSize="20sp" />
+                <Spinner android:visibility="gone"
+                    android:id="@+id/spnInfo2"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:drawSelectorOnTop="true"
+                    android:prompt="@string/planet_prompt"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -394,11 +410,19 @@
                 <EditText
                     android:id="@+id/txtInfo3"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="10"
+                    android:textSize="20sp" />
+                <Spinner android:visibility="gone"
+                    android:id="@+id/spnInfo3"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:drawSelectorOnTop="true"
+                    android:prompt="@string/planet_prompt"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -432,11 +456,19 @@
                 <EditText
                     android:id="@+id/txtInfo4"
                     style="@style/customEdit"
-                    android:layout_width="100sp"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="10"
+                    android:textSize="20sp" />
+                <Spinner android:visibility="gone"
+                    android:id="@+id/spnInfo4"
+                    android:layout_width="300sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:drawSelectorOnTop="true"
+                    android:prompt="@string/planet_prompt"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -507,7 +539,7 @@
                 android:visibility="gone">
 
                 <include
-                    layout="@layout/member"
+                    layout="@layout/member_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

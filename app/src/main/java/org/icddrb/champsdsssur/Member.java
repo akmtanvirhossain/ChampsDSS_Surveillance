@@ -673,6 +673,9 @@
          secSp4.setVisibility(View.GONE);
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave1);
+
+
+
         cmdSave.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
             DataSave();
@@ -1174,13 +1177,13 @@
      
            RadioButton rb;
            Member_DataModel d = new Member_DataModel();
-           String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
+           String SQL = "Select * from tmpMember  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
            List<Member_DataModel> data = d.SelectAll(this, SQL);
            for(Member_DataModel item : data){
-             txtVill.setText(item.getVill());
+             /*txtVill.setText(item.getVill());
              txtBari.setText(item.getBari());
              txtHH.setText(item.getHH());
-             txtMSlNo.setText(item.getMSlNo());
+             txtMSlNo.setText(item.getMSlNo());*/
             // txtPNo.setText(item.getPNo());
              txtName.setText(item.getName());
              spnRth.setSelection(Global.SpinnerItemPositionAnyLength(spnRth, item.getRth()));

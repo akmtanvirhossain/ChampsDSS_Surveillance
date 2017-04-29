@@ -152,6 +152,25 @@ import android.content.Context;
             }
            return response;
         }
+
+     public String TransactionSQL(Context context)
+     {
+         C = new Connection(context);
+         String SQL = "";
+         try
+         {
+             if(C.Existence("Select * from "+ TableName +"  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' and EvType='"+ _EvType +"' and EvDate='"+ _EvDate +"' and Rnd='"+ _Rnd +"' "))
+                 SQL = "Update "+ TableName +" Set Upload='2',modifyDate='" + _modifyDate + "' ,Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',EvType = '"+ _EvType +"',EvDate = '"+ _EvDate +"',Info1 = '"+ _Info1 +"',Info2 = '"+ _Info2 +"',Info3 = '"+ _Info3 +"',Info4 = '"+ _Info4 +"',VDate = '"+ _VDate +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' and EvType='"+ _EvType +"' and EvDate='"+ _EvDate +"' and Rnd='"+ _Rnd +"'";
+             else
+                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,EvType,EvDate,Info1,Info2,Info3,Info4,VDate,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload,modifyDate)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _EvType +"', '"+ _EvDate +"', '"+ _Info1 +"', '"+ _Info2 +"', '"+ _Info3 +"', '"+ _Info4 +"', '"+ _VDate +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"', '"+ _modifyDate +"')";
+         }
+         catch(Exception  e)
+         {
+             SQL = e.getMessage();
+         }
+         return SQL;
+     }
+
         Connection C;
 
         private String SaveData(Context context)

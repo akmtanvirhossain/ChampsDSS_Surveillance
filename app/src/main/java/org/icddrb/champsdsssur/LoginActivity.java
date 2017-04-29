@@ -120,8 +120,8 @@ public class LoginActivity extends Activity {
                 C.Sync_Download("DataCollector",UniqueID,"Status='d'");
                 C.Sync_Download("RoundVisit",UniqueID,"CurrRound='1'");
 
-                //Intent syncService = new Intent(this, Sync_Service.class);
-                //startService(syncService);
+                Intent syncService = new Intent(this, Sync_Service.class);
+                startService(syncService);
             }
             //**************************************************************************************
             uid.setAdapter(C.getArrayAdapter("select UserId||'-'||UserName User from DataCollector order by UserName"));
@@ -145,6 +145,7 @@ public class LoginActivity extends Activity {
                     {
                         String[] U = Connection.split(uid.getSelectedItem().toString(),'-');
                         g.setUserId(U[0]);
+                        sp.save(LoginActivity.this,"userid",UniqueID);
 
                         if (!C.Existence("Select * from DataCollector where UserId='" + U[0] + "' and Pass='" + pass.getText().toString() + "'"))
                         {

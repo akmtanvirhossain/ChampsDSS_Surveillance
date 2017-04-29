@@ -137,6 +137,7 @@ public class MainMenu extends Activity {
 //                                        td.Sync_Download("Baris",DEVICEID,"");
                                         td.Sync_Download("EventCode",DEVICEID,"");
                                         //td.Sync_Download("Visits",DEVICEID,"");
+                                        td.Sync_Download("MigDatabase",DEVICEID,"");
 
                                         List<String> tableList = new ArrayList<String>();
 //                                        tableList.add("Baris");

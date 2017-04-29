@@ -17,11 +17,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:paddingLeft="30sp"
-            android:text="Status" />
-        <TextView android:id="@+id/VisitNote" android:layout_width="150dp" android:gravity="left" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp"/>
+            android:text="Status" android:visibility="gone" />
+        <TextView android:id="@+id/VisitNote" android:layout_width="150dp" android:gravity="left" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:paddingLeft="30sp" android:visibility="gone"/>
         <TextView android:id="@+id/TotMem" android:layout_width="120sp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" android:visibility="gone" />
     </LinearLayout>
     <LinearLayout android:id="@+id/secRowVStatus" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:id="@+id/BBB" android:layout_width="50sp" android:gravity="left" android:layout_height="wrap_content" android:layout_weight="0.00" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
         <TextView android:id="@+id/lblVStatus" android:layout_width="wrap_content" android:textColor="#006699" android:gravity="left" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginTop="8sp" android:layout_marginBottom="8sp" />
     </LinearLayout>
  </LinearLayout>

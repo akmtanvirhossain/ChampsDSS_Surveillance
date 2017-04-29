@@ -12,8 +12,8 @@
         <TextView android:text="বাড়ির নাম" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="খানা #" android:layout_width="80dp" android:layout_marginLeft="50sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="খানা প্রধান" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
-        <TextView android:text="ফলাফল" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
-        <TextView android:text="মন্তব্য" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="ফলাফল" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp" android:visibility="gone" />
+        <TextView android:text="মন্তব্য" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp" android:visibility="gone" />
 
     </LinearLayout>
  </LinearLayout>

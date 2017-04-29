@@ -79,7 +79,7 @@
 
             <LinearLayout
                 android:id="@+id/secVill"
-                style="@style/rowStyle0"
+                style="@style/rowStyle1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -94,20 +94,30 @@
 
                 <TextView
                     android:id="@+id/VlblVill"
-                    android:layout_width="220sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="খানা নম্বর"
                     android:textSize="20sp" />
 
                 <EditText
+                    android:id="@+id/txtHHNo"
+                    style="@style/customEdit"
+                    android:layout_width="130sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10sp"
+                    android:inputType="text"
+                    android:maxLength="11"
+                    android:textSize="20sp" />
+
+                <EditText
                     android:id="@+id/txtVill"
                     style="@style/customEdit"
-                    android:layout_width="60sp"
+                    android:layout_width="170sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="3"
-                    android:textSize="20sp" />
+                    android:textSize="20sp" android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/txtBari"
@@ -117,7 +127,7 @@
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="4"
-                    android:textSize="20sp" />
+                    android:textSize="20sp" android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/txtHH"
@@ -127,13 +137,13 @@
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="2"
-                    android:textSize="20sp" />
+                    android:textSize="20sp" android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/VlblRnd"
-                    android:layout_width="40sp"
+                    android:layout_width="100sp"
                     android:layout_height="wrap_content"
-                    android:text="Rnd"
+                    android:text="Round No:"
                     android:textSize="20sp" />
 
                 <EditText
@@ -144,7 +154,7 @@
                     android:layout_marginRight="10sp"
                     android:inputType="text"
                     android:maxLength="2"
-                    android:textSize="20sp" />
+                    android:textSize="20sp" android:gravity="center" />
             </LinearLayout>
 
             <View
@@ -231,7 +241,7 @@
 
                 <TextView
                     android:id="@+id/VlblHHHead"
-                    android:layout_width="220sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="খানা প্রধানের নাম"
                     android:textSize="20sp" />
@@ -276,7 +286,7 @@
 
                 <TextView
                     android:id="@+id/VlblReligion"
-                    android:layout_width="120sp"
+                    android:layout_width="105sp"
                     android:layout_height="wrap_content"
                     android:text="ধর্ম"
                     android:textSize="20sp" />
@@ -315,7 +325,7 @@
 
                 <TextView
                     android:id="@+id/VlblMobileNo1"
-                    android:layout_width="220sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="১ম মোবাইল নম্বর"
                     android:textSize="20sp" />
@@ -363,7 +373,7 @@
 
                 <TextView
                     android:id="@+id/VlblMobileNo2"
-                    android:layout_width="220sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="২য় মোবাইল নম্বর"
                     android:textSize="20sp" />
@@ -459,7 +469,7 @@
 
                 <TextView
                     android:id="@+id/VlblVDate"
-                    android:layout_width="220sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="সাক্ষাতকারের তারিখ"
                     android:textSize="20sp" />
@@ -578,7 +588,7 @@
 
                 <TextView
                     android:id="@+id/VlblResp"
-                    android:layout_width="220sp"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:text="উত্তরদাতা"
                     android:textSize="20sp" />
@@ -616,7 +626,7 @@
 
                 <TextView
                     android:id="@+id/VlblNote"
-                    android:layout_width="220sp"
+                    android:layout_width="200sp"
                     android:layout_height="wrap_content"
                     android:text="পরিদর্শন মন্তব্য"
                     android:textSize="20sp" />
@@ -624,10 +634,10 @@
                 <EditText
                     android:id="@+id/txtNote"
                     style="@style/customEdit"
-                    android:layout_width="250sp"
+                    android:layout_width="290sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
-                    android:inputType="text"
+                    android:inputType="text|textCapWords"
                     android:maxLength="100"
                     android:textSize="20sp" />
             </LinearLayout>

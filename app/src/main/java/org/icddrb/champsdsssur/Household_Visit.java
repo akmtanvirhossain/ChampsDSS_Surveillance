@@ -37,8 +37,9 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+ import android.widget.Toast;
 
-import java.util.ArrayList;
+ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -94,6 +95,7 @@ import Common.Global;
          View lineVill;
          TextView VlblVill;
          EditText txtVill;
+         EditText txtHHNo;
          LinearLayout secBari;
          View lineBari;
          TextView VlblBari;
@@ -257,10 +259,13 @@ import Common.Global;
        linelbl02 = (View) findViewById(R.id.linelbl02);
        seclbl01 = (LinearLayout) findViewById(R.id.seclbl01);
        linelbl01 = (View) findViewById(R.id.linelbl01);
-       secVill = (LinearLayout) findViewById(R.id.secVill);
-       lineVill = (View) findViewById(R.id.lineVill);
-       VlblVill = (TextView) findViewById(R.id.VlblVill);
-       txtVill = (EditText) findViewById(R.id.txtVill);
+
+//       secVill = (LinearLayout) findViewById(R.id.secVill);
+//       lineVill = (View) findViewById(R.id.lineVill);
+//       VlblVill = (TextView) findViewById(R.id.VlblVill);
+//       txtVill = (EditText) findViewById(R.id.txtVill);
+       txtHHNo = (EditText) findViewById(R.id.txtHHNo);
+
        secBari = (LinearLayout) findViewById(R.id.secBari);
        lineBari = (View) findViewById(R.id.lineBari);
        VlblBari = (TextView) findViewById(R.id.VlblBari);
@@ -297,7 +302,6 @@ import Common.Global;
        lineHHHead = (View) findViewById(R.id.lineHHHead);
        VlblHHHead = (TextView) findViewById(R.id.VlblHHHead);
        txtHHHead = (EditText) findViewById(R.id.txtHHHead);
-
 
 //         secTotMem=(LinearLayout)findViewById(R.id.secTotMem);
 //         lineTotMem=(View)findViewById(R.id.lineTotMem);
@@ -429,8 +433,8 @@ import Common.Global;
        txtNote = (EditText) findViewById(R.id.txtNote);
 
 
-       txtVill.setText(VILL);
-       txtVill.setFocusable(false);
+//       txtVill.setText(VILL);
+//       txtVill.setFocusable(false);
        txtBari.setText(BARI);
        txtBari.setFocusable(false);
 
@@ -439,6 +443,10 @@ import Common.Global;
        }
        txtHH.setText(HH);
        txtHH.setFocusable(false);
+
+       txtHHNo.setText(VILL+"-"+BARI+"-"+HH);
+       txtHHNo.setEnabled(false);
+       txtRnd.setEnabled(false);
 
 
 //         dtpEnDate.setOnTouchListener(new View.OnTouchListener() {
@@ -537,16 +545,16 @@ import Common.Global;
              if(Integer.valueOf(R)>=1 & Integer.valueOf(R)<=76)
              {
                  SQL  =" Select ' ' union";
-                 SQL +=" Select '77-Entire household migrated-out' union";
+                 SQL +=" Select '77-সমগ্র পরিবার অন্যত্র  চলেগেছে' union";
                  SQL +=" Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
              }
              else {
 
                  SQL = " Select ' ' union";
-                 SQL += " Select '00-No Visit due to unavoidable situation' union";
-                 SQL += " Select '77-Entire household migrated-out' union";
-                 SQL += " Select '88-Refused to interview' union";
-                 SQL += " Select '99-All adult members absent' union";
+                 SQL += " Select '00-অনিবার্য পরিস্থিতির কারণে পরিদর্শন করা হয়নি' union";
+                 SQL += " Select '77-সমগ্র পরিবার অন্যত্র  চলেগেছে' union";
+                 SQL += " Select '88-ইন্টারভিউ দিতে রাজী নয়' union";
+                 SQL += " Select '99-খানার সকল সদস্য অনুপস্থিত' union";
                  SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
              }
          }
@@ -683,25 +691,25 @@ import Common.Global;
      {
          String DV="";
 
-         if(txtVill.getText().toString().length()==0 & secVill.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: গ্রাম.");
-             txtVill.requestFocus();
-             return;
-           }
-         else if(txtBari.getText().toString().length()==0 & secBari.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: বাড়ি.");
-             txtBari.requestFocus();
-             return;
-           }
-         else if(txtHH.getText().toString().length()==0 & secHH.isShown())
-           {
-             Connection.MessageBox(Household_Visit.this, "Required field: খানা.");
-             txtHH.requestFocus();
-             return;
-           }
-         else if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
+//         if(txtVill.getText().toString().length()==0 & secVill.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: গ্রাম.");
+//             txtVill.requestFocus();
+//             return;
+//           }
+//         else if(txtBari.getText().toString().length()==0 & secBari.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: বাড়ি.");
+//             txtBari.requestFocus();
+//             return;
+//           }
+//         else if(txtHH.getText().toString().length()==0 & secHH.isShown())
+//           {
+//             Connection.MessageBox(Household_Visit.this, "Required field: খানা.");
+//             txtHH.requestFocus();
+//             return;
+//           }
+         if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
          {
              Connection.MessageBox(Household_Visit.this, "Required field: খানা প্রধানের নাম.");
              txtHHHead.requestFocus();
@@ -1043,7 +1051,7 @@ import Common.Global;
            String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH + "'";
            List<Household_DataModel> data = d.SelectAll(this, SQL);
            for(Household_DataModel item : data){
-             txtVill.setText(item.getVill());
+//             txtVill.setText(item.getVill());
              txtBari.setText(item.getBari());
              txtHH.setText(item.getHH());
              spnReligion.setSelection(Global.SpinnerItemPositionAnyLength(spnReligion, item.getReligion()));
@@ -1060,7 +1068,7 @@ import Common.Global;
                String SQL1 = "Select Vill,Bari,HH,VDate,ifnull(VStatus,'')VStatus,ifnull(VStatusOth,'')VStatusOth,Note,ifnull(Resp,'')Resp,Rnd from Visits Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and Rnd='"+ ROUNDNO +"'";
                List<Visits_DataModel> data1 = d1.SelectAll(this, SQL1);
                for(Visits_DataModel item1 : data1) {
-                   txtVill.setText(item1.getVill());
+//                   txtVill.setText(item1.getVill());
                    txtBari.setText(item1.getBari());
                    txtHH.setText(item1.getHH());
                    dtpVDate.setText(item1.getVDate().toString().length() == 0 ? "" : Global.DateConvertDMY(item1.getVDate()));

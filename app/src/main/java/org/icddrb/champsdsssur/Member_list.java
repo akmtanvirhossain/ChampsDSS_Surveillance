@@ -128,6 +128,7 @@ public class Member_list extends Activity {
          final TextView txtVill = (TextView) findViewById(R.id.txtVill);
          final TextView txtBari = (TextView) findViewById(R.id.txtBari);
          final TextView txtHH = (TextView) findViewById(R.id.txtHH);
+         final TextView txtRnd = (TextView) findViewById(R.id.txtRnd);
 
          TextView lblHHHead=(TextView)findViewById(R.id.lblHHHead);
          lblHHHead.setText(": "+IDbundle.getString("HHHead"));
@@ -139,9 +140,11 @@ public class Member_list extends Activity {
          lblVillName.setText(": "+ VillName);
          lblBariName.setText(": "+BARI+", "+IDbundle.getString("BariName"));
 
-         txtVill.setText(VILL);
+//         txtVill.setText(VILL);
          txtBari.setText(BARI);
          txtHH.setText(HH);
+         txtVill.setText(VILL+"-"+BARI+"-"+HH);
+         txtRnd.setText(ROUNDNO);
 
          LinearLayout secMenu;
          secMenu= (LinearLayout) findViewById(R.id.secMenu);
@@ -319,6 +322,7 @@ public class Member_list extends Activity {
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
+         txtRnd.setEnabled(false);
 
          DataSearch(VILL,BARI,HH);
          DataStatus();

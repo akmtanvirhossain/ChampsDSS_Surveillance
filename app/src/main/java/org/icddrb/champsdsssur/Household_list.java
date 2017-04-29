@@ -552,7 +552,6 @@ public class Household_list extends Activity  {
          final LinearLayout secRowVStatus = (LinearLayout)convertView.findViewById(R.id.secRowVStatus);
          final TextView lblVStatus = (TextView)convertView.findViewById(R.id.lblVStatus);
 
-//         final ImageButton delHousehold = (ImageButton)convertView.findViewById(R.id.delHousehold);
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
 
          Bari.setText(o.get("Bari"));
@@ -582,16 +581,16 @@ public class Household_list extends Activity  {
          }else if(resp.equals("00")){
              Bari.setTextColor(Color.GREEN);
              secRowVStatus.setVisibility(View.VISIBLE);
-             lblVStatus.setText("No visit due to unavoidable situation, "+ o.get("Note"));
+             lblVStatus.setText("অনিবার্য পরিস্থিতির কারণে পরিদর্শন করা হয়নি, "+ o.get("Note"));
          }else if(resp.equals("77")){
              secRowVStatus.setVisibility(View.VISIBLE);
-             lblVStatus.setText("Entire household migrated out, "+ o.get("Note"));
+             lblVStatus.setText("সমগ্র পরিবার অন্যত্র  চলেগেছে, "+ o.get("Note"));
          }else if(resp.equals("88")){
              secRowVStatus.setVisibility(View.VISIBLE);
-             lblVStatus.setText("Regused to interview, "+ o.get("Note"));
+             lblVStatus.setText("ইন্টারভিউ দিতে রাজী নয়, "+ o.get("Note"));
          }else if(resp.equals("99")){
              secRowVStatus.setVisibility(View.VISIBLE);
-             lblVStatus.setText("All adult members absent, "+ o.get("Note"));
+             lblVStatus.setText("খানার সকল সদস্য অনুপস্থিত, "+ o.get("Note"));
          }
 
          TotMem.setText(o.get("TotMem"));

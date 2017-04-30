@@ -656,13 +656,13 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("61"))
                             {
-                                String PMono = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PMono = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("Update tmpMember set MoNo='"+ PMono +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("62"))
                             {
-                                String PFano = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PFano = C.ReturnSingleValue("Select Info2 from tmpEvents where  vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("Update tmpMember set FaNo='"+ PFano +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
@@ -674,19 +674,19 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("64"))
                             {
-                                String PRth = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PRth = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("Update tmpMember set Rth='"+ PRth +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("71"))
                             {
-                                String PEdu = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PEdu = C.ReturnSingleValue("Select Info2 from tmpEvents where  vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("Update tmpMember set Edu='"+ PEdu +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
                             else if(EV.equals("72"))
                             {
-                                String POcp = C.ReturnSingleValue("Select Info2 from tTrans where status='e' and vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String POcp = C.ReturnSingleValue("Select Info2 from tmpEvents where  vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
                                 C.Save("Update tmpMember set Ocp='"+ POcp +"' where vill||bari||hh='"+ HH +"' and SNo='"+ SN +"'");
                             }
@@ -779,21 +779,21 @@ public class Member_list extends Activity {
 
             if(ActiveOrAll.equalsIgnoreCase("active"))
             {
-                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.Sno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age,Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
+                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.MSlNo, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age,Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
                 SQLStr += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
                 SQLStr += " (case when cast(strftime('%Y', ifnull(t.ExDate,'')) as int)>=2014 and t.ExType='55' then '1' else '2' end)as deathrep,";
-                SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tTrans t";
+                SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tmpMember t";
                 SQLStr += " left outer join Member m on t.vill||t.bari||t.hh||t.sno = m.vill||m.bari||m.hh||m.sno";
-                SQLStr += " where t.status='m' and t.vill||t.bari||t.hh='"+ HH +"' and (length(t.extype)=0 or t.extype is null) order by cast(t.SNo as int) asc";
+                SQLStr += " where t.vill||t.bari||t.hh='"+ HH +"' and (length(t.extype)=0 or t.extype is null) order by cast(t.SNo as int) asc";
             }
             else if(ActiveOrAll.equalsIgnoreCase("all"))
             {
-                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.Sno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age, Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
+                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.MSlNo, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age, Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
                 SQLStr += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
                 SQLStr += " (case when cast(strftime('%Y', ifnull(t.ExDate,'')) as int)>=2014 and t.ExType='55' then '1' else '2' end)as deathrep,";
-                SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tTrans t";
+                SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tmpMember t";
                 SQLStr += " left outer join member m on t.vill||t.bari||t.hh||t.sno = m.vill||m.bari||m.hh||m.sno";
-                SQLStr += " where t.status='m' and t.vill||t.bari||t.hh='"+ HH +"' order by cast(t.SNo as int) asc";
+                SQLStr += " where t.vill||t.bari||t.hh='"+ HH +"' order by cast(t.SNo as int) asc";
             }
 
 

@@ -486,8 +486,6 @@
          txtRnd=(EditText) findViewById(R.id.txtRnd);
 
 
-
-
          dtpEvDate.setOnTouchListener(new View.OnTouchListener() {
              @Override
              public boolean onTouch(View v, MotionEvent event) {
@@ -515,11 +513,11 @@
              }
          });
 
-
          spnEvType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                  String EVCODE = spnEvType.getSelectedItem().toString().length()==0 ? "" : spnEvType.getSelectedItem().toString().split("-")[0];
+//                 String CodeList = spnInfo4.getSelectedItem().toString().length()==0 ? "" : spnInfo4.getSelectedItem().toString().split("-")[0];
 
                  formMember.setVisibility(View.GONE);
                  secInfo1.setVisibility(View.GONE);
@@ -576,16 +574,23 @@
                  }else if(EVCODE.equals("32")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     spnInfo1.setVisibility(View.GONE);
+                     txtInfo1.setVisibility(View.VISIBLE);
                      VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
 //                     secInfo2.setVisibility(View.VISIBLE);
                  }else if(EVCODE.equals("33")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     spnInfo1.setVisibility(View.GONE);
+                     txtInfo1.setVisibility(View.VISIBLE);
                      VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
 //                     secInfo2.setVisibility(View.VISIBLE);
                  }else if(EVCODE.equals("34")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     secInfo1.setVisibility(View.VISIBLE);
+                     spnInfo1.setVisibility(View.GONE);
+                     txtInfo1.setVisibility(View.VISIBLE);
                      VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
 //                     secInfo2.setVisibility(View.VISIBLE);
                  }
@@ -626,26 +631,49 @@
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
-                 }else if(EVCODE.equals("64")){
-                     dtpEvDate.setText(Global.DateNowDMY());
-                     secInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
                  }
+//                 else if(EVCODE.equals("64")){
+//                     dtpEvDate.setText(Global.DateNowDMY());
+//                     secInfo1.setVisibility(View.VISIBLE);
+//                     secInfo2.setVisibility(View.VISIBLE);
+//                 }
+//
+//                 else if(EVCODE.equals("71")){
+//                     dtpEvDate.setText(Global.DateNowDMY());
+//                     secInfo1.setVisibility(View.VISIBLE);
+//                     secInfo2.setVisibility(View.VISIBLE);
+//                 }
+//
+//                 else if(EVCODE.equals("72")) {
+//                     dtpEvDate.setText(Global.DateNowDMY());
+//                     secInfo1.setVisibility(View.VISIBLE);
+//                     secInfo2.setVisibility(View.VISIBLE);
+//                 }else{
+//                     formMember.setVisibility(View.GONE);
+//                 }
 
-                 else if(EVCODE.equals("71")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                 else if(EVCODE.equals("64") | EVCODE.equals("71") | EVCODE.equals("72"))
+                 {
+                     VlblInfo1.setText("কোড");
                      secInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
-                 }
+                     spnInfo1.setVisibility(View.VISIBLE);
+                     txtInfo1.setVisibility(View.GONE);
+                     txtInfo2.setVisibility(View.GONE);
+                     VlblInfo2.setVisibility(View.GONE);
+                     secVDate.setVisibility(View.GONE);
+                     secInfo2.setVisibility(View.GONE);
 
-                 else if(EVCODE.equals("72")) {
-                     dtpEvDate.setText(Global.DateNowDMY());
-                     secInfo1.setVisibility(View.VISIBLE);
-                     secInfo2.setVisibility(View.VISIBLE);
+                     if(EVCODE.equals("64"))
+                         spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM RTH"));
+                     else if(EVCODE.equals("71"))
+                     {
+                         spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM EDU"));
+                     }
+                     else if(EVCODE.equals("72"))
+                         spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM OCP"));
                  }else{
                      formMember.setVisibility(View.GONE);
                  }
-
 
                  if(EVCODE.equals("12") | EVCODE.equals("40") | EVCODE.equals("49"))
                  {
@@ -759,12 +787,12 @@
                  dtpEvDate.requestFocus();
                  return;
              }
-             else if(txtInfo1.getText().toString().length()==0 & secInfo1.isShown())
-             {
-                 Connection.MessageBox(Events.this, "Required field: Info1.");
-                 txtInfo1.requestFocus();
-                 return;
-             }
+//             else if(txtInfo1.getText().toString().length()==0 & secInfo1.isShown())
+//             {
+//                 Connection.MessageBox(Events.this, "Required field: Info1.");
+//                 txtInfo1.requestFocus();
+//                 return;
+//             }
              else if(txtInfo2.getText().toString().length()==0 & secInfo2.isShown())
              {
                  Connection.MessageBox(Events.this, "Required field: Info2.");
@@ -1171,64 +1199,60 @@
              }else if(EVTYPE.equals("21")){
 
              }
-
              //Internal Movement
              else if(EVTYPE.equals("22")){
 
              }else if(EVTYPE.equals("23")){
 
              }
-
              //Birth
              else if(EVTYPE.equals("25")){
 
              }
              //Marital Status
-             else if(EVTYPE.equals("31")|EVTYPE.equals("32")|EVTYPE.equals("33")|EVTYPE.equals("34")){
+             else if(EVTYPE.equals("31")|EVTYPE.equals("32")|EVTYPE.equals("33")|EVTYPE.equals("34"))
+             {
                  SQL3 = "Update tmpMember set MS='"+ EVTYPE +"'";
              }
-
              //Pregnancy Information
-             else if(EVTYPE.equals("40")|EVTYPE.equals("49")){
+             else if(EVTYPE.equals("40")|EVTYPE.equals("49"))
+             {
                  SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt=''";
-             }else if(EVTYPE.equals("41")){
-                 SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt='"+ EVDATE +"'";
-             }else if(EVTYPE.equals("42")){
+             }else if(EVTYPE.equals("41"))
+             {
+                 SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt='"+ Global.DateConvertYMD(dtpEvDate.getText().toString()) +"'";
+             }else if(EVTYPE.equals("42"))
+             {
 
              }
              //Migration out
-             else if(EVTYPE.equals("51")|EVTYPE.equals("52")|EVTYPE.equals("53")|EVTYPE.equals("55")){
-                 SQL3 = "Update tmpMember set ExType='"+ EVTYPE +"',ExDate='"+ EVDATE +"'";
+             else if(EVTYPE.equals("51")|EVTYPE.equals("52")|EVTYPE.equals("53")|EVTYPE.equals("55"))
+             {
+                 SQL3 = "Update tmpMember set ExType='"+ EVTYPE +"',ExDate='"+ Global.DateConvertYMD(dtpEvDate.getText().toString()) +"'";
              }
+             //Mother's serial no update
+             else if(EVTYPE.equals("61"))
+             {
+                 SQL3 = "Update tmpMember set MoNo='"+ txtInfo1.getText().toString() +"'";
 
-             else if(EVTYPE.equals("61")){
-                 dtpEvDate.setText(Global.DateNowDMY());
-                 secInfo1.setVisibility(View.VISIBLE);
-                 secInfo2.setVisibility(View.VISIBLE);
-             }else if(EVTYPE.equals("62")){
-                 dtpEvDate.setText(Global.DateNowDMY());
-                 secInfo1.setVisibility(View.VISIBLE);
-                 secInfo2.setVisibility(View.VISIBLE);
-             }else if(EVTYPE.equals("63")){
-                 dtpEvDate.setText(Global.DateNowDMY());
-                 secInfo1.setVisibility(View.VISIBLE);
-                 secInfo2.setVisibility(View.VISIBLE);
-             }else if(EVTYPE.equals("64")){
-                 dtpEvDate.setText(Global.DateNowDMY());
-                 secInfo1.setVisibility(View.VISIBLE);
-                 secInfo2.setVisibility(View.VISIBLE);
+             }else if(EVTYPE.equals("62"))
+             {
+                 SQL3 = "Update tmpMember set FaNo='"+ txtInfo1.getText().toString() +"'";
+             }else if(EVTYPE.equals("63"))
+             {
+                 SQL3 = "Update tmpMember set Sp1='"+ txtInfo1.getText().toString() +"'";
+             }else if(EVTYPE.equals("64"))
+             {
+                 SQL3 = "Update tmpMember set Rth='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
              }
-
-             else if(EVTYPE.equals("71")){
-                 dtpEvDate.setText(Global.DateNowDMY());
-                 secInfo1.setVisibility(View.VISIBLE);
-                 secInfo2.setVisibility(View.VISIBLE);
+             else if(EVTYPE.equals("71"))
+             {
+                 SQL3 = "Update tmpMember set Edu='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
              }
+             else if(EVTYPE.equals("72"))
+             {
+                 SQL3 = "Update tmpMember set Ocp='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
 
-             else if(EVTYPE.equals("72")) {
-                 dtpEvDate.setText(Global.DateNowDMY());
-                 secInfo1.setVisibility(View.VISIBLE);
-                 secInfo2.setVisibility(View.VISIBLE);
              }else{
                  formMember.setVisibility(View.GONE);
              }
@@ -1935,7 +1959,6 @@
      {
          try
          {
-
              RadioButton rb;
              Member_DataModel d = new Member_DataModel();
              String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
@@ -1981,7 +2004,6 @@
              return;
          }
      }
-
 
      private boolean isAgeDifferenceWithParentsValid(String VILL, String BARI,String HH, String fatherSL, String motherSL, String Age) {
          // Cursor fCursor,mCursor;

@@ -1893,7 +1893,7 @@ public class Connection extends SQLiteOpenHelper {
             //--------------------------------------------------------------------------------------
             C.Sync_DatabaseStructure(UniqueID);
             C.Sync_Download("DataCollector", UniqueID, "");
-            //C.Sync_Download("Country", UniqueID, "");
+            C.Sync_Download("Village", UniqueID, "");
 
             //Sync_Download
             // Parameter 1: table Name

@@ -19,6 +19,7 @@ import java.util.List;
 import Common.Connection;
 import Common.Global;
 import Common.Tran_Download;
+import Utility.MySharedPreferences;
 
 public class MainMenu extends Activity {
 
@@ -32,6 +33,7 @@ public class MainMenu extends Activity {
     Spinner spnCluster;
     Spinner spnBlock;
     Spinner spnRound;
+    MySharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MainMenu extends Activity {
             setContentView(R.layout.main_menu);
             C = new Connection(this);
             g = Global.getInstance();
+            sp = new MySharedPreferences();
 
             turnGPSOn();
             Intent gpsService = new Intent(this, GPSService.class);
@@ -76,6 +79,10 @@ public class MainMenu extends Activity {
             cmdHHInterview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    sp.save(MainMenu.this,"cluster",spnCluster.getSelectedItem().toString());
+                    sp.save(MainMenu.this,"block",spnBlock.getSelectedItem().toString());
+                    sp.save(MainMenu.this,"roundno",spnRound.getSelectedItem().toString());
+
                     Bundle IDbundle = new Bundle();
                     IDbundle.putString("Village", "");
                     IDbundle.putString("VCode", "");

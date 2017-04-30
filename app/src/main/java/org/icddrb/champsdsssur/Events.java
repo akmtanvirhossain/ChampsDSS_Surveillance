@@ -260,9 +260,13 @@
     static String HH = "";
     static String MSLNO = "";
     static String EVDATE = "";
-    static String ROUNDNO = "";
+
     static String EVTYPE = "";
     static String OLDNEWHH = "";
+
+     static String ROUNDNO = "";
+     static String CLUSTER = "";
+     static String BLOCK   = "";
 
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -275,6 +279,9 @@
          STARTTIME = g.CurrentTime24();
          DEVICEID  = sp.getValue(this, "deviceid");
          ENTRYUSER = sp.getValue(this, "userid");
+         CLUSTER   = sp.getValue(this, "cluster");
+         BLOCK     = sp.getValue(this, "block");
+         ROUNDNO   = sp.getValue(this, "roundno");
 
          IDbundle = getIntent().getExtras();
          VILL = IDbundle.getString("Vill");
@@ -283,7 +290,7 @@
          MSLNO = IDbundle.getString("MSlNo");
          EVTYPE = IDbundle.getString("EvType");
          EVDATE = IDbundle.getString("EvDate");
-         ROUNDNO = IDbundle.getString("roundno");
+         //ROUNDNO = IDbundle.getString("roundno");
          OLDNEWHH = IDbundle.getString("OldNew");
 
          TableName = "Events";
@@ -638,6 +645,8 @@
                  }else{
                      formMember.setVisibility(View.GONE);
                  }
+
+
                  if(EVCODE.equals("12") | EVCODE.equals("40") | EVCODE.equals("49"))
                  {
                      secEvDate.setVisibility(View.GONE);
@@ -1145,15 +1154,89 @@
 
              String SQL1 = "";
              String SQL2 = "";
+             String SQL3 = "";
 
+             //Save Events
              SQL1 = objSave.TransactionSQL(this);
+
              //Save Member
              if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23") |EVTYPE.equals("25")) {
                  SQL2 = DataSaveMember(MSL);
              }
+             //Update Member Data
+             if(EVTYPE.equals("12")){
 
+             }else if(EVTYPE.equals("20")){
 
-             String status = C.TransactionDataInsert(SQL1,SQL2,"","");
+             }else if(EVTYPE.equals("21")){
+
+             }
+
+             //Internal Movement
+             else if(EVTYPE.equals("22")){
+
+             }else if(EVTYPE.equals("23")){
+
+             }
+
+             //Birth
+             else if(EVTYPE.equals("25")){
+
+             }
+             //Marital Status
+             else if(EVTYPE.equals("31")|EVTYPE.equals("32")|EVTYPE.equals("33")|EVTYPE.equals("34")){
+                 SQL3 = "Update tmpMember set MS='"+ EVTYPE +"'";
+             }
+
+             //Pregnancy Information
+             else if(EVTYPE.equals("40")|EVTYPE.equals("49")){
+                 SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt=''";
+             }else if(EVTYPE.equals("41")){
+                 SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt='"+ EVDATE +"'";
+             }else if(EVTYPE.equals("42")){
+
+             }
+             //Migration out
+             else if(EVTYPE.equals("51")|EVTYPE.equals("52")|EVTYPE.equals("53")|EVTYPE.equals("55")){
+                 SQL3 = "Update tmpMember set ExType='"+ EVTYPE +"',ExDate='"+ EVDATE +"'";
+             }
+
+             else if(EVTYPE.equals("61")){
+                 dtpEvDate.setText(Global.DateNowDMY());
+                 secInfo1.setVisibility(View.VISIBLE);
+                 secInfo2.setVisibility(View.VISIBLE);
+             }else if(EVTYPE.equals("62")){
+                 dtpEvDate.setText(Global.DateNowDMY());
+                 secInfo1.setVisibility(View.VISIBLE);
+                 secInfo2.setVisibility(View.VISIBLE);
+             }else if(EVTYPE.equals("63")){
+                 dtpEvDate.setText(Global.DateNowDMY());
+                 secInfo1.setVisibility(View.VISIBLE);
+                 secInfo2.setVisibility(View.VISIBLE);
+             }else if(EVTYPE.equals("64")){
+                 dtpEvDate.setText(Global.DateNowDMY());
+                 secInfo1.setVisibility(View.VISIBLE);
+                 secInfo2.setVisibility(View.VISIBLE);
+             }
+
+             else if(EVTYPE.equals("71")){
+                 dtpEvDate.setText(Global.DateNowDMY());
+                 secInfo1.setVisibility(View.VISIBLE);
+                 secInfo2.setVisibility(View.VISIBLE);
+             }
+
+             else if(EVTYPE.equals("72")) {
+                 dtpEvDate.setText(Global.DateNowDMY());
+                 secInfo1.setVisibility(View.VISIBLE);
+                 secInfo2.setVisibility(View.VISIBLE);
+             }else{
+                 formMember.setVisibility(View.GONE);
+             }
+
+             SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
+
+             //Transaction Process
+             String status = C.TransactionDataInsert(SQL1,SQL2,SQL3,"");
 
              if(status.length()==0) {
                  Intent returnIntent = new Intent();
@@ -1819,10 +1902,14 @@
              objSave.setSp2((spnSp2.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-")));
              objSave.setSp3((spnSp3.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-")));
              objSave.setSp4((spnSp4.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-")));
-             objSave.setEnType(spnEvType.getSelectedItem().toString().split("-")[0]);
-             objSave.setEnDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
-             objSave.setExType("");
-             objSave.setExDate("");
+             if(EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23")|EVTYPE.equals("25")) {
+                 objSave.setEnType(spnEvType.getSelectedItem().toString().split("-")[0]);
+                 objSave.setEnDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
+                 objSave.setExType("");
+                 objSave.setExDate("");
+             }
+             //objSave.setExType("");
+             //objSave.setExDate("");
              objSave.setEnDt(Global.DateTimeNowYMDHMS());
              objSave.setStartTime(STARTTIME);
              objSave.setEndTime(g.CurrentTime24());
@@ -1960,8 +2047,7 @@
              //should be same village
              else if(EvCode.equals("53"))
              {
-//                 VillageList.setAdapter(C.getArrayAdapter("select VCode||' - '||vname from Village order by vname asc"));
-                 VillageList.setAdapter(C.getArrayAdapter("select VCode||' - '||vname from Village where cluster='"+ g.getClusterCode() +"' and VCode='"+ g.getVillageCode() +"' order by vname asc"));
+                 VillageList.setAdapter(C.getArrayAdapter("select VCode||' - '||vname from Village where cluster='"+ CLUSTER +"' and VCode='"+ txtVill.getText().toString() +"' order by vname asc"));
                  lblMigTitle.setText("Split-In");
              }
 

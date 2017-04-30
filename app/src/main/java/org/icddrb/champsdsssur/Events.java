@@ -665,6 +665,7 @@
 
                      if(EVCODE.equals("64"))
                          spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM RTH"));
+
                      else if(EVCODE.equals("71"))
                      {
                          spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM EDU"));
@@ -1213,14 +1214,19 @@
              else if(EVTYPE.equals("31")|EVTYPE.equals("32")|EVTYPE.equals("33")|EVTYPE.equals("34"))
              {
                  SQL3 = "Update tmpMember set MS='"+ EVTYPE +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }
              //Pregnancy Information
              else if(EVTYPE.equals("40")|EVTYPE.equals("49"))
              {
                  SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt=''";
-             }else if(EVTYPE.equals("41"))
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
+             }
+             else if(EVTYPE.equals("41"))
              {
                  SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt='"+ Global.DateConvertYMD(dtpEvDate.getText().toString()) +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
+
              }else if(EVTYPE.equals("42"))
              {
 
@@ -1229,35 +1235,40 @@
              else if(EVTYPE.equals("51")|EVTYPE.equals("52")|EVTYPE.equals("53")|EVTYPE.equals("55"))
              {
                  SQL3 = "Update tmpMember set ExType='"+ EVTYPE +"',ExDate='"+ Global.DateConvertYMD(dtpEvDate.getText().toString()) +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }
              //Mother's serial no update
              else if(EVTYPE.equals("61"))
              {
                  SQL3 = "Update tmpMember set MoNo='"+ txtInfo1.getText().toString() +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
 
              }else if(EVTYPE.equals("62"))
              {
                  SQL3 = "Update tmpMember set FaNo='"+ txtInfo1.getText().toString() +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }else if(EVTYPE.equals("63"))
              {
                  SQL3 = "Update tmpMember set Sp1='"+ txtInfo1.getText().toString() +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }else if(EVTYPE.equals("64"))
              {
                  SQL3 = "Update tmpMember set Rth='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }
              else if(EVTYPE.equals("71"))
              {
                  SQL3 = "Update tmpMember set Edu='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }
              else if(EVTYPE.equals("72"))
              {
                  SQL3 = "Update tmpMember set Ocp='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
 
              }else{
                  formMember.setVisibility(View.GONE);
              }
-
-             SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
 
              //Transaction Process
              String status = C.TransactionDataInsert(SQL1,SQL2,SQL3,"");
@@ -1763,8 +1774,6 @@
          }
      }
 
-
-
      protected Dialog onCreateDialog(int id) {
          final Calendar c = Calendar.getInstance();
          hour = c.get(Calendar.HOUR_OF_DAY);
@@ -1808,7 +1817,6 @@
          public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
              hour = selectedHour; minute = selectedMinute;
              EditText tpTime;
-
 
              //tpTime.setText(new StringBuilder().append(Global.Right("00"+hour,2)).append(":").append(Global.Right("00"+minute,2)));
 
@@ -1926,6 +1934,7 @@
              objSave.setSp2((spnSp2.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp2.getSelectedItem().toString(), "-")));
              objSave.setSp3((spnSp3.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-")));
              objSave.setSp4((spnSp4.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-")));
+
              if(EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23")|EVTYPE.equals("25")) {
                  objSave.setEnType(spnEvType.getSelectedItem().toString().split("-")[0]);
                  objSave.setEnDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());

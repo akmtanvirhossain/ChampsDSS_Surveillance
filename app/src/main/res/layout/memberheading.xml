@@ -15,6 +15,8 @@
         <TextView android:text="বাবার সিরিয়াল" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="সর্বোচ্চ শ্রেণি পাশ" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text=" বৈবাহিক অবস্থা" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text=" গর্ভের অবস্থা" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="LMP Date" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text=" পেশা" android:layout_width="100dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 1" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="স্বামী/স্ত্রীর সিরিয়াল 2" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
@@ -24,5 +26,7 @@
         <TextView android:text="EnDate" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" android:textSize="16sp"/>
         <TextView android:text="ExType" android:layout_width="60dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" android:textSize="16sp"/>
         <TextView android:text="ExDate" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" android:textSize="16sp"/>
+        <TextView android:text="Pos.Mig" android:layout_width="60dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible"  android:textSize="16sp"/>
+        <TextView android:text="Mig.Date" android:layout_width="120dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" android:textSize="16sp"/>
     </LinearLayout>
  </LinearLayout>

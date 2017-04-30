@@ -1223,6 +1223,7 @@ public class Member_list extends Activity {
                  map.put("MS", item.getMS());
                  map.put("Pstat", item.getPstat());
                  map.put("LmpDt", item.getBDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getLmpDt()));
+
                  map.put("Ocp", item.getOcp());
                  map.put("Sp1", item.getSp1());
                  map.put("Sp2", item.getSp2());

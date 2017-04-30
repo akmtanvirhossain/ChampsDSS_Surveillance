@@ -1222,8 +1222,7 @@ public class Member_list extends Activity {
                  map.put("Edu", item.getEdu());
                  map.put("MS", item.getMS());
                  map.put("Pstat", item.getPstat());
-                 map.put("LmpDt", item.getBDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getLmpDt()));
-
+                 map.put("LmpDt", item.getLmpDt().toString().length()==0 ? "" : Global.DateConvertDMY(item.getLmpDt()));
                  map.put("Ocp", item.getOcp());
                  map.put("Sp1", item.getSp1());
                  map.put("Sp2", item.getSp2());
@@ -1233,6 +1232,9 @@ public class Member_list extends Activity {
                  map.put("EnDate", item.getEnDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getEnDate()));
                  map.put("ExType", item.getExType());
                  map.put("ExDate", item.getExDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getExDate()));
+                 map.put("PosMig", item.getPosMig());
+                 map.put("PosMigDate", item.getPosMigDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getPosMigDate()));
+
                  map.put("sl", i.toString());
                  i+=1;
                  dataList.add(map);
@@ -1407,6 +1409,8 @@ public class Member_list extends Activity {
          final TextView FaNo = (TextView)convertView.findViewById(R.id.FaNo);
          final TextView Edu = (TextView)convertView.findViewById(R.id.Edu);
          final TextView MS = (TextView)convertView.findViewById(R.id.MS);
+         final TextView Pstat = (TextView)convertView.findViewById(R.id.Pstat);
+         final TextView LmpDt = (TextView)convertView.findViewById(R.id.LmpDt);
          final TextView Ocp = (TextView)convertView.findViewById(R.id.Ocp);
          final TextView Sp1 = (TextView)convertView.findViewById(R.id.Sp1);
          final TextView Sp2 = (TextView)convertView.findViewById(R.id.Sp2);
@@ -1416,6 +1420,9 @@ public class Member_list extends Activity {
          final TextView EnDate = (TextView)convertView.findViewById(R.id.EnDate);
          final TextView ExType = (TextView)convertView.findViewById(R.id.ExType);
          final TextView ExDate = (TextView)convertView.findViewById(R.id.ExDate);
+         final TextView PosMig = (TextView)convertView.findViewById(R.id.PosMig);
+         final TextView PosMigDate = (TextView)convertView.findViewById(R.id.PosMigDate);
+
          final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
 
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
@@ -1433,6 +1440,8 @@ public class Member_list extends Activity {
          FaNo.setText(o.get("FaNo"));
          Edu.setText(o.get("Edu"));
          MS.setText(o.get("MS"));
+         Pstat.setText(o.get("Pstat"));
+         LmpDt.setText(o.get("LmpDt"));
          Ocp.setText(o.get("Ocp"));
          Sp1.setText(o.get("Sp1"));
          Sp2.setText(o.get("Sp2"));
@@ -1442,6 +1451,8 @@ public class Member_list extends Activity {
          EnDate.setText(o.get("EnDate"));
          ExType.setText(o.get("ExType"));
          ExDate.setText(o.get("ExDate"));
+         PosMig.setText(o.get("PosMig"));
+         PosMigDate.setText(o.get("PosMigDate"));
 
          if (o.get("PNo").length() == 0) {
              MSlNo.setTextColor(Color.RED);

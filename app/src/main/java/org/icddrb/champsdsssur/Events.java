@@ -1894,7 +1894,6 @@
          return M;
      }
 
-
      private String DataSaveMember(String MemberSl)
      {
          String SQL = "";

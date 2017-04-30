@@ -1234,8 +1234,8 @@ import Common.Global;
 
      //-- -tmpMember Information-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      SQL = " Insert into tmpMember";
-     SQL += " (Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
-     SQL += " Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Member";
+     SQL += " (Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS,Pstat,LmpDt, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate,PosMig,PosMigDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload)";
+     SQL += " Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS,Pstat,LmpDt, Ocp, Sp1, Sp2, Sp3, Sp4, EnType, EnDate, ExType, ExDate,PosMig,PosMigDate, NeedReview, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload from Member";
      SQL += " where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'";
      C.Save(SQL);
 

@@ -326,6 +326,7 @@ import android.content.Context;
                 d._MS = cur.getString(cur.getColumnIndex("MS"));
                 d._Pstat = cur.getString(cur.getColumnIndex("Pstat"));
                 d._LmpDt = cur.getString(cur.getColumnIndex("LmpDt"));
+
                 d._Ocp = cur.getString(cur.getColumnIndex("Ocp"));
                 d._Sp1 = cur.getString(cur.getColumnIndex("Sp1"));
                 d._Sp2 = cur.getString(cur.getColumnIndex("Sp2"));

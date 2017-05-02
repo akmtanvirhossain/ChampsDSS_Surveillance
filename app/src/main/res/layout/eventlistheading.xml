@@ -19,7 +19,7 @@
 					        android:layout_height="wrap_content"
 					        android:text=""/>					    
 				    <TextView android:layout_column="2"
-				        android:text="SNo"				
+				        android:text="MslNo"
 						android:textSize="18sp" android:gravity="center"
 						android:layout_width="60sp"
 						android:layout_height="40sp"/>

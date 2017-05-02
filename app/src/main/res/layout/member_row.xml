@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scrollbars="vertical">
     <LinearLayout android:id="@+id/secListRow" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-        <ImageButton android:layout_width="50sp" android:layout_marginLeft="0sp"
-            android:layout_height="45sp" android:background="#ffffff" android:src="@drawable/discard"
-            android:id="@+id/delMember"/>
+        <ImageButton android:layout_width="50sp" android:layout_marginLeft="0sp" android:layout_height="45sp" android:background="#ffffff" android:src="@drawable/discard" android:id="@+id/delMember"/>
+
         <TextView android:id="@+id/Vill" android:paddingTop="8sp" android:paddingBottom="8sp"  android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
         <TextView android:id="@+id/Bari" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
         <TextView android:id="@+id/HH" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
+        <ImageView android:id="@+id/imgPreg" android:visibility="invisible" android:background="@drawable/preg" android:layout_width="50sp" android:layout_height="45sp" />
         <TextView android:id="@+id/MSlNo" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="80dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1"   />
         <TextView android:id="@+id/Name" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:layout_weight="1"   />
         <TextView android:id="@+id/PNo" android:paddingTop="8sp" android:paddingBottom="8sp" android:layout_width="170dp" android:gravity="center" android:layout_height="wrap_content" android:layout_weight="1"   />

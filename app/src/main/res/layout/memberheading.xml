@@ -4,7 +4,8 @@
         <TextView android:text="Vill" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
         <TextView android:text="Bari" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
         <TextView android:text="HH" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="gone" />
-        <TextView android:text="  সিরিয়াল নং" android:layout_width="80dp" android:layout_marginLeft="50sp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:visibility="visible" />
+        <TextView android:text="সিরিয়াল" android:layout_width="80dp" android:layout_marginLeft="50sp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="নাম" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="স্থায়ী নাম্বার" android:layout_width="170dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
         <TextView android:text="সম্পর্ক" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>

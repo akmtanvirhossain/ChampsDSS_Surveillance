@@ -321,7 +321,7 @@
                     android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="50"
                     android:textSize="20sp" />
 
@@ -369,7 +369,7 @@
                     android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="10"
                     android:textSize="20sp" />
 

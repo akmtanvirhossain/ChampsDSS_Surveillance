@@ -616,18 +616,59 @@
                  }else if(EVCODE.equals("55")){
                      dtpEvDate.setText("");
                  }
-                 else if(EVCODE.equals("61")){
+                 else if(EVCODE.equals("61"))
+                 {
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
-                 }else if(EVCODE.equals("62")){
+                     txtInfo1.setVisibility(View.GONE);
+                     txtInfo2.setVisibility(View.GONE);
+                     VlblInfo1.setText("নতুন সিরিয়াল");
+                     VlblInfo2.setText("পূর্বের সিরিয়াল");
+                     spnInfo1.setVisibility(View.VISIBLE);
+                     spnInfo2.setVisibility(View.VISIBLE);
+
+                     if(EVCODE.equals("61"))
+                     {
+                         spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+                         spnInfo2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+                     }
+
+                 }
+                 else if(EVCODE.equals("62"))
+                 {
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
-                 }else if(EVCODE.equals("63")){
+                     txtInfo1.setVisibility(View.GONE);
+                     txtInfo2.setVisibility(View.GONE);
+                     VlblInfo1.setText("নতুন সিরিয়াল");
+                     VlblInfo2.setText("পূর্বের সিরিয়াল");
+                     spnInfo1.setVisibility(View.VISIBLE);
+                     spnInfo2.setVisibility(View.VISIBLE);
+
+                     if(EVCODE.equals("62"))
+                    {
+                        spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+                        spnInfo2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+                    }
+
+                 }else if(EVCODE.equals("63"))
+                 {
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
+                     txtInfo1.setVisibility(View.GONE);
+                     txtInfo2.setVisibility(View.GONE);
+                     VlblInfo1.setText("নতুন সিরিয়াল");
+                     VlblInfo2.setText("পূর্বের সিরিয়াল");
+                     spnInfo1.setVisibility(View.VISIBLE);
+                     spnInfo2.setVisibility(View.VISIBLE);
+
+                     if(EVCODE.equals("63")) {
+                         spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+                         spnInfo2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+                     }
                  }
 //                 else if(EVCODE.equals("64")){
 //                     dtpEvDate.setText(Global.DateNowDMY());
@@ -669,7 +710,9 @@
                      }
                      else if(EVCODE.equals("72"))
                          spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM OCP"));
-                 }else{
+                 }
+                 else
+                 {
                      formMember.setVisibility(View.GONE);
                  }
 
@@ -794,6 +837,8 @@
              String EvDate = Global.DateConvertYMD(dtpEvDate.getText().toString());
 
              String Code   = txtInfo1.getText().toString();
+             String[] Code1 = spnInfo1.getSelectedItem().toString().split("-");
+             String[] Code2 = spnInfo2.getSelectedItem().toString().split("-");
 
              String SpNo   = txtInfo1.getText().toString();
 
@@ -801,13 +846,13 @@
 
 
 
-             if(txtInfo2.getText().toString().length()==0 & secInfo2.isShown())
+             if(txtInfo2.getText().toString().length()==0 & txtInfo1.isShown())
              {
                  Connection.MessageBox(Events.this, "Required field: Info2.");
                  txtInfo2.requestFocus();
                  return;
              }
-             else if(txtInfo3.getText().toString().length()==0 & secInfo3.isShown())
+              if(txtInfo3.getText().toString().length()==0 & secInfo3.isShown())
              {
                  Connection.MessageBox(Events.this, "Required field: Info3.");
                  txtInfo3.requestFocus();
@@ -826,12 +871,7 @@
                  dtpVDate.requestFocus();
                  return;
              }
-             else if(txtRnd.getText().toString().length()==0 & secRnd.isShown())
-             {
-                 Connection.MessageBox(Events.this, "Required field: Round No.");
-                 txtRnd.requestFocus();
-                 return;
-             }
+
 
              String EDT = Global.DateValidate(dtpEvDate.getText().toString());
              SimpleDateFormat evdateformat = new SimpleDateFormat("dd/MM/yyyy");
@@ -1019,13 +1059,19 @@
                  {
                      Connection.MessageBox(Events.this, EDT); return;
                  }
-                 else if(ECode == 61 & Code.length() == 0)
+                 else if(ECode == 61 & Code1[0].length() == 0)
                  {
-                     Connection.MessageBox(Events.this, "সদস্যের মায়ের সঠিক সিরিয়াল নাম্বার লিখুন।");return;
+                     Connection.MessageBox(Events.this, "সদস্যের মায়ের সঠিক সিরিয়াল নাম্বার লিখুন।");
+                     return;
                  }
-                 if(MSLNO.equals(Code))
+                 if(MSLNO.equals(Code1))
                  {
                      Connection.MessageBox(Events.this, "মায়ের সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
+                     return;
+                 }
+                 if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-"))& spnInfo2.isShown())
+                 {
+                     Connection.MessageBox(Events.this, "মায়ের বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
                      return;
                  }
              }
@@ -1035,18 +1081,22 @@
                  {
                      Connection.MessageBox(Events.this, EDT); return;
                  }
-                 else if(ECode == 62 & Code.length() == 0)
+                 else if(ECode == 62 & Code1[0].length() == 0)
                  {
-                     Connection.MessageBox(Events.this, "সদস্যের বাবার সঠিক সিরিয়াল নাম্বার লিখুন।");return;
+                     Connection.MessageBox(Events.this, "সদস্যের বাবার সঠিক সিরিয়াল নাম্বার লিখুন।");
+                     return;
                  }
-                 if(MSLNO.equals(Code))
+                 if(MSLNO.equals(Code1[0]))
                  {
                      Connection.MessageBox(Events.this, "বাবার সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
                      return;
                  }
-
+                 if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-"))& spnInfo2.isShown())
+                 {
+                     Connection.MessageBox(Events.this, "বাবার বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
+                     return;
+                 }
              }
-
 
              else if (ECode == 63)
              {
@@ -1054,17 +1104,17 @@
                  {
                      Connection.MessageBox(Events.this, EDT); return;
                  }
-                 else if(Code.length()==0)
+                 else if(Code1[0].length()==0)
                  {
                      Connection.MessageBox(Events.this, "সঠিক স্বামী/স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Code)।");
                      return;
                  }
-                 else if(Code.length()!=2)
+                 else if(Code1[0].length()!=2)
                  {
                      Connection.MessageBox(Events.this, "সঠিক স্বামী/স্ত্রী এর সিরিয়াল নাম্বার ২ সংখ্যা হতে হবে(Code)।");
                      return;
                  }
-                 else if(Sex.equals("1") & Code.equals("00") & SpNo.length()==0)
+                 else if(Sex.equals("1") & Code1[0].equals("00") & SpNo.length()==0)
                  {
                      Connection.MessageBox(Events.this, "সঠিক স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Spouse's No)।");
                      return;
@@ -1074,19 +1124,28 @@
                      Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১০ বছরের বেশী হতে হবে।");
                      return;
                  }
+                 else if(MSLNO.equals(Code1[0]))
+                 {
+                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
+                     return;
+                 }
+                 else if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-"))& spnInfo2.isShown())
+                 {
+                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
+                     return;
+                 }
 
                  //spouse's is not available in the member list
-                 if(!Code.equals("00") & !C.Existence("select vill from tmpMember where  vill||bari||hh='"+ Household +"' and MslNo='"+ Code +"'"))
+                 if(!Code1[0].equals("00") & !C.Existence("select vill from tmpMember where  vill||bari||hh='"+ Household +"' and MslNo='"+ Code1[0] +"'"))
                  {
-                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার "+ Code +" এই খানার তালিকায় নেই।");
+                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার "+ Code1[0] +" এই খানার তালিকায় নেই।");
                      return;
                  }
-                 else if(C.Existence("select vill from tmpMember where  vill||bari||hh='"+ Household +"' and SNo='"+ MSLNO +"' and (Sp1='"+ Code +"' or Sp2='"+ Code +"' or Sp3='"+ Code +"' or Sp4='"+ Code +"')"))
+                 else if(C.Existence("select vill from tmpMember where  vill||bari||hh='"+ Household +"' and Mslno='"+ MSLNO +"' and (Sp1='"+ Code1[0] +"' or Sp2='"+ Code1[0] +"' or Sp3='"+ Code1[0] +"' or Sp4='"+ Code1[0] +"')"))
                  {
-                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার "+ Code +" পূর্বের নাম্বার এর সমান হবে না।");
+                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার "+ Code1[0] +" পূর্বের নাম্বার এর সমান হবে না।");
                      return;
                  }
-
              }
 
              else if (ECode == 64)
@@ -1690,13 +1749,13 @@
                  //Mother's serial no update
              else if(EVTYPE.equals("61"))
              {
-                 SQL3 = "Update tmpMember set MoNo='"+ txtInfo1.getText().toString() +"'";
+                 SQL3 = "Update tmpMember set MoNo='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
                  SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
 
              }
              else if(EVTYPE.equals("62"))
              {
-                 SQL3 = "Update tmpMember set FaNo='"+ txtInfo1.getText().toString() +"'";
+                 SQL3 = "Update tmpMember set FaNo='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
                  SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }
 
@@ -1715,49 +1774,49 @@
                      sp4 = cur.getString(4).toString();
 
                      //Male
-                     if (sex.equals("1") & Integer.valueOf(Code) == 0)
+                     if (sex.equals("1") & Integer.valueOf(Code1[0]) == 0)
                      {
                          if(sp1.equals(SpNo))
                          {
-                             C.Save("Update tmpMember Set Sp1='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp1='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                          else if(sp2.equals(SpNo))
                          {
-                             C.Save("Update tmpMember Set Sp2='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp2='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                          else if(sp3.equals(SpNo))
                          {
-                             C.Save("Update tmpMember Set Sp3='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp3='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                          else if(sp4.equals(SpNo))
                          {
-                             C.Save("Update tmpMember Set Sp4='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp4='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                      }
-                     else if (sex.equals("1") & Integer.valueOf(Code) != 0)
+                     else if (sex.equals("1") & Integer.valueOf(Code1[0]) != 0)
                      {
                          if(sp1.length()==0 | sp1.equals("0") | sp1.equals("00"))
                          {
-                             C.Save("Update tmpMember Set Sp1='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp1='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                          else if(sp2.length()==0 | sp2.equals("0") | sp2.equals("00"))
                          {
-                             C.Save("Update tmpMember Set Sp2='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp2='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                          else if(sp3.length()==0 | sp3.equals("0") | sp3.equals("00"))
                          {
-                             C.Save("Update tmpMember Set Sp3='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp3='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                          else if(sp4.length()==0 | sp4.equals("0") | sp4.equals("00"))
                          {
-                             C.Save("Update tmpMember Set Sp4='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                             C.Save("Update tmpMember Set Sp4='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                      }
 
                      //Female
                      else
                      {
-                         C.Save("Update tmpMember Set Sp1='"+ Code +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
+                         C.Save("Update tmpMember Set Sp1='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                      }
 
                      cur.moveToNext();

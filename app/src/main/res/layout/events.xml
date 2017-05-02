@@ -381,7 +381,7 @@
                     android:drawSelectorOnTop="true"
                     android:prompt="@string/planet_prompt"
                     android:textSize="20sp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View

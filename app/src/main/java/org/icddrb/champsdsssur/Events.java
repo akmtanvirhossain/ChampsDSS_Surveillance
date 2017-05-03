@@ -457,6 +457,38 @@
          VlblInfo1=(TextView) findViewById(R.id.VlblInfo1);
          txtInfo1=(EditText) findViewById(R.id.txtInfo1);
          secInfo2=(LinearLayout)findViewById(R.id.secInfo2);
+
+         txtInfo1.addTextChangedListener(new TextWatcher() {
+             @Override
+             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+             }
+
+             @Override
+             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+             }
+
+             @Override
+             public void afterTextChanged(Editable s) {
+                 if (Integer.valueOf(txtInfo1.getText().toString().length() == 0 ? "77" : txtInfo1.getText().toString()) == 77)
+                 {
+                     if(txtInfo1.getText().toString().equals("77"))
+                     {
+                         txtInfo2.setVisibility(View.GONE);
+                         secInfo2.setVisibility(View.GONE);
+                     }
+                     else
+                     {
+                         txtInfo2.setVisibility(View.VISIBLE);
+                         secInfo2.setVisibility(View.VISIBLE);
+                     }
+
+                 }
+             }
+         });
+
+
          lineInfo2=(View)findViewById(R.id.lineInfo2);
          VlblInfo2=(TextView) findViewById(R.id.VlblInfo2);
          txtInfo2=(EditText) findViewById(R.id.txtInfo2);
@@ -538,19 +570,19 @@
                      secInfo2.setVisibility(View.VISIBLE);
                      VlblInfo2.setText("Reason");
 
-//                     if(txtInfo1.getText().length()==0)
-//                     {
-//                         if(Integer.valueOf(txtInfo1.getText().toString())==77)
-//                         {
-//                             txtInfo2.setVisibility(View.GONE);
-//                             secInfo2.setVisibility(View.GONE);
-//                         }
-//                         else
-//                         {
-//                             txtInfo2.setVisibility(View.VISIBLE);
-//                             secInfo2.setVisibility(View.VISIBLE);
-//                         }
-//                     }
+                     if(txtInfo1.getText().length()==0)
+                     {
+                         if(txtInfo1.getText().toString().equals("77"))
+                         {
+                             txtInfo2.setVisibility(View.GONE);
+                             secInfo2.setVisibility(View.GONE);
+                         }
+                         else
+                         {
+                             txtInfo2.setVisibility(View.VISIBLE);
+                             secInfo2.setVisibility(View.VISIBLE);
+                         }
+                     }
                      //Clear Member Form
                  }
 

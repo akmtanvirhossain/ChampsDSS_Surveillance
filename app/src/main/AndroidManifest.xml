@@ -75,6 +75,7 @@
             android:theme="@style/CustomThemeActivity" />
         <activity android:name="org.icddrb.champsdsssur.Household_Visit" />
         <activity android:name="map.IconGeneratorDemoActivity" />
+        <activity android:name=".Events_NewMem" />
 
         <service android:name="org.icddrb.champsdsssur.GPSService" android:process=":gps_service" />
         <action android:name="gps_data"/>

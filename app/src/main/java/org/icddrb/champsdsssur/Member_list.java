@@ -301,7 +301,7 @@ public class Member_list extends Activity {
              @Override
              public void onClick(View v) {
                  Intent f1;
-                 f1 = new Intent(getApplicationContext(), Events.class);
+                 f1 = new Intent(getApplicationContext(),Events_NewMem.class);
                  IDbundle.putString("Vill", VILL);
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);

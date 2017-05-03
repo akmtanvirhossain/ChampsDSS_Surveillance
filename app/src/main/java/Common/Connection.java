@@ -48,7 +48,7 @@ public class Connection extends SQLiteOpenHelper {
         dbContext = context;
         ud_context = context;
 
-        //Save("Drop Table LastVillBari");
+        //Save("Delete from RoundVisit");
     }
 
     //Split function

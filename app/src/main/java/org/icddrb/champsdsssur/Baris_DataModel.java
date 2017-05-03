@@ -79,6 +79,11 @@ import android.content.Context;
          }
         private String _Upload = "2";
 
+     private String _modifyDate = "";
+     public void setmodifyDate(String newValue){
+         _modifyDate = newValue;
+     }
+
         String TableName = "Baris";
 
         public String SaveUpdateData(Context context)
@@ -126,7 +131,7 @@ import android.content.Context;
             String SQL = "";
             try
               {
-                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',Cluster = '"+ _Cluster +"',Block = '"+ _Block +"',BariName = '"+ _BariName +"',BariLoc = '"+ _BariLoc +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"'";
+                 SQL = "Update "+ TableName +" Set Upload='2',modifyDate='"+ _modifyDate +"',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',Cluster = '"+ _Cluster +"',Block = '"+ _Block +"',BariName = '"+ _BariName +"',BariLoc = '"+ _BariLoc +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"'";
                  C.Save(SQL);
                  C.close();
               }

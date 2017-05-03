@@ -46,7 +46,7 @@ public class SettingForm extends Activity {
             spnCluster = (Spinner)findViewById(R.id.spnCluster);
             spnBlock = (Spinner)findViewById(R.id.spnBlock);
             List<String> listCluster = new ArrayList<String>();
-            for(int c=1;c<=17;c++){
+            for(int c=1;c<=15;c++){
                 listCluster.add(Global.Right("00"+String.valueOf(c),2));
             }
             ArrayAdapter<String> adptrCluster= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCluster);

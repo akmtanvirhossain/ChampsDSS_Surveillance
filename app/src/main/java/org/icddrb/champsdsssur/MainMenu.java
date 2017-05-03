@@ -74,6 +74,10 @@ public class MainMenu extends Activity {
             spnBlock = (Spinner)findViewById(R.id.spnBlock);
             spnBlock.setAdapter(C.getArrayAdapter("Select distinct Block from Baris"));
 
+            String[] RCB = C.ReturnSingleValue("Select RoundNo||'-'||Cluster||'-'||Block from LastRoundBlock").split("-");
+            spnRound.setSelection(Global.SpinnerItemPositionAnyLength(spnRound,RCB[0]));
+            spnCluster.setSelection(Global.SpinnerItemPositionAnyLength(spnCluster,RCB[1]));
+            spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock,RCB[2]));
 
             cmdHHInterview = (Button) findViewById(R.id.cmdHHInterview);
             cmdHHInterview.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +86,9 @@ public class MainMenu extends Activity {
                     sp.save(MainMenu.this,"cluster",spnCluster.getSelectedItem().toString());
                     sp.save(MainMenu.this,"block",spnBlock.getSelectedItem().toString());
                     sp.save(MainMenu.this,"roundno",spnRound.getSelectedItem().toString());
+
+                    C.Save("Delete from LastRoundBlock");
+                    C.Save("Insert into LastRoundBlock values('"+ spnRound.getSelectedItem().toString() +"','"+ spnCluster.getSelectedItem().toString() +"','"+ spnBlock.getSelectedItem().toString() +"')");
 
                     Bundle IDbundle = new Bundle();
                     IDbundle.putString("Village", "");
@@ -98,21 +105,6 @@ public class MainMenu extends Activity {
                 }
             });
 
-//            cmdMember = (Button) findViewById(R.id.cmdMember);
-//            cmdMember.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Bundle IDbundle = new Bundle();
-//                    IDbundle.putString("Village", "");
-//                    IDbundle.putString("VCode", "");
-//                    finish();
-//                    Intent f1;
-//                    f1 = new Intent(getApplicationContext(), Member_list.class);
-//                    f1.putExtras(IDbundle);
-//                    startActivity(f1);
-//                    //startActivity(new Intent(MainMenu.this, HouseholdIndex1.class));
-//                }
-//            });
 
             cmdDataSync = (Button) findViewById(R.id.cmdDataSync);
             cmdDataSync.setOnClickListener(new View.OnClickListener() {

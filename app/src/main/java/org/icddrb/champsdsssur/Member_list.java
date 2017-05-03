@@ -42,6 +42,7 @@ import java.util.List;
 import Common.Connection;
 import Common.Global;
 import Common.Utility;
+import Utility.*;
 
 public class Member_list extends Activity {
     boolean networkAvailable=false;
@@ -103,6 +104,8 @@ public class Member_list extends Activity {
     Button btnMemberName;
     Button btnSES;
     Button btnPregHis;
+    MySharedPreferences sp;
+
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
    try
@@ -110,6 +113,7 @@ public class Member_list extends Activity {
          setContentView(R.layout.member_list);
          C = new Connection(this);
          g = Global.getInstance();
+         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
          STARTTIME = g.CurrentTime24();
          DEVICEID  = g.getDeviceNo();
@@ -121,9 +125,15 @@ public class Member_list extends Activity {
          BName=IDbundle.getString("BariName");
          HH = IDbundle.getString("HH");
          MSLNO = IDbundle.getString("MSlNo");
-         ROUNDNO        = IDbundle.getString("roundno");
+
+         sp = new MySharedPreferences();
+         ROUNDNO = sp.getValue(this,"roundno");
+         CLUSTER = sp.getValue(this,"cluster");
+         BLOCK = sp.getValue(this,"block");
+
+         /*ROUNDNO        = IDbundle.getString("roundno");
          CLUSTER        = IDbundle.getString("cluster");
-         BLOCK          = IDbundle.getString("block");
+         BLOCK          = IDbundle.getString("block");*/
 
 
          final TextView txtVill = (TextView) findViewById(R.id.txtVill);

@@ -204,6 +204,8 @@ import Common.Global;
      ImageButton btnVDate;
      EditText VisitDate;
      Spinner BariList;
+     MySharedPreferences sp;
+
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
    try {
@@ -222,9 +224,14 @@ import Common.Global;
        BName = IDbundle.getString("BariName");
        HH = IDbundle.getString("HH");
 
-       ROUNDNO = IDbundle.getString("roundno");
+       sp = new MySharedPreferences();
+       ROUNDNO = sp.getValue(this,"roundno");
+       CLUSTER = sp.getValue(this,"cluster");
+       BLOCK = sp.getValue(this,"block");
+
+       /*ROUNDNO = IDbundle.getString("roundno");
        CLUSTER = IDbundle.getString("cluster");
-       BLOCK = IDbundle.getString("block");
+       BLOCK = IDbundle.getString("block");*/
        OLDNEWHH = IDbundle.getString("OldNew");
 
        TableName = "Household";

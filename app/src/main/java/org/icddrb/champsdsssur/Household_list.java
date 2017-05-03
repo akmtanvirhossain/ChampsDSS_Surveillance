@@ -37,6 +37,7 @@ import java.util.List;
 
 import Common.Connection;
 import Common.Global;
+ import Utility.MySharedPreferences;
 
 public class Household_list extends Activity  {
     boolean networkAvailable=false;
@@ -88,6 +89,8 @@ public class Household_list extends Activity  {
     static String ROUNDNO = "";
     static String CLUSTER = "";
     static String BLOCK   = "";
+    MySharedPreferences sp;
+
  public void onCreate(Bundle savedInstanceState)
  {
          super.onCreate(savedInstanceState);
@@ -106,9 +109,14 @@ public class Household_list extends Activity  {
          BName=IDbundle.getString("BariName");
          HH = IDbundle.getString("HH");
 
-         ROUNDNO        = IDbundle.getString("roundno");
-         CLUSTER        = IDbundle.getString("cluster");
-         BLOCK          = IDbundle.getString("block");
+         //ROUNDNO        = IDbundle.getString("roundno");
+         //CLUSTER        = IDbundle.getString("cluster");
+         //BLOCK          = IDbundle.getString("block");
+
+         sp = new MySharedPreferences();
+         ROUNDNO = sp.getValue(this,"roundno");
+         CLUSTER = sp.getValue(this,"cluster");
+         BLOCK = sp.getValue(this,"block");
 
          TableName = "Household";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
@@ -201,6 +209,8 @@ public class Household_list extends Activity  {
                  Bundle IDbundle = new Bundle();
                  IDbundle.putString("Vill", V);
                  IDbundle.putString("Bari", B);
+                 IDbundle.putString("cluster", CLUSTER);
+                 IDbundle.putString("block", BLOCK);
                  Intent intent = new Intent(getApplicationContext(),Baris.class);
                  intent.putExtras(IDbundle);
                  startActivityForResult(intent, 1);
@@ -237,10 +247,7 @@ public class Household_list extends Activity  {
                      Connection.MessageBox(Household_list.this,"গ্রামের তালিকা থেকে সঠিক গ্রামের নাম নির্বাচন করুন.");
                      return;
                  }
-                 /*else if(spnBari.getSelectedItemPosition()==0){
-                     Connection.MessageBox(Household_list.this,"Please select a valid bari from dropdown list.");
-                     return;
-                 }*/
+
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
                  String B = Connection.SelectedSpinnerValue(spnBari.getSelectedItem().toString(),"-");
                  IDbundle.putString("village", V);
@@ -341,104 +348,6 @@ public class Household_list extends Activity  {
         return H;
     }
 
-     private void ShowBariForm(final String Vill,final String BariNo, final String Status)
-     {
-         //Status: u-update, s-save (new bari)
-
-         final Dialog dialog = new Dialog(Household_list.this);
-         dialog.setTitle("Bari Form");
-         //dialog .requestWindowFeature(Window.FEATURE_NO_TITLE);
-         dialog.setContentView(R.layout.baris);
-         dialog.setCancelable(true);
-         dialog.setCanceledOnTouchOutside(false);
-
-         Window window = dialog.getWindow();
-         WindowManager.LayoutParams wlp = window.getAttributes();
-
-         wlp.gravity = Gravity.TOP;
-         wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-         window.setAttributes(wlp);
-
-         final Spinner BariList = (Spinner)findViewById(R.id.spnBari);
-         final TextView txtCluster = (TextView)dialog.findViewById(R.id.txtCluster);
-         final Spinner txtBlock = (Spinner)dialog.findViewById(R.id.spnBlock);
-         final TextView txtVill = (TextView)dialog.findViewById(R.id.txtVill);
-         final EditText txtBari = (EditText)dialog.findViewById(R.id.txtBari);
-         final EditText txtBName = (EditText)dialog.findViewById(R.id.txtBariName);
-         final EditText txtBLoc = (EditText)dialog.findViewById(R.id.txtBariLoc);
-         final String BLOCK = g.getBlockCode();
-
-         txtVill.setText(g.getVillageCode()+", "+CurrentVillage);
-         txtBari.setText(BariNo);
-         txtCluster.setText(g.getClusterCode());
-         txtBlock.setAdapter(C.getArrayAdapter("Select distinct Block from Baris order by cast(Block as int)"));
-         //txtBlock.setText(g.getBlockCode());
-         txtBlock.setSelection(Common.Global.SpinnerItemPosition(txtBlock, 2, g.getBlockCode()));
-         if(Status.equalsIgnoreCase("u"))
-         {
-             txtBName.setText(BariList.getSelectedItem().toString().substring(6,BariList.getSelectedItem().toString().length()));
-             txtBLoc.setText(C.ReturnSingleValue("Select BariLoc from Baris where Vill||Bari='"+ (Vill+BariNo) +"'"));
-         }
-
-         Button cmdBariSave = (Button)dialog.findViewById(R.id.cmdSave);
-         cmdBariSave.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View arg0) {
-                 if(txtBName.getText().length()==0)
-                 {
-                     Connection.MessageBox(Household_list.this, "বাড়ীর নাম খালি রাখা যাবে না।");
-                     return;
-                 }
-                 else
-                 {
-                     try
-                     {
-                         String SQL="";
-                         int selBari = BariList.getSelectedItemPosition();
-                         if(Status.equalsIgnoreCase("s"))
-                         {
-                             SQL  = "Insert into Baris (Vill, Bari, Block, BariName,BariLoc,EnDt,Upload)Values(";
-                             SQL += "'"+ Vill +"','"+ txtBari.getText() +"','"+ "','"+ txtBName.getText() +"','"+ txtBLoc.getText() +"',";
-
-                             C.Save(SQL);
-                             C.Save("update Baris set cluster=(select cluster from Village where vill=baris.vill) where length(cluster)=0 or cluster is null");
-                         }
-                         else if(Status.equalsIgnoreCase("u"))
-                         {
-                             SQL  = "Update Baris Set ";
-                             SQL += " BariName='"+ txtBName.getText() +"',BariLoc='"+ txtBLoc.getText() +"',Upload='2'";
-                             SQL += " Where Vill='"+ Vill +"' and Bari='"+ txtBari.getText() +"'";
-                             C.Save(SQL);
-
-                         }
-
-                         dialog.dismiss();
-                         final Spinner BariList = (Spinner)findViewById(R.id.spnBari);
-                         BariList.setAdapter(C.getArrayAdapter("Select ' ' union Select ' All Bari' union select Bari||', '||BariName from Baris b,Village v where b.vill=v.vill '"));
-
-                         BariList.setSelection(selBari);
-                         //BlockList(false, Global.Left(BariList.getSelectedItem().toString(),4));
-                     }
-                     catch(Exception ex)
-                     {
-                         Connection.MessageBox(Household_list.this, ex.getMessage());
-                         return;
-                     }
-
-                 }
-             }
-         });
-
-         //Button cmdBariClose = (Button)dialog.findViewById(R.id.cmdBariClose);
-         //cmdBariClose.setOnClickListener(new View.OnClickListener() {
-           //  public void onClick(View arg0) {
-                 // TODO Auto-generated method stub
-             //    dialog.cancel();
-             //}
-         //});
-
-         //dialog.show();
-
-     }
  @Override
  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
      super.onActivityResult(requestCode, resultCode, data);
@@ -446,13 +355,12 @@ public class Household_list extends Activity  {
          //Write your code if there's no result
      } else {
          if(data.getExtras().getString("res").equals("bari")) {
-             if (spnVill.getSelectedItemPosition() == 0) return;
+             //if (spnVill.getSelectedItemPosition() == 0) return;
              String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
-             spnBari.setAdapter(C.getArrayAdapter("Select '' union select Bari||'-'||BariName from Baris b where b.Vill='" + V[0] + "'"));
+             spnBari.setAdapter(C.getArrayAdapter("Select '.All Bari' union Select Bari||'-'||BariName from Baris where Vill='"+ V[0] +"' and Cluster='"+ CLUSTER +"' and Block='"+ BLOCK +"'"));
              spnBari.setSelection(Global.SpinnerItemPositionAnyLength(spnBari,data.getExtras().getString("bid")));
-//             spnBari.setAdapter(C.getArrayAdapter("Select '' union Select 'All Bari' union select Bari||'-'||BariName from Baris b where b.Vill='" + V[0] + "'"));
          }else if(data.getExtras().getString("res").equals("hh")) {
-             if (spnVill.getSelectedItemPosition() == 0 | spnBari.getSelectedItemPosition() == 0) return;
+             if (spnBari.getSelectedItemPosition() == 0) return;
              String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
              String[] B = Connection.split(spnBari.getSelectedItem().toString(), '-');
              DataSearch(CLUSTER, BLOCK, "");

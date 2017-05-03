@@ -86,7 +86,7 @@ public class LoginActivity extends Activity {
                 }
             }else
             {
-                C.CreateTable("LastVillBari","Create table LastVillBari(Vill varchar(3), Bari varchar(4))");
+                C.CreateTable("LastRoundBlock","Create table LastRoundBlock(RoundNo varchar(3), Cluster varchar(2), Block varchar(2))");
             }
 
 

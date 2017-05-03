@@ -76,10 +76,10 @@ import Common.Global;
          TextView VlblBari;
          EditText txtBari;
          LinearLayout secCluster;
-         View lineCluster;
-         TextView VlblCluster;
-         EditText txtCluster;
-         LinearLayout secBlock;
+         //View lineCluster;
+         //TextView VlblCluster;
+         Spinner spnCluster;
+         //LinearLayout secBlock;
          View lineBlock;
          TextView VlblBlock;
          Spinner spnBlock;
@@ -170,20 +170,29 @@ import Common.Global;
          }
 
          secCluster=(LinearLayout)findViewById(R.id.secCluster);
-         lineCluster=(View)findViewById(R.id.lineCluster);
-         VlblCluster=(TextView) findViewById(R.id.VlblCluster);
-         txtCluster=(EditText) findViewById(R.id.txtCluster);
-         secBlock=(LinearLayout)findViewById(R.id.secBlock);
+         //lineCluster=(View)findViewById(R.id.lineCluster);
+         //VlblCluster=(TextView) findViewById(R.id.VlblCluster);
+         //secBlock=(LinearLayout)findViewById(R.id.secBlock);
          lineBlock=(View)findViewById(R.id.lineBlock);
          VlblBlock=(TextView) findViewById(R.id.VlblBlock);
+
+         spnCluster=(Spinner) findViewById(R.id.spnCluster);
          spnBlock=(Spinner) findViewById(R.id.spnBlock);
+
+         List<String> listCluster = new ArrayList<String>();
+         for(int c=1;c<=15;c++){
+             listCluster.add(Global.Right("00"+String.valueOf(c),2));
+         }
+         ArrayAdapter<String> adptrCluster= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCluster);
+         spnCluster.setAdapter(adptrCluster);
+
          List<String> listBlock = new ArrayList<String>();
-         
-         listBlock.add("");
-         listBlock.add("01-b1");
-         listBlock.add("02-B2");
+         for(int b=1;b<=80;b++){
+             listBlock.add(Global.Right("00"+String.valueOf(b),2));
+         }
          ArrayAdapter<String> adptrBlock= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listBlock);
          spnBlock.setAdapter(adptrBlock);
+
 
          secBariName=(LinearLayout)findViewById(R.id.secBariName);
          lineBariName=(View)findViewById(R.id.lineBariName);
@@ -275,15 +284,17 @@ import Common.Global;
          Baris_DataModel objSave = new Baris_DataModel();
          objSave.setVill(txtVill.getText().toString());
          objSave.setBari(txtBari.getText().toString());
-         objSave.setCluster(CLUSTER);
-         objSave.setBlock(BLOCK);
+         objSave.setCluster(spnCluster.getSelectedItem().toString());
+         objSave.setBlock(spnBlock.getSelectedItem().toString());
          objSave.setBariName(txtBariName.getText().toString());
          objSave.setBariLoc(txtBariLoc.getText().toString());
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
          objSave.setStartTime(STARTTIME);
          objSave.setEndTime(g.CurrentTime24());
          objSave.setDeviceID(DEVICEID);
-         objSave.setEntryUser(ENTRYUSER); //from data entry user list
+         objSave.setEntryUser(ENTRYUSER);
+         objSave.setmodifyDate(Global.DateTimeNowYMDHMS());
+         //from data entry user list
          //objSave.setLat(Double.toString(currentLatitude));
          //objSave.setLon(Double.toString(currentLongitude));
 
@@ -313,16 +324,19 @@ import Common.Global;
      {
        try
         {
-     
+            spnCluster.setEnabled(false);
+            spnBlock.setEnabled(false);
            RadioButton rb;
            Baris_DataModel d = new Baris_DataModel();
            String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"'";
            List<Baris_DataModel> data = d.SelectAll(this, SQL);
            for(Baris_DataModel item : data){
+               spnCluster.setEnabled(true);
+               spnBlock.setEnabled(true);
              //txtVill.setText(item.getVill());
              //txtBari.setText(item.getBari());
-             //txtCluster.setText(item.getCluster());
-             //spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock, item.getBlock()));
+             spnCluster.setSelection(Global.SpinnerItemPositionAnyLength(spnCluster, item.getCluster()));
+             spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock, item.getBlock()));
              txtBariName.setText(item.getBariName());
              txtBariLoc.setText(item.getBariLoc());
            }

@@ -1067,7 +1067,6 @@ public class Member_list extends Activity {
                 exdate.setTextColor(Color.GREEN);
             }
 
-
             if(o.get("extype").trim().equals("55"))
             {
                 if(o.get("deathrep").equals("1"))
@@ -1147,12 +1146,12 @@ public class Member_list extends Activity {
             });
 
             //21 may 2016
-            ImageView imgPreg = (ImageView)convertView.findViewById(R.id.imgPreg);
-            if(o.get("pstat").equals("41"))
-                imgPreg.setVisibility(View.VISIBLE);
-            else
-                imgPreg.setVisibility(View.INVISIBLE);
-
+//            ImageView imgPreg = (ImageView)convertView.findViewById(R.id.imgPreg);
+//            if(o.get("pstat").equals("41"))
+//                imgPreg.setVisibility(View.VISIBLE);
+//            else
+//                imgPreg.setVisibility(View.INVISIBLE);
+//
             return convertView;
         }
     }
@@ -1450,6 +1449,108 @@ public class Member_list extends Activity {
              delMember.setVisibility(View.INVISIBLE);
          }
 
+         if(o.get("ExType").trim().length()==0 & (o.get("PosMig").trim().length()==0 | !o.get("PosMig").trim().equals("54")))
+         {
+             MSlNo.setTextColor(Color.BLACK);
+             PNo.setTextColor(Color.BLACK);
+             Name.setTextColor(Color.BLACK);
+             Rth.setTextColor(Color.BLACK);
+             Sex.setTextColor(Color.BLACK);
+             BDate.setTextColor(Color.BLACK);
+             MoNo.setTextColor(Color.BLACK);
+             FaNo.setTextColor(Color.BLACK);
+             Edu.setTextColor(Color.BLACK);
+             MS.setTextColor(Color.BLACK);
+             Pstat.setTextColor(Color.BLACK);
+             LmpDt.setTextColor(Color.BLACK);
+             Sp1.setTextColor(Color.BLACK);
+             Sp2.setTextColor(Color.BLACK);
+             Sp3.setTextColor(Color.BLACK);
+             Sp4.setTextColor(Color.BLACK);
+             Ocp.setTextColor(Color.BLACK);
+             EnType.setTextColor(Color.BLACK);
+             EnDate.setTextColor(Color.BLACK);
+             ExType.setTextColor(Color.BLACK);
+             ExDate.setTextColor(Color.BLACK);
+         }
+         else if(o.get("ExType").trim().length()==0 & o.get("PosMig").trim().equals("54"))
+         {
+             MSlNo.setTextColor(Color.BLACK);
+             PNo.setTextColor(Color.BLACK);
+             Name.setTextColor(Color.BLACK);
+             Rth.setTextColor(Color.BLACK);
+             Sex.setTextColor(Color.BLACK);
+             BDate.setTextColor(Color.BLACK);
+             MoNo.setTextColor(Color.BLACK);
+             FaNo.setTextColor(Color.BLACK);
+             Edu.setTextColor(Color.BLACK);
+             MS.setTextColor(Color.BLACK);
+             Pstat.setTextColor(Color.BLACK);
+             LmpDt.setTextColor(Color.BLACK);
+             Sp1.setTextColor(Color.BLACK);
+             Sp2.setTextColor(Color.BLACK);
+             Sp3.setTextColor(Color.BLACK);
+             Sp4.setTextColor(Color.BLACK);
+             Ocp.setTextColor(Color.BLACK);
+             EnType.setTextColor(Color.BLACK);
+             EnDate.setTextColor(Color.BLACK);
+             ExType.setTextColor(Color.BLACK);
+             ExDate.setTextColor(Color.BLACK);
+             PosMig.setTextColor(Color.BLUE);
+             PosMigDate.setTextColor(Color.BLUE);
+         }
+         else
+         {
+             MSlNo.setTextColor(Color.BLACK);
+             PNo.setTextColor(Color.BLACK);
+             Name.setTextColor(Color.BLACK);
+             Rth.setTextColor(Color.BLACK);
+             Sex.setTextColor(Color.BLACK);
+             BDate.setTextColor(Color.BLACK);
+             MoNo.setTextColor(Color.BLACK);
+             FaNo.setTextColor(Color.BLACK);
+             Edu.setTextColor(Color.BLACK);
+             MS.setTextColor(Color.BLACK);
+             Pstat.setTextColor(Color.BLACK);
+             LmpDt.setTextColor(Color.BLACK);
+             Sp1.setTextColor(Color.BLACK);
+             Sp2.setTextColor(Color.BLACK);
+             Sp3.setTextColor(Color.BLACK);
+             Sp4.setTextColor(Color.BLACK);
+             Ocp.setTextColor(Color.BLACK);
+             EnType.setTextColor(Color.BLACK);
+             EnDate.setTextColor(Color.BLACK);
+             ExType.setTextColor(Color.BLACK);
+             ExDate.setTextColor(Color.BLACK);
+         }
+//
+//         if(o.get("newold").equals("n"))
+//         {
+//             MSlNo.setTextColor(Color.BLACK);
+//             PNo.setTextColor(Color.BLACK);
+//             Name.setTextColor(Color.BLACK);
+//             Rth.setTextColor(Color.BLACK);
+//             Sex.setTextColor(Color.BLACK);
+//             BDate.setTextColor(Color.BLACK);
+//             MoNo.setTextColor(Color.BLACK);
+//             FaNo.setTextColor(Color.BLACK);
+//             Edu.setTextColor(Color.BLACK);
+//             MS.setTextColor(Color.BLACK);
+//             Pstat.setTextColor(Color.BLACK);
+//             LmpDt.setTextColor(Color.BLACK);
+//             Sp1.setTextColor(Color.BLACK);
+//             Sp2.setTextColor(Color.BLACK);
+//             Sp3.setTextColor(Color.BLACK);
+//             Sp4.setTextColor(Color.BLACK);
+//             Ocp.setTextColor(Color.BLACK);
+//             EnType.setTextColor(Color.BLACK);
+//             EnDate.setTextColor(Color.BLACK);
+//             ExType.setTextColor(Color.BLACK);
+//             ExDate.setTextColor(Color.BLACK);
+//         }
+
+
+
          if(Integer.valueOf(o.get("sl"))%2==0) {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
              delMember.setBackgroundColor(Color.parseColor("#F3F3F3"));
@@ -1496,7 +1597,14 @@ public class Member_list extends Activity {
              }
          });
 
+         ImageView imgPreg = (ImageView)convertView.findViewById(R.id.imgPreg);
+         if(o.get("Pstat").equals("41"))
+             imgPreg.setVisibility(View.VISIBLE);
+         else
+             imgPreg.setVisibility(View.INVISIBLE);
+
          return convertView;
+
        }
 
  }

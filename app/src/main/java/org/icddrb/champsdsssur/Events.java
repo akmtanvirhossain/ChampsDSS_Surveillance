@@ -129,6 +129,7 @@
          LinearLayout secInfo2;
          View lineInfo2;
          TextView VlblInfo2;
+         TextView VlblOth;
          EditText txtInfo2;
          LinearLayout secInfo3;
          View lineInfo3;
@@ -491,6 +492,7 @@
 
          lineInfo2=(View)findViewById(R.id.lineInfo2);
          VlblInfo2=(TextView) findViewById(R.id.VlblInfo2);
+         VlblOth=(TextView) findViewById(R.id.VlblOth);
          txtInfo2=(EditText) findViewById(R.id.txtInfo2);
          secInfo3=(LinearLayout)findViewById(R.id.secInfo3);
          lineInfo3=(View)findViewById(R.id.lineInfo3);
@@ -569,19 +571,28 @@
                      VlblInfo1.setText("Reason/Spouse's Age");
                      secInfo2.setVisibility(View.VISIBLE);
                      VlblInfo2.setText("Reason");
+                     VlblOth.setVisibility(View.VISIBLE);
+                     spnInfo1.setVisibility(View.GONE);
+                     spnInfo2.setVisibility(View.GONE);
 
                      if(txtInfo1.getText().length()==0)
                      {
-                         if(txtInfo1.getText().toString().equals("77"))
+                         if(txtInfo1.getText().toString().equals("77") & EVCODE.equals("21"))
                          {
                              txtInfo2.setVisibility(View.GONE);
                              secInfo2.setVisibility(View.GONE);
                          }
-                         else
+                         else if(EVCODE.equals("21"))
                          {
-                             txtInfo2.setVisibility(View.VISIBLE);
-                             secInfo2.setVisibility(View.VISIBLE);
+                            secEvDate.setVisibility(View.VISIBLE);
+                            secInfo2.setVisibility(View.VISIBLE);
                          }
+                        else
+                        {
+                            txtInfo2.setText("");
+                            txtInfo2.setVisibility(View.GONE);
+                            secInfo2.setVisibility(View.GONE);
+                        }
                      }
                      //Clear Member Form
                  }
@@ -590,11 +601,13 @@
                  else if(EVCODE.equals("22")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     VlblOth.setVisibility(View.GONE);
                      VlblInfo1.setText("পূর্বের খানা নাম্বার");
                      MigrationForm(dialog,"52");
                  }else if(EVCODE.equals("23")){
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     VlblOth.setVisibility(View.GONE);
                      VlblInfo1.setText("মূর্বের খানা নাম্বার");
                      MigrationForm(dialog,"53");
                  }
@@ -604,15 +617,15 @@
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE); //Mother serial no
                      VlblInfo1.setText("মায়ের সিরিয়াল নম্বর");
+                     VlblOth.setVisibility(View.GONE);
+                     secInfo2.setVisibility(View.GONE);
+                     txtInfo2.setVisibility(View.GONE);
+                     spnInfo1.setVisibility(View.GONE);
+                     spnInfo2.setVisibility(View.GONE);
+
                      formMember.setVisibility(View.VISIBLE);
 
-                     String MoSl = "";
-                     String a = spnMoNo.getSelectedItemPosition() == 0 ? "" : spnMoNo.getSelectedItem().toString().split("-")[0];
-                     MoSl = a;
-
-                     txtInfo1.setText(MoSl);
-
-                    //Clear Member Form
+                      //Clear Member Form
                  }
                  //Marital Status
                  else if(EVCODE.equals("31")){
@@ -818,6 +831,9 @@
          lineVDate.setVisibility(View.GONE);
          secRnd.setVisibility(View.GONE);
          lineRnd.setVisibility(View.GONE);
+         VlblOth.setVisibility(View.GONE);
+         spnInfo1.setVisibility(View.GONE);
+         spnInfo2.setVisibility(View.GONE);
 
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);

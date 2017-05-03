@@ -334,6 +334,12 @@
                     android:prompt="@string/planet_prompt"
                     android:textSize="20sp"
                     android:visibility="visible" />
+                <TextView
+                    android:id="@+id/VlblOth"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:text="77-Other Reason"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <View

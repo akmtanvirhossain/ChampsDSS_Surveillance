@@ -326,6 +326,42 @@
          spnMoNo = (Spinner) findViewById(R.id.spnMoNo);
          spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
 
+         spnMoNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+         {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 String d = "";
+                 if (position > 0)
+                 {
+                     final EditText txtInfo1 = (EditText)findViewById(R.id.txtInfo1);
+                     String[] a = spnMoNo.getSelectedItem().toString().split("-");
+                     d = a[0];
+                     txtInfo1.setText(d.toString());
+                 }
+
+//                 if(d.equals("00") | d.length()==0) {
+//                     final EditText txtInfo1 = (EditText)findViewById(R.id.txtInfo1);
+//
+//                     String MoSl = "";
+//                     String a = spnMoNo.getSelectedItemPosition() == 0 ? "" : spnMoNo.getSelectedItem().toString().split("-")[0];
+//                     MoSl = a;
+//                     txtInfo1.setText(MoSl.toString());
+
+
+//                 }else{
+//                     spnSp2.setVisibility(View.VISIBLE);
+//                     lineSp2.setVisibility(View.VISIBLE);
+//                     secSp2.setVisibility(View.VISIBLE);
+//                     lineSp2.setVisibility(View.VISIBLE);
+//                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
+
+             }
+         });
+
          secFaNo = (LinearLayout) findViewById(R.id.secFaNo);
          lineFaNo = (View) findViewById(R.id.lineFaNo);
          VlblFaNo = (TextView) findViewById(R.id.VlblFaNo);
@@ -573,7 +609,8 @@
          });
 
 
-         spnSp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+         spnSp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+         {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                  String d = "";

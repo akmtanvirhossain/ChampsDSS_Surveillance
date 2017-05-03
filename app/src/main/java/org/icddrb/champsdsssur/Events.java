@@ -123,9 +123,9 @@
          TextView VlblInfo1;
          EditText txtInfo1;
          Spinner spnInfo1;
-     Spinner spnInfo2;
-     Spinner spnInfo3;
-     Spinner spnInfo4;
+         Spinner spnInfo2;
+         Spinner spnInfo3;
+         Spinner spnInfo4;
          LinearLayout secInfo2;
          View lineInfo2;
          TextView VlblInfo2;
@@ -537,6 +537,20 @@
                      VlblInfo1.setText("Reason/Spouse's Age");
                      secInfo2.setVisibility(View.VISIBLE);
                      VlblInfo2.setText("Reason");
+
+//                     if(txtInfo1.getText().length()==0)
+//                     {
+//                         if(Integer.valueOf(txtInfo1.getText().toString())==77)
+//                         {
+//                             txtInfo2.setVisibility(View.GONE);
+//                             secInfo2.setVisibility(View.GONE);
+//                         }
+//                         else
+//                         {
+//                             txtInfo2.setVisibility(View.VISIBLE);
+//                             secInfo2.setVisibility(View.VISIBLE);
+//                         }
+//                     }
                      //Clear Member Form
                  }
 
@@ -559,6 +573,13 @@
                      secInfo1.setVisibility(View.VISIBLE); //Mother serial no
                      VlblInfo1.setText("মায়ের সিরিয়াল নম্বর");
                      formMember.setVisibility(View.VISIBLE);
+
+                     String MoSl = "";
+                     String a = spnMoNo.getSelectedItemPosition() == 0 ? "" : spnMoNo.getSelectedItem().toString().split("-")[0];
+                     MoSl = a;
+
+                     txtInfo1.setText(MoSl);
+
                     //Clear Member Form
                  }
                  //Marital Status
@@ -616,11 +637,13 @@
                  }else if(EVCODE.equals("55")){
                      dtpEvDate.setText("");
                  }
+                 //Mothers Serial Number
                  else if(EVCODE.equals("61"))
                  {
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo2.setVisibility(View.VISIBLE);
                      txtInfo1.setVisibility(View.GONE);
                      txtInfo2.setVisibility(View.GONE);
                      VlblInfo1.setText("নতুন সিরিয়াল");
@@ -628,18 +651,27 @@
                      spnInfo1.setVisibility(View.VISIBLE);
                      spnInfo2.setVisibility(View.VISIBLE);
 
+                     String PMoNo= C.ReturnSingleValue("Select MoNo from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='" + MSLNO +"'");
+
                      if(EVCODE.equals("61"))
                      {
                          spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
-                         spnInfo2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
-                     }
 
+                         if  (!PMoNo.equals("00")) {
+                            spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PMoNo.toString() + "'"));
+                        }
+                         if  (PMoNo.equals("00")) {
+                             spnInfo2.setAdapter(C.getArrayAdapter("Select '00-এই খানার সদস্য নয়'"));
+                         }
+                     }
                  }
+                 //Father Serial Number
                  else if(EVCODE.equals("62"))
                  {
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo2.setVisibility(View.VISIBLE);
                      txtInfo1.setVisibility(View.GONE);
                      txtInfo2.setVisibility(View.GONE);
                      VlblInfo1.setText("নতুন সিরিয়াল");
@@ -647,17 +679,28 @@
                      spnInfo1.setVisibility(View.VISIBLE);
                      spnInfo2.setVisibility(View.VISIBLE);
 
-                     if(EVCODE.equals("62"))
-                    {
-                        spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
-                        spnInfo2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
-                    }
+                     String PFoNo= C.ReturnSingleValue("Select FaNo from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='" + MSLNO +"'");
 
-                 }else if(EVCODE.equals("63"))
+                     if(EVCODE.equals("62"))
+                     {
+                         spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+
+                         if  (!PFoNo.equals("00")) {
+                             spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PFoNo.toString() + "'"));
+                         }
+                         if  (PFoNo.equals("00")) {
+                             spnInfo2.setAdapter(C.getArrayAdapter("Select '00-এই খানার সদস্য নয়'"));
+                         }
+                     }
+
+                 }
+                 //Spouses Serial Number
+                 else if(EVCODE.equals("63"))
                  {
                      dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo2.setVisibility(View.VISIBLE);
                      txtInfo1.setVisibility(View.GONE);
                      txtInfo2.setVisibility(View.GONE);
                      VlblInfo1.setText("নতুন সিরিয়াল");
@@ -665,34 +708,24 @@
                      spnInfo1.setVisibility(View.VISIBLE);
                      spnInfo2.setVisibility(View.VISIBLE);
 
-                     if(EVCODE.equals("63")) {
-                         spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
-                         spnInfo2.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+                     String PSpNo= C.ReturnSingleValue("Select Sp1 from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='" + MSLNO +"'");
+
+                     if(EVCODE.equals("63"))
+                     {
+                         spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and MS='31' union Select '00-এই খানার সদস্য নয়'"));
+
+                         if  (!PSpNo.equals("00"))
+                         {
+                             spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PSpNo.toString() + "'"));
+                         }
+                         if  (PSpNo.equals("00"))
+                         {
+                             spnInfo2.setAdapter(C.getArrayAdapter("Select '00-এই খানার সদস্য নয়'"));
+                         }
                      }
                  }
-//                 else if(EVCODE.equals("64")){
-//                     dtpEvDate.setText(Global.DateNowDMY());
-//                     secInfo1.setVisibility(View.VISIBLE);
-//                     secInfo2.setVisibility(View.VISIBLE);
-//                 }
-//
-//                 else if(EVCODE.equals("71")){
-//                     dtpEvDate.setText(Global.DateNowDMY());
-//                     secInfo1.setVisibility(View.VISIBLE);
-//                     secInfo2.setVisibility(View.VISIBLE);
-//                 }
-//
-//                 else if(EVCODE.equals("72")) {
-//                     dtpEvDate.setText(Global.DateNowDMY());
-//                     secInfo1.setVisibility(View.VISIBLE);
-//                     secInfo2.setVisibility(View.VISIBLE);
-//                 }else{
-//                     formMember.setVisibility(View.GONE);
-//                 }
-
                  else if(EVCODE.equals("64") | EVCODE.equals("71") | EVCODE.equals("72"))
                  {
-                     VlblInfo1.setText("কোড");
                      secInfo1.setVisibility(View.VISIBLE);
                      spnInfo1.setVisibility(View.VISIBLE);
                      txtInfo1.setVisibility(View.GONE);
@@ -701,14 +734,17 @@
                      secVDate.setVisibility(View.GONE);
                      secInfo2.setVisibility(View.GONE);
 
-                     if(EVCODE.equals("64"))
+                     if(EVCODE.equals("64")) {
+                         VlblInfo1.setText("সম্পর্কের কোড");
                          spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM RTH"));
-
+                     }
                      else if(EVCODE.equals("71"))
                      {
+                         VlblInfo1.setText("শিক্ষার কোড");
                          spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM EDU"));
                      }
                      else if(EVCODE.equals("72"))
+                         VlblInfo1.setText("পেশার কোড");
                          spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Name FROM OCP"));
                  }
                  else
@@ -783,8 +819,6 @@
      {
          try
          {
-             //----------------------------------------------------------------------------------------------------------
-
              String Household = VILL+BARI+HH;
 
              int age=0;
@@ -837,16 +871,15 @@
              String EvDate = Global.DateConvertYMD(dtpEvDate.getText().toString());
 
              String Code   = txtInfo1.getText().toString();
-             String[] Code1 = spnInfo1.getSelectedItem().toString().split("-");
-             String[] Code2 = spnInfo2.getSelectedItem().toString().split("-");
+
+//             String[] Code1 = spnInfo1.getSelectedItem().toString().split("-");
+//             String[] Code2 = spnInfo2.getSelectedItem().toString().split("-");
 
              String SpNo   = txtInfo1.getText().toString();
 
              String CodeList = "";
 
-
-
-             if(txtInfo2.getText().toString().length()==0 & txtInfo1.isShown())
+             if(txtInfo2.getText().toString().length()==0 & txtInfo2.isShown())
              {
                  Connection.MessageBox(Events.this, "Required field: Info2.");
                  txtInfo2.requestFocus();
@@ -1053,128 +1086,97 @@
              {
 
              }
-             else if(ECode == 61)
-             {
-                 if(EDT.length()!=0)
-                 {
-                     Connection.MessageBox(Events.this, EDT); return;
-                 }
-                 else if(ECode == 61 & Code1[0].length() == 0)
-                 {
-                     Connection.MessageBox(Events.this, "সদস্যের মায়ের সঠিক সিরিয়াল নাম্বার লিখুন।");
-                     return;
-                 }
-                 if(MSLNO.equals(Code1))
-                 {
-                     Connection.MessageBox(Events.this, "মায়ের সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
-                     return;
-                 }
-                 if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-"))& spnInfo2.isShown())
-                 {
-                     Connection.MessageBox(Events.this, "মায়ের বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
-                     return;
-                 }
-             }
-             else if(ECode == 62)
-             {
-                 if(EDT.length()!=0)
-                 {
-                     Connection.MessageBox(Events.this, EDT); return;
-                 }
-                 else if(ECode == 62 & Code1[0].length() == 0)
-                 {
-                     Connection.MessageBox(Events.this, "সদস্যের বাবার সঠিক সিরিয়াল নাম্বার লিখুন।");
-                     return;
-                 }
-                 if(MSLNO.equals(Code1[0]))
-                 {
-                     Connection.MessageBox(Events.this, "বাবার সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
-                     return;
-                 }
-                 if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-"))& spnInfo2.isShown())
-                 {
-                     Connection.MessageBox(Events.this, "বাবার বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
-                     return;
-                 }
-             }
 
-             else if (ECode == 63)
-             {
-                 if(EDT.length()!=0)
-                 {
-                     Connection.MessageBox(Events.this, EDT); return;
-                 }
-                 else if(Code1[0].length()==0)
-                 {
-                     Connection.MessageBox(Events.this, "সঠিক স্বামী/স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Code)।");
-                     return;
-                 }
-                 else if(Code1[0].length()!=2)
-                 {
-                     Connection.MessageBox(Events.this, "সঠিক স্বামী/স্ত্রী এর সিরিয়াল নাম্বার ২ সংখ্যা হতে হবে(Code)।");
-                     return;
-                 }
-                 else if(Sex.equals("1") & Code1[0].equals("00") & SpNo.length()==0)
-                 {
-                     Connection.MessageBox(Events.this, "সঠিক স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Spouse's No)।");
-                     return;
-                 }
-                 else if(age < 10)
-                 {
-                     Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১০ বছরের বেশী হতে হবে।");
-                     return;
-                 }
-                 else if(MSLNO.equals(Code1[0]))
-                 {
-                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
-                     return;
-                 }
-                 else if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-"))& spnInfo2.isShown())
-                 {
-                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
-                     return;
-                 }
+             else if((ECode >= 61 & ECode <= 64)){
+                    String Code1 = "";
+                    String a = spnInfo1.getSelectedItemPosition() == 0 ? "" : spnInfo1.getSelectedItem().toString().split("-")[0];
+                    Code1 = a;
 
-                 //spouse's is not available in the member list
-                 if(!Code1[0].equals("00") & !C.Existence("select vill from tmpMember where  vill||bari||hh='"+ Household +"' and MslNo='"+ Code1[0] +"'"))
-                 {
-                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার "+ Code1[0] +" এই খানার তালিকায় নেই।");
-                     return;
-                 }
-                 else if(C.Existence("select vill from tmpMember where  vill||bari||hh='"+ Household +"' and Mslno='"+ MSLNO +"' and (Sp1='"+ Code1[0] +"' or Sp2='"+ Code1[0] +"' or Sp3='"+ Code1[0] +"' or Sp4='"+ Code1[0] +"')"))
-                 {
-                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার "+ Code1[0] +" পূর্বের নাম্বার এর সমান হবে না।");
-                     return;
-                 }
-             }
+                    if (ECode == 61) {
+                        if (EDT.length() != 0) {
+                            Connection.MessageBox(Events.this, EDT);
+                            return;
+                        } else if (ECode == 61 & Code1.length() == 0) {
+                            Connection.MessageBox(Events.this, "সদস্যের মায়ের সঠিক সিরিয়াল নাম্বার লিখুন");
+                            return;
+                        }
+                        if (MSLNO.equals(Code1)) {
+                            Connection.MessageBox(Events.this, "মায়ের সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
+                            return;
+                        }
+                        if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-")) & spnInfo2.isShown()) {
+                            Connection.MessageBox(Events.this, "মায়ের বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
+                            return;
+                        }
+                    } else if (ECode == 62) {
+                        if (EDT.length() != 0) {
+                            Connection.MessageBox(Events.this, EDT);
+                            return;
+                        } else if (ECode == 62 & Code1.length() == 0) {
+                            Connection.MessageBox(Events.this, "সদস্যের বাবার সঠিক সিরিয়াল নাম্বার লিখুন।");
+                            return;
+                        }
+                        if (MSLNO.equals(Code1)) {
+                            Connection.MessageBox(Events.this, "বাবার সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
+                            return;
+                        }
+                        if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-")) & spnInfo2.isShown()) {
+                            Connection.MessageBox(Events.this, "বাবার বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
+                            return;
+                        }
+                    } else if (ECode == 63) {
+                        if (EDT.length() != 0) {
+                            Connection.MessageBox(Events.this, EDT);
+                            return;
+                        } else if (Code1.length() == 0) {
+                            Connection.MessageBox(Events.this, "সঠিক স্বামী/স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Code)।");
+                            return;
+                        } else if (Code1.length() != 2) {
+                            Connection.MessageBox(Events.this, "সঠিক স্বামী/স্ত্রী এর সিরিয়াল নাম্বার ২ সংখ্যা হতে হবে(Code)।");
+                            return;
+                        } else if (Sex.equals("1") & Code1.equals("00") & SpNo.length() == 0) {
+                            Connection.MessageBox(Events.this, "সঠিক স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Spouse's No)।");
+                            return;
+                        } else if (age < 10) {
+                            Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১০ বছরের বেশী হতে হবে।");
+                            return;
+                        } else if (MSLNO.equals(Code1)) {
+                            Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার এবং সদস্যের সিরিয়াল নাম্বার একই রকম হবে না।");
+                            return;
+                        } else if (Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnInfo2.getSelectedItem().toString(), "-")) & spnInfo2.isShown()) {
+                            Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর বর্তমান সিরিয়াল নাম্বার এবং পূর্বের সিরিয়াল নাম্বার একই রকম হবে না।");
+                            return;
+                        }
 
-             else if (ECode == 64)
-             {
-                 if(EDT.length()!=0)
-                 {
-                     Connection.MessageBox(Events.this, EDT); return;
-                 }
-                 else if(ECode == 64 & spnInfo1.getSelectedItemPosition() == 0)
-                 {
-                     Connection.MessageBox(Events.this, "সদস্যের সঠিক সম্পর্ক কি লিখুন।");return;
-                 }
-                 else
-                 {
-                     CodeList = Global.Left(spnInfo1.getSelectedItem().toString(),2);
-                 }
+                        //spouse's is not available in the member list
+                        if (!Code1.equals("00") & !C.Existence("select vill from tmpMember where  vill||bari||hh='" + Household + "' and MslNo='" + Code1 + "'")) {
+                            Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার " + Code1 + " এই খানার তালিকায় নেই।");
+                            return;
+                        } else if (C.Existence("select vill from tmpMember where  vill||bari||hh='" + Household + "' and Mslno='" + MSLNO + "' and (Sp1='" + Code1 + "' or Sp2='" + Code1 + "' or Sp3='" + Code1 + "' or Sp4='" + Code1 + "')")) {
+                            Connection.MessageBox(Events.this, "স্বামী/স্ত্রী এর সিরিয়াল নাম্বার " + Code1 + " পূর্বের নাম্বার এর সমান হবে না।");
+                            return;
+                        }
+                    } else if (ECode == 64) {
+                        if (EDT.length() != 0) {
+                            Connection.MessageBox(Events.this, EDT);
+                            return;
+                        } else if (ECode == 64 & spnInfo1.getSelectedItemPosition() == 0) {
+                            Connection.MessageBox(Events.this, "সদস্যের সঠিক সম্পর্ক কি লিখুন।");
+                            return;
+                        } else {
+                            CodeList = Global.Left(spnInfo1.getSelectedItem().toString(), 2);
+                        }
 
-                 if(CodeList.equals("01") & C.Existence("Select * from tmpMember where hh='"+ Household +"' and Rth='01' and (ExType is null or length(ExType)=0)")==true)
-                 {
-                     Connection.MessageBox(Events.this, "একই খানায় ২ জন খানা প্রধান থাকতে পারে না।");
-                     return;
-                 }
-                 else if(CodeList.equals("01") & age < 10)
-                 {
-                     Connection.MessageBox(Events.this, "সদস্যের বয়স "+ age +",খানা প্রধান হতে হলে বয়স ১০ বছরের সমান/বেশী হতে হবে।");
-                     return;
-                 }
+                        if (CodeList.equals("01") & C.Existence("Select * from tmpMember where hh='" + Household + "' and Rth='01' and (ExType is null or length(ExType)=0)") == true) {
+                            Connection.MessageBox(Events.this, "একই খানায় ২ জন খানা প্রধান থাকতে পারে না।");
+                            return;
+                        } else if (CodeList.equals("01") & age < 10) {
+                            Connection.MessageBox(Events.this, "সদস্যের বয়স " + age + ",খানা প্রধান হতে হলে বয়স ১০ বছরের সমান/বেশী হতে হবে।");
+                            return;
+                        }
 
-             }
+                    }
+                }
              else if(ECode == 71)
              {
                  if(EDT.length()!=0)
@@ -1762,6 +1764,10 @@
              //Husband's serial no update
              else if(ECode == 63)
              {
+                 String Code1 = "";
+                 String a = spnInfo1.getSelectedItemPosition() == 0 ? "" : spnInfo1.getSelectedItem().toString().split("-")[0];
+                 Code1 = a;
+
                  //Update Husband's serial no
                  Cursor cur = C.ReadData("Select sex,sp1,sp2,sp3,sp4 from tmpMember where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                  cur.moveToFirst();
@@ -1774,7 +1780,7 @@
                      sp4 = cur.getString(4).toString();
 
                      //Male
-                     if (sex.equals("1") & Integer.valueOf(Code1[0]) == 0)
+                     if (sex.equals("1") & Integer.valueOf(Code1) == 0)
                      {
                          if(sp1.equals(SpNo))
                          {
@@ -1793,7 +1799,7 @@
                              C.Save("Update tmpMember Set Sp4='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"' where Vill||Bari||HH='"+ Household +"' and MslNo='"+ MSLNO +"'");
                          }
                      }
-                     else if (sex.equals("1") & Integer.valueOf(Code1[0]) != 0)
+                     else if (sex.equals("1") & Integer.valueOf(Code1) != 0)
                      {
                          if(sp1.length()==0 | sp1.equals("0") | sp1.equals("00"))
                          {

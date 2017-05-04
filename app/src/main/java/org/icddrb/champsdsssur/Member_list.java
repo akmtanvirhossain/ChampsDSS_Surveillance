@@ -949,11 +949,13 @@ public class Member_list extends Activity {
             fano.setText(o.get("fano"));
             edu.setText(o.get("edu"));
             ms.setText(o.get("ms"));
+
             pstat.setText(o.get("pstat"));
             if(o.get("lmpdt")==null | o.get("lmpdt").trim().length()==0)
                 lmpdt.setText(o.get("lmpdt"));
             else
                 lmpdt.setText(Global.DateConvertDMY(o.get("lmpdt")));
+
             ocp.setText(o.get("ocp"));
             sp1.setText(o.get("sp1"));
             sp2.setText(o.get("sp2"));
@@ -962,25 +964,13 @@ public class Member_list extends Activity {
             entype.setText(o.get("entype"));
             endate.setText(Global.DateConvertDMY(o.get("endate")));
             extype.setText(o.get("extype"));
+
             if(o.get("exdate")==null | o.get("exdate").trim().length()==0)
                 exdate.setText(o.get("exdate"));
             else
                 exdate.setText(Global.DateConvertDMY(o.get("exdate")));
 
-            if (o.get("PNo").length() == 0)
-            {
-                mslno.setTextColor(Color.RED);
-                name.setTextColor(Color.RED);
-                delMember.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                mslno.setTextColor(Color.BLACK);
-                mslno.setTextColor(Color.BLACK);
-                delMember.setVisibility(View.INVISIBLE);
-            }
-
-            //show only if possible migration
+             //show only if possible migration
             if(o.get("posmig").equals("54"))
                 posmig.setText(o.get("posmig"));
             else
@@ -1464,7 +1454,7 @@ public class Member_list extends Activity {
          PosMig.setText(o.get("PosMig"));
          PosMigDate.setText(o.get("PosMigDate"));
 
-         if (o.get("PNo").length() == 0)
+         if (o.get("Rth").length() == 0)
          {
              MSlNo.setTextColor(Color.RED);
              Name.setTextColor(Color.RED);
@@ -1621,6 +1611,7 @@ public class Member_list extends Activity {
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                       C.Save("Delete from tmpMember where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "' and MSlNo='" + o.get("MSlNo") + "'");
+                      C.Save("Delete from tmpEvents where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "' and MSlNo='" + o.get("MSlNo") + "'");
                          DataSearch(o.get("Vill"),o.get("Bari"),o.get("HH"));
                      }
                  });
@@ -1638,6 +1629,316 @@ public class Member_list extends Activity {
          return convertView;
 
        }
+
+     //data transfer to main tables
+     //***********************************************************************************************
+     private String FinalDataProcess(String Household, String Rnd)
+     {
+         String Err = "";
+         try
+         {
+             //C.Save("Delete from PregHis where vill||bari||hh='"+ Household +"'");
+             C.Save("Delete from SES where vill||bari||hh='"+ Household +"'");
+
+             //Search Maximun PNo from Member table
+             //-- ---------------------------------------
+             String CP = C.ReturnSingleValue("Select (ifnull(max(cast(substr(pno,4,8)as int)),0)+1)MaxPno from Member where substr(pno,1,3)='"+ Global.Left(Household, 3)  +"' group by substr(pno,1,3)");
+             int CPN = Integer.parseInt(CP.length()==0?"1":CP);
+
+             Cursor cur = C.ReadData("Select Rth,Sno,PNo,ExType from tTrans where status='m' and vill||bari||hh='"+ Household +"' and length(PNo)=0 order by cast(SNO as int) asc");
+             cur.moveToFirst();
+             String CPNo = "";
+             while(!cur.isAfterLast())
+             {
+                 //Generate Permanent no(PNo) for member, preghis, events table--------------------------
+                 CPNo = Global.Left(Household, 3) + Global.Right("00000"+String.valueOf(CPN),5);
+                 //-- --------------------------------------------------------------------------------
+                 C.Save("update tTrans set PNo='"+ CPNo +"' where Status='m' and vill||bari||hh ='"+ Household +"' and SNo='"+ cur.getString(cur.getColumnIndex("Sno")) +"'");
+                 C.Save("update tTrans set PNo='"+ CPNo +"' where Status='e' and vill||bari||hh ='"+ Household +"' and SNo='"+ cur.getString(cur.getColumnIndex("Sno")) +"'");
+                 C.Save("update tTrans set PNo='"+ CPNo +"' where Status='p' and vill||bari||hh ='"+ Household +"' and SNo='"+ cur.getString(cur.getColumnIndex("Sno")) +"'");
+                 C.Save("update ImmunizationTemp set PNo='"+ CPNo +"' Where vill||bari||hh ='"+ Household +"' and SNo='"+ cur.getString(cur.getColumnIndex("Sno")) +"'");
+
+                 CPN += 1;
+                 //-- --------------------------------------------------------------------------------
+                 cur.moveToNext();
+             }
+             cur.close();
+
+             //Household Table
+             //-- ---------------------------------------
+             String SQL="";
+             String Head = "";
+             //***** need current household head name
+             if(C.Existence("Select vill from Household where vill||bari||hh='"+ Household +"'"))
+             {
+                 Head = C.ReturnSingleValue("select name from tTrans where status='m' and vill||bari||hh='"+ Household +"' and Rth='01' and (length(extype)=0 or extype is null)");
+                 Cursor curH = C.ReadData("Select ContactNo,ifnull(ExType,'')as ExType,ifnull(ExDate,'')as ExDate,HHHead,Note from tTrans where status='h' and vill||bari||hh='"+ Household +"'");
+                 curH.moveToFirst();
+                 while(!curH.isAfterLast())
+                 {
+                     SQL = "Update Household set upload='2',";
+                     SQL += " ExType='"+ curH.getString(curH.getColumnIndex("ExType")) +"',";
+                     SQL += " Note='"+ curH.getString(curH.getColumnIndex("Note")) +"',";
+                     SQL += " ContactNo='"+ curH.getString(curH.getColumnIndex("ContactNo")) +"',";
+                     if(Head != null & Head.length()!=0)
+                     {
+                         SQL += " ExDate='"+ curH.getString(curH.getColumnIndex("ExDate")) +"',";
+                         SQL += " HHHead='"+ Head +"'";
+                     }
+                     else
+                     {
+                         SQL += " ExDate='"+ curH.getString(curH.getColumnIndex("ExDate")) +"'";
+                     }
+
+                     SQL += " where vill||bari||hh='"+ Household +"'";
+                     C.Save(SQL);
+                     curH.moveToNext();
+                 }
+                 curH.close();
+
+                 C.Save(SQL);
+             }
+             else
+             {
+                 Head = C.ReturnSingleValue("select name from tTrans where status='m' and vill||bari||hh='"+ Household +"' and Rth='01' and (length(extype)=0 or extype is null)");
+
+                 SQL = "Insert into Household";
+                 SQL += "(Vill, Bari, Hh, Pno, EnType, EnDate, ExType, ExDate, Rel, HHHead, Clust, Block, EnDt, Rnd,Upload,Note,ContactNo)";
+                 SQL += " select h.Vill, h.Bari, h.Hh, h.Pno, h.EnType, h.EnDate, h.ExType, h.ExDate, h.Rel, '"+ Head +"', h.Clust, h.Block, h.EnterDt,h.Rnd,'2',Note,ContactNo";
+                 SQL += " from tTrans h where h.status='h' and h.vill||h.bari||h.hh='"+ Household +"'";
+
+                 C.Save(SQL);
+             }
+
+             //-- -Member Table-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+             SQL = "Select (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.Sno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, t.Age, t.Mono, t.Fano, t.Edu,";
+             SQL += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
+             SQL += " t.ExType, t.ExDate, t.PageNo, t.Status, t.Upload,t.PosMig,t.PosMigDate from tTrans t";
+             SQL += " left outer join member m on t.vill||t.bari||t.hh||t.sno = m.vill||m.bari||m.hh||m.sno";
+             SQL += " where t.status='m' and t.vill||t.bari||t.hh='"+ Household +"' order by cast(t.SNo as int) asc";
+
+             Cursor curM = C.ReadData(SQL);
+             curM.moveToFirst();
+             while(!curM.isAfterLast())
+             {
+                 if(curM.getString(curM.getColumnIndex("NewOld")).equals("n"))
+                 {
+                     SQL = "Insert into Member";
+                     SQL += " (Vill, Bari, Hh, Sno, Pno, Name, Rth, Sex, BDate, Age, Mono, Fano, Edu, Ms, Pstat, LmpDt, Sp1, Sp2, Sp3, Sp4, Ocp, EnType, EnDate, ExType, ExDate, PageNo, Status, Upload,PosMig,PosMigDate)";
+                     SQL += " Select Vill, Bari, Hh, Sno, Pno, Name, Rth, Sex, BDate, Age, Mono, Fano, Edu, Ms, Pstat, LmpDt, Sp1, Sp2, Sp3, Sp4, Ocp, EnType, EnDate, ExType, ExDate, PageNo, Status, '2',PosMig,PosMigDate";
+                     SQL += " from tTrans where vill||bari||hh='"+ Household +"' and Status='m' and SNo='"+ curM.getString(curM.getColumnIndex("Sno")) +"'";
+
+                     C.Save(SQL);
+                 }
+                 else if(curM.getString(curM.getColumnIndex("NewOld")).equals("o"))
+                 {
+                     SQL = "Update Member Set ";
+                     SQL += " Name='"+ curM.getString(curM.getColumnIndex("Name")) +"',";
+                     SQL += " Rth='"+ curM.getString(curM.getColumnIndex("Rth")) +"',";
+                     SQL += " Sex='"+ curM.getString(curM.getColumnIndex("Sex")) +"',";
+                     SQL += " BDate='"+ curM.getString(curM.getColumnIndex("BDate")) +"',";
+                     SQL += " Mono='"+ curM.getString(curM.getColumnIndex("Mono")) +"',";
+                     SQL += " Fano='"+ curM.getString(curM.getColumnIndex("Fano")) +"',";
+                     SQL += " Edu='"+ curM.getString(curM.getColumnIndex("Edu")) +"',";
+                     SQL += " Ms='"+ curM.getString(curM.getColumnIndex("Ms")) +"',";
+                     SQL += " Pstat='"+ curM.getString(curM.getColumnIndex("Pstat")) +"',";
+                     SQL += " LmpDt='"+ curM.getString(curM.getColumnIndex("LmpDt")) +"',";
+                     SQL += " Sp1='"+ curM.getString(curM.getColumnIndex("Sp1")) +"',";
+                     SQL += " Sp2='"+ curM.getString(curM.getColumnIndex("Sp2")) +"',";
+                     SQL += " Sp3='"+ curM.getString(curM.getColumnIndex("Sp3")) +"',";
+                     SQL += " Sp4='"+ curM.getString(curM.getColumnIndex("Sp4")) +"',";
+                     SQL += " Ocp='"+ curM.getString(curM.getColumnIndex("Ocp")) +"',";
+                     SQL += " EnType='"+ curM.getString(curM.getColumnIndex("EnType")) +"',";
+                     SQL += " EnDate='"+ curM.getString(curM.getColumnIndex("EnDate")) +"',";
+                     SQL += " ExType='"+ curM.getString(curM.getColumnIndex("ExType")) +"',";
+                     SQL += " ExDate='"+ curM.getString(curM.getColumnIndex("ExDate")) +"',";
+                     SQL += " Status='C',";
+                     SQL += " Upload='2',";
+                     SQL += " PosMig='"+ curM.getString(curM.getColumnIndex("PosMig")) +"',";
+                     SQL += " PosMigDate='"+ curM.getString(curM.getColumnIndex("PosMigDate")) +"'";
+
+                     SQL += " where  vill||bari||hh='"+ Household +"' and SNo='"+ curM.getString(curM.getColumnIndex("Sno")) +"'";
+
+                     C.Save(SQL);
+                 }
+                 curM.moveToNext();
+             }
+             curM.close();
+
+
+
+             //-- -SES Table-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+             SQL = "Insert into SES";
+             SQL += "(Vill, Bari, Hh, SESNo, Visit, Q015a, Q015b, Q015c, Q016a, Q016b, Q016c, Q017, Q018, Q019a, Q019b, Q019c, Q019d, Q019e, Q019f, Q019g, Q019h, Q019i, Q019j, Q019k, Q019l, Q019m, Q019n, Q019o, Q019p, Q019q, Q019r, Q019s, Q019t, Q019u, Q019v, Q019w, Q019x, Q019y, Q019z, Q020a, Q020b, Q020c, Q020d, Q020e, Q020f, Q020g, Q020h, Q021, Q022a, Q022b, Q022c, Q023a, Q023b, Q024a, Q024b, Q025a, Q025b, Q026, Q027a, Q027b, Q027c, Q027d, Q027e, Q027f, Q027g, Q027h, Q027i, Q027j, Q027y, Q027z, Q028a, Q028b, Q028c, Q028d, Q028e, Q028y, Q029, Q030a, Q030b, Q030c, Q030d, Q030e, Q030f, Q030g, Q030h, Q030z, Q031, Vdate, Rnd, PageNo, Status, Upload, Lat, Lon)";
+             SQL += " Select Vill, Bari, Hh, SESNo, Visit, Q015a, Q015b, Q015c, Q016a, Q016b, Q016c, Q017, Q018, Q019a, Q019b, Q019c, Q019d, Q019e, Q019f, Q019g, Q019h, Q019i, Q019j, Q019k, Q019l, Q019m, Q019n, Q019o, Q019p, Q019q, Q019r, Q019s, Q019t, Q019u, Q019v, Q019w, Q019x, Q019y, Q019z, Q020a, Q020b, Q020c, Q020d, Q020e, Q020f, Q020g, Q020h, Q021, Q022a, Q022b, Q022c, Q023a, Q023b, Q024a, Q024b, Q025a, Q025b, Q026, Q027a, Q027b, Q027c, Q027d, Q027e, Q027f, Q027g, Q027h, Q027i, Q027j, Q027y, Q027z, Q028a, Q028b, Q028c, Q028d, Q028e, Q028y, Q029, Q030a, Q030b, Q030c, Q030d, Q030e, Q030f, Q030g, Q030h, Q030z, Q031, Vdate, Rnd, ifnull(PageNo,'')PageNo, Status, '2', ifnull(Lat,'')Lat, ifnull(Lon,'')Lon";
+             SQL += " from ttrans where status='s' and vill||bari||hh='"+ Household +"'";
+
+             C.Save(SQL);
+
+             //-- -Pregnancy Info. Table--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+             //SQL = "Insert into PregHis(Vill, Bari, Hh, Sno, Pno, Visit, MarM, MarY, Births, LiveHh, SLiveHh, DLiveHh, LiveOut, SLiveOut, DLiveOut, Died, SDied, DDied, Abor, TAbor, TotPreg, Vdate, Rnd, PageNo, Status, Upload, Lat, Lon)";
+             //SQL += " select Vill, Bari, Hh, Sno, Pno, Visit, MarM, MarY, Births, LiveHh, SLiveHh, DLiveHh, LiveOut, SLiveOut, DLiveOut, Died, SDied, DDied, Abor, TAbor, TotPreg, Vdate, Rnd, ifnull(PageNo,'')PageNo, ifnull(Status,'C')Status, ifnull(Upload,'2')Upload, ifnull(Lat,'')Lat, ifnull(Lon,'')Lon";
+             //SQL += " from tTrans t where t.status='p' and t.vill||t.bari||t.hh='"+ Household +"'";
+
+             //C.Save(SQL);
+
+             //Pregnancy History: 03 05 2016
+             Cursor pHis = C.ReadData("select Vill, Bari, Hh, Sno, Pno, Visit, MarM, MarY, Births, LiveHh, SLiveHh, DLiveHh, LiveOut, SLiveOut, DLiveOut, Died, SDied, DDied, Abor, TAbor, TotPreg, Vdate as vdate, Rnd, PageNo, Status from tTrans where status='p' and vill||bari||hh='"+ Household +"'");
+             pHis.moveToFirst();
+             while(!pHis.isAfterLast())
+             {
+                 if(C.Existence("select Vill, Bari, Hh,SNo,PNo from PregHis where vill||bari||hh='"+ Household +"' and SNo='"+ pHis.getString(pHis.getColumnIndex("Sno")) +"'"))
+                 {
+                     SQL = "Update PregHis set Upload='2',";
+                     SQL += "Visit='"+ pHis.getString(pHis.getColumnIndex("Visit")) +"',";
+                     SQL += "MarM='"+ pHis.getString(pHis.getColumnIndex("MarM")) +"',";
+                     SQL += "MarY='"+ pHis.getString(pHis.getColumnIndex("MarY")) +"',";
+                     SQL += "Births='"+ pHis.getString(pHis.getColumnIndex("Births")) +"',";
+                     SQL += "LiveHh='"+ pHis.getString(pHis.getColumnIndex("LiveHh")) +"',";
+                     SQL += "SLiveHh='"+ pHis.getString(pHis.getColumnIndex("SLiveHh")) +"',";
+                     SQL += "DLiveHh='"+ pHis.getString(pHis.getColumnIndex("DLiveHh")) +"',";
+                     SQL += "LiveOut='"+ pHis.getString(pHis.getColumnIndex("LiveOut")) +"',";
+                     SQL += "SLiveOut='"+ pHis.getString(pHis.getColumnIndex("SLiveOut")) +"',";
+                     SQL += "DLiveOut='"+ pHis.getString(pHis.getColumnIndex("DLiveOut")) +"',";
+                     SQL += "Died='"+ pHis.getString(pHis.getColumnIndex("Died")) +"',";
+                     SQL += "SDied='"+ pHis.getString(pHis.getColumnIndex("SDied")) +"',";
+                     SQL += "DDied='"+ pHis.getString(pHis.getColumnIndex("DDied")) +"',";
+                     SQL += "Abor='"+ pHis.getString(pHis.getColumnIndex("Abor")) +"',";
+                     SQL += "TAbor='"+ pHis.getString(pHis.getColumnIndex("TAbor")) +"',";
+                     SQL += "TotPreg='"+ pHis.getString(pHis.getColumnIndex("TotPreg")) +"',";
+                     SQL += "Vdate='"+ pHis.getString(pHis.getColumnIndex("vdate")) +"'";
+                     SQL += " Where vill||bari||hh='"+ Household +"' and SNo='"+ pHis.getString(pHis.getColumnIndex("Sno")) +"'";
+                     C.Save( SQL );
+                 }
+                 else
+                 {
+                     SQL = "Insert into PregHis(Vill, Bari, Hh, Sno, Pno, Visit, MarM, MarY, Births, LiveHh, SLiveHh, DLiveHh, LiveOut, SLiveOut, DLiveOut, Died, SDied, DDied, Abor, TAbor, TotPreg, Vdate, Rnd, PageNo, Status, Upload, Lat, Lon)";
+                     SQL += " select Vill, Bari, Hh, Sno, Pno, Visit, MarM, MarY, Births, LiveHh, SLiveHh, DLiveHh, LiveOut, SLiveOut, DLiveOut, Died, SDied, DDied, Abor, TAbor, TotPreg, Vdate, Rnd, ifnull(PageNo,'')PageNo, ifnull(Status,'C')Status, ifnull(Upload,'2')Upload, ifnull(Lat,'')Lat, ifnull(Lon,'')Lon";
+                     SQL += " from tTrans t where t.status='p' and t.vill||t.bari||t.hh='"+ Household +"' and t.sno='"+ pHis.getString(pHis.getColumnIndex("Sno")) +"' ";
+                     C.Save( SQL );
+                 }
+
+                 pHis.moveToNext();
+             }
+             pHis.close();
+
+
+             //-- -Visit Table-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+             if(C.Existence("Select vill from Visits where vill||bari||hh='"+ Household +"' and Rnd ='"+ Rnd +"'")==true)
+             {
+                 Cursor curV = C.ReadData("select Vill, Bari, Hh, ifnull(Resp,'')Resp, Dma, EnterDt, Vdate, Rnd, Lat, Lon,ExType,ExDate,Note from tTrans where status='v' and vill||bari||hh='"+ Household +"' and Rnd ='"+ Rnd +"'");
+                 curV.moveToFirst();
+                 while(!curV.isAfterLast())
+                 {
+                     SQL = "Update Visits set Upload='2',";
+                     SQL += " Rsno='"+ curV.getString(curV.getColumnIndex("Resp")) +"',";
+                     SQL += " VDate='"+ curV.getString(curV.getColumnIndex("VDate")) +"',"; //date of visit
+                     SQL += " Note='"+ curV.getString(curV.getColumnIndex("Note")) +"',";
+                     SQL += " Dma='"+ curV.getString(curV.getColumnIndex("Dma")) +"'"; //DC code
+                     SQL += " where vill||bari||hh='"+ Household +"' and Rnd='"+ Rnd +"'";
+                     C.Save(SQL);
+
+                     if(curV.getString(curV.getColumnIndex("Resp")).equals("77"))
+                     {
+                         SQL = "Update Household set Upload='2',ExType='"+ curV.getString(curV.getColumnIndex("ExType")) +"',ExDate='"+ curV.getString(curV.getColumnIndex("ExDate")) +"' where vill||bari||hh='"+ Household +"'";
+                         C.Save(SQL);
+                     }
+
+
+                     //update temp table: 16 may 2016
+                     SQL = "Update Visits_temp set ";
+                     SQL += " Rsno='"+ curV.getString(curV.getColumnIndex("Resp")) +"',";
+                     SQL += " VDate='"+ curV.getString(curV.getColumnIndex("VDate")) +"'"; //date of visit
+                     SQL += " where vill||bari||hh='"+ Household +"' and Rnd='"+ Rnd +"'";
+                     C.Save(SQL);
+
+                     curV.moveToNext();
+                 }
+                 curV.close();
+             }
+             else
+             {
+                 Cursor curV = C.ReadData("select ifnull(Resp,'')Resp,ExType,ExDate from tTrans where status='v' and vill||bari||hh='"+ Household +"' and Rnd ='"+ Rnd +"'");
+                 curV.moveToFirst();
+                 while(!curV.isAfterLast())
+                 {
+                     if(curV.getString(curV.getColumnIndex("Resp")).equals("77"))
+                     {
+                         SQL = "Update Household set Upload='2',ExType='"+ curV.getString(curV.getColumnIndex("ExType")) +"',ExDate='"+ curV.getString(curV.getColumnIndex("ExDate")) +"' where vill||bari||hh='"+ Household +"'";
+                         C.Save(SQL);
+                     }
+                     curV.moveToNext();
+                 }
+                 curV.close();
+
+                 SQL = "Insert into Visits(Vill, Bari, Hh, Rsno, Dma, EnterDt, Vdate, Rnd, Lat, Lon,LatNet,LonNet,Upload,Note)";
+                 SQL += " Select Vill, Bari, Hh, Resp, Dma, EnterDt, Vdate, Rnd, Lat, Lon,LatNet,LonNet,'2',Note from tTrans where status='v' and vill||bari||hh='"+ Household +"'";
+                 C.Save(SQL);
+
+                 //update temp data
+                 SQL = "Insert into Visits_temp(Vill, Bari, Hh, Rsno, Vdate, Rnd)";
+                 SQL += " Select Vill, Bari, Hh, Resp, Vdate, Rnd from tTrans where status='v' and vill||bari||hh='"+ Household +"'";
+                 C.Save(SQL);
+
+             }
+
+             //-- -Event Table----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+             SQL = "Insert into Events";
+             SQL += " (Vill,Bari,Hh,Pno,Sno,EvType,EvDate,Info1,Info2,Info3,Info4,VDate,Rnd,Upload)";
+             SQL += " Select Vill,Bari,HH,PNo,SNo,EvType,EvDate,ifnull(Info1,'')Info1,ifnull(Info2,'')Info2,ifnull(Info3,'')Info3,ifnull(Info4,'')Info4,VDate,Rnd,'2'";
+             SQL += " from tTrans where Status='e' and vill||bari||hh='"+ Household +"'";
+             C.Save(SQL);
+
+
+             //Need to create/remove a record in migration database
+             String migSQL="";
+             String evtype="";
+             Cursor curMig = C.ReadData("select t.EvType evtype,(t.vill||t.bari||t.HH) hh,t.SNo sno,t.PNo pno,m.Name name,t.EvDate exdate from tTrans t,Member m where t.vill||t.bari||t.hh=m.vill||m.bari||m.hh and t.sno=m.sno and t.status='e' and t.vill||t.bari||t.hh='"+ Household +"' and t.Rnd ='"+ Rnd +"' and t.EvType in('52','22','53','23')");
+             curMig.moveToFirst();
+             while(!curMig.isAfterLast())
+             {
+                 evtype = curMig.getString(curMig.getColumnIndex("evtype")).toString();
+
+                 //insert data in to migration table
+                 if(evtype.equals("52") | evtype.equals("53"))
+                 {
+                     migSQL = "Insert into MigDatabase(ExType,HH,SNo,PNo,Name,ExDate)Values(";
+                     migSQL += "'"+ curMig.getString(curMig.getColumnIndex("evtype")) +"',";
+                     migSQL += "'"+ curMig.getString(curMig.getColumnIndex("hh")) +"',";
+                     migSQL += "'"+ curMig.getString(curMig.getColumnIndex("sno")) +"',";
+                     migSQL += "'"+ curMig.getString(curMig.getColumnIndex("pno")) +"',";
+                     migSQL += "'"+ curMig.getString(curMig.getColumnIndex("name")) +"',";
+                     migSQL += "'"+ curMig.getString(curMig.getColumnIndex("exdate")) +"')";
+                     C.Save(migSQL);
+                 }
+
+                 //remove data in to migration table
+                 else if(evtype.equals("22"))
+                 {
+                     C.Save("Delete from MigDatabase where pno='"+ curMig.getString(curMig.getColumnIndex("pno")) +"' and extype='52'");
+                 }
+
+                 //remove data in to migration table
+                 else if(evtype.equals("23"))
+                 {
+                     C.Save("Delete from MigDatabase where pno='"+ curMig.getString(curMig.getColumnIndex("pno")) +"' and extype='53'");
+                 }
+                 curMig.moveToNext();
+             }
+             curMig.close();
+
+             //-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+             C.Save("Delete from tTrans where vill||bari||hh='"+ Household +"'");
+
+         }
+         catch(Exception ex)
+         {
+             Err = ex.getMessage();
+         }
+
+         return Err;
+     }
 
  }
 

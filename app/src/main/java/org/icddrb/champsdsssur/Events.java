@@ -246,6 +246,7 @@
     static String STARTTIME = "";
     static String DEVICEID  = "";
     static String ENTRYUSER = "";
+     static String EvType="";
     MySharedPreferences sp;
 
     Bundle IDbundle;
@@ -337,9 +338,9 @@
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          txtMSlNo=(EditText) findViewById(R.id.txtMSlNo);
 
-         if (OLDNEWHH.equals("new"))
-             txtMSlNo.setText(MemNo(VILL,BARI,HH));
-         else
+//         if (OLDNEWHH.equals("new"))
+//             txtMSlNo.setText(MemNo(VILL,BARI,HH));
+//         else
              txtMSlNo.setText(MSLNO);
          txtMSlNo.setEnabled(false);
 
@@ -353,7 +354,6 @@
          lineEvType=(View)findViewById(R.id.lineEvType);
          VlblEvType=(TextView) findViewById(R.id.VlblEvType);
          spnEvType=(Spinner) findViewById(R.id.spnEvType);
-
          final Spinner EvType = (Spinner)findViewById(R.id.spnEvType);
 
          String Sex = "";
@@ -363,14 +363,21 @@
 
          //New Member
 
-         if (OLDNEWHH.equals("new")) {
-             EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('20','21','22','23','25')"));
-
+         if (OLDNEWHH.equals("new"))
+         {
              String ECode = spnEvType.getSelectedItem().toString().substring(0, 2);
 
              if(ECode.equals("21") )
              {
-                 dtpEvDate.setVisibility(View.VISIBLE);
+                 String Code = C.ReturnSingleValue("Select EnType from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                 spnEvType.setAdapter(C.getArrayAdapter(" SELECT distinct (EvType||'-'||EvName) FROM EventCode Where EvType='" + Code + "'"));
+             }
+//             EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('20','21','22','23','25')"));
+
+             if(ECode.equals("21") )
+             {
+                 DataSearch(VILL,BARI,HH,MSLNO,EVDATE,EVDATE,ROUNDNO,"tmpEvents");
+
                  txtInfo1.setVisibility(View.GONE);
                  txtInfo2.setVisibility(View.GONE);
                  txtInfo3.setVisibility(View.GONE);
@@ -379,7 +386,8 @@
              }
              else if(ECode.equals("22"))
              {
-                 dtpEvDate.setVisibility(View.VISIBLE);
+                 DataSearch(VILL,BARI,HH,MSLNO,EVDATE,EVDATE,ROUNDNO,"tmpEvents");
+//                 dtpEvDate.setVisibility(View.VISIBLE);
                  txtInfo1.setVisibility(View.GONE);
                  txtInfo2.setVisibility(View.GONE);
                  txtInfo3.setVisibility(View.GONE);
@@ -388,7 +396,8 @@
              }
              else if(ECode.equals("23"))
              {
-                 dtpEvDate.setVisibility(View.VISIBLE);
+                 DataSearch(VILL,BARI,HH,MSLNO,EVDATE,EVDATE,ROUNDNO,"tmpEvents");
+//                 dtpEvDate.setVisibility(View.VISIBLE);
                  txtInfo1.setVisibility(View.GONE);
                  txtInfo2.setVisibility(View.GONE);
                  txtInfo3.setVisibility(View.GONE);
@@ -920,9 +929,6 @@
 
              String Code   = txtInfo1.getText().toString();
 
-//             String[] Code1 = spnInfo1.getSelectedItem().toString().split("-");
-//             String[] Code2 = spnInfo2.getSelectedItem().toString().split("-");
-
              String SpNo   = txtInfo1.getText().toString();
 
              String CodeList = "";
@@ -1270,7 +1276,6 @@
                  }
 
              }
-
 
              else if(ECode == 72)
              {
@@ -2402,10 +2407,11 @@
              }});*/
 
          DataSearchMember(VILL,BARI,HH,MSLNO,"tmpMember");
+         DataSearch(VILL,BARI,HH,MSLNO,EVTYPE,EVDATE,ROUNDNO,"tmpEvents");
      }
 
 
-     private void DataSearch(String Vill, String Bari, String HH, String MSlNo, String EvType, String EvDate, String Rnd)
+     private void DataSearch(String Vill, String Bari, String HH, String MSlNo, String EvType, String EvDate, String Rnd,String TableName)
      {
          try
          {

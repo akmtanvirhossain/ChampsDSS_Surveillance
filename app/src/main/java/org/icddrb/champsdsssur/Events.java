@@ -365,16 +365,16 @@
 
          if (OLDNEWHH.equals("new"))
          {
-             String ECode = spnEvType.getSelectedItem().toString().substring(0, 2);
-//             EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('20','21','22','23','25')"));
+//             String ECode = spnEvType.getSelectedItem().toString().substring(0, 2);
+             EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('20','21','22','23','25')"));
 
-             if(ECode.equals("20") )
+             if(EvType.equals("20") )
              {
                  String Code = C.ReturnSingleValue("Select EnType from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
                  spnEvType.setAdapter(C.getArrayAdapter(" SELECT distinct (EvType||'-'||EvName) FROM EventCode Where EvType='" + Code + "'"));
              }
 
-            else if(ECode.equals("21") )
+            else if(EvType.equals("21") )
              {
                  txtInfo1.setVisibility(View.GONE);
                  txtInfo2.setVisibility(View.GONE);
@@ -382,16 +382,7 @@
                  txtInfo4.setVisibility(View.GONE);
                  dtpVDate.setVisibility(View.VISIBLE);
              }
-             else if(ECode.equals("22"))
-             {
-//                 dtpEvDate.setVisibility(View.VISIBLE);
-                 txtInfo1.setVisibility(View.GONE);
-                 txtInfo2.setVisibility(View.GONE);
-                 txtInfo3.setVisibility(View.GONE);
-                 txtInfo4.setVisibility(View.GONE);
-                 dtpVDate.setVisibility(View.VISIBLE);
-             }
-             else if(ECode.equals("23"))
+             else if(EvType.equals("22"))
              {
 //                 dtpEvDate.setVisibility(View.VISIBLE);
                  txtInfo1.setVisibility(View.GONE);
@@ -400,7 +391,16 @@
                  txtInfo4.setVisibility(View.GONE);
                  dtpVDate.setVisibility(View.VISIBLE);
              }
-             else if(ECode.equals("25")){
+             else if(EvType.equals("23"))
+             {
+//                 dtpEvDate.setVisibility(View.VISIBLE);
+                 txtInfo1.setVisibility(View.GONE);
+                 txtInfo2.setVisibility(View.GONE);
+                 txtInfo3.setVisibility(View.GONE);
+                 txtInfo4.setVisibility(View.GONE);
+                 dtpVDate.setVisibility(View.VISIBLE);
+             }
+             else if(EvType.equals("25")){
                  dtpEvDate.setText("");
                  secInfo1.setVisibility(View.VISIBLE); //Mother serial no
                  VlblInfo1.setText("মায়ের সিরিয়াল নম্বর");

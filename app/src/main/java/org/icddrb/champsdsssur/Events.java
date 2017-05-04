@@ -368,13 +368,11 @@
 //             String ECode = spnEvType.getSelectedItem().toString().substring(0, 2);
              EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('20','21','22','23','25')"));
 
-             if(EvType.equals("20") )
-             {
-                 String Code = C.ReturnSingleValue("Select EnType from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
-                 spnEvType.setAdapter(C.getArrayAdapter(" SELECT distinct (EvType||'-'||EvName) FROM EventCode Where EvType='" + Code + "'"));
-             }
+             String Code = C.ReturnSingleValue("Select EnType from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+             spnEvType.setAdapter(C.getArrayAdapter(" SELECT distinct (EvType||'-'||EvName) FROM EventCode Where EvType='" + Code + "'"));
 
-            else if(EvType.equals("21") )
+
+             if(EvType.equals("21") )
              {
                  txtInfo1.setVisibility(View.GONE);
                  txtInfo2.setVisibility(View.GONE);

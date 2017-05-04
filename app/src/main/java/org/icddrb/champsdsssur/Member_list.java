@@ -934,6 +934,8 @@ public class Member_list extends Activity {
             TextView posmig= (TextView) convertView.findViewById(R.id.posmig);
             TextView posmigdate= (TextView) convertView.findViewById(R.id.posmigdate);
 
+            final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
+
             final HashMap<String, String> o = (HashMap<String, String>) mSchedule.getItem(position);
 
             mslno.setText(o.get("mslno"));
@@ -964,6 +966,19 @@ public class Member_list extends Activity {
                 exdate.setText(o.get("exdate"));
             else
                 exdate.setText(Global.DateConvertDMY(o.get("exdate")));
+
+            if (o.get("PNo").length() == 0)
+            {
+                mslno.setTextColor(Color.RED);
+                name.setTextColor(Color.RED);
+                delMember.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                mslno.setTextColor(Color.BLACK);
+                mslno.setTextColor(Color.BLACK);
+                delMember.setVisibility(View.INVISIBLE);
+            }
 
             //show only if possible migration
             if(o.get("posmig").equals("54"))
@@ -1369,7 +1384,7 @@ public class Member_list extends Activity {
 
      private String MemberSerial(String VILL, String BARI , String HH)
      {
-         String M = C.ReturnSingleValue("Select (ifnull(max(cast(MSlNo as int)),0)+1)serial from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'");
+         String M = C.ReturnSingleValue("Select (ifnull(max(cast(MSlNo as int)),0)+1)serial from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'");
          M = Global.Right("0"+M,2);
          return M;
      }
@@ -1449,16 +1464,18 @@ public class Member_list extends Activity {
          PosMig.setText(o.get("PosMig"));
          PosMigDate.setText(o.get("PosMigDate"));
 
-         if (o.get("PNo").length() == 0) {
+         if (o.get("PNo").length() == 0)
+         {
              MSlNo.setTextColor(Color.RED);
              Name.setTextColor(Color.RED);
              delMember.setVisibility(View.VISIBLE);
-         } else {
+         }
+         else
+         {
              MSlNo.setTextColor(Color.BLACK);
              Name.setTextColor(Color.BLACK);
              delMember.setVisibility(View.INVISIBLE);
          }
-
          if(o.get("ExType").trim().length()==0 & (o.get("PosMig").trim().length()==0 | !o.get("PosMig").trim().equals("54")))
          {
              MSlNo.setTextColor(Color.BLACK);
@@ -1558,14 +1575,13 @@ public class Member_list extends Activity {
 //             ExType.setTextColor(Color.BLACK);
 //             ExDate.setTextColor(Color.BLACK);
 //         }
-
-
-
-         if(Integer.valueOf(o.get("sl"))%2==0) {
+         if(Integer.valueOf(o.get("sl"))%2==0)
+         {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
              delMember.setBackgroundColor(Color.parseColor("#F3F3F3"));
          }
-         else {
+         else
+         {
              secListRow.setBackgroundColor(Color.parseColor("#FFFFFF"));
              delMember.setBackgroundColor(Color.parseColor("#FFFFFF"));
          }
@@ -1579,7 +1595,13 @@ public class Member_list extends Activity {
                IDbundle.putString("HH", o.get("HH"));
                IDbundle.putString("MSlNo", o.get("MSlNo"));
                IDbundle.putString("roundno",ROUNDNO);
-               IDbundle.putString("OldNew", "old");
+
+                if (o.get("PNo").length() == 0)
+                {
+                    IDbundle.putString("OldNew", "new");
+                }
+                else
+                IDbundle.putString("OldNew", "old");
 
                Intent f1;
                f1 = new Intent(getApplicationContext(), Events.class);
@@ -1598,7 +1620,7 @@ public class Member_list extends Activity {
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
-                      C.Save("Delete from Member where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "' and MSlNo='" + o.get("MSlNo") + "'");
+                      C.Save("Delete from tmpMember where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "' and MSlNo='" + o.get("MSlNo") + "'");
                          DataSearch(o.get("Vill"),o.get("Bari"),o.get("HH"));
                      }
                  });

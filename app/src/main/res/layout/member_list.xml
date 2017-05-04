@@ -7,15 +7,44 @@
 
         <TextView
             android:id="@+id/lblHeading"
-            android:layout_width="300sp"
+            android:layout_width="250sp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10sp"
             android:text="খানা সদস্যদের তালিকা"
             android:textColor="@color/pageHeading"
             android:textSize="20sp" />
-        <TextView android:id="@+id/VlblRnd" android:text="Round No" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="#FFFFFF" android:layout_marginLeft="50sp"/>
-        <EditText android:id="@+id/txtRnd" android:maxLength="3" android:layout_width="60sp" android:inputType="number" android:layout_marginLeft="10sp" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" android:gravity="center" />
+
+        <Button
+            android:id="@+id/btnprocess"
+            android:layout_width="80sp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10sp"
+            android:layout_marginLeft="0sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.52"
+            android:background="@color/pageHeadingBack"
+            android:textColor="@color/pageHeading"
+            android:text="Process"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btncanceltran"
+            android:layout_width="20sp"
+            android:layout_height="40sp"
+            android:layout_marginBottom="10sp"
+            android:layout_marginLeft="0sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5dip"
+            android:layout_weight="1"
+            android:background="@color/pageHeadingBack"
+            android:textColor="@color/pageHeading"
+            android:text="Cancel"
+            android:textSize="18sp" />
+
+        <TextView android:id="@+id/VlblRnd" android:text="Round No" android:layout_width="wrap_content" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="#FFFFFF" android:layout_marginLeft="50sp"/>
+        <EditText android:id="@+id/txtRnd" android:maxLength="3" android:layout_width="60sp" android:visibility="gone" android:inputType="number" android:layout_marginLeft="10sp" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" android:gravity="center" />
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
     <LinearLayout android:id="@+id/secVill" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
@@ -218,7 +247,7 @@
 
             <RadioButton
                 android:id="@+id/roAllMember"
-                android:layout_width="wrap_content"
+                android:layout_width="200sp"
                 android:layout_height="wrap_content"
                 android:text="All Members" />
         </RadioGroup>

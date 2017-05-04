@@ -175,7 +175,6 @@ public class Member_list extends Activity {
 
          TableName = "tmpMember";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
-//         lblHeading.setText("খানা সদস্যদের তালিকা, Round:  "+ IDbundle.getString("roundno"));
 
          btncanceltran = (Button) findViewById(R.id.btncanceltran);
          btncanceltran.setOnClickListener(new View.OnClickListener() {
@@ -1011,7 +1010,7 @@ public class Member_list extends Activity {
             TextView posmig= (TextView) convertView.findViewById(R.id.posmig);
             TextView posmigdate= (TextView) convertView.findViewById(R.id.posmigdate);
 
-            final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
+//            final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
 
             final HashMap<String, String> o = (HashMap<String, String>) mSchedule.getItem(position);
 
@@ -1531,7 +1530,7 @@ public class Member_list extends Activity {
          PosMig.setText(o.get("PosMig"));
          PosMigDate.setText(o.get("PosMigDate"));
 
-         if (o.get("Rth").length() == 0)
+         if (o.get("PNo").length() == 0)
          {
              MSlNo.setTextColor(Color.RED);
              Name.setTextColor(Color.RED);

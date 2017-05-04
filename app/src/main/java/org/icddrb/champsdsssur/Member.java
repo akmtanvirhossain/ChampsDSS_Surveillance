@@ -276,8 +276,9 @@
          lineRth=(View)findViewById(R.id.lineRth);
          VlblRth=(TextView) findViewById(R.id.VlblRth);
          spnRth=(Spinner) findViewById(R.id.spnRth);
+
          List<String> listRth = new ArrayList<String>();
-         
+
          listRth.add("");
          listRth.add("00-খানা প্রধানের সাথে স¤পর্ক নেই");
          listRth.add("01-নিজেই খানা প্রধান");
@@ -324,7 +325,8 @@
          lineMoNo = (View) findViewById(R.id.lineMoNo);
          VlblMoNo = (TextView) findViewById(R.id.VlblMoNo);
          spnMoNo = (Spinner) findViewById(R.id.spnMoNo);
-         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
+//         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
 
          spnMoNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
          {
@@ -351,7 +353,7 @@
          lineFaNo = (View) findViewById(R.id.lineFaNo);
          VlblFaNo = (TextView) findViewById(R.id.VlblFaNo);
          spnFaNo = (Spinner) findViewById(R.id.spnFaNo);
-         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
 
 //         secMoNo=(LinearLayout)findViewById(R.id.secMoNo);
 //         lineMoNo=(View)findViewById(R.id.lineMoNo);

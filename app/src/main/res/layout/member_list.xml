@@ -7,7 +7,7 @@
 
         <TextView
             android:id="@+id/lblHeading"
-            android:layout_width="250sp"
+            android:layout_width="300sp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10sp"
@@ -18,29 +18,29 @@
         <Button
             android:id="@+id/btnprocess"
             android:layout_width="80sp"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10sp"
             android:layout_marginLeft="0sp"
             android:layout_marginRight="10sp"
             android:layout_marginTop="5dip"
             android:layout_weight="0.52"
             android:background="@color/pageHeadingBack"
-            android:textColor="@color/pageHeading"
             android:text="Process"
+            android:textColor="@color/pageHeading"
             android:textSize="18sp" />
 
         <Button
             android:id="@+id/btncanceltran"
-            android:layout_width="20sp"
-            android:layout_height="40sp"
+            android:layout_width="30sp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10sp"
             android:layout_marginLeft="0sp"
             android:layout_marginRight="10sp"
             android:layout_marginTop="5dip"
             android:layout_weight="1"
             android:background="@color/pageHeadingBack"
-            android:textColor="@color/pageHeading"
             android:text="Cancel"
+            android:textColor="@color/pageHeading"
             android:textSize="18sp" />
 
         <TextView android:id="@+id/VlblRnd" android:text="Round No" android:layout_width="wrap_content" android:visibility="gone" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="#FFFFFF" android:layout_marginLeft="50sp"/>

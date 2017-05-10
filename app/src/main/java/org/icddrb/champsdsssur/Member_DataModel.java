@@ -237,7 +237,8 @@ import android.content.Context;
      public void setNeedReview(String newValue){
          _NeedReview = newValue;
      }
-        String TableName = "tmpMember";
+
+     String TableName = "tmpMember";
 
 
      public String TransactionSQL(Context context)
@@ -247,9 +248,9 @@ import android.content.Context;
          try
          {
              if(C.Existence("Select * from "+ TableName +"  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' "))
-                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate +"',PosMig = '"+ _PosMig +"',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
+                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate +"',NeedReview='"+ _NeedReview +"',PosMig = '"+ _PosMig +"',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
              else
-                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt + "', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
+                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,NeedReview,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt + "', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "','"+ _NeedReview +"', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
          }
          catch(Exception  e)
          {
@@ -285,7 +286,7 @@ import android.content.Context;
             String SQL = "";
             try
               {
-                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt +"', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
+                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,NeedReview,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt +"', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "','"+ _NeedReview +"', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
                  C.Save(SQL);
                  C.close();
               }
@@ -303,7 +304,7 @@ import android.content.Context;
             String SQL = "";
             try
               {
-                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate + "',PosMig = '"+ _PosMig +  "',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
+                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate + "',NeedReview='"+ _NeedReview +"',PosMig = '"+ _PosMig +  "',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
                  C.Save(SQL);
                  C.close();
               }
@@ -317,7 +318,7 @@ import android.content.Context;
 
         public List<Member_DataModel> SelectAll(Context context, String SQL)
         {
-            Connection C = new Connection(context);
+            C = new Connection(context);
             List<Member_DataModel> data = new ArrayList<Member_DataModel>();
             Member_DataModel d = new Member_DataModel();
             Cursor cur = C.ReadData(SQL);
@@ -340,8 +341,8 @@ import android.content.Context;
                 d._FaNo = cur.getString(cur.getColumnIndex("FaNo"));
                 d._Edu = cur.getString(cur.getColumnIndex("Edu"));
                 d._MS = cur.getString(cur.getColumnIndex("MS"));
-                d._Pstat = cur.getString(cur.getColumnIndex("Pstat"));
-                d._LmpDt = cur.getString(cur.getColumnIndex("LmpDt"));
+                d._Pstat = cur.getString(cur.getColumnIndex("Pstat"))==null?"":cur.getString(cur.getColumnIndex("Pstat"));
+                d._LmpDt = cur.getString(cur.getColumnIndex("LmpDt"))==null?"":cur.getString(cur.getColumnIndex("LmpDt"));
                 d._Ocp = cur.getString(cur.getColumnIndex("Ocp"));
                 d._Sp1 = cur.getString(cur.getColumnIndex("Sp1"));
                 d._Sp2 = cur.getString(cur.getColumnIndex("Sp2"));
@@ -351,8 +352,9 @@ import android.content.Context;
                 d._EnDate = cur.getString(cur.getColumnIndex("EnDate"));
                 d._ExType = cur.getString(cur.getColumnIndex("ExType"));
                 d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
-                d._PosMig = cur.getString(cur.getColumnIndex("PosMig"));
-                d._PosMigDate = cur.getString(cur.getColumnIndex("PosMigDate"));
+                d._PosMig = cur.getString(cur.getColumnIndex("PosMig"))==null?"":cur.getString(cur.getColumnIndex("PosMig"));
+                d._PosMigDate = cur.getString(cur.getColumnIndex("PosMigDate"))==null?"":cur.getString(cur.getColumnIndex("PosMigDate"));
+                d._NeedReview = cur.getString(cur.getColumnIndex("NeedReview"))==null?"":cur.getString(cur.getColumnIndex("NeedReview"));
                 data.add(d);
 
                 cur.moveToNext();
@@ -360,4 +362,50 @@ import android.content.Context;
             cur.close();
           return data;
         }
+
+     public List<Member_DataModel> SelectAll_MigMember(Context context, String SQL)
+     {
+         Connection C = new Connection(context);
+         List<Member_DataModel> data = new ArrayList<Member_DataModel>();
+         Member_DataModel d = new Member_DataModel();
+         Cursor cur = C.ReadData(SQL);
+
+         cur.moveToFirst();
+         while(!cur.isAfterLast())
+         {
+             d = new Member_DataModel();
+             d._Vill = cur.getString(cur.getColumnIndex("Vill"));
+             d._Bari = cur.getString(cur.getColumnIndex("Bari"));
+             d._HH = cur.getString(cur.getColumnIndex("HH"));
+             d._MSlNo = cur.getString(cur.getColumnIndex("MSlNo"));
+             d._PNo = cur.getString(cur.getColumnIndex("PNo"));
+             d._Name = cur.getString(cur.getColumnIndex("Name"));
+             d._Rth = cur.getString(cur.getColumnIndex("Rth"));
+             d._Sex = cur.getString(cur.getColumnIndex("Sex"));
+             d._BDate = cur.getString(cur.getColumnIndex("BDate"));
+             d._AgeY = cur.getString(cur.getColumnIndex("AgeY"));
+             d._MoNo = cur.getString(cur.getColumnIndex("MoNo"));
+             d._FaNo = cur.getString(cur.getColumnIndex("FaNo"));
+             d._Edu = cur.getString(cur.getColumnIndex("Edu"));
+             d._MS = cur.getString(cur.getColumnIndex("MS"));
+             d._Pstat = cur.getString(cur.getColumnIndex("Pstat"));
+             d._LmpDt = cur.getString(cur.getColumnIndex("LmpDt"));
+             d._Ocp = cur.getString(cur.getColumnIndex("Ocp"));
+             d._Sp1 = cur.getString(cur.getColumnIndex("Sp1"));
+             d._Sp2 = cur.getString(cur.getColumnIndex("Sp2"));
+             d._Sp3 = cur.getString(cur.getColumnIndex("Sp3"));
+             d._Sp4 = cur.getString(cur.getColumnIndex("Sp4"));
+             d._EnType = cur.getString(cur.getColumnIndex("EnType"));
+             d._EnDate = cur.getString(cur.getColumnIndex("EnDate"));
+             d._ExType = cur.getString(cur.getColumnIndex("ExType"));
+             d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
+             //d._PosMig = cur.getString(cur.getColumnIndex("PosMig"));
+             //d._PosMigDate = cur.getString(cur.getColumnIndex("PosMigDate"));
+             data.add(d);
+
+             cur.moveToNext();
+         }
+         cur.close();
+         return data;
+     }
  }

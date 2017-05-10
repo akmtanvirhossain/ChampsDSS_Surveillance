@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
     
@@ -80,23 +80,20 @@
 				android:layout_height="wrap_content" android:textSize="20sp" />
 		</LinearLayout>
 
-	<LinearLayout android:background="#FFFFFF"
-	        android:layout_width="fill_parent" android:paddingLeft="20sp" android:paddingTop="10dp" android:paddingBottom="10sp"
-	        android:layout_height="wrap_content"
+	<LinearLayout android:background="#FFFFFF" android:weightSum="2"
+	        android:layout_width="fill_parent"  android:paddingTop="20dp" android:paddingBottom="10sp"
+	        android:layout_height="wrap_content" android:layout_marginLeft="10sp" android:layout_marginRight="10sp"
 	        android:orientation="horizontal">
 					
 				    <Button
 				        android:id="@+id/cmdMigListClose"
-				        android:layout_width="150sp"
-				        android:layout_height="wrap_content"
-				        android:layout_gravity="right"				        
+				        android:layout_width="150sp" android:layout_weight="1"
+				        android:layout_height="wrap_content" android:background="@drawable/button_style_green" android:textColor="#FFFFFF"
 				        android:text="Close" />	
-					<TextView android:gravity="center" android:text="" android:layout_width="250sp" android:textColor="#ff0000" android:layout_height="wrap_content" android:textSize="20sp" />
 				    <Button
-				        android:id="@+id/cmdMigListOk"
-				        android:layout_width="100sp"
-				        android:layout_height="wrap_content"
-				        android:layout_gravity="right"				        
+				        android:id="@+id/cmdMigListOk" android:layout_weight="1"
+				        android:layout_width="100sp" android:layout_marginLeft="20sp"
+				        android:layout_height="wrap_content" android:background="@drawable/button_style_green" android:textColor="#FFFFFF"
 				        android:text="Ok" />									        				
 		</LinearLayout>
  </LinearLayout>

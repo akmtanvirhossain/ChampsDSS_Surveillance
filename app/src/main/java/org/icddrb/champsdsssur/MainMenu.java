@@ -74,10 +74,10 @@ public class MainMenu extends Activity {
             spnBlock = (Spinner)findViewById(R.id.spnBlock);
             spnBlock.setAdapter(C.getArrayAdapter("Select distinct Block from Baris"));
 
-            String[] RCB = C.ReturnSingleValue("Select RoundNo||'-'||Cluster||'-'||Block from LastRoundBlock").split("-");
+            /*String[] RCB = C.ReturnSingleValue("Select RoundNo||'-'||Cluster||'-'||Block from LastRoundBlock").split("-");
             spnRound.setSelection(Global.SpinnerItemPositionAnyLength(spnRound,RCB[0]));
             spnCluster.setSelection(Global.SpinnerItemPositionAnyLength(spnCluster,RCB[1]));
-            spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock,RCB[2]));
+            spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock,RCB[2]));*/
 
             cmdHHInterview = (Button) findViewById(R.id.cmdHHInterview);
             cmdHHInterview.setOnClickListener(new View.OnClickListener() {
@@ -130,30 +130,27 @@ public class MainMenu extends Activity {
                                     try {
                                         String r = C.ExecuteCommandOnServer("Insert into UploadMonitor(DeviceID)Values('"+ DEVICEID +"')");
 
-                                        Tran_Download td = new Tran_Download(MainMenu.this);
-
-                                        //GPS Bari List
-//                                        td.Sync_Download("Baris",DEVICEID,"");
-//                                        td.Sync_Download("EventCode",DEVICEID,"");
-                                        //td.Sync_Download("Visits",DEVICEID,"");
-//                                        td.Sync_Download("MigDatabase",DEVICEID,"");
-//                                        td.Sync_Download("EDU",DEVICEID,"");
-//                                        td.Sync_Download("OCP",DEVICEID,"");
-//                                        td.Sync_Download("POA",DEVICEID,"");
-//                                        td.Sync_Download("POP",DEVICEID,"");
-//                                        td.Sync_Download("POR",DEVICEID,"");
-//                                        td.Sync_Download("RTH",DEVICEID,"");
-
 
                                         List<String> tableList = new ArrayList<String>();
-//                                        tableList.add("Baris");
-//                                        tableList.add("Household");
-//                                        tableList.add("Visits");
-//                                        tableList.add("Member");
-//                                        tableList.add("SES");
-//                                        tableList.add("PregHis");
+                                        tableList.add("Baris");
+                                        tableList.add("Household");
+                                        tableList.add("Visits");
+                                        tableList.add("Member");
+                                        tableList.add("SES");
+                                        tableList.add("PregHis");
+                                        tableList.add("Events");
 
                                         C.Sync_Upload(tableList);
+
+                                        Tran_Download td = new Tran_Download(MainMenu.this);
+                                        td.Sync_Download("migMember",DEVICEID,"");
+                                        td.Sync_Download("EventCode",DEVICEID,"");
+                                        td.Sync_Download("EDU",DEVICEID,"");
+                                        td.Sync_Download("OCP",DEVICEID,"");
+                                        td.Sync_Download("POA",DEVICEID,"");
+                                        td.Sync_Download("POP",DEVICEID,"");
+                                        td.Sync_Download("POR",DEVICEID,"");
+                                        td.Sync_Download("RTH",DEVICEID,"");
 
                                     } catch (Exception e) {
 

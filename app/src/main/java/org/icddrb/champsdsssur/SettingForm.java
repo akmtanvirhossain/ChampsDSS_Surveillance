@@ -25,7 +25,7 @@ public class SettingForm extends Activity {
     String UserID = "";
 
     Spinner spnCluster;
-    Spinner spnBlock;
+    //Spinner spnBlock;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +44,7 @@ public class SettingForm extends Activity {
             SpinnerItem(spnUser, "select DeviceId+'-'+DeviceName from DeviceList order by DeviceId");
 
             spnCluster = (Spinner)findViewById(R.id.spnCluster);
-            spnBlock = (Spinner)findViewById(R.id.spnBlock);
+            //spnBlock = (Spinner)findViewById(R.id.spnBlock);
             List<String> listCluster = new ArrayList<String>();
             for(int c=1;c<=15;c++){
                 listCluster.add(Global.Right("00"+String.valueOf(c),2));
@@ -52,12 +52,12 @@ public class SettingForm extends Activity {
             ArrayAdapter<String> adptrCluster= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listCluster);
             spnCluster.setAdapter(adptrCluster);
 
-            List<String> listBlock = new ArrayList<String>();
+            /*List<String> listBlock = new ArrayList<String>();
             for(int b=1;b<=80;b++){
                 listBlock.add(Global.Right("00"+String.valueOf(b),2));
             }
             ArrayAdapter<String> adptrBlock= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listBlock);
-            spnBlock.setAdapter(adptrBlock);
+            spnBlock.setAdapter(adptrBlock);*/
 
             Button cmdSave = (Button)findViewById(R.id.cmdSave);
             cmdSave.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class SettingForm extends Activity {
                         new Thread() {
                             public void run() {
                                 try {
-                                    C.RebuildDatabase(UserID,spnCluster.getSelectedItem().toString(),spnBlock.getSelectedItem().toString());
+                                    C.RebuildDatabase(UserID,spnCluster.getSelectedItem().toString());
                                 } catch (Exception e) {
 
                                 }

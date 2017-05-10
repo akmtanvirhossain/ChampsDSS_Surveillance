@@ -471,7 +471,7 @@
                     android:id="@+id/VlblVDate"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="সাক্ষাতকারের তারিখ"
+                    android:text="সাক্ষাতের তারিখ"
                     android:textSize="20sp" />
 
                 <EditText
@@ -512,7 +512,7 @@
                     android:id="@+id/VlblVStatus"
                     android:layout_width="220sp"
                     android:layout_height="wrap_content"
-                    android:text="সাক্ষাতকারের ফলাফল"
+                    android:text="সাক্ষাতের ফলাফল"
                     android:textSize="20sp" />
 
                 <Spinner
@@ -628,7 +628,7 @@
                     android:id="@+id/VlblNote"
                     android:layout_width="200sp"
                     android:layout_height="wrap_content"
-                    android:text="পরিদর্শন মন্তব্য"
+                    android:text="মন্তব্য"
                     android:textSize="20sp" />
 
                 <EditText
@@ -665,7 +665,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10sp"
-                    android:background="@drawable/button_style"
+                    android:background="@drawable/button_style_green" android:textColor="#FFFFFF"
                     android:text=" Save -> Continue "
                     android:textSize="20sp" />
             </LinearLayout>

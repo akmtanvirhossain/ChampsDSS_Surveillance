@@ -196,37 +196,65 @@ import android.content.Context;
         public void setLMPDate(String newValue){
               _LMPDate = newValue;
          }
-        private String _StartTime = "";
-        public void setStartTime(String newValue){
-              _StartTime = newValue;
-         }
-        private String _EndTime = "";
-        public void setEndTime(String newValue){
-              _EndTime = newValue;
-         }
-        private String _DeviceID = "";
-        public void setDeviceID(String newValue){
-              _DeviceID = newValue;
-         }
-        private String _EntryUser = "";
-        public void setEntryUser(String newValue){
-              _EntryUser = newValue;
-         }
-        private String _Lat = "";
-        public void setLat(String newValue){
-              _Lat = newValue;
-         }
-        private String _Lon = "";
-        public void setLon(String newValue){
-              _Lon = newValue;
-         }
-        private String _EnDt = "";
-        public void setEnDt(String newValue){
-              _EnDt = newValue;
-         }
+
+     private String _StartTime = "";
+     public void setStartTime(String newValue){
+         _StartTime = newValue;
+     }
+     public String getStartTime(){
+         return _StartTime;
+     }
+
+     private String _EndTime = "";
+     public void setEndTime(String newValue){
+         _EndTime = newValue;
+     }
+     public String getEndTime(){
+         return _EndTime;
+     }
+     private String _DeviceID = "";
+     public void setDeviceID(String newValue){
+         _DeviceID = newValue;
+     }
+     public String getDeviceID(){
+         return _DeviceID;
+     }
+
+     private String _EntryUser = "";
+     public void setEntryUser(String newValue){
+         _EntryUser = newValue;
+     }
+     public String getEntryUser(){
+         return _EntryUser;
+     }
+
+     private String _Lat = "";
+     public void setLat(String newValue){
+         _Lat = newValue;
+     }
+     public String getLat(){
+         return _Lat;
+     }
+
+     private String _Lon = "";
+     public void setLon(String newValue){
+         _Lon = newValue;
+     }
+     public String getLon(){
+         return _Lon;
+     }
+
+     private String _EnDt = "";
+     public void setEnDt(String newValue){
+         _EnDt = newValue;
+     }
+     public String getEnDt(){
+         return _EnDt;
+     }
+
         private String _Upload = "2";
 
-        String TableName = "PregHis";
+        String TableName = "tmpPregHis";
 
         public String SaveUpdateData(Context context)
         {

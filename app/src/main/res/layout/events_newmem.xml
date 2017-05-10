@@ -608,7 +608,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10sp"
-                    android:background="@drawable/button_style"
+                    android:background="@drawable/button_style_green" android:textColor="#FFFFFF"
                     android:text=" Save -> Continue "
                     android:textSize="20sp" />
             </LinearLayout>

@@ -59,7 +59,7 @@ public class LoginActivity extends Activity {
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
-            SystemUpdateDT = "04042017";  //Format: DDMMYYYY
+            SystemUpdateDT = "09052017";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
 
             //Check for Internet connectivity
@@ -145,7 +145,7 @@ public class LoginActivity extends Activity {
                     {
                         String[] U = Connection.split(uid.getSelectedItem().toString(),'-');
                         g.setUserId(U[0]);
-                        sp.save(LoginActivity.this,"userid",UniqueID);
+                        sp.save(LoginActivity.this,"userid",U[0]);
 
                         if (!C.Existence("Select * from DataCollector where UserId='" + U[0] + "' and Pass='" + pass.getText().toString() + "'"))
                         {

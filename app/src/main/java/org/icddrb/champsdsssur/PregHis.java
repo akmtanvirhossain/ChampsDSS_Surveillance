@@ -266,7 +266,7 @@ import Common.Global;
          MSLNO = IDbundle.getString("MSlNo");
 
 
-         TableName = "PregHis";
+         TableName = "tmpPregHis";
 
 
 
@@ -915,8 +915,8 @@ import Common.Global;
                     linelbl113.setVisibility(View.VISIBLE);
                     secTotPregOut.setVisibility(View.VISIBLE);
                     lineTotPregOut.setVisibility(View.VISIBLE);
-                    secCurPreg.setVisibility(View.VISIBLE);
-                    lineCurPreg.setVisibility(View.VISIBLE);
+                    //secCurPreg.setVisibility(View.VISIBLE);
+                    //lineCurPreg.setVisibility(View.VISIBLE);
              }
              else
              {
@@ -926,8 +926,8 @@ import Common.Global;
                     linelbl113.setVisibility(View.VISIBLE);
                     secTotPregOut.setVisibility(View.VISIBLE);
                     lineTotPregOut.setVisibility(View.VISIBLE);
-                    secCurPreg.setVisibility(View.VISIBLE);
-                    lineCurPreg.setVisibility(View.VISIBLE);
+                    //secCurPreg.setVisibility(View.VISIBLE);
+                    //lineCurPreg.setVisibility(View.VISIBLE);
 //                    seclbl113.setVisibility(View.VISIBLE);
 //                    linelbl113.setVisibility(View.VISIBLE);
              }
@@ -976,8 +976,8 @@ import Common.Global;
                  }
                  else
                  {
-                     secLMPDate.setVisibility(View.VISIBLE);
-                     lineLMPDate.setVisibility(View.VISIBLE);
+                     //secLMPDate.setVisibility(View.VISIBLE);
+                     //lineLMPDate.setVisibility(View.VISIBLE);
                  }
              }
              public void onNothingSelected(AdapterView<?> adapterView) {

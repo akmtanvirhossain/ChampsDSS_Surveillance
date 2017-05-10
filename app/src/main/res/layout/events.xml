@@ -21,7 +21,23 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10sp"
             android:orientation="vertical">
-
+            <LinearLayout
+                style="@style/rowStyle0"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/lblName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" android:textColor="#006699"
+                    android:textSize="25sp" />
+            </LinearLayout>
+            <View
+                android:id="@+id/lineVill1"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="#CCCCCC" />
             <LinearLayout
                 android:id="@+id/secVill"
                 style="@style/rowStyle0"
@@ -211,6 +227,11 @@
                     android:maxLength="11"
                     android:textSize="20sp" />
             </LinearLayout>
+
+
+
+
+
 
             <View
                 android:id="@+id/linePNo"
@@ -569,7 +590,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10sp"
-                    android:background="@drawable/button_style"
+                    android:background="@drawable/button_style_green" android:textColor="#FFFFFF"
                     android:text=" Save -> Continue "
                     android:textSize="20sp" />
             </LinearLayout>

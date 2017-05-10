@@ -280,7 +280,7 @@
 
     <View android:id="@+id/lineTotPregOut" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
-    <LinearLayout android:id="@+id/secCurPreg" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+    <LinearLayout android:id="@+id/secCurPreg" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblCurPreg" android:text="১১৪." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblCurPreg" android:text="আপনি কি বর্তমানে গর্ভবতী ?" android:layout_width="340sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <RadioGroup android:id="@+id/rdogrpCurPreg" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp">
@@ -291,7 +291,7 @@
     </LinearLayout>
     <View android:id="@+id/lineCurPreg" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
-    <LinearLayout android:id="@+id/secLMPDate" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+    <LinearLayout android:id="@+id/secLMPDate" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
         <TextView android:id="@+id/lblLMPDate" android:text="১১৫." android:layout_width="60sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <TextView android:id="@+id/VlblLMPDate" android:text="আপনার শেষ মাসিক কত তারিখে শুরু হয়েছিল?" android:layout_width="340sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <EditText android:id="@+id/dtpLMPDate" android:drawableRight="@drawable/calendersmall" android:layout_width="150sp" android:inputType="text" android:layout_height="wrap_content" android:focusable="false" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp"/>
@@ -299,7 +299,7 @@
     <View android:id="@+id/lineLMPDate" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
        <LinearLayout android:layout_width="fill_parent" android:paddingTop="20sp" android:layout_height="wrap_content" android:orientation="horizontal">
-       	<Button android:id="@+id/cmdSave" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/button_style"
+       	<Button android:id="@+id/cmdSave" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/button_style_green" android:textColor="#FFFFFF"
        			android:textSize="20sp" android:text=" Save -> Continue "  android:layout_marginBottom="10sp"/>
        </LinearLayout>
     </LinearLayout>

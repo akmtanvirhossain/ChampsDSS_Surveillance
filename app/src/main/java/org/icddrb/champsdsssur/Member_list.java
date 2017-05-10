@@ -31,6 +31,7 @@ import android.widget.ImageButton;
  import android.widget.ImageView;
  import android.widget.LinearLayout;
 import android.widget.ListView;
+ import android.widget.RadioButton;
  import android.widget.RadioGroup;
  import android.widget.SimpleAdapter;
  import android.widget.Spinner;
@@ -110,6 +111,8 @@ public class Member_list extends Activity {
     Button btnPregHis;
     Button btncanceltran;
     Button btnprocess;
+    Button btnNote;
+
     MySharedPreferences sp;
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -209,57 +212,70 @@ public class Member_list extends Activity {
          btnprocess.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+                 adb.setTitle("Process Transaction");
                  adb.setMessage("Do you want to process current transaction[Yes/No]?");
                  adb.setNegativeButton("No", null);
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
 
-//                        try
-//                        {
-//                            String msg = ProcessTransaction(VILL+BARI+HH,g.getRoundNumber());
-//                            if(msg.length()==0)
-//                            {
-//                                g.setBariCode("");
-//                                g.setHouseholdNo("");
-//
-//                                finish();
-//                            }
-//                            else
-//                            {
-//                                Connection.MessageBox(Member_list.this, msg);
-//                                return;
-//                            }
-//                        }
-//                        catch(Exception ex)
-//                        {
-//                            Connection.MessageBox(Member_list.this, ex.getMessage());
-//                            return;
-//                        }
-//
+                         //Table Name: Visits
+                         VisitsDataTransfer(VILL, BARI, HH, ROUNDNO);
+
+                         //Table Name: Household
+                         HouseholdDataTransfer(VILL, BARI, HH);
+
+                         //Table Name: Member
+                         MemberDataTransfer(VILL, BARI, HH);
+
+                         //Table Name: SES
+                         SESDataTransfer(VILL, BARI, HH);
+
+                         //Table Name: PregHis
+                         PreHisDataTransfer(VILL, BARI, HH);
+
+                         //Table Name: Events
+                         EventDataTransfer(VILL, BARI, HH);
+
+                         C.Save("Delete from tmpHousehold where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpVisits where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpMember where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpSES where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpPregHis where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpEvents where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+
+                         finish();
+
                      }});
                  adb.show();
+             }});
+
+         btnNote = (Button) findViewById(R.id.btnNote);
+         btnNote.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+                 VisitNoteForm(VILL, BARI, HH);
+
              }});
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
-                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
+                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
 
                  if (Integer.valueOf(infoMiss) > 0) {
                      Connection.MessageBox(Member_list.this, infoMiss + " জন সদস্যের তথ্য আপডেট করা হয় নাই");
                      return;
                  }
 
-                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                 if (!C.Existence("Select PNo from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
                      return;
                  }
-                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 if(!C.Existence("Select Rth from tmpMember  where rtrim(Rth)='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
                  {
                      Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
                      return;
                  }
-                 if (!C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                 if (!C.Existence("Select VStatus from tmpSES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "Required: খানার তথ্য  খালি রাখা যাবেনা ");
                      return;
                  }
@@ -289,28 +305,21 @@ public class Member_list extends Activity {
                  adb.show();
              }});
 
-         btnRefresh = (Button) findViewById(R.id.btnRefresh);
-         btnRefresh.setOnClickListener(new View.OnClickListener() {
-
-             public void onClick(View view) {
-                   //write your code here
-                 DataSearch(VILL, BARI, HH);
-             }});
 
          btnSES = (Button) findViewById(R.id.btnSES);
          btnSES.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                 if (!C.Existence("Select PNo from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
                      return;
                  }
-                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 if(!C.Existence("Select Rth from tmpMember  where rtrim(Rth)='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
                  {
                      Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
                      return;
                  }
-                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
+                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
 
                  if (Integer.valueOf(infoMiss) > 0) {
                      Connection.MessageBox(Member_list.this, infoMiss + " জন সদস্যের তথ্য আপডেট করা হয় নাই");
@@ -332,36 +341,36 @@ public class Member_list extends Activity {
          btnPregHis.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 if (!C.Existence("Select PNo from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                 if (!C.Existence("Select PNo from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
                      Connection.MessageBox(Member_list.this, "Required: কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.");
                      return;
                  }
-                 if(!C.Existence("Select Rth from Member  where Rth='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+
+                 if(!C.Existence("Select Rth from tmpMember  where rtrim(Rth)='01' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
                  {
                      Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন খানা প্রধান থাকতে হবে।");
                      return;
                  }
 
-                 if(!C.Existence("Select Sex from Member  where Sex='2' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
+                 if(!C.Existence("Select Sex from tmpMember  where Sex='2' and Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"'"))
                  {
                      Connection.MessageBox(Member_list.this, "খানায় কমপক্ষে একজন মহিলা সদস্য এন্ট্রি করতে হবে.");
                      return;
                  }
 
-                 if(!C.Existence("Select Sex, AgeY,MS from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday('now')-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"))
+                 if(!C.Existence("Select Sex, AgeY,MS from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday('now')-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"))
                  {
                      Connection.MessageBox(Member_list.this, "খানায় ৫০ বছরের কম বয়সের কখনও বিবাহ হয়েছে এমন মহিলা নেই .");
                      return;
                  }
-                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
+
+                 String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
 
                  if (Integer.valueOf(infoMiss) > 0) {
-
                      Connection.MessageBox(Member_list.this, infoMiss + " জন সদস্যের তথ্য আপডেট করা হয় নাই");
-
                      return;
                  }
-//                 Toast.makeText(Member_list.this, "Vill:"+VILL+"/Bari:"+BARI+"/HH:"+HH, Toast.LENGTH_SHORT).show();
+
                  Intent f1;
                  f1 = new Intent(getApplicationContext(), PregHis.class);
                  IDbundle.putString("Vill", VILL);
@@ -376,8 +385,7 @@ public class Member_list extends Activity {
          btnMemberName.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent f1;
-                 f1 = new Intent(getApplicationContext(),Events_NewMem.class);
+                 Intent f1 = new Intent(getApplicationContext(),Events_NewMem.class);
                  IDbundle.putString("Vill", VILL);
                  IDbundle.putString("Bari", BARI);
                  IDbundle.putString("HH", HH);
@@ -416,6 +424,7 @@ public class Member_list extends Activity {
 
          cmdVisitList.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
+
                  VisitList(VILL,BARI,HH);
              }
          });
@@ -569,11 +578,11 @@ public class Member_list extends Activity {
 
         if(Status.equals("current"))
         {
-            cur1 = C.ReadData("select mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from tmpEvents where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
+            cur1 = C.ReadData("select Vill,Bari,HH,mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from tmpEvents where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
         }
         else if(Status.equals("all"))
         {
-            cur1 = C.ReadData("select mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from Events where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
+            cur1 = C.ReadData("select Vill,Bari,HH,mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from Events where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
         }
 
         if(cur1.getCount()==0)
@@ -591,6 +600,10 @@ public class Member_list extends Activity {
         while(!cur1.isAfterLast())
         {
             HashMap<String, String> map = new HashMap<String, String>();
+            map.put("vill", cur1.getString(cur1.getColumnIndex("Vill")));
+            map.put("bari", cur1.getString(cur1.getColumnIndex("Bari")));
+            map.put("hh", cur1.getString(cur1.getColumnIndex("HH")));
+
             map.put("mslno", cur1.getString(cur1.getColumnIndex("MSlNo")));
             map.put("pno", cur1.getString(cur1.getColumnIndex("pno")));
             map.put("evtype", cur1.getString(cur1.getColumnIndex("EvType")));
@@ -672,7 +685,7 @@ public class Member_list extends Activity {
                 public void onClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                     adb.setTitle("Event Delete");
-                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("MslNo").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি মুছে ফেলতে চান [Yes/No]?");
+                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("mslno").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি মুছে ফেলতে চান [Yes/No]?");
 
                     adb.setNegativeButton("No", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
@@ -681,19 +694,18 @@ public class Member_list extends Activity {
 
                     adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
-                            String HH = VILL+BARI+txtHH;
-                            String SN = o.get("Mslno").toString();
+                            String HH = o.get("vill")+o.get("bari")+o.get("hh");
+                            String SN = o.get("mslno").toString();
                             String EV = o.get("evtype").toString();
                             String EVD= o.get("evdate").toString();
 
                             //event specific update
                             if(EV.equals("12"))
                             {
-                                C.Save("Delete from tmpEvents where vill||bari||hh='"+ HH +"' and MSlNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Delete from tmpEvents where vill||bari||hh='"+ HH +"' and MSlNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                             }
-                            else if(EV.equals("21") | EV.equals("22") | EV.equals("23"))
+                            else if(EV.equals("20") | EV.equals("21") | EV.equals("22") | EV.equals("23"))
                             {
-
                                 C.Save("Delete from tmpMember where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                                 C.Save("Delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                             }
@@ -704,12 +716,12 @@ public class Member_list extends Activity {
                             else if(EV.equals("31") | EV.equals("32") | EV.equals("33") | EV.equals("34"))
                             {
                                 String PMS = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set MS='"+ PMS +"' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                             }
                             else if(EV.equals("40") | EV.equals("49"))
                             {
-                                C.Save("Delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("Delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                             }
                             else if(EV.equals("41"))
                             {
@@ -721,7 +733,7 @@ public class Member_list extends Activity {
                                 }
 
                                 //Update from temporary table
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set PStat='',LMPDt='' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
 
                                 //Transfer events from main to UpdateEvents table
@@ -742,7 +754,7 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("51") | EV.equals("52") | EV.equals("53") | EV.equals("55"))
                             {
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set ExType='',ExDate='' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                             }
                             else if(EV.equals("54") | EV.equals("57"))
@@ -752,14 +764,14 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("61"))
                             {
-                                String PMono = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PMono = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set MoNo='"+ PMono +"' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                             }
                             else if(EV.equals("62"))
                             {
-                                String PFano = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PFano = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set FaNo='"+ PFano +"' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                             }
                             else if(EV.equals("63"))
@@ -768,20 +780,20 @@ public class Member_list extends Activity {
                             }
                             else if(EV.equals("64"))
                             {
-                                String PRth = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and Mslno='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PRth = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and Mslno='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set Rth='"+ PRth +"' where vill||bari||hh='"+ HH +"' and Mslno='"+ SN +"'");
                             }
                             else if(EV.equals("71"))
                             {
-                                String PEdu = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String PEdu = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set Edu='"+ PEdu +"' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                             }
                             else if(EV.equals("72"))
                             {
-                                String POcp = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
-                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"'");
+                                String POcp = C.ReturnSingleValue("Select Info2 from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
+                                C.Save("delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"' and EvType='"+ EV +"' and EvDate='"+ EVD +"' and Rnd='"+ o.get("rnd") +"'");
                                 C.Save("Update tmpMember set Ocp='"+ POcp +"' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                             }
 
@@ -1249,15 +1261,15 @@ public class Member_list extends Activity {
 
     private void DataStatus()
     {
-        if (C.Existence("Select VStatus from SES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+        if (C.Existence("Select VStatus from tmpSES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
             btnSES.setBackgroundColor(Color.GREEN);
         }
         else{
             btnSES.setBackgroundResource(R.drawable.button_style);
         }
 
-        String TotRh = C.ReturnSingleValue("Select Count(*)TotRWO from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'");
-        String PregHis = C.ReturnSingleValue("Select count(*)Total from PregHis Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+        String TotRh = C.ReturnSingleValue("Select Count(*)TotRWO from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'");
+        String PregHis = C.ReturnSingleValue("Select count(*)Total from tmpPregHis Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
 
         if (Integer.valueOf(TotRh)>0 & Integer.valueOf(TotRh) == Integer.valueOf(PregHis))
         {
@@ -1271,7 +1283,7 @@ public class Member_list extends Activity {
      {
        try
         {
-           Member_DataModel d = new Member_DataModel();
+             Member_DataModel d = new Member_DataModel();
              String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
@@ -1530,7 +1542,7 @@ public class Member_list extends Activity {
          PosMig.setText(o.get("PosMig"));
          PosMigDate.setText(o.get("PosMigDate"));
 
-         if (o.get("PNo").length() == 0)
+         /*if (o.get("Rth").length() == 0)
          {
              MSlNo.setTextColor(Color.RED);
              Name.setTextColor(Color.RED);
@@ -1541,8 +1553,16 @@ public class Member_list extends Activity {
              MSlNo.setTextColor(Color.BLACK);
              Name.setTextColor(Color.BLACK);
              delMember.setVisibility(View.INVISIBLE);
+         }*/
+
+         delMember.setVisibility(View.INVISIBLE);
+         if (o.get("Rth").length() == 0)
+         {
+             MSlNo.setTextColor(Color.RED);
+             Name.setTextColor(Color.RED);
+             delMember.setVisibility(View.VISIBLE);
          }
-         if(o.get("ExType").trim().length()==0 & (o.get("PosMig").trim().length()==0 | !o.get("PosMig").trim().equals("54")))
+         else if(o.get("ExType").trim().length()==0 & (o.get("PosMig").trim().length()==0 | !o.get("PosMig").trim().equals("54")))
          {
              MSlNo.setTextColor(Color.BLACK);
              PNo.setTextColor(Color.BLACK);
@@ -1550,6 +1570,7 @@ public class Member_list extends Activity {
              Rth.setTextColor(Color.BLACK);
              Sex.setTextColor(Color.BLACK);
              BDate.setTextColor(Color.BLACK);
+             AgeY.setTextColor(Color.BLACK);
              MoNo.setTextColor(Color.BLACK);
              FaNo.setTextColor(Color.BLACK);
              Edu.setTextColor(Color.BLACK);
@@ -1568,29 +1589,79 @@ public class Member_list extends Activity {
          }
          else if(o.get("ExType").trim().length()==0 & o.get("PosMig").trim().equals("54"))
          {
-             MSlNo.setTextColor(Color.BLACK);
-             PNo.setTextColor(Color.BLACK);
-             Name.setTextColor(Color.BLACK);
-             Rth.setTextColor(Color.BLACK);
-             Sex.setTextColor(Color.BLACK);
-             BDate.setTextColor(Color.BLACK);
-             MoNo.setTextColor(Color.BLACK);
-             FaNo.setTextColor(Color.BLACK);
-             Edu.setTextColor(Color.BLACK);
-             MS.setTextColor(Color.BLACK);
-             Pstat.setTextColor(Color.BLACK);
-             LmpDt.setTextColor(Color.BLACK);
-             Sp1.setTextColor(Color.BLACK);
-             Sp2.setTextColor(Color.BLACK);
-             Sp3.setTextColor(Color.BLACK);
-             Sp4.setTextColor(Color.BLACK);
-             Ocp.setTextColor(Color.BLACK);
-             EnType.setTextColor(Color.BLACK);
-             EnDate.setTextColor(Color.BLACK);
-             ExType.setTextColor(Color.BLACK);
-             ExDate.setTextColor(Color.BLACK);
+             MSlNo.setTextColor(Color.BLUE);
+             PNo.setTextColor(Color.BLUE);
+             Name.setTextColor(Color.BLUE);
+             Rth.setTextColor(Color.BLUE);
+             Sex.setTextColor(Color.BLUE);
+             BDate.setTextColor(Color.BLUE);
+             AgeY.setTextColor(Color.BLUE);
+             MoNo.setTextColor(Color.BLUE);
+             FaNo.setTextColor(Color.BLUE);
+             Edu.setTextColor(Color.BLUE);
+             MS.setTextColor(Color.BLUE);
+             Pstat.setTextColor(Color.BLUE);
+             LmpDt.setTextColor(Color.BLUE);
+             Sp1.setTextColor(Color.BLUE);
+             Sp2.setTextColor(Color.BLUE);
+             Sp3.setTextColor(Color.BLUE);
+             Sp4.setTextColor(Color.BLUE);
+             Ocp.setTextColor(Color.BLUE);
+             EnType.setTextColor(Color.BLUE);
+             EnDate.setTextColor(Color.BLUE);
+             ExType.setTextColor(Color.BLUE);
+             ExDate.setTextColor(Color.BLUE);
              PosMig.setTextColor(Color.BLUE);
              PosMigDate.setTextColor(Color.BLUE);
+         }
+         else if(o.get("ExType").trim().length()>0)
+         {
+             MSlNo.setTextColor(Color.RED);
+             PNo.setTextColor(Color.RED);
+             Name.setTextColor(Color.RED);
+             Rth.setTextColor(Color.RED);
+             Sex.setTextColor(Color.RED);
+             BDate.setTextColor(Color.RED);
+             AgeY.setTextColor(Color.RED);
+             MoNo.setTextColor(Color.RED);
+             FaNo.setTextColor(Color.RED);
+             Edu.setTextColor(Color.RED);
+             MS.setTextColor(Color.RED);
+             Pstat.setTextColor(Color.RED);
+             LmpDt.setTextColor(Color.RED);
+             Sp1.setTextColor(Color.RED);
+             Sp2.setTextColor(Color.RED);
+             Sp3.setTextColor(Color.RED);
+             Sp4.setTextColor(Color.RED);
+             Ocp.setTextColor(Color.RED);
+             EnType.setTextColor(Color.RED);
+             EnDate.setTextColor(Color.RED);
+             ExType.setTextColor(Color.RED);
+             ExDate.setTextColor(Color.RED);
+         }else if(o.get("NeedReview").toString().equals("1"))
+         {
+             MSlNo.setTextColor(Color.GREEN);
+             PNo.setTextColor(Color.GREEN);
+             Name.setTextColor(Color.GREEN);
+             Rth.setTextColor(Color.GREEN);
+             Sex.setTextColor(Color.GREEN);
+             BDate.setTextColor(Color.GREEN);
+             AgeY.setTextColor(Color.GREEN);
+             MoNo.setTextColor(Color.GREEN);
+             FaNo.setTextColor(Color.GREEN);
+             Edu.setTextColor(Color.GREEN);
+             MS.setTextColor(Color.GREEN);
+             Pstat.setTextColor(Color.GREEN);
+             LmpDt.setTextColor(Color.GREEN);
+             Sp1.setTextColor(Color.GREEN);
+             Sp2.setTextColor(Color.GREEN);
+             Sp3.setTextColor(Color.GREEN);
+             Sp4.setTextColor(Color.GREEN);
+             Ocp.setTextColor(Color.GREEN);
+             EnType.setTextColor(Color.GREEN);
+             EnDate.setTextColor(Color.GREEN);
+             ExType.setTextColor(Color.GREEN);
+             ExDate.setTextColor(Color.GREEN);
          }
          else
          {
@@ -1600,6 +1671,7 @@ public class Member_list extends Activity {
              Rth.setTextColor(Color.BLACK);
              Sex.setTextColor(Color.BLACK);
              BDate.setTextColor(Color.BLACK);
+             AgeY.setTextColor(Color.BLACK);
              MoNo.setTextColor(Color.BLACK);
              FaNo.setTextColor(Color.BLACK);
              Edu.setTextColor(Color.BLACK);
@@ -1616,31 +1688,7 @@ public class Member_list extends Activity {
              ExType.setTextColor(Color.BLACK);
              ExDate.setTextColor(Color.BLACK);
          }
-//
-//         if(o.get("newold").equals("n"))
-//         {
-//             MSlNo.setTextColor(Color.BLACK);
-//             PNo.setTextColor(Color.BLACK);
-//             Name.setTextColor(Color.BLACK);
-//             Rth.setTextColor(Color.BLACK);
-//             Sex.setTextColor(Color.BLACK);
-//             BDate.setTextColor(Color.BLACK);
-//             MoNo.setTextColor(Color.BLACK);
-//             FaNo.setTextColor(Color.BLACK);
-//             Edu.setTextColor(Color.BLACK);
-//             MS.setTextColor(Color.BLACK);
-//             Pstat.setTextColor(Color.BLACK);
-//             LmpDt.setTextColor(Color.BLACK);
-//             Sp1.setTextColor(Color.BLACK);
-//             Sp2.setTextColor(Color.BLACK);
-//             Sp3.setTextColor(Color.BLACK);
-//             Sp4.setTextColor(Color.BLACK);
-//             Ocp.setTextColor(Color.BLACK);
-//             EnType.setTextColor(Color.BLACK);
-//             EnDate.setTextColor(Color.BLACK);
-//             ExType.setTextColor(Color.BLACK);
-//             ExDate.setTextColor(Color.BLACK);
-//         }
+
          if(Integer.valueOf(o.get("sl"))%2==0)
          {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
@@ -1654,26 +1702,47 @@ public class Member_list extends Activity {
 
          secListRow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               //Write your code here
-               Bundle IDbundle = new Bundle();
-               IDbundle.putString("Vill", o.get("Vill"));
-               IDbundle.putString("Bari", o.get("Bari"));
-               IDbundle.putString("HH", o.get("HH"));
-               IDbundle.putString("MSlNo", o.get("MSlNo"));
-               IDbundle.putString("roundno",ROUNDNO);
+                if(o.get("ExType").toString().length()>0){
+                    Connection.MessageBox(Member_list.this,"সদস্য বর্তমানে সক্রিয় নয়।");
+                    return;
+                }else if(o.get("PosMig").equals("54")){
+                    AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+                    adb.setTitle("54: মুছে ফেলা");
+                    adb.setMessage("আপনি কি সদস্যঃ "+ o.get("Name") +" এর 54 ইভেন্ট  মুছে ফেলতে চান[হ্যাঁ/না]?");
+                    adb.setNegativeButton("না", null);
+                    adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            C.Save("Update tmpMember set PosMig='',PosMigDate='' where Vill='" + o.get("Vill") + "' and Bari='" + o.get("Bari") + "' and HH='" + o.get("HH") + "' and MSlNo='" + o.get("MSlNo") + "'");
+                            DataSearch(o.get("Vill"),o.get("Bari"),o.get("HH"));
+                        }
+                    });
+                    adb.show();
+                    return;
+                }
 
-                if (o.get("PNo").length() == 0)
+               //Write your code here
+                Bundle IDbundle = new Bundle();
+                IDbundle.putString("Vill", o.get("Vill"));
+                IDbundle.putString("Bari", o.get("Bari"));
+                IDbundle.putString("HH", o.get("HH"));
+                IDbundle.putString("MSlNo", o.get("MSlNo"));
+                IDbundle.putString("roundno",ROUNDNO);
+                IDbundle.putString("endate",o.get("EnDate"));
+                IDbundle.putString("pno",o.get("PNo"));
+                IDbundle.putString("name",o.get("Name"));
+
+                if (o.get("Rth").length() == 0)
                 {
                     IDbundle.putString("OldNew", "new");
                 }
                 else
-                IDbundle.putString("OldNew", "old");
+                    IDbundle.putString("OldNew", "old");
 
                Intent f1;
                f1 = new Intent(getApplicationContext(), Events.class);
                f1.putExtras(IDbundle);
                //startActivity(f1);
-                startActivityForResult(f1, 1);
+               startActivityForResult(f1, 1);
             }
           });
 
@@ -2121,4 +2190,343 @@ public class Member_list extends Activity {
  }
 
 
+ //Data Transfer to Main Table
+ //************************************************
+    //Table Name: Visits
+    private void VisitsDataTransfer(String Vill, String Bari, String HH, String Rnd)
+    {
+        Visits_DataModel d = new Visits_DataModel();
+        String SQL = "Select * from tmpVisits  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and Rnd='"+ Rnd +"'";
+        List<Visits_DataModel> data = d.SelectAll(this, SQL);
+        for(Visits_DataModel item : data){
+            Visits_DataModel_Main objSave = new Visits_DataModel_Main();
+            objSave.setVill(Vill);
+            objSave.setBari(Bari);
+            objSave.setHH(HH);
+            objSave.setVDate(item.getVDate());
+            objSave.setVStatus(item.getVStatus());
+            objSave.setVStatusOth(item.getVStatusOth());
+            objSave.setResp(item.getResp());
+            objSave.setRnd(item.getRnd());
+
+            objSave.setStartTime(item.getStartTime());
+            objSave.setEndTime(item.getEndTime());
+            objSave.setDeviceID(item.getDeviceID());
+            objSave.setEntryUser(item.getEntryUser());
+            objSave.setLat(item.getLat());
+            objSave.setLon(item.getLon());
+            objSave.setEnDt(item.getEnDt());
+
+            String status = objSave.SaveUpdateData(this);
+        }
+    }
+
+    //Table Name: Household
+    private void HouseholdDataTransfer(String Vill, String Bari, String HH)
+    {
+        Household_DataModel d = new Household_DataModel();
+        String SQL = "Select * from tmpHousehold  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+        List<Household_DataModel> data = d.SelectAll(this, SQL);
+        for(Household_DataModel item : data){
+            Household_DataModel_Main objSave = new Household_DataModel_Main();
+            objSave.setVill(Vill);
+            objSave.setBari(Bari);
+            objSave.setHH(HH);
+            objSave.setReligion(item.getReligion());
+            objSave.setMobileNo1(item.getMobileNo1());
+            objSave.setMobileNo2(item.getMobileNo2());
+            objSave.setHHHead(item.getHHHead());
+            objSave.setTotMem(item.getTotMem());
+            objSave.setTotRWo(item.getTotRWo());
+            objSave.setEnType(item.getEnType());
+            objSave.setEnDate(item.getEnDate());
+            objSave.setExType(item.getExType());
+            objSave.setExDate(item.getExDate());
+            objSave.setRnd(item.getRnd());
+            objSave.setEnDt(item.getEnDt());
+            objSave.setStartTime(item.getStartTime());
+            objSave.setEndTime(item.getEndTime());
+            objSave.setDeviceID(item.getDeviceID());
+            objSave.setEntryUser(item.getEntryUser());
+            objSave.setLat(item.getLat());
+            objSave.setLon(item.getLon());
+            objSave.setEnDt(item.getEnDt());
+
+            String status = objSave.SaveUpdateData(this);
+        }
+    }
+
+    //Table Name: Member
+    private void MemberDataTransfer(String Vill, String Bari, String HH)
+    {
+        Member_DataModel d = new Member_DataModel();
+        String SQL = "Select * from tmpMember  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+        List<Member_DataModel> data = d.SelectAll(this, SQL);
+        for(Member_DataModel item : data){
+            Member_DataModel_Main objSave = new Member_DataModel_Main();
+            objSave.setVill(Vill);
+            objSave.setBari(Bari);
+            objSave.setHH(HH);
+            objSave.setMSlNo(item.getMSlNo());
+            objSave.setPNo(item.getPNo());
+            objSave.setName(item.getName());
+            objSave.setRth(item.getRth());
+            objSave.setSex(item.getSex());
+            objSave.setBDate(item.getBDate());
+            objSave.setAgeY(item.getAgeY());
+            objSave.setMoNo(item.getMoNo());
+            objSave.setFaNo(item.getFaNo());
+            objSave.setEdu(item.getEdu());
+            objSave.setMS(item.getMS());
+            objSave.setOcp(item.getOcp());
+            objSave.setSp1(item.getSp1());
+            objSave.setSp2(item.getSp2());
+            objSave.setSp3(item.getSp3());
+            objSave.setSp4(item.getSp4());
+            objSave.setEnType(item.getEnType());
+            objSave.setEnDate(item.getEnDate());
+            objSave.setExType(item.getExType());
+            objSave.setExDate(item.getExDate());
+            objSave.setPosMig(item.getPosMig());
+            objSave.setPosMigDate(item.getPosMigDate());
+            objSave.setNeedReview(item.getNeedReview());
+
+            String status = objSave.SaveUpdateData(this);
+        }
+    }
+
+    //Table Name: SES
+    private void SESDataTransfer(String Vill, String Bari, String HH)
+    {
+        SES_DataModel d = new SES_DataModel();
+        String SQL = "Select * from tmpSES  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+        List<SES_DataModel> data = d.SelectAll(this, SQL);
+        for(SES_DataModel item : data){
+            SES_DataModel_Main objSave = new SES_DataModel_Main();
+            objSave.setVill(item.getVill());
+            objSave.setBari(item.getBari());
+            objSave.setHH(item.getHH());
+            objSave.setSESNo(item.getSESNo());
+            objSave.setVDate(item.getVDate());
+            objSave.setVStatus(item.getVStatus());
+            objSave.setVStatusOth(item.getVStatusOth());
+            objSave.setRnd(item.getRnd());
+            objSave.setWSDrink(item.getWSDrink());
+            objSave.setWSDrinkOth(item.getWSDrinkOth());
+            objSave.setWSCook(item.getWSCook());
+            objSave.setWSCookOth(item.getWSCookOth());
+            objSave.setWSWash(item.getWSWash());
+            objSave.setWSWashOth(item.getWSWashOth());
+            objSave.setLatrine(item.getLatrine());
+            objSave.setLatrineOth(item.getLatrineOth());
+
+            objSave.setElectricity(item.getElectricity());
+            objSave.setRadio(item.getRadio());
+            objSave.setTV(item.getTV());
+            objSave.setMobile(item.getMobile());
+            objSave.setTelephone(item.getTelephone());
+            objSave.setRefrige(item.getRefrige());
+            objSave.setWatch(item.getWatch());
+            objSave.setElecFan(item.getElecFan());
+            objSave.setRickVan(item.getRickVan());
+            objSave.setBicycle(item.getBicycle());
+            objSave.setMotCycle(item.getMotCycle());
+            objSave.setComputer(item.getComputer());
+            objSave.setBuffalo(item.getBuffalo());
+            objSave.setBull(item.getBull());
+            objSave.setGoat(item.getGoat());
+            objSave.setChicken(item.getChicken());
+            objSave.setPigeon(item.getPigeon());
+            objSave.setRoof(item.getRoof());
+            objSave.setRoofOth(item.getRoofOth());
+            objSave.setWall(item.getWall());
+            objSave.setWallOth(item.getWallOth());
+            objSave.setFloor(item.getFloor());
+            objSave.setFloorOth(item.getFloorOth());
+            objSave.setHomestead(item.getHomestead());
+            objSave.setHomesteadOth(item.getHomesteadOth());
+            objSave.setOthLand(item.getOthLand());
+            objSave.setRnd(item.getRnd());
+            objSave.setEnDt(item.getEnDt());
+            objSave.setStartTime(item.getStartTime());
+            objSave.setEndTime(item.getEndTime());
+            objSave.setDeviceID(item.getDeviceID());
+            objSave.setEntryUser(item.getEntryUser()); //from data entry user list
+            objSave.setLat(item.getLat());
+            objSave.setLon(item.getLon());
+
+            String status = objSave.SaveUpdateData(this);
+        }
+    }
+
+    //Table Name: PregHis
+    private void PreHisDataTransfer(String Vill, String Bari, String HH)
+    {
+        PregHis_DataModel d = new PregHis_DataModel();
+        String SQL = "Select * from tmpPregHis  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+        List<PregHis_DataModel> data = d.SelectAll(this, SQL);
+        for(PregHis_DataModel item : data){
+            PregHis_DataModel_Main objSave = new PregHis_DataModel_Main();
+            objSave.setVill(item.getVill());
+            objSave.setBari(item.getBari());
+            objSave.setHH(item.getHH());
+            objSave.setMSlNo(item.getMSlNo());
+            objSave.setPNo(item.getPNo());
+            objSave.setVDate(item.getVDate());
+            objSave.setVStatus(item.getVStatus());
+            objSave.setVStatusOth(item.getVStatusOth());
+            objSave.setMarriageStatus(item.getMarriageStatus());
+            objSave.setMarMon(item.getMarMon());
+            objSave.setMarYear(item.getMarYear());
+            objSave.setMarDK(item.getMarDK());
+            objSave.setGaveBirth(item.getGaveBirth());
+
+            objSave.setChildLivWWo(item.getChildLivWWo());
+            objSave.setSonLivWWo(item.getSonLivWWo());
+            objSave.setDaugLivWWo(item.getDaugLivWWo());
+
+            objSave.setChldLivOut(item.getChldLivOut());
+            objSave.setSonLivOut(item.getSonLivOut());
+            objSave.setDaugLivOut(item.getDaugLivOut());
+            objSave.setChldDie(item.getChldDie());
+            objSave.setBoyDied(item.getBoyDied());
+            objSave.setGirlDied(item.getGirlDied());
+            objSave.setNotLivBrth(item.getNotLivBrth());
+            objSave.setTotLB(item.getTotLB());
+            objSave.setTotPregOut(item.getTotPregOut());
+            objSave.setCurPreg(item.getCurPreg());
+            objSave.setLMPDate(item.getLMPDate());
+            objSave.setEnDt(item.getEnDt());
+            objSave.setStartTime(item.getStartTime());
+            objSave.setEndTime(item.getEndTime());
+            objSave.setDeviceID(item.getDeviceID());
+            objSave.setEntryUser(item.getEntryUser()); //from data entry user list
+            objSave.setLat(item.getLat());
+            objSave.setLon(item.getLon());
+
+            String status = objSave.SaveUpdateData(this);
+        }
+    }
+    //Table Name: Events
+    private void EventDataTransfer(String Vill, String Bari, String HH)
+    {
+        Events_DataModel d = new Events_DataModel();
+        String SQL = "Select * from tmpEvents  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+        List<Events_DataModel> data = d.SelectAll(this, SQL);
+        for(Events_DataModel item : data){
+            Events_DataModel_Main objSave = new Events_DataModel_Main();
+            objSave.setVill(item.getVill());
+            objSave.setBari(item.getBari());
+            objSave.setHH(item.getHH());
+            objSave.setMSlNo(item.getMSlNo());
+            objSave.setPNo(item.getPNo());
+            objSave.setEvType(item.getEvType());
+            objSave.setEvDate(item.getEvDate());
+            objSave.setInfo1(item.getInfo1());
+            objSave.setInfo2(item.getInfo2());
+            objSave.setInfo3(item.getInfo3());
+            objSave.setInfo4(item.getInfo4());
+            objSave.setVDate(item.getVDate());
+            objSave.setRnd(item.getRnd());
+            objSave.setEnDt(item.getEnDt());
+            objSave.setStartTime(item.getStartTime());
+            objSave.setEndTime(item.getEndTime());
+            objSave.setDeviceID(item.getDeviceID());
+            objSave.setEntryUser(item.getEntryUser());
+            objSave.setLat(item.getLat());
+            objSave.setLon(item.getLon());
+
+            String status = objSave.SaveUpdateData(this);
+
+            //Release from migration table
+            if(item.getEvType().equals("22")){
+                C.Save("Delete from migMember where pno='"+ item.getPNo() +"' and extype='52'");
+            }else if(item.getEvType().equals("23")){
+                C.Save("Delete from migMember where pno='"+ item.getPNo() +"' and extype='53'");
+            }
+
+            //Prepare migration database
+            else if(item.getEvType().equals("52") | item.getEvType().equals("53")){
+                Member_DataModel d1 = new Member_DataModel();
+                String SQL1 = "Select * from tmpMember  Where Vill='"+ item.getVill() +"' and Bari='"+ item.getBari() +"' and HH='"+ item.getHH() +"' and MSlNo='"+ item.getMSlNo() +"'";
+                List<Member_DataModel> data1 = d1.SelectAll(this, SQL1);
+                for(Member_DataModel item1 : data1) {
+                    MigrationMember_DataModel objSave1 = new MigrationMember_DataModel();
+                    objSave1.setVill(item1.getVill());
+                    objSave1.setBari(item1.getBari());
+                    objSave1.setHH(item1.getHH());
+                    objSave1.setMSlNo(item1.getMSlNo());
+                    objSave1.setPNo(item1.getPNo());
+                    objSave1.setName(item1.getName());
+                    objSave1.setRth(item1.getRth());
+                    objSave1.setSex(item1.getSex());
+                    objSave1.setBDate(item1.getBDate());
+                    objSave1.setAgeY(item1.getAgeY());
+                    objSave1.setMoNo(item1.getMoNo());
+                    objSave1.setFaNo(item1.getFaNo());
+                    objSave1.setEdu(item1.getEdu());
+                    objSave1.setMS(item1.getMS());
+                    objSave1.setOcp(item1.getOcp());
+                    objSave1.setSp1(item1.getSp1());
+                    objSave1.setSp2(item1.getSp2());
+                    objSave1.setSp3(item1.getSp3());
+                    objSave1.setSp4(item1.getSp4());
+                    objSave1.setEnType(item1.getEnType());
+                    objSave1.setEnDate(item1.getEnDate());
+                    objSave1.setExType(item1.getExType());
+                    objSave1.setExDate(item1.getExDate());
+
+                    String status1 = objSave1.SaveUpdateData(this);
+                }
+            }
+        }
+    }
+
+
+
+    private void VisitNoteForm(final String Vill, final String Bari, final String HH)
+    {
+        try
+        {
+            final Dialog dialog = new Dialog(Member_list.this);
+            dialog.setTitle("Visit Note");
+            //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.visitnote);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCancelable(true);
+
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+
+            wlp.gravity = Gravity.TOP;
+            wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            window.setAttributes(wlp);
+
+            final TextView txtVisitNote = (TextView)dialog.findViewById(R.id.txtVisitNote);
+            txtVisitNote.setText(C.ReturnSingleValue("Select note from Household where vill||bari||hh = '"+ (Vill+Bari+HH) +"'"));
+
+            Button cmdVisitNoteSave = (Button)dialog.findViewById(R.id.cmdVisitNoteSave);
+            cmdVisitNoteSave.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    C.Save("Update Household set Note='"+ txtVisitNote.getText() +"' where Vill||bari||hh='"+ (Vill+Bari+HH) +"'");
+                    dialog.dismiss();
+                }
+            });
+
+            Button cmdImmClose = (Button)dialog.findViewById(R.id.cmdVisitNoteClose);
+            cmdImmClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    dialog.dismiss();
+                }
+            });
+
+
+            dialog.show();
+        }
+        catch(Exception  e)
+        {
+            Connection.MessageBox(Member_list.this, e.getMessage());
+            return;
+        }
+    }
 }

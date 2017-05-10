@@ -40,7 +40,7 @@
  import android.widget.ArrayAdapter;
 
  import Common.*;
-
+import Utility.*;
  public class SES extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
@@ -311,7 +311,10 @@
         static String BARI = "";
         static String HH = "";
         static String SESNO = "";
-
+     MySharedPreferences sp;
+     static String ROUNDNO = "";
+     static String CLUSTER="";
+     static String BLOCK="";
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
    try
@@ -330,7 +333,12 @@
          HH = IDbundle.getString("HH");
          SESNO = IDbundle.getString("SESNo");
 
-         TableName = "SES";
+         sp = new MySharedPreferences();
+         ROUNDNO = sp.getValue(this,"roundno");
+         CLUSTER = sp.getValue(this,"cluster");
+         BLOCK = sp.getValue(this,"block");
+
+         TableName = "tmpSES";
 
          //turnGPSOn();
 
@@ -1738,7 +1746,7 @@
              rb = (RadioButton)rdogrpOthLand.getChildAt(i);
              if (rb.isChecked()) objSave.setOthLand(d_rdogrpOthLand[i]);
          }
-         objSave.setRnd("00");
+         objSave.setRnd(ROUNDNO);
          objSave.setEnDt(Global.DateTimeNowYMDHMS());
          objSave.setStartTime(STARTTIME);
          objSave.setEndTime(g.CurrentTime24());

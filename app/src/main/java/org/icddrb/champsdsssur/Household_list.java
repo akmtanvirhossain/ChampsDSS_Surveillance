@@ -131,10 +131,10 @@ public class Household_list extends Activity  {
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
                  {
                      public void onClick(DialogInterface dialog, int which) {
-                         String V = spnVill.getSelectedItemPosition()==0?"": Global.Left(spnVill.getSelectedItem().toString(),3);
+                         /*String V = spnVill.getSelectedItemPosition()==0?"": Global.Left(spnVill.getSelectedItem().toString(),3);
                          String B = spnBari.getSelectedItemPosition()==0?"": Global.Left(spnBari.getSelectedItem().toString(),4);
                          C.Save("Delete from LastVillBari");
-                         C.Save("Insert into LastVillBari(Vill, Bari)Values('"+ V +"','"+ B +"')");
+                         C.Save("Insert into LastVillBari(Vill, Bari)Values('"+ V +"','"+ B +"')");*/
 
                          finish();
                          startActivity(new Intent(Household_list.this, MainMenu.class));
@@ -162,7 +162,11 @@ public class Household_list extends Activity  {
              @Override
              public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                 if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari"))
+                 String V = spnVill.getSelectedItem().toString().split("-")[0];
+                 String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari")?"":spnBari.getSelectedItem().toString().split("-")[0];
+                 DataSearch(CLUSTER, BLOCK,V,B);
+
+                 /*if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari"))
                  {
                      DataSearch(CLUSTER, BLOCK,"");
                  }
@@ -171,7 +175,7 @@ public class Household_list extends Activity  {
                      String[] B = Connection.split(spnBari.getSelectedItem().toString(),'-');
                      BARI = B[0];
                      DataSearch(CLUSTER,BLOCK,BARI);
-                 }
+                 }*/
              }
 
              @Override
@@ -259,7 +263,8 @@ public class Household_list extends Activity  {
              }
          });
 
-         DataSearch(CLUSTER,BLOCK,"");
+         String V = spnVill.getSelectedItem().toString().split("-")[0];
+         DataSearch(CLUSTER, BLOCK,V,"");
 
      }
      catch(Exception  e)
@@ -321,7 +326,7 @@ public class Household_list extends Activity  {
                     objSave.setEntryUser(ENTRYUSER); //from data entry user list
                     String status = objSave.SaveUpdateData(Household_list.this);
 
-                    DataSearch(CLUSTER, BLOCK,"");
+                    DataSearch(CLUSTER, BLOCK,txtVill.getText().toString(),txtBari.getText().toString());
                     //txtHH.setText(HHSerial(VILL,BARI));
                     //txtName.setText("");
                     //txtName.requestFocus();
@@ -360,27 +365,27 @@ public class Household_list extends Activity  {
              spnBari.setAdapter(C.getArrayAdapter("Select '.All Bari' union Select Bari||'-'||BariName from Baris where Vill='"+ V[0] +"' and Cluster='"+ CLUSTER +"' and Block='"+ BLOCK +"'"));
              spnBari.setSelection(Global.SpinnerItemPositionAnyLength(spnBari,data.getExtras().getString("bid")));
          }else if(data.getExtras().getString("res").equals("hh")) {
-             if (spnBari.getSelectedItemPosition() == 0) return;
-             String[] V = Connection.split(spnVill.getSelectedItem().toString(), '-');
-             String[] B = Connection.split(spnBari.getSelectedItem().toString(), '-');
-             DataSearch(CLUSTER, BLOCK, "");
+             String V = spnVill.getSelectedItem().toString().split("-")[0];
+             String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari")?"":spnBari.getSelectedItem().toString().split("-")[0];
+
+             DataSearch(CLUSTER, BLOCK, V, B);
          }
      }
  }
 
 
- public void DataSearch(String Cluster, String Block, String Bari)
+ public void DataSearch(String Cluster, String Block, String Vill, String Bari)
      {
        try
         {
            Household_DataModel d = new Household_DataModel();
             String SQL ;
 
-            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, ifnull(h.Note,'')Note,h.Rnd,b.BariName,";
+            SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, ifnull(TotMem,'0')TotMem,TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, ifnull(h.Note,'')Note,h.Rnd,b.BariName,";
             SQL += " ifnull(v.VStatus,'') as vstatus,ifnull(v.vstatusoth,'') vstatusoth,ifnull(v.Resp,'') as resp";
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQL += " left outer join Visits v on h.Vill=v.Vill and h.Bari=v.Bari and h.HH=v.HH and v.Rnd='"+ ROUNDNO +"'";
-            SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Bari Like('%"+ Bari +"%')";
+            SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%')";
 
 
             List<Household_DataModel> data = d.SelectAllVisit(this, SQL);
@@ -491,14 +496,23 @@ public class Household_list extends Activity  {
              secRowVStatus.setVisibility(View.VISIBLE);
              lblVStatus.setText("অনিবার্য পরিস্থিতির কারণে পরিদর্শন করা হয়নি, "+ o.get("Note"));
          }else if(resp.equals("77")){
+             Bari.setTextColor(Color.GREEN);
              secRowVStatus.setVisibility(View.VISIBLE);
              lblVStatus.setText("সমগ্র পরিবার অন্যত্র  চলেগেছে, "+ o.get("Note"));
          }else if(resp.equals("88")){
+             Bari.setTextColor(Color.GREEN);
              secRowVStatus.setVisibility(View.VISIBLE);
              lblVStatus.setText("ইন্টারভিউ দিতে রাজী নয়, "+ o.get("Note"));
          }else if(resp.equals("99")){
+             Bari.setTextColor(Color.GREEN);
              secRowVStatus.setVisibility(View.VISIBLE);
              lblVStatus.setText("খানার সকল সদস্য অনুপস্থিত, "+ o.get("Note"));
+         }
+
+
+         if(o.get("TotMem").equals("0")||o.get("TotMem").length()==0){
+             secRowVStatus.setVisibility(View.VISIBLE);
+             lblVStatus.setText("বেজলাইনে অনুপস্থিত");
          }
 
          TotMem.setText(o.get("TotMem"));
@@ -523,10 +537,11 @@ public class Household_list extends Activity  {
                IDbundle.putString("cluster",CLUSTER);
                IDbundle.putString("block",BLOCK);
                IDbundle.putString("OldNew", "old");
+               IDbundle.putString("totalmem", o.get("TotMem").length()==0?"0":o.get("TotMem"));
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);
                f1.putExtras(IDbundle);
-                startActivityForResult(f1, 1);
+               startActivityForResult(f1, 1);
             }
           });
 
@@ -547,114 +562,7 @@ public class Household_list extends Activity  {
 //         });
          return convertView;
        }
-     public void BlockList(Boolean heading, String BariCode)
-     {
-         final ListView list = (ListView) findViewById(R.id.lstData);
-         mylist = new ArrayList<HashMap<String, String>>();
-         HashMap<String, String> map;
 
-         try
-         {
-             String BCode = ""; //BariCode.length()==0?"%":BariCode;
-             String SQL = "";
-
-             if(BariCode.length()!=0)
-             {
-                 SQL +="select b.bari,ifnull(h.hh,'')as hh,ifnull(h.hhhead,'')hhhead,count(m.vill)totalMem,b.vill,b.bariname,(case when v.rnd is null then '2' else '1' end)RoundVisit,";
-                 SQL +=" ifnull(h.rel,'')rel,ifnull(v.rsno,'')rsno,ifnull(v.vdate,'')vdate,count(case when m.posmig='54' then '1' else null end)posmig from ";
-                 SQL +=" Baris b";
-                 SQL +=" left outer join Household h on b.vill||b.bari=h.vill||h.bari";
-                 SQL +=" left outer join Member m on h.vill||h.bari||h.hh=m.Vill||m.Bari||m.hh and length(m.extype)=0";
-                 SQL +=" left outer join visits_temp v on h.vill||h.bari||h.hh=v.Vill||v.Bari||v.hh";
-                 //SQL +=" inner join mdssvill vl on (b.vill=vl.vill)";
-                 SQL +=" where ";//vl.Cluster='"+ g.getClusterCode() +"' and";
-                 SQL +=" b.Cluster='"+ g.getClusterCode() +"' and";
-                 SQL +=" b.block='"+ g.getBlockCode() +"' and b.bari ='"+ BariCode +"'";
-                 SQL +=" group by h.vill,h.bari,h.hh";
-                 SQL +=" order by h.vill, h.Bari, h.HH";
-
-					/*SQL +="Select b.bari,ifnull(h.hh,'')hh,ifnull(h.hhhead,'')hhhead,0 totalmem,b.vill,b.bariname, (case when v1.vill is null then '2' else '1' end)RoundVisit,Rel,ifnull(v1.rsno,'')rsno,ifnull(v1.vdate,'')vdate";
-					SQL +=" from Baris b";
-					SQL +=" left outer join Household h on (b.vill=h.vill and b.bari=h.bari)";
-					SQL +=" inner join mdssvill v on (b.vill=v.vill)";
-					SQL +=" left outer join visits_temp v1 on (h.vill||h.bari||h.HH=v1.vill||v1.bari||v1.hh)";
-					SQL +=" where";
-					SQL +=" v.Cluster='"+ g.getClusterCode() +"' and";
-					SQL +=" b.block='"+ g.getBlockCode() +"' and b.bari ='"+ BariCode +"'";
-					SQL +=" order by h.vill, h.Bari, h.HH";*/
-             }
-             else
-             {
-                 SQL +="select b.bari,ifnull(h.hh,'')as hh,ifnull(h.hhhead,'')hhhead,count(m.vill)totalMem,b.vill,b.bariname,(case when v.rnd is null then '2' else '1' end)RoundVisit,";
-                 SQL +=" ifnull(h.rel,'')rel,ifnull(v.rsno,'')rsno,ifnull(v.vdate,'')vdate,count(case when m.posmig='54' then '1' else null end)posmig from ";
-                 SQL +=" Baris b";
-                 SQL +=" left outer join Household h on b.vill||b.bari=h.vill||h.bari";
-                 SQL +=" left outer join Member m on h.vill||h.bari||h.hh=m.Vill||m.Bari||m.hh and length(m.extype)=0";
-                 SQL +=" left outer join visits_temp v on h.vill||h.bari||h.hh=v.Vill||v.Bari||v.hh";
-                 //SQL +=" inner join mdssvill vl on (b.vill=vl.vill)";
-                 SQL +=" where ";//vl.Cluster='"+ g.getClusterCode() +"' and";
-                 SQL +=" b.Cluster='"+ g.getClusterCode() +"' and";
-                 SQL +=" b.block='"+ g.getBlockCode() +"'";
-                 SQL +=" group by h.vill,h.bari,h.hh";
-                 SQL +=" order by h.vill, h.Bari, h.HH";
-
-					/*SQL +="Select b.bari,ifnull(h.hh,'')hh,ifnull(h.hhhead,'')hhhead,0 totalmem,b.vill,b.bariname, (case when v1.vill is null then '2' else '1' end)RoundVisit,Rel,ifnull(v1.rsno,'')rsno,ifnull(v1.vdate,'')vdate";
-					SQL +=" from Baris b";
-					SQL +=" left outer join Household h on (b.vill=h.vill and b.bari=h.bari)";
-					SQL +=" inner join mdssvill v on (b.vill=v.vill)";
-					SQL +=" left outer join visits_temp v1 on (h.vill||h.bari||h.HH=v1.vill||v1.bari||v1.hh)";
-					SQL +=" where";
-					SQL +=" v.Cluster='"+ g.getClusterCode() +"' and";
-					SQL +=" b.block='"+ g.getBlockCode() +"'";
-					SQL +=" order by h.vill, h.Bari, h.HH";*/
-             }
-             Cursor cur=C.ReadData(SQL);
-
-             cur.moveToFirst();
-             if(heading==true)
-             {
-                 View header = getLayoutInflater().inflate(R.layout.household_list, null);
-                 list.addHeaderView(header);
-             }
-
-             while(!cur.isAfterLast())
-             {
-                 map = new HashMap<String, String>();
-                 map.put("bari", cur.getString(0));
-                 map.put("hh",cur.getString(1));
-                 map.put("hhhead", cur.getString(2));
-                 map.put("totalmem", cur.getString(3));
-                 map.put("vcode", cur.getString(4));
-                 map.put("bariname", cur.getString(5));
-                 map.put("visit", cur.getString(6));
-                 map.put("rel", cur.getString(7));
-                 map.put("rsno", cur.getString(8));
-                 map.put("vdate", cur.getString(9));
-                 map.put("posmig", cur.getString(10));
-
-                 mylist.add(map);
-
-                 cur.moveToNext();
-             }
-             cur.close();
-//             mSchedule = new SimpleAdapter(this, mylist, R.layout.household_row,
-//                     new String[] {"bari","hh", "hhhead"},
-//                     new int[] {R.id.Bari, R.id.HH, R.id.HHHead});
-
-//             list.setAdapter(new DataListAdapter(this));
-
-         }
-         catch(Exception e)
-         {
-             AlertDialog.Builder adb=new AlertDialog.Builder(Household_list.this);
-             adb.setTitle("Message");
-             adb.setMessage(e.getMessage());
-             adb.setPositiveButton("Ok", null);
-             adb.show();
-         }
-
-     }
  }
-
 
 }

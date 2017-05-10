@@ -34,7 +34,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="0sp">
+            android:paddingTop="20sp">
 
             <Button
                 android:id="@+id/cmdHHInterview"
@@ -66,12 +66,11 @@
                 android:id="@+id/cmdDataSync"
                 style="@style/menuButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginBottom="5sp"
                 android:layout_marginLeft="20sp"
                 android:layout_marginRight="20sp"
                 android:layout_marginTop="20sp"
-                android:background="@drawable/button_style_blue"
+                android:background="@drawable/button_style_green"
                 android:gravity="center|center_vertical"
                 android:text="Data Sync"
                 android:textColor="#ffffff"

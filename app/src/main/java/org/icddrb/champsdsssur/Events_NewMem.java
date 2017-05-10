@@ -1187,6 +1187,7 @@
              objSave.setHH(txtHH.getText().toString());
              objSave.setMSlNo(MemberSl);
              objSave.setName(txtName.getText().toString());
+             objSave.setPNo(txtPNo.getText().toString());
 
              if(EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23")|EVTYPE.equals("25")) {
                  objSave.setEnType(spnEvType.getSelectedItem().toString().split("-")[0]);
@@ -1537,7 +1538,7 @@
              RadioButton rb;
              Member_DataModel d = new Member_DataModel();
              String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
-             List<Member_DataModel> data = d.SelectAll(this, SQL);
+             List<Member_DataModel> data = d.SelectAll_MigMember(this, SQL);
              for(Member_DataModel item : data){
 
                  txtName.setText(item.getName());

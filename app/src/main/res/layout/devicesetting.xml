@@ -26,16 +26,12 @@
         <TextView android:text="Cluster" android:layout_width="140sp" android:layout_height="wrap_content" android:textSize="20sp" />
         <Spinner android:id="@+id/spnCluster" android:drawSelectorOnTop="true" android:layout_width="300sp" android:layout_height="wrap_content" android:layout_weight="0" android:prompt="@string/planet_prompt" android:textSize="20sp" />
     </LinearLayout>
-    <View android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-        <TextView android:text="Block" android:layout_width="140sp" android:layout_height="wrap_content" android:textSize="20sp" />
-        <Spinner android:id="@+id/spnBlock" android:drawSelectorOnTop="true" android:layout_width="300sp" android:layout_height="wrap_content" android:layout_weight="0" android:prompt="@string/planet_prompt" android:textSize="20sp" />
-    </LinearLayout>
+
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
     <LinearLayout android:layout_width="fill_parent" android:paddingTop="60sp" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
        	<Button android:id="@+id/cmdSave" android:layout_width="fill_parent" android:layout_height="wrap_content"
-       			android:textSize="20sp" android:text=" Done "  android:layout_marginBottom="10sp" android:background="@drawable/button_style"/>
+       			android:textSize="20sp" android:text=" Done "  android:layout_marginBottom="10sp" android:background="@drawable/button_style_green" android:textColor="#FFFFFF"/>
     </LinearLayout>
 
 </LinearLayout>

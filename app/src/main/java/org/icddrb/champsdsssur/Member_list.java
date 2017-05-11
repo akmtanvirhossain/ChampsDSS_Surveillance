@@ -2123,18 +2123,7 @@ public class Member_list extends Activity {
                 ErrMsg += "\n-> খানায় একের বেশী খানা প্রধান থাকতে পারে না।";
             }
         }
-        //age of last SES collection
-        if(C.Existence("select vill from tmpSES where vill||bari||hh='"+ Household +"'"))
-        {
-            //***need to collect ses again from 22 rnd
-            //int sesage = Integer.parseInt(C.ReturnSingleValue("select cast((julianday(date('now'))-julianday(vdate))/365.25 as int)ageses from tTrans where status='s' and vill||bari||hh='"+ Household +"' order by sesno desc limit 1"));
-            //if(sesage >= 3)
-            //	ErrMsg += "-> SES এর বয়স ৩ বছরের বেশী হয়েছে, আবার সংগ্রহ করতে হবে।\n";
-        }
-        else
-        {
-            ErrMsg += "\n-> SES এর তথ্য সংগ্রহ করতে হবে।";
-        }
+
         //Not pregnant event(40) missing
         SQLS = "SELECT M.MslNo as sno,M.NAME as name";
         SQLS += " FROM tmpMember M WHERE  M.VILL||M.BARI||M.HH='"+ Household +"' AND M.MS='31' AND cast((julianday(date('now'))-julianday(bdate))/365.25 as int)<50  ";
@@ -2154,22 +2143,34 @@ public class Member_list extends Activity {
 
 
         //Pregnancy history missing
-        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
-        SQLS += " and t.Sex='2' and t.ms<>'30' and ((julianday(date('now'))-julianday(t.bdate))/365.25)<50";
+//        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+//        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
+//        SQLS += " and t.Sex='2' and t.ms<>'30' and ((julianday(date('now'))-julianday(t.bdate))/365.25)<50";
+//
+//        Cursor curphis = C.ReadData(SQLS);
+//        curphis.moveToFirst();
+//        while(!curphis.isAfterLast())
+//        {
+//            if(!C.Existence("select vill from tmpPregHis where vill||bari||hh='"+ Household +"' and MslNo='"+ curphis.getString(curphis.getColumnIndex("MslNo")) +"'") & !C.Existence("select vill from PregHis where pno='"+ curphis.getString(curphis.getColumnIndex("pno")) +"'"))
+//            {
+//                ErrMsg += "\n-> RHQ হয় নাই (সিরিয়াল নাম্বার= "+  curphis.getString(curphis.getColumnIndex("sno")) +" এবং নাম= "+ curphis.getString(curphis.getColumnIndex("name")) +" ).";
+//            }
+//            curphis.moveToNext();
+//        }
+//        curphis.close();
 
-        Cursor curphis = C.ReadData(SQLS);
-        curphis.moveToFirst();
-        while(!curphis.isAfterLast())
-        {
-            if(!C.Existence("select vill from tmpPregHis where vill||bari||hh='"+ Household +"' and MslNo='"+ curphis.getString(curphis.getColumnIndex("MslNo")) +"'") & !C.Existence("select vill from PregHis where pno='"+ curphis.getString(curphis.getColumnIndex("pno")) +"'"))
-            {
-                ErrMsg += "\n-> RHQ হয় নাই (সিরিয়াল নাম্বার= "+  curphis.getString(curphis.getColumnIndex("sno")) +" এবং নাম= "+ curphis.getString(curphis.getColumnIndex("name")) +" ).";
-            }
-            curphis.moveToNext();
-        }
-        curphis.close();
-
+        //age of last SES collection
+//        if(C.Existence("select vill from tmpSES where vill||bari||hh='"+ Household +"'"))
+//        {
+//            //***need to collect ses again from 22 rnd
+//            //int sesage = Integer.parseInt(C.ReturnSingleValue("select cast((julianday(date('now'))-julianday(vdate))/365.25 as int)ageses from tTrans where status='s' and vill||bari||hh='"+ Household +"' order by sesno desc limit 1"));
+//            //if(sesage >= 3)
+//            //	ErrMsg += "-> SES এর বয়স ৩ বছরের বেশী হয়েছে, আবার সংগ্রহ করতে হবে।\n";
+//        }
+//        else
+//        {
+//            ErrMsg += "\n-> SES এর তথ্য সংগ্রহ করতে হবে।";
+//        }
 
         //occupation missing (age >= 12 years)
 //        SQLS = "Select MslNo as sno, Name as name from tmpMember where VILL||BARI||HH='"+ Household +"' and cast((julianday(date('now'))-julianday(bdate))/365.25 as int)>=12 and length(OCp)=0 and (extype is null or length(extype)=0)";

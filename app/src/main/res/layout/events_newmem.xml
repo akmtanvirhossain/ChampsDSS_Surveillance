@@ -322,7 +322,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="number"
-                    android:maxLength="50"
+                    android:maxLength="11"
                     android:textSize="20sp" />
 
                 <Spinner
@@ -376,7 +376,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="number"
-                    android:maxLength="10"
+                    android:maxLength="2"
                     android:textSize="20sp" />
 
                 <Spinner
@@ -424,7 +424,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
-                    android:maxLength="10"
+                    android:maxLength="2"
                     android:textSize="20sp" />
 
                 <Spinner
@@ -472,7 +472,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10sp"
                     android:inputType="text"
-                    android:maxLength="10"
+                    android:maxLength="2"
                     android:textSize="20sp" />
 
                 <Spinner

@@ -26,6 +26,7 @@
  import android.provider.Settings;
  import android.provider.Telephony;
  import android.text.Editable;
+ import android.text.InputFilter;
  import android.text.TextWatcher;
  import android.view.Gravity;
  import android.view.KeyEvent;
@@ -381,7 +382,7 @@
              String Code = C.ReturnSingleValue("Select EnType from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
              spnEvType.setAdapter(C.getArrayAdapter("SELECT distinct (EvType||'-'||EvName) FROM EventCode Where EvType='" + Code + "'"));
 
-             if(EvType.equals("21") )
+             if(EvType.equals("21"))
              {
                  txtInfo1.setVisibility(View.GONE);
                  txtInfo2.setVisibility(View.GONE);
@@ -420,8 +421,6 @@
                  spnInfo2.setVisibility(View.GONE);
 
                  formMember.setVisibility(View.VISIBLE);
-
-                 //Clear Member Form
              }
          }
 
@@ -598,54 +597,61 @@
                      dtpEvDate.setText(Global.DateNowDMY());
                      dtpEvDate.setEnabled(false);
                      formMember.setVisibility(View.VISIBLE);
-                     //Clear Member Form
                  }
                  else if(EVCODE.equals("21"))
                  {
                      dtpEvDate.setText("");
-                     formMember.setVisibility(View.VISIBLE);
                      secInfo1.setVisibility(View.VISIBLE);
-                     VlblInfo1.setText("Reason/Spouse's Age");
-                     secInfo2.setVisibility(View.GONE);
-                     VlblInfo2.setText("Reason");
+                     VlblInfo1.setText("কারন/স্বামী বা স্ত্রীর বয়স");
+                     secInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo2.setText("ঘটনার কারন");
                      VlblOth.setVisibility(View.VISIBLE);
+                     txtInfo1.setVisibility(View.VISIBLE);
+                     spnInfo2.setVisibility(View.VISIBLE);
+                     txtInfo2.setVisibility(View.GONE);
                      spnInfo1.setVisibility(View.GONE);
-                     spnInfo2.setVisibility(View.GONE);
+                     spnInfo2.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType in('30','31','32','33','34')"));
 
                      if(txtInfo1.getText().length()==0)
                      {
                          if(txtInfo1.getText().toString().equals("77") & EVCODE.equals("21"))
                          {
                              txtInfo2.setVisibility(View.GONE);
+                             spnInfo2.setVisibility(View.GONE);
                              secInfo2.setVisibility(View.GONE);
                          }
                          else if(EVCODE.equals("21"))
                          {
-                            secEvDate.setVisibility(View.VISIBLE);
-                            secInfo2.setVisibility(View.VISIBLE);
+                             secEvDate.setVisibility(View.VISIBLE);
+                             secInfo2.setVisibility(View.VISIBLE);
+                             spnInfo2.setVisibility(View.VISIBLE);
+                             txtInfo2.setVisibility(View.GONE);
                          }
-                        else
-                        {
-                            txtInfo2.setText("");
-                            txtInfo2.setVisibility(View.GONE);
-                            secInfo2.setVisibility(View.GONE);
-                        }
+                         else
+                         {
+                             txtInfo2.setVisibility(View.GONE);
+                             spnInfo2.setVisibility(View.GONE);
+                             secInfo2.setVisibility(View.GONE);
+                         }
                      }
-
+                     formMember.setVisibility(View.VISIBLE);
                      DataSearch(VILL,BARI,HH,MSLNO,EVCODE,EVDATE,ROUNDNO);
                  }
 
                  //Internal Movement
-                 else if(EVCODE.equals("22")){
+                 else if(EVCODE.equals("22"))
+                 {
                      dtpEvDate.setText(ENDATE);
                      dtpEvDate.setEnabled(false);
                      secInfo1.setVisibility(View.VISIBLE);
                      VlblOth.setVisibility(View.GONE);
                      VlblInfo1.setText("পূর্বের খানা নাম্বার");
+                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(11))});
                      formMember.setVisibility(View.VISIBLE);
                      DataSearchMigMemberNew("52",Global.DateConvertYMD(ENDATE),txtPNo.getText().toString());
                  }
-                 else if(EVCODE.equals("23")){
+                 else if(EVCODE.equals("23"))
+                 {
                      dtpEvDate.setText(ENDATE);
                      dtpEvDate.setEnabled(false);
                      secInfo1.setVisibility(View.VISIBLE);
@@ -656,22 +662,27 @@
                  }
 
                  //Birth
-                 else if(EVCODE.equals("25")){
-                     dtpEvDate.setText("");
+                 else if(EVCODE.equals("25"))
+                 {
+                     dtpEvDate.setText(ENDATE);
+                     dtpEvDate.setEnabled(false);
                      secInfo1.setVisibility(View.VISIBLE); //Mother serial no
+                     spnInfo1.setVisibility(View.VISIBLE);
+
+                     String MoNo = C.ReturnSingleValue("Select Info1 from tmpEvents where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                     spnInfo1.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MoNo.toString() + "'"));
+
                      VlblInfo1.setText("মায়ের সিরিয়াল নম্বর");
                      VlblOth.setVisibility(View.GONE);
                      secInfo2.setVisibility(View.GONE);
+                     txtInfo1.setVisibility(View.GONE);
                      txtInfo2.setVisibility(View.GONE);
-                     spnInfo1.setVisibility(View.GONE);
                      spnInfo2.setVisibility(View.GONE);
-
                      formMember.setVisibility(View.VISIBLE);
-
-                      //Clear Member Form
                  }
                  //Marital Status
-                 else if(EVCODE.equals("31")|EVCODE.equals("32")|EVCODE.equals("33")|EVCODE.equals("34")){
+                 else if(EVCODE.equals("31")|EVCODE.equals("32")|EVCODE.equals("33")|EVCODE.equals("34"))
+                 {
                      dtpEvDate.setText("");
                      txtInfo1.setText(EVCODE);
                      txtInfo2.setText(C.ReturnSingleValue("select MS from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MslNo='"+ MSLNO +"'"));
@@ -917,7 +928,8 @@
 
              //====================================================================================================================
              String DV="";
-             if(spnEvType.getSelectedItem().toString().length()==0){
+             if(spnEvType.getSelectedItem().toString().length()==0)
+             {
                  Connection.MessageBox(Events.this, "Select a valid event from the list");
                  spnEvType.requestFocus();
                  return;
@@ -938,40 +950,50 @@
                  return;
              }
              String EV = "";
-             if(spnEvType.getCount()==1) {
+             if(spnEvType.getCount()==1)
+             {
                  EV = spnEvType.getSelectedItem().toString().split("-")[0];
              }
              else {
                  EV = (spnEvType.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-"));
              }
 
-             if(!EV.equals("42")) {
-                 if (txtInfo1.getText().toString().length()==0  & txtInfo1.isShown()) {
+             if(!EV.equals("42"))
+             {
+                 if (txtInfo1.getText().toString().length()==0  & txtInfo1.isShown())
+                 {
                      Connection.MessageBox(Events.this, "Required field: txtInfo1.");
                      txtInfo1.requestFocus();
                      return;
                  }
-                 if (txtInfo2.getText().toString().length()==0  & txtInfo2.isShown()) {
+                 if (txtInfo2.getText().toString().length()==0  & txtInfo2.isShown())
+                 {
                      Connection.MessageBox(Events.this, "Required field: txtInfo2.");
                      txtInfo2.requestFocus();
                      return;
-                 } else if (txtInfo3.getText().toString().length()==0  & txtInfo3.isShown()) {
+                 }
+                 else if (txtInfo3.getText().toString().length()==0  & txtInfo3.isShown())
+                 {
                      Connection.MessageBox(Events.this, "Required field: txtInfo3.");
                      txtInfo3.requestFocus();
                      return;
                  }
              }
-             else if(EV.equals("42")) {
-                 if (spnInfo1.getSelectedItemPosition()==0  & spnInfo1.isShown()) {
+             else if(EV.equals("42"))
+             {
+                 if (spnInfo1.getSelectedItemPosition()==0  & spnInfo1.isShown())
+                 {
                      Connection.MessageBox(Events.this, "গর্ভের ফলাফল খালি রাখা যাবেনা");
                      spnInfo1.requestFocus();
                      return;
                  }
-                 if (spnInfo2.getSelectedItemPosition()==0  & spnInfo2.isShown()) {
+                 if (spnInfo2.getSelectedItemPosition()==0  & spnInfo2.isShown())
+                 {
                      Connection.MessageBox(Events.this, "ফলাফলের স্থান খালি রাখা যাবেনা");
                      spnInfo2.requestFocus();
                      return;
-                 } else if (spnInfo3.getSelectedItemPosition()==0  & spnInfo3.isShown()) {
+                 } else if (spnInfo3.getSelectedItemPosition()==0  & spnInfo3.isShown())
+                 {
                      Connection.MessageBox(Events.this, "উপস্থিত ছিলেন খালি রাখা যাবেনা");
                      spnInfo3.requestFocus();
                      return;
@@ -1343,8 +1365,10 @@
                      int ocp = Integer.valueOf(CodeList);
 
                      //occupation
-                     if (ocp >= 1) {
-                         if (age < 12) {
+                     if (ocp >= 1)
+                     {
+                         if (age < 12)
+                         {
                              Connection.MessageBox(Events.this, "সদস্যের বয়স ১২ বছরের কম হলে ইভেন্ট ৭২ প্রযোজ্য নয়।");
                              return;
                          }
@@ -1392,10 +1416,10 @@
                  }
              }
 
-
              //==========================================================================================================================================================
              //Member Validation Check
-             if(EVTYPE.equals("12")|EVTYPE.equals("20")){
+             if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21") |EVTYPE.equals("22") |EVTYPE.equals("23") |EVTYPE.equals("25"))
+             {
                  String ED = "";
                  if (EVTYPE.equals("12") | EVTYPE.equals("40") | EVTYPE.equals("49"))
                  {
@@ -1407,14 +1431,14 @@
                  }
 
                  //(Temporary Table) check the information is available or not
-                 if(!EVTYPE.equals("12") & !EVTYPE.equals("20") & C.Existence("Select * from tmpEvents where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EVTYPE.toString() +"' and EvDate='"+ ED +"' and Rnd='"+ ROUNDNO +"'"))
+                 if(!EVTYPE.equals("12") & !EVTYPE.equals("20")  & !EVTYPE.equals("21") & !EVTYPE.equals("22") & !EVTYPE.equals("23") & !EVTYPE.equals("25") & C.Existence("Select * from tmpEvents where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EVTYPE.toString() +"' and EvDate='"+ ED +"' and Rnd='"+ ROUNDNO +"'"))
                  {
                      Connection.MessageBox(Events.this, "ইভেন্ট কোড ("+ EVTYPE +") রউন্ড নাম্বার "+ ROUNDNO +" এ ঘটানো হয়েছে।");
                      return;
                  }
 
                  //(Event Table) check the information is available or not
-                 if(!EVTYPE.equals("12") & !EVTYPE.equals("20") & C.Existence("Select * from Events where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EVTYPE.toString() +"' and EvDate='"+ ED +"' and Rnd='"+ ROUNDNO +"'"))
+                 if(!EVTYPE.equals("12") & !EVTYPE.equals("20") & !EVTYPE.equals("21") & !EVTYPE.equals("22") & !EVTYPE.equals("23") & !EVTYPE.equals("25") & C.Existence("Select * from Events where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EVTYPE.toString() +"' and EvDate='"+ ED +"' and Rnd='"+ ROUNDNO +"'"))
                  {
                      Connection.MessageBox(Events.this, "ইভেন্ট কোড ("+ EVTYPE +") রউন্ড নাম্বার "+ ROUNDNO +" এ ঘটানো হয়েছে।");
                      return;
@@ -1432,7 +1456,6 @@
                      spnRth.requestFocus();
                      return;
                  }
-
                  else if(!rdoSex1.isChecked() & !rdoSex2.isChecked() & secSex.isShown())
                  {
                      Connection.MessageBox(Events.this, "প্রশ্ন ৫: পুরুষ/মহিলা থেকে একটি অপশন নির্বাচন করুন");
@@ -1453,22 +1476,20 @@
                      return;
                  }
 
-
                  int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
                  int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString());
-                 if(ageday/365!=ageyear){
+
+                 if(ageday/365!=ageyear)
+                 {
                      Connection.MessageBox(Events.this, "বয়স এর সাথে জন্মতারিখ মিল নেই, বয়স "+ ageday/365 +" বছর হতে হবে।");
                      return;
                  }
-
                  else if(Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "0" : txtAgeY.getText().toString()) < 0 || Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "110" : txtAgeY.getText().toString()) > 110)
                  {
                      Connection.MessageBox(Events.this, "সদস্যের বয়স ০ থেকে ১১০ এর ভিতরে হতে হবে।");
                      txtAgeY.requestFocus();
                      return;
                  }
-
-
                  else if(spnMoNo.getSelectedItemPosition()==0  & spnMoNo.isShown())
                  {
                      Connection.MessageBox(Events.this, "প্রশ্ন ৮: মায়ের সিরিয়াল নম্বর খালি রাখা যাবেনা");
@@ -1613,7 +1634,7 @@
 
                  if ((MoSex.equals("1")))
                  {
-                     Connection.MessageBox(Events.this, "সদস্যের মা পুরুষ হবে না ");
+                     Connection.MessageBox(Events.this, "প্রশ্ন ৮. সদস্যের মা পুরুষ হবে না ");
                      spnRth.requestFocus();
                      return;
                  }
@@ -1630,7 +1651,7 @@
 
                  if ((FoSex.equals("2")))
                  {
-                     Connection.MessageBox(Events.this, "সদস্যের বাবা মহিলা হবে না ");
+                     Connection.MessageBox(Events.this, "প্রশ্ন ৯. সদস্যের বাবা মহিলা হবে না ");
                      spnRth.requestFocus();
                      return;
                  }
@@ -1702,6 +1723,7 @@
 
              objSave.setMSlNo(txtMSlNo.getText().toString());
              objSave.setPNo(txtPNo.getText().toString());
+
              String EVT = "";
              if(spnEvType.getCount()==1) {
                  objSave.setEvType(spnEvType.getSelectedItem().toString().split("-")[0]);
@@ -1714,43 +1736,57 @@
 
              objSave.setEvDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
 
-             if(EVT.equals("42")){
+             if(EVT.equals("25"))
+             {
+                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                 objSave.setInfo2(txtInfo2.getText().toString());
+                 objSave.setInfo3(txtInfo3.getText().toString());
+                 objSave.setInfo4(txtInfo4.getText().toString());
+             }
+             else if(EVT.equals("42"))
+             {
                  objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo3(spnInfo3.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo4(txtInfo4.getText().toString());
              }
-             else if(EVT.equals("61")){
+             else if(EVT.equals("61"))
+             {
                  objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo3(txtInfo3.getText().toString());
                  objSave.setInfo4(txtInfo4.getText().toString());
              }
-             else if(EVT.equals("62")){
+             else if(EVT.equals("62"))
+             {
                  objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo3(txtInfo3.getText().toString());
                  objSave.setInfo4(txtInfo4.getText().toString());
              }
-             else if(EVT.equals("64")){
+             else if(EVT.equals("64"))
+             {
                  objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo2(txtInfo2.getText().toString());
                  objSave.setInfo3(txtInfo3.getText().toString());
                  objSave.setInfo4(txtInfo4.getText().toString());
              }
-             else if(EVT.equals("71")){
+             else if(EVT.equals("71"))
+             {
                  objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo2(txtInfo2.getText().toString());
                  objSave.setInfo3(txtInfo3.getText().toString());
                  objSave.setInfo4(txtInfo4.getText().toString());
             }
-            else if(EVT.equals("72")){
+            else if(EVT.equals("72"))
+            {
                  objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
                  objSave.setInfo2(txtInfo2.getText().toString());
                  objSave.setInfo3(txtInfo3.getText().toString());
                  objSave.setInfo4(txtInfo4.getText().toString());
              }
-             else {
+             else
+             {
                  objSave.setInfo1(txtInfo1.getText().toString());
                  objSave.setInfo2(txtInfo2.getText().toString());
                  objSave.setInfo3(txtInfo3.getText().toString());
@@ -1776,7 +1812,8 @@
              SQL1 = objSave.TransactionSQL(this);
 
              //Save Member
-             if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23") |EVTYPE.equals("25")) {
+             if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23") |EVTYPE.equals("25"))
+             {
                  SQL2 = DataSaveMember(txtMSlNo.getText().toString());
              }
              //Update Member Data
@@ -1838,7 +1875,7 @@
                  SQL3 = "Update tmpMember set PosMig='"+ EVTYPE +"',PosMigDate='"+ EvDate +"'";
                  SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }
-                 //Mother's serial no update
+             //Mother's serial no update
              else if(EVTYPE.equals("61"))
              {
                  SQL3 = "Update tmpMember set MoNo='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
@@ -2003,6 +2040,9 @@
 
      private void MemberInitialize()
      {
+         spnEvType = (Spinner) findViewById(R.id.spnEvType);
+         EvType = spnEvType.getSelectedItem().toString().split("-")[0];
+
          chkNeedReview = (CheckBox)findViewById(R.id.chkNeedReview);
          secName=(LinearLayout)findViewById(R.id.secName);
          VlblName=(TextView) findViewById(R.id.VlblName);
@@ -2056,6 +2096,11 @@
          VlblBDate=(TextView) findViewById(R.id.VlblBDate);
          dtpBDate=(EditText) findViewById(R.id.dtpBDate);
 
+         String EnDate  = C.ReturnSingleValue("select EnDate from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Mslno='"+ MSLNO + "'");
+         if (EvType.equals("25")){
+             dtpBDate.setText(ENDATE);
+         }
+
          secAgeY=(LinearLayout)findViewById(R.id.secAgeY);
          lineAgeY=(View)findViewById(R.id.lineAgeY);
          VlblAgeY=(TextView) findViewById(R.id.VlblAgeY);
@@ -2065,13 +2110,22 @@
          lineMoNo = (View) findViewById(R.id.lineMoNo);
          VlblMoNo = (TextView) findViewById(R.id.VlblMoNo);
          spnMoNo = (Spinner) findViewById(R.id.spnMoNo);
-         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
+         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+
+//         if (EvType.equals("25"))
+//         {
+//             String MoNo = C.ReturnSingleValue("Select Info1 from tmpEvents where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+//             spnMoNo.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MoNo.toString() + "'"));
+//         }
+//         else {
+//             spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+//         }
 
          secFaNo = (LinearLayout) findViewById(R.id.secFaNo);
          lineFaNo = (View) findViewById(R.id.lineFaNo);
          VlblFaNo = (TextView) findViewById(R.id.VlblFaNo);
          spnFaNo = (Spinner) findViewById(R.id.spnFaNo);
-         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' union Select '00-এই খানার সদস্য নয়'"));
+         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
 
 //         secMoNo=(LinearLayout)findViewById(R.id.secMoNo);
 //         lineMoNo=(View)findViewById(R.id.lineMoNo);
@@ -2421,6 +2475,7 @@
          String SQL = "";
          try
          {
+
              String DV="";
 
              RadioButton rb;
@@ -2559,6 +2614,7 @@
                  txtInfo1.setEnabled(false);
                  txtInfo2.setText(item.getInfo2());
                  txtInfo2.setEnabled(false);
+                 spnInfo2.setSelection(Global.SpinnerItemPositionAnyLength(spnInfo2, item.getInfo2()));
                  txtInfo3.setText(item.getInfo3());
                  txtInfo3.setEnabled(false);
                  txtInfo4.setText(item.getInfo4());

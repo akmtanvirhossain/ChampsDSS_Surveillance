@@ -218,34 +218,45 @@ public class Member_list extends Activity {
                  adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
 
-                         //Table Name: Visits
-                         VisitsDataTransfer(VILL, BARI, HH, ROUNDNO);
+                         String Status = ProcessTransaction(VILL,BARI,HH,ROUNDNO);
 
-                         //Table Name: Household
-                         HouseholdDataTransfer(VILL, BARI, HH);
+                         if(Status.length()>0)
+                         {
+                             Connection.MessageBox(Member_list.this,Status);
+                             return;
+                         }
+                         else {
+                             //Table Name: Visits
+                             VisitsDataTransfer(VILL, BARI, HH, ROUNDNO);
 
-                         //Table Name: Member
-                         MemberDataTransfer(VILL, BARI, HH);
+                             //Table Name: Household
+                             HouseholdDataTransfer(VILL, BARI, HH);
 
-                         //Table Name: SES
-                         SESDataTransfer(VILL, BARI, HH);
+                             //Table Name: Member
+                             MemberDataTransfer(VILL, BARI, HH);
 
-                         //Table Name: PregHis
-                         PreHisDataTransfer(VILL, BARI, HH);
+                             //Table Name: SES
+                             SESDataTransfer(VILL, BARI, HH);
 
-                         //Table Name: Events
-                         EventDataTransfer(VILL, BARI, HH);
+                             //Table Name: PregHis
+                             PreHisDataTransfer(VILL, BARI, HH);
 
-                         C.Save("Delete from tmpHousehold where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                         C.Save("Delete from tmpVisits where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                         C.Save("Delete from tmpMember where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                         C.Save("Delete from tmpSES where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                         C.Save("Delete from tmpPregHis where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                         C.Save("Delete from tmpEvents where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                             //Table Name: Events
+                             EventDataTransfer(VILL, BARI, HH);
 
-                         finish();
+                             C.Save("Delete from tmpHousehold where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
+                             C.Save("Delete from tmpVisits where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
+                             C.Save("Delete from tmpMember where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
+                             C.Save("Delete from tmpSES where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
+                             C.Save("Delete from tmpPregHis where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
+                             C.Save("Delete from tmpEvents where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
 
-                     }});
+
+                             finish();
+                         }
+                     }
+
+                 });
                  adb.show();
              }});
 
@@ -1775,108 +1786,6 @@ public class Member_list extends Activity {
 
        }
 
-
-
-     private String ProcessTransaction(String Household, String Rnd)
-     {
-         String SQLS = "";
-         ErrMsg = "";
-
-         if(!g.getRsNo().equals("77"))
-         {
-             //household member available/not
-             if(!C.Existence("Select vill from tmpMember where vill||bari||hh='"+ Household +"' and (extype is null or length(extype)=0)"))
-             {
-                 ErrMsg += "\n-> খানায় কমপক্ষে একজন সদস্য সক্রিয় থাকতে হবে।";
-             }
-             //at least one household head should be available
-             if(!C.Existence("select vill from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0)"))
-             {
-                 ErrMsg += "\n-> খানায় একজন খানা প্রধান অবশ্যই থাকতে হবে।";
-             }
-             //only one active household head applicable
-             if(C.Existence("select count(*) from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0) group by vill||bari||hh having count(*)>1"))
-             {
-                 ErrMsg += "\n-> খানায় একের বেশী খানা প্রধান থাকতে পারে না।";
-             }
-         }
-
-         //Not pregnant event(40) missing
-         SQLS = "SELECT M.SNO as sno,M.NAME as name";
-         SQLS += " FROM tmpMember M WHERE  M.VILL||M.BARI||M.HH='"+ Household +"' AND M.MS='31' AND cast((julianday(date('now'))-julianday(bdate))/365.25 as int)<50  ";
-         SQLS += " AND M.SEX='2' AND ifnull(M.PSTAT,'0')<>'41' AND (EXTYPE IS NULL OR LENGTH(EXTYPE)=0) and (posmig IS NULL OR LENGTH(posmig)=0) AND NOT EXISTS";
-         SQLS += " (SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM tmpEvents WHERE vill||bari||HH=m.vill||m.bari||M.HH AND MSlNo=M.MSlNo AND EVTYPE IN('40','49') AND RND='"+ ROUNDNO +"'";
-         SQLS += " UNION SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM EVENTS WHERE EVTYPE IN('40','49') AND RND='"+ ROUNDNO +"' AND PNO=M.PNO)";
-
-         Cursor cur40 = C.ReadData(SQLS);
-         cur40.moveToFirst();
-         while(!cur40.isAfterLast())
-         {
-             ErrMsg += "\n-> ইভেন্ট ৪০ ঘটানো হয় নাই (সিরিয়াল নাম্বার= "+  cur40.getString(cur40.getColumnIndex("sno")) +" এবং নাম= "+ cur40.getString(cur40.getColumnIndex("name")) +" ).";
-
-             cur40.moveToNext();
-         }
-         cur40.close();
-
-
-         //Pregnancy history missing: 26 Nov 2013
-         SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-         SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
-         SQLS += " and t.Sex='2' and t.ms<>'30' and ((julianday(date('now'))-julianday(t.bdate))/365.25)<50";
-
-         Cursor curphis = C.ReadData(SQLS);
-         curphis.moveToFirst();
-         while(!curphis.isAfterLast())
-         {
-             if(!C.Existence("select vill from tmpPregHis where vill||bari||hh='"+ Household +"' and MslNo='"+ curphis.getString(curphis.getColumnIndex("MslNo")) +"'") & !C.Existence("select vill from PregHis where pno='"+ curphis.getString(curphis.getColumnIndex("pno")) +"'"))
-             {
-                 ErrMsg += "\n-> RHQ হয় নাই (সিরিয়াল নাম্বার= "+  curphis.getString(curphis.getColumnIndex("sno")) +" এবং নাম= "+ curphis.getString(curphis.getColumnIndex("name")) +" ).";
-             }
-             curphis.moveToNext();
-         }
-         curphis.close();
-
-
-
-         //occupation missing (age >= 12 years)
-         SQLS = "Select MslNo as sno, Name as name from tmpMember where VILL||BARI||HH='"+ Household +"' and cast((julianday(date('now'))-julianday(bdate))/365.25 as int)>=12 and length(OCp)=0 and (extype is null or length(extype)=0)";
-         Cursor CR = null;
-         CR = C.ReadData(SQLS);
-         CR.moveToFirst();
-         while(!CR.isAfterLast())
-         {
-             ErrMsg += "\n-> বয়স ১২ এর সমান/বেশী হলে পেশা থাকতে হবে(সিরিয়াল নাম্বার= "+  CR.getString(CR.getColumnIndex("sno")) +" এবং নাম= "+ CR.getString(CR.getColumnIndex("name")) +" ).";
-
-             CR.moveToNext();
-         }
-         CR.close();
-
-
-         //age of last SES collection
-         if(C.Existence("select vill from tmpSES where vill||bari||hh='"+ Household +"'"))
-         {
-             //***need to collect ses again from 22 rnd
-             //int sesage = Integer.parseInt(C.ReturnSingleValue("select cast((julianday(date('now'))-julianday(vdate))/365.25 as int)ageses from tTrans where status='s' and vill||bari||hh='"+ Household +"' order by sesno desc limit 1"));
-             //if(sesage >= 3)
-             //	ErrMsg += "-> SES এর বয়স ৩ বছরের বেশী হয়েছে, আবার সংগ্রহ করতে হবে।\n";
-         }
-         else
-         {
-             ErrMsg += "\n-> SES এর তথ্য সংগ্রহ করতে হবে।";
-         }
-
-         //Stop process if any error have
-         if (ErrMsg.length()!=0)
-         {
-             return ErrMsg;
-         }
-         else
-         {
-             return FinalDataProcess(Household, Rnd);
-         }
-     }
-
-
      //data transfer to main tables
      //***********************************************************************************************
      private String FinalDataProcess(String Household, String Rnd)
@@ -2189,6 +2098,106 @@ public class Member_list extends Activity {
 
  }
 
+
+    private String ProcessTransaction(String Vill, String Bari, String HH, String Rnd)
+    {
+        String SQLS = "";
+        String Household = Vill + Bari + HH;
+        ErrMsg = "";
+
+        if(!g.getRsNo().equals("77"))
+        {
+            //household member available/not
+            if(!C.Existence("Select vill from tmpMember where vill||bari||hh='"+ Household +"' and (extype is null or length(extype)=0)"))
+            {
+                ErrMsg += "\n-> খানায় কমপক্ষে একজন সদস্য সক্রিয় থাকতে হবে।";
+            }
+            //at least one household head should be available
+            if(!C.Existence("select vill from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0)"))
+            {
+                ErrMsg += "\n-> খানায় একজন খানা প্রধান অবশ্যই থাকতে হবে।";
+            }
+            //only one active household head applicable
+            if(C.Existence("select count(*) from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0) group by vill||bari||hh having count(*)>1"))
+            {
+                ErrMsg += "\n-> খানায় একের বেশী খানা প্রধান থাকতে পারে না।";
+            }
+        }
+        //age of last SES collection
+        if(C.Existence("select vill from tmpSES where vill||bari||hh='"+ Household +"'"))
+        {
+            //***need to collect ses again from 22 rnd
+            //int sesage = Integer.parseInt(C.ReturnSingleValue("select cast((julianday(date('now'))-julianday(vdate))/365.25 as int)ageses from tTrans where status='s' and vill||bari||hh='"+ Household +"' order by sesno desc limit 1"));
+            //if(sesage >= 3)
+            //	ErrMsg += "-> SES এর বয়স ৩ বছরের বেশী হয়েছে, আবার সংগ্রহ করতে হবে।\n";
+        }
+        else
+        {
+            ErrMsg += "\n-> SES এর তথ্য সংগ্রহ করতে হবে।";
+        }
+        //Not pregnant event(40) missing
+        SQLS = "SELECT M.MslNo as sno,M.NAME as name";
+        SQLS += " FROM tmpMember M WHERE  M.VILL||M.BARI||M.HH='"+ Household +"' AND M.MS='31' AND cast((julianday(date('now'))-julianday(bdate))/365.25 as int)<50  ";
+        SQLS += " AND M.SEX='2' AND ifnull(M.PSTAT,'0')<>'41' AND (EXTYPE IS NULL OR LENGTH(EXTYPE)=0) and (posmig IS NULL OR LENGTH(posmig)=0) AND NOT EXISTS";
+        SQLS += " (SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM tmpEvents WHERE vill||bari||HH=m.vill||m.bari||M.HH AND MSlNo=M.MSlNo AND EVTYPE IN('40','49') AND RND='"+ ROUNDNO +"'";
+        SQLS += " UNION SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM EVENTS WHERE EVTYPE IN('40','49') AND RND='"+ ROUNDNO +"' AND PNO=M.PNO)";
+
+        Cursor cur40 = C.ReadData(SQLS);
+        cur40.moveToFirst();
+        while(!cur40.isAfterLast())
+        {
+            ErrMsg += "\n-> ইভেন্ট ৪০ ঘটানো হয় নাই (সিরিয়াল নাম্বার= "+  cur40.getString(cur40.getColumnIndex("sno")) +" এবং নাম= "+ cur40.getString(cur40.getColumnIndex("name")) +" ).";
+
+            cur40.moveToNext();
+        }
+        cur40.close();
+
+
+        //Pregnancy history missing
+        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
+        SQLS += " and t.Sex='2' and t.ms<>'30' and ((julianday(date('now'))-julianday(t.bdate))/365.25)<50";
+
+        Cursor curphis = C.ReadData(SQLS);
+        curphis.moveToFirst();
+        while(!curphis.isAfterLast())
+        {
+            if(!C.Existence("select vill from tmpPregHis where vill||bari||hh='"+ Household +"' and MslNo='"+ curphis.getString(curphis.getColumnIndex("MslNo")) +"'") & !C.Existence("select vill from PregHis where pno='"+ curphis.getString(curphis.getColumnIndex("pno")) +"'"))
+            {
+                ErrMsg += "\n-> RHQ হয় নাই (সিরিয়াল নাম্বার= "+  curphis.getString(curphis.getColumnIndex("sno")) +" এবং নাম= "+ curphis.getString(curphis.getColumnIndex("name")) +" ).";
+            }
+            curphis.moveToNext();
+        }
+        curphis.close();
+
+
+        //occupation missing (age >= 12 years)
+//        SQLS = "Select MslNo as sno, Name as name from tmpMember where VILL||BARI||HH='"+ Household +"' and cast((julianday(date('now'))-julianday(bdate))/365.25 as int)>=12 and length(OCp)=0 and (extype is null or length(extype)=0)";
+//        Cursor CR = null;
+//        CR = C.ReadData(SQLS);
+//        CR.moveToFirst();
+//        while(!CR.isAfterLast())
+//        {
+//            ErrMsg += "\n-> বয়স ১২ এর সমান/বেশী হলে পেশা থাকতে হবে(সিরিয়াল নাম্বার= "+  CR.getString(CR.getColumnIndex("sno")) +" এবং নাম= "+ CR.getString(CR.getColumnIndex("name")) +" ).";
+//
+//            CR.moveToNext();
+//        }
+//        CR.close();
+
+
+
+        //Stop process if any error have
+         /*if (ErrMsg.length()!=0)
+         {
+             return ErrMsg;
+         }
+         else
+         {
+             return FinalDataProcess(Household, Rnd);
+         }*/
+
+        return ErrMsg;
+    }
 
  //Data Transfer to Main Table
  //************************************************

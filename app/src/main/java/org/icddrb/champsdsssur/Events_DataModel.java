@@ -60,9 +60,7 @@ import android.content.Context;
         public String getInfo1(){
               return _Info1;
          }
-        public void setInfo1(String newValue){
-              _Info1 = newValue;
-         }
+        public void setInfo1(String newValue){ _Info1 = newValue; }
         private String _Info2 = "";
         public String getInfo2(){
               return _Info2;

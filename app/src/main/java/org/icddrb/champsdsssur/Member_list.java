@@ -150,7 +150,6 @@ public class Member_list extends Activity {
          CLUSTER        = IDbundle.getString("cluster");
          BLOCK          = IDbundle.getString("block");*/
 
-
          final TextView txtVill = (TextView) findViewById(R.id.txtVill);
          final TextView txtBari = (TextView) findViewById(R.id.txtBari);
          final TextView txtHH = (TextView) findViewById(R.id.txtHH);
@@ -164,9 +163,9 @@ public class Member_list extends Activity {
 
          final String VillName=C.ReturnSingleValue("Select VName from Village where VCode='"+  VILL  +"'");
          lblVillName.setText(": "+ VillName);
-         lblBariName.setText(": "+BARI+", "+IDbundle.getString("BariName"));
+         lblBariName.setText(": "+IDbundle.getString("BariName"));
+//         lblBariName.setText(": "+BARI+", "+IDbundle.getString("BariName"));
 
-//         txtVill.setText(VILL);
          txtBari.setText(BARI);
          txtHH.setText(HH);
          txtVill.setText(VILL+"-"+BARI+"-"+HH);
@@ -209,6 +208,7 @@ public class Member_list extends Activity {
              }});
 
          btnprocess = (Button) findViewById(R.id.btnprocess);
+         btnprocess.setTextColor(Color.BLUE);
          btnprocess.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
@@ -225,7 +225,8 @@ public class Member_list extends Activity {
                              Connection.MessageBox(Member_list.this,Status);
                              return;
                          }
-                         else {
+                         else
+                         {
                              //Table Name: Visits
                              VisitsDataTransfer(VILL, BARI, HH, ROUNDNO);
 
@@ -250,7 +251,6 @@ public class Member_list extends Activity {
                              C.Save("Delete from tmpSES where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
                              C.Save("Delete from tmpPregHis where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
                              C.Save("Delete from tmpEvents where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
-
 
                              finish();
                          }
@@ -1033,8 +1033,6 @@ public class Member_list extends Activity {
             TextView posmig= (TextView) convertView.findViewById(R.id.posmig);
             TextView posmigdate= (TextView) convertView.findViewById(R.id.posmigdate);
 
-//            final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
-
             final HashMap<String, String> o = (HashMap<String, String>) mSchedule.getItem(position);
 
             mslno.setText(o.get("mslno"));
@@ -1195,7 +1193,6 @@ public class Member_list extends Activity {
                 }
             }
 
-
             final AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
             final TableLayout memtab = (TableLayout)convertView.findViewById(R.id.memtab);
             final EditText lblMslNo = (EditText)convertView.findViewById(R.id.txtMSlNo);
@@ -1274,9 +1271,15 @@ public class Member_list extends Activity {
     {
         if (C.Existence("Select VStatus from tmpSES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
             btnSES.setBackgroundColor(Color.GREEN);
+            btnSES.setTextColor(Color.BLACK);
         }
         else{
             btnSES.setBackgroundResource(R.drawable.button_style);
+        }
+
+        if (C.Existence("Select VStatus from tmpSES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"' and VStatus <>'1'")) {
+            btnSES.setBackgroundColor(Color.BLUE);
+            btnSES.setTextColor(Color.WHITE);
         }
 
         String TotRh = C.ReturnSingleValue("Select Count(*)TotRWO from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'");
@@ -1285,9 +1288,15 @@ public class Member_list extends Activity {
         if (Integer.valueOf(TotRh)>0 & Integer.valueOf(TotRh) == Integer.valueOf(PregHis))
         {
             btnPregHis.setBackgroundColor(Color.GREEN);
+            btnPregHis.setTextColor(Color.BLACK);
         }
         else{
             btnPregHis.setBackgroundResource(R.drawable.button_style);
+        }
+
+        if (C.Existence("Select VStatus from tmpPregHis where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"' and VStatus <>'1'")) {
+            btnPregHis.setBackgroundColor(Color.BLUE);
+            btnPregHis.setTextColor(Color.WHITE);
         }
     }
  private void DataSearch(String Vill, String Bari, String HH )
@@ -2301,6 +2310,14 @@ public class Member_list extends Activity {
             objSave.setPosMigDate(item.getPosMigDate());
             objSave.setNeedReview(item.getNeedReview());
 
+            objSave.setEnDt(item.getEnDt());
+            objSave.setStartTime(item.getStartTime());
+            objSave.setEndTime(item.getEndTime());
+            objSave.setDeviceID(item.getDeviceID());
+            objSave.setEntryUser(item.getEntryUser()); //from data entry user list
+            objSave.setLat(item.getLat());
+            objSave.setLon(item.getLon());
+
             String status = objSave.SaveUpdateData(this);
         }
     }
@@ -2357,6 +2374,7 @@ public class Member_list extends Activity {
             objSave.setHomesteadOth(item.getHomesteadOth());
             objSave.setOthLand(item.getOthLand());
             objSave.setRnd(item.getRnd());
+
             objSave.setEnDt(item.getEnDt());
             objSave.setStartTime(item.getStartTime());
             objSave.setEndTime(item.getEndTime());

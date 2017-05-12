@@ -8,7 +8,7 @@ import java.util.List;
 
 import Common.Connection;
 
-public class Member_DataModel_Main {
+public class Member_DataModel_Back {
 
        private String _Vill = "";
        public String getVill(){
@@ -166,13 +166,15 @@ public class Member_DataModel_Main {
        public void setEnType(String newValue){
              _EnType = newValue;
         }
-       private String _EnDate = "";
+
+        private String _EnDate = "";
        public String getEnDate(){
              return _EnDate;
         }
        public void setEnDate(String newValue){
              _EnDate = newValue;
         }
+
        private String _ExType = "";
        public String getExType(){
              return _ExType;
@@ -180,6 +182,7 @@ public class Member_DataModel_Main {
        public void setExType(String newValue){
              _ExType = newValue;
         }
+
        private String _ExDate = "";
        public String getExDate(){
              return _ExDate;
@@ -192,79 +195,82 @@ public class Member_DataModel_Main {
        public String getPosMig(){
         return _PosMig;
     }
-       public void setPosMig(String newValue){_PosMig = newValue; }
-
-         private String _PosMigDate = "";
-        public String getPosMigDate(){
+       public void setPosMig(String newValue){
+        _PosMig = newValue;
+    }
+       private String _PosMigDate = "";
+       public String getPosMigDate(){
         return _PosMigDate;
     }
-        public void setPosMigDate(String newValue){
+       public void setPosMigDate(String newValue){
         _PosMigDate = newValue;
     }
 
-        private String _StartTime = "";
-        public String getStartTime(){
+       private String _StartTime = "";
+       public String getStartTime(){
         return _StartTime;
     }
-        public void setStartTime(String newValue){
+       public void setStartTime(String newValue){
              _StartTime = newValue;
         }
 
-        private String _EndTime = "";
-        public String getEndTime(){
+       private String _EndTime = "";
+       public String getEndTime(){
         return _EndTime;
     }
-        public void setEndTime(String newValue){
+       public void setEndTime(String newValue){
              _EndTime = newValue;
         }
 
-        private String _DeviceID = "";
-        public String getDeviceID(){
+       private String _DeviceID = "";
+       public String getDeviceID(){
         return _DeviceID;
     }
-        public void setDeviceID(String newValue){
+       public void setDeviceID(String newValue){
              _DeviceID = newValue;
         }
 
-        private String _EntryUser = "";
-        public String getEntryUser(){
+       private String _EntryUser = "";
+       public String getEntryUser(){
         return _EntryUser;
     }
-        public void setEntryUser(String newValue){
+       public void setEntryUser(String newValue){
              _EntryUser = newValue;
         }
 
-        private String _Lat = "";
-        public String getLat(){
+       private String _Lat = "";
+       public String getLat(){
         return _Lat;
     }
-        public void setLat(String newValue){
+       public void setLat(String newValue){
              _Lat = newValue;
         }
 
-        private String _Lon = "";
-        public String getLon(){
+       private String _Lon = "";
+       public String getLon(){
         return _Lon;
     }
-        public void setLon(String newValue){
+       public void setLon(String newValue){
              _Lon = newValue;
         }
 
-        private String _EnDt = "";
-        public String getEnDt(){
-        return _EnDt;
-    }
-        public void setEnDt(String newValue){ _EnDt = newValue; }
+       private String _EnDt = "";
+       public String getEnDt(){ return _EnDt; }
+       public void setEnDt(String newValue){
+             _EnDt = newValue;
+        }
 
-        private String _Upload = "2";
+       private String _Upload = "2";
 
-        private String _NeedReview = "";
-        public String getNeedReview(){
+    private String _NeedReview = "";
+    public String getNeedReview(){
         return _NeedReview;
     }
-        public void setNeedReview(String newValue){ _NeedReview = newValue; }
+    public void setNeedReview(String newValue){
+        _NeedReview = newValue;
+    }
 
-    String TableName = "Member";
+    String TableName = "tmpMember";
 
 
     public String TransactionSQL(Context context)
@@ -274,9 +280,9 @@ public class Member_DataModel_Main {
         try
         {
             if(C.Existence("Select * from "+ TableName +"  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' "))
-                SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate +"',PosMig = '"+ _PosMig +"',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
+                SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate +"',NeedReview='"+ _NeedReview +"',PosMig = '"+ _PosMig +"',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
             else
-                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt + "', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
+                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,NeedReview,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt + "', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "','"+ _NeedReview +"', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
         }
         catch(Exception  e)
         {
@@ -312,7 +318,7 @@ public class Member_DataModel_Main {
            String SQL = "";
            try
              {
-                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt +"', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
+                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,NeedReview,PosMig,PosMigDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt +"', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "','"+ _NeedReview +"', '"+ _PosMig +  "', '"+ _PosMigDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
                 C.Save(SQL);
                 C.close();
              }
@@ -330,7 +336,7 @@ public class Member_DataModel_Main {
            String SQL = "";
            try
              {
-                SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate + "',PosMig = '"+ _PosMig +  "',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
+                SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate + "',NeedReview='"+ _NeedReview +"',PosMig = '"+ _PosMig +  "',PosMigDate = '"+ _PosMigDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
                 C.Save(SQL);
                 C.close();
              }
@@ -342,17 +348,17 @@ public class Member_DataModel_Main {
        }
 
 
-       public List<Member_DataModel_Main> SelectAll(Context context, String SQL)
+       public List<Member_DataModel_Back> SelectAll(Context context, String SQL)
        {
-           Connection C = new Connection(context);
-           List<Member_DataModel_Main> data = new ArrayList<Member_DataModel_Main>();
-           Member_DataModel_Main d = new Member_DataModel_Main();
+           C = new Connection(context);
+           List<Member_DataModel_Back> data = new ArrayList<Member_DataModel_Back>();
+           Member_DataModel_Back d = new Member_DataModel_Back();
            Cursor cur = C.ReadData(SQL);
 
            cur.moveToFirst();
            while(!cur.isAfterLast())
            {
-               d = new Member_DataModel_Main();
+               d = new Member_DataModel_Back();
                d._Vill = cur.getString(cur.getColumnIndex("Vill"));
                d._Bari = cur.getString(cur.getColumnIndex("Bari"));
                d._HH = cur.getString(cur.getColumnIndex("HH"));
@@ -367,8 +373,8 @@ public class Member_DataModel_Main {
                d._FaNo = cur.getString(cur.getColumnIndex("FaNo"));
                d._Edu = cur.getString(cur.getColumnIndex("Edu"));
                d._MS = cur.getString(cur.getColumnIndex("MS"));
-               d._Pstat = cur.getString(cur.getColumnIndex("Pstat"));
-               d._LmpDt = cur.getString(cur.getColumnIndex("LmpDt"));
+               d._Pstat = cur.getString(cur.getColumnIndex("Pstat"))==null?"":cur.getString(cur.getColumnIndex("Pstat"));
+               d._LmpDt = cur.getString(cur.getColumnIndex("LmpDt"))==null?"":cur.getString(cur.getColumnIndex("LmpDt"));
                d._Ocp = cur.getString(cur.getColumnIndex("Ocp"));
                d._Sp1 = cur.getString(cur.getColumnIndex("Sp1"));
                d._Sp2 = cur.getString(cur.getColumnIndex("Sp2"));
@@ -378,8 +384,9 @@ public class Member_DataModel_Main {
                d._EnDate = cur.getString(cur.getColumnIndex("EnDate"));
                d._ExType = cur.getString(cur.getColumnIndex("ExType"));
                d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
-               d._PosMig = cur.getString(cur.getColumnIndex("PosMig"));
-               d._PosMigDate = cur.getString(cur.getColumnIndex("PosMigDate"));
+               d._PosMig = cur.getString(cur.getColumnIndex("PosMig"))==null?"":cur.getString(cur.getColumnIndex("PosMig"));
+               d._PosMigDate = cur.getString(cur.getColumnIndex("PosMigDate"))==null?"":cur.getString(cur.getColumnIndex("PosMigDate"));
+               d._NeedReview = cur.getString(cur.getColumnIndex("NeedReview"))==null?"":cur.getString(cur.getColumnIndex("NeedReview"));
                data.add(d);
 
                cur.moveToNext();
@@ -387,4 +394,50 @@ public class Member_DataModel_Main {
            cur.close();
          return data;
        }
+
+    public List<Member_DataModel_Back> SelectAll_MigMember(Context context, String SQL)
+    {
+        Connection C = new Connection(context);
+        List<Member_DataModel_Back> data = new ArrayList<Member_DataModel_Back>();
+        Member_DataModel_Back d = new Member_DataModel_Back();
+        Cursor cur = C.ReadData(SQL);
+
+        cur.moveToFirst();
+        while(!cur.isAfterLast())
+        {
+            d = new Member_DataModel_Back();
+            d._Vill = cur.getString(cur.getColumnIndex("Vill"));
+            d._Bari = cur.getString(cur.getColumnIndex("Bari"));
+            d._HH = cur.getString(cur.getColumnIndex("HH"));
+            d._MSlNo = cur.getString(cur.getColumnIndex("MSlNo"));
+            d._PNo = cur.getString(cur.getColumnIndex("PNo"));
+            d._Name = cur.getString(cur.getColumnIndex("Name"));
+            d._Rth = cur.getString(cur.getColumnIndex("Rth"));
+            d._Sex = cur.getString(cur.getColumnIndex("Sex"));
+            d._BDate = cur.getString(cur.getColumnIndex("BDate"));
+            d._AgeY = cur.getString(cur.getColumnIndex("AgeY"));
+            d._MoNo = cur.getString(cur.getColumnIndex("MoNo"));
+            d._FaNo = cur.getString(cur.getColumnIndex("FaNo"));
+            d._Edu = cur.getString(cur.getColumnIndex("Edu"));
+            d._MS = cur.getString(cur.getColumnIndex("MS"));
+            d._Pstat = cur.getString(cur.getColumnIndex("Pstat"));
+            d._LmpDt = cur.getString(cur.getColumnIndex("LmpDt"));
+            d._Ocp = cur.getString(cur.getColumnIndex("Ocp"));
+            d._Sp1 = cur.getString(cur.getColumnIndex("Sp1"));
+            d._Sp2 = cur.getString(cur.getColumnIndex("Sp2"));
+            d._Sp3 = cur.getString(cur.getColumnIndex("Sp3"));
+            d._Sp4 = cur.getString(cur.getColumnIndex("Sp4"));
+            d._EnType = cur.getString(cur.getColumnIndex("EnType"));
+            d._EnDate = cur.getString(cur.getColumnIndex("EnDate"));
+            d._ExType = cur.getString(cur.getColumnIndex("ExType"));
+            d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
+            //d._PosMig = cur.getString(cur.getColumnIndex("PosMig"));
+            //d._PosMigDate = cur.getString(cur.getColumnIndex("PosMigDate"));
+            data.add(d);
+
+            cur.moveToNext();
+        }
+        cur.close();
+        return data;
+    }
 }

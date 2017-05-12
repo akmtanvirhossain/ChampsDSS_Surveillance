@@ -282,6 +282,8 @@
 
          final Spinner EvType = (Spinner)findViewById(R.id.spnEvType);
 
+
+
          String Sex = "";
          String MS  = "";
          String PS  = "";
@@ -506,6 +508,7 @@
                  else if(EVCODE.equals("20"))
                  {
                      dtpEvDate.setText(Global.DateNowDMY());
+                     secName.setVisibility(View.VISIBLE);
                  }
                  else if(EVCODE.equals("21"))
                  {
@@ -517,6 +520,7 @@
                      VlblOth.setVisibility(View.VISIBLE);
                      txtInfo1.setVisibility(View.VISIBLE);
                      spnInfo2.setVisibility(View.VISIBLE);
+                     secName.setVisibility(View.VISIBLE);
                      txtInfo2.setVisibility(View.GONE);
                      spnInfo1.setVisibility(View.GONE);
                      spnInfo2.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType in('31','32','33','34')"));
@@ -551,6 +555,7 @@
                  {
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     secName.setVisibility(View.VISIBLE);
                      VlblOth.setVisibility(View.GONE);
                      VlblInfo1.setText("পূর্বের খানা নাম্বার");
                      txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(11))});
@@ -560,6 +565,7 @@
                  {
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
+                     secName.setVisibility(View.VISIBLE);
                      VlblOth.setVisibility(View.GONE);
                      VlblInfo1.setText("মূর্বের খানা নাম্বার");
                      txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(11))});
@@ -571,6 +577,7 @@
                      dtpEvDate.setText("");
                      secInfo1.setVisibility(View.VISIBLE);
                      spnInfo1.setVisibility(View.VISIBLE); //Mother serial no
+                     secName.setVisibility(View.VISIBLE);
                      spnInfo1.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
                      VlblInfo1.setText("মায়ের সিরিয়াল নম্বর");
                      VlblOth.setVisibility(View.GONE);
@@ -775,7 +782,7 @@
         // MemberInitialize();
 
          //Hide all skip variables
-         //secEvDate.setVisibility(View.GONE);
+         secEvDate.setVisibility(View.GONE);
          lineEvDate.setVisibility(View.GONE);
          secInfo1.setVisibility(View.GONE);
          lineInfo1.setVisibility(View.GONE);
@@ -792,7 +799,7 @@
          VlblOth.setVisibility(View.GONE);
          spnInfo1.setVisibility(View.GONE);
          spnInfo2.setVisibility(View.GONE);
-//         txtName.setVisibility(View.GONE);
+         secName.setVisibility(View.GONE);
 
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
@@ -923,6 +930,14 @@
                      {
                          Connection.MessageBox(Events_NewMem.this, "সদস্যদের নাম খালি রাখা যাবেনা.");
                          txtName.requestFocus();
+                         return;
+                     }
+                     String PregResult = C.ReturnSingleValue("Select EVType from Events Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and Rnd='"+ ROUNDNO + "' and EVType='42'");
+
+                     if(!PregResult.equals("42"))
+                     {
+                         Connection.MessageBox(Events_NewMem.this, "এই খানায় কোন মহিলার ইভেনট ৪২ ঘটান হয়নি, আগে ৪২ হবে তারপর ২৫ হবে.");
+                         spnInfo2.requestFocus();
                          return;
                      }
                  }
@@ -1374,6 +1389,7 @@
              Button cmdMigListOk = (Button)dialog.findViewById(R.id.cmdMigListOk);
              cmdMigListOk.setOnClickListener(new View.OnClickListener() {
                  public void onClick(View arg0) {
+
                      if(g.getPNo().trim().length()==0)
                      {
                          Connection.MessageBox(Events_NewMem.this, " সদস্য সিলেক্ট করা হয়নি, প্রথমে তালিকা থেকে সদস্য সিলেক্ট করুন।");

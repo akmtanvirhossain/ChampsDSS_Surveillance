@@ -265,16 +265,7 @@ import Common.Global;
          HH = IDbundle.getString("HH");
          MSLNO = IDbundle.getString("MSlNo");
 
-
          TableName = "tmpPregHis";
-
-
-
-         //turnGPSOn();
-         //GPS Location
-         //FindLocation();
-         // Double.toString(currentLatitude);
-         // Double.toString(currentLongitude);
 
          lblHeading = (TextView)findViewById(R.id.lblHeading);
 
@@ -314,7 +305,7 @@ import Common.Global;
          lineMSlNo=(View)findViewById(R.id.lineMSlNo);
          VlblMSlNo=(TextView) findViewById(R.id.VlblMSlNo);
          spnMSlNo=(Spinner) findViewById(R.id.spnMSlNo);
-         spnMSlNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from Member Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"));
+         spnMSlNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and (julianday(EnDate)-julianday(BDate))<=18262 and Sex='2' and MS<>'30'"));
 
          secPNo=(LinearLayout)findViewById(R.id.secPNo);
          linePNo=(View)findViewById(R.id.linePNo);
@@ -330,7 +321,7 @@ import Common.Global;
                      spnVStatus.setSelection(0);
                  }else{
                      String MSL = spnMSlNo.getSelectedItemPosition()==0?"":Global.Left(spnMSlNo.getSelectedItem().toString(),2);
-                     String PNo= C.ReturnSingleValue("Select PNo from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSL +"'");
+                     String PNo= C.ReturnSingleValue("Select PNo from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSL +"'");
                      txtPNo.setText(PNo);
                      if(dataSeatch == true)
                          DataSearch(VILL,BARI,HH,MSL);

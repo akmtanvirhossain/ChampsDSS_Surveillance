@@ -103,6 +103,7 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
+
             <LinearLayout
                 style="@style/rowStyle0"
                 android:visibility="gone"

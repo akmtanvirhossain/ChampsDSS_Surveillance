@@ -2322,6 +2322,7 @@ public class Member_list extends Activity {
         }
     }
 
+
     //Table Name: SES
     private void SESDataTransfer(String Vill, String Bari, String HH)
     {

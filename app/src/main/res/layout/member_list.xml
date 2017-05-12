@@ -16,7 +16,6 @@
             android:text="Cancel"
             android:textSize="18sp" />
 
-
         <TextView
             android:id="@+id/lblHeading"
             android:layout_width="300sp"

@@ -286,6 +286,8 @@ import Common.Global;
                  adb.show();
              }});
 
+
+
          seclbl01=(LinearLayout)findViewById(R.id.seclbl01);
          linelbl01=(View)findViewById(R.id.linelbl01);
          secVill=(LinearLayout)findViewById(R.id.secVill);

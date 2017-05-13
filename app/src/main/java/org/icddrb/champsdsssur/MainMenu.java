@@ -70,9 +70,9 @@ public class MainMenu extends Activity {
             spnRound = (Spinner)findViewById(R.id.spnRound);
             spnRound.setAdapter(C.getArrayAdapter("Select RoundNo from RoundVisit order by RoundNo desc limit 4"));
             spnCluster = (Spinner)findViewById(R.id.spnCluster);
-            spnCluster.setAdapter(C.getArrayAdapter("Select distinct Cluster from Baris"));
+            spnCluster.setAdapter(C.getArrayAdapter("Select distinct Cluster from Baris order by cast(Cluster as int)"));
             spnBlock = (Spinner)findViewById(R.id.spnBlock);
-            spnBlock.setAdapter(C.getArrayAdapter("Select distinct Block from Baris"));
+            spnBlock.setAdapter(C.getArrayAdapter("Select distinct Block from Baris order by Cast(Block as int)"));
 
             /*String[] RCB = C.ReturnSingleValue("Select RoundNo||'-'||Cluster||'-'||Block from LastRoundBlock").split("-");
             spnRound.setSelection(Global.SpinnerItemPositionAnyLength(spnRound,RCB[0]));
@@ -142,7 +142,7 @@ public class MainMenu extends Activity {
 
                                         C.Sync_Upload(tableList);
 
-                                        Tran_Download td = new Tran_Download(MainMenu.this);
+                                        /*Tran_Download td = new Tran_Download(MainMenu.this);
                                         td.Sync_Download("migMember",DEVICEID,"");
                                         td.Sync_Download("EventCode",DEVICEID,"");
                                         td.Sync_Download("EDU",DEVICEID,"");
@@ -150,7 +150,10 @@ public class MainMenu extends Activity {
                                         td.Sync_Download("POA",DEVICEID,"");
                                         td.Sync_Download("POP",DEVICEID,"");
                                         td.Sync_Download("POR",DEVICEID,"");
-                                        td.Sync_Download("RTH",DEVICEID,"");
+                                        td.Sync_Download("RTH",DEVICEID,"");*/
+
+                                        Intent syncService = new Intent(MainMenu.this, Sync_Service.class);
+                                        startService(syncService);
 
                                     } catch (Exception e) {
 

@@ -1243,11 +1243,12 @@
                  objSave.setExDate("");
              }
 
+             objSave.setEnDt(Global.DateTimeNowYMDHMS());
              objSave.setStartTime(STARTTIME);
              objSave.setEndTime(g.CurrentTime24());
              objSave.setDeviceID(DEVICEID);
              objSave.setEntryUser(ENTRYUSER); //from data entry user list
-             objSave.setNeedReview("2");
+             objSave.setNeedReview((chkNeedReview.isChecked()?"1":"2"));
              SQL = objSave.TransactionSQL(this);
 
          }

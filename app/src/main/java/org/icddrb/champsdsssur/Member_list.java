@@ -422,7 +422,7 @@ public class Member_list extends Activity {
 //                     DataRetrieve(VILL+BARI+HH, false,"all");
 //                 }
 //             }});
-
+//
 //         DataRetrieve(VILL+BARI+HH, true,"active");
 
          cmdEvList.setOnClickListener(new View.OnClickListener() {
@@ -914,11 +914,11 @@ public class Member_list extends Activity {
             mylist.clear();
 
             ListView list = (ListView) findViewById(R.id.lstData);
-//            if(heading ==true)
-//            {
+            if(heading ==true)
+            {
 //                View header = getLayoutInflater().inflate(R.layout.memberheading, null);
 //                list.addHeaderView(header);
-//            }
+            }
 
             int i=0;
             while(!cur1.isAfterLast())
@@ -930,37 +930,37 @@ public class Member_list extends Activity {
                     //View header = getLayoutInflater().inflate(R.layout.membereventsheading, null);
                     //list.addHeaderView(header);
                 }
-                map.put("newold", cur1.getString(cur1.getColumnIndex("NewOld")));
-                map.put("vill", cur1.getString(cur1.getColumnIndex("Vill")));
-                map.put("bari", cur1.getString(cur1.getColumnIndex("Bari")));
-                map.put("hh", cur1.getString(cur1.getColumnIndex("Hh")));
-                map.put("mslno", cur1.getString(cur1.getColumnIndex("MslNo")));
-                map.put("pno", cur1.getString(cur1.getColumnIndex("Pno")));
-                map.put("name", cur1.getString(cur1.getColumnIndex("Name")));
-                map.put("rth", cur1.getString(cur1.getColumnIndex("Rth")));
-                map.put("sex", cur1.getString(cur1.getColumnIndex("Sex")));
-                map.put("dob", cur1.getString(cur1.getColumnIndex("BDate")));
-                map.put("age", cur1.getString(cur1.getColumnIndex("Age")));
-                map.put("mono", cur1.getString(cur1.getColumnIndex("Mono")));
-                map.put("fano", cur1.getString(cur1.getColumnIndex("Fano")));
-                map.put("edu", cur1.getString(cur1.getColumnIndex("Edu")));
-                map.put("ms", cur1.getString(cur1.getColumnIndex("Ms")));
-                map.put("pstat", cur1.getString(cur1.getColumnIndex("Pstat")));
-                map.put("lmpdt", cur1.getString(cur1.getColumnIndex("LmpDt")));
-                map.put("ocp", cur1.getString(cur1.getColumnIndex("Ocp")));
-                map.put("sp1", cur1.getString(cur1.getColumnIndex("Sp1")));
-                map.put("sp2", cur1.getString(cur1.getColumnIndex("Sp2")));
-                map.put("sp3", cur1.getString(cur1.getColumnIndex("Sp3")));
-                map.put("sp4", cur1.getString(cur1.getColumnIndex("Sp4")));
-                map.put("entype", cur1.getString(cur1.getColumnIndex("EnType")));
-                map.put("endate", cur1.getString(cur1.getColumnIndex("EnDate")));
-                map.put("extype", cur1.getString(cur1.getColumnIndex("ExType")));
-                map.put("exdate", cur1.getString(cur1.getColumnIndex("ExDate")));
-                map.put("posmig", cur1.getString(cur1.getColumnIndex("PosMig")));
-                map.put("posmigdate", cur1.getString(cur1.getColumnIndex("PosMigDate")));
-                map.put("exyear", cur1.getString(cur1.getColumnIndex("ExYear")));
-                map.put("deathage", cur1.getString(cur1.getColumnIndex("DeathAge")));
-                map.put("deathrep", cur1.getString(cur1.getColumnIndex("deathrep")));
+//                map.put("newold", cur1.getString(cur1.getColumnIndex("NewOld")));
+//                map.put("vill", cur1.getString(cur1.getColumnIndex("Vill")));
+//                map.put("bari", cur1.getString(cur1.getColumnIndex("Bari")));
+//                map.put("hh", cur1.getString(cur1.getColumnIndex("Hh")));
+                map.put("mslno", cur1.getString(cur1.getColumnIndex("mslno")));
+                map.put("pno", cur1.getString(cur1.getColumnIndex("pno")));
+                map.put("name", cur1.getString(cur1.getColumnIndex("name")));
+                map.put("rth", cur1.getString(cur1.getColumnIndex("rth")));
+                map.put("sex", cur1.getString(cur1.getColumnIndex("sex")));
+                map.put("bdate", cur1.getString(cur1.getColumnIndex("bdate")));
+                map.put("age", cur1.getString(cur1.getColumnIndex("age")));
+                map.put("mono", cur1.getString(cur1.getColumnIndex("mono")));
+                map.put("fano", cur1.getString(cur1.getColumnIndex("fano")));
+                map.put("edu", cur1.getString(cur1.getColumnIndex("edu")));
+                map.put("ms", cur1.getString(cur1.getColumnIndex("ms")));
+                map.put("pstat", cur1.getString(cur1.getColumnIndex("pstat")));
+                map.put("lmpdt", cur1.getString(cur1.getColumnIndex("lmpdt")));
+                map.put("ocp", cur1.getString(cur1.getColumnIndex("ocp")));
+                map.put("sp1", cur1.getString(cur1.getColumnIndex("sp1")));
+                map.put("sp2", cur1.getString(cur1.getColumnIndex("sp2")));
+                map.put("sp3", cur1.getString(cur1.getColumnIndex("sp3")));
+                map.put("sp4", cur1.getString(cur1.getColumnIndex("sp4")));
+                map.put("entype", cur1.getString(cur1.getColumnIndex("entype")));
+                map.put("endate", cur1.getString(cur1.getColumnIndex("endate")));
+                map.put("extype", cur1.getString(cur1.getColumnIndex("extype")));
+                map.put("exdate", cur1.getString(cur1.getColumnIndex("exdate")));
+                map.put("posmig", cur1.getString(cur1.getColumnIndex("posmig")));
+                map.put("posmigdate", cur1.getString(cur1.getColumnIndex("posmigdate")));
+//                map.put("exyear", cur1.getString(cur1.getColumnIndex("ExYear")));
+//                map.put("deathage", cur1.getString(cur1.getColumnIndex("DeathAge")));
+//                map.put("deathrep", cur1.getString(cur1.getColumnIndex("deathrep")));
 
                 mylist.add(map);
                 mSchedule = new SimpleAdapter(Member_list.this, mylist, R.layout.memberheading,new String[] {"mslno","name","pno","rth","sex","dob","age","mono","fano","edu","ms","pstat","lmpdt","ocp","sp1","sp2","sp3","sp4","entype","endate","extype","exdate","posmig","posmigdate"},
@@ -2131,6 +2131,20 @@ public class Member_list extends Activity {
             {
                 ErrMsg += "\n-> খানায় একের বেশী খানা প্রধান থাকতে পারে না।";
             }
+
+            String infoMiss = C.ReturnSingleValue("Select count(*)TotalMiss from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and length(Sex)=0");
+
+            if (Integer.valueOf(infoMiss) > 0) {
+                ErrMsg += "\n-> খানার সদস্য তথ্য আপডেট করা বাকি আছে";
+            }
+
+            if (!C.Existence("Select PNo from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                ErrMsg += "\n-> কমপক্ষে একজন সদস্য এন্ট্রি করতে হবে.";
+            }
+
+            if (!C.Existence("Select VStatus from tmpSES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
+                ErrMsg += "\n-> খানার তথ্য  খালি রাখা যাবেনা";
+            }
         }
 
         //Not pregnant event(40) missing
@@ -2150,23 +2164,22 @@ public class Member_list extends Activity {
         }
         cur40.close();
 
-
         //Pregnancy history missing
-//        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-//        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
-//        SQLS += " and t.Sex='2' and t.ms<>'30' and ((julianday(date('now'))-julianday(t.bdate))/365.25)<50";
-//
-//        Cursor curphis = C.ReadData(SQLS);
-//        curphis.moveToFirst();
-//        while(!curphis.isAfterLast())
-//        {
-//            if(!C.Existence("select vill from tmpPregHis where vill||bari||hh='"+ Household +"' and MslNo='"+ curphis.getString(curphis.getColumnIndex("MslNo")) +"'") & !C.Existence("select vill from PregHis where pno='"+ curphis.getString(curphis.getColumnIndex("pno")) +"'"))
-//            {
-//                ErrMsg += "\n-> RHQ হয় নাই (সিরিয়াল নাম্বার= "+  curphis.getString(curphis.getColumnIndex("sno")) +" এবং নাম= "+ curphis.getString(curphis.getColumnIndex("name")) +" ).";
-//            }
-//            curphis.moveToNext();
-//        }
-//        curphis.close();
+        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
+        SQLS += " and t.Sex='2' and t.ms<>'30' and ((julianday(date('now'))-julianday(t.bdate))/365.25)<50";
+
+        Cursor curphis = C.ReadData(SQLS);
+        curphis.moveToFirst();
+        while(!curphis.isAfterLast())
+        {
+            if(!C.Existence("select vill from tmpPregHis where vill||bari||hh='"+ Household +"' and MSlNo='"+ curphis.getString(curphis.getColumnIndex("sno")) +"'") & !C.Existence("select vill from PregHis where pno='"+ curphis.getString(curphis.getColumnIndex("pno")) +"'"))
+            {
+                ErrMsg += "\n-> গর্ভের ইতিহাস সংগ্রহ করা হয় নাই (সিরিয়াল নাম্বার= "+  curphis.getString(curphis.getColumnIndex("sno")) +" এবং নাম= "+ curphis.getString(curphis.getColumnIndex("name")) +" ).";
+            }
+            curphis.moveToNext();
+        }
+        curphis.close();
 
         //age of last SES collection
 //        if(C.Existence("select vill from tmpSES where vill||bari||hh='"+ Household +"'"))
@@ -2180,20 +2193,6 @@ public class Member_list extends Activity {
 //        {
 //            ErrMsg += "\n-> SES এর তথ্য সংগ্রহ করতে হবে।";
 //        }
-
-        //occupation missing (age >= 12 years)
-//        SQLS = "Select MslNo as sno, Name as name from tmpMember where VILL||BARI||HH='"+ Household +"' and cast((julianday(date('now'))-julianday(bdate))/365.25 as int)>=12 and length(OCp)=0 and (extype is null or length(extype)=0)";
-//        Cursor CR = null;
-//        CR = C.ReadData(SQLS);
-//        CR.moveToFirst();
-//        while(!CR.isAfterLast())
-//        {
-//            ErrMsg += "\n-> বয়স ১২ এর সমান/বেশী হলে পেশা থাকতে হবে(সিরিয়াল নাম্বার= "+  CR.getString(CR.getColumnIndex("sno")) +" এবং নাম= "+ CR.getString(CR.getColumnIndex("name")) +" ).";
-//
-//            CR.moveToNext();
-//        }
-//        CR.close();
-
 
 
         //Stop process if any error have

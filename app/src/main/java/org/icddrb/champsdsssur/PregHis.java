@@ -274,9 +274,9 @@ import Common.Global;
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(PregHis.this);
                  adb.setTitle("Close");
-                 adb.setMessage("আপনি কি এ ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
-                 adb.setNegativeButton("No", null);
-                 adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                 adb.setMessage("আপনি কি গর্ভের ইতিহাস ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
                          finish();
                          Intent returnIntent = new Intent();

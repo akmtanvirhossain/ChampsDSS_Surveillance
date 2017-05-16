@@ -112,6 +112,7 @@ import android.content.Context;
         public void setRnd(String newValue){
               _Rnd = newValue;
          }
+
      private String _StartTime = "";
      public void setStartTime(String newValue){
          _StartTime = newValue;
@@ -127,6 +128,7 @@ import android.content.Context;
      public String getEndTime(){
          return _EndTime;
      }
+
      private String _DeviceID = "";
      public void setDeviceID(String newValue){
          _DeviceID = newValue;
@@ -167,9 +169,9 @@ import android.content.Context;
          return _EnDt;
      }
 
-        private String _Upload = "2";
+     private String _Upload = "2";
 
-        String TableName = "Household";
+        String TableName = "tmpHousehold";
 
         public String SaveUpdateData(Context context)
         {
@@ -254,6 +256,14 @@ import android.content.Context;
              d._ExDate = cur.getString(cur.getColumnIndex("ExDate"));
              d._Rnd = cur.getString(cur.getColumnIndex("Rnd"));
              d._Note = cur.getString(cur.getColumnIndex("Note"));
+
+             d._EnDt = cur.getString(cur.getColumnIndex("EnDt"));
+             d._StartTime = cur.getString(cur.getColumnIndex("StartTime"));
+             d._EndTime = cur.getString(cur.getColumnIndex("EndTime"));
+             d._DeviceID = cur.getString(cur.getColumnIndex("DeviceID"));
+             d._EntryUser = cur.getString(cur.getColumnIndex("EntryUser"));
+             d._Lat = cur.getString(cur.getColumnIndex("Lat"));
+             d._Lon = cur.getString(cur.getColumnIndex("Lon"));
              data.add(d);
 
              cur.moveToNext();

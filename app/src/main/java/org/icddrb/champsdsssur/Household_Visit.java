@@ -252,7 +252,7 @@ import Common.Global;
            public void onClick(View v) {
                AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
                adb.setTitle("Close");
-               adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+               adb.setMessage("আপনি কি খানা পরিদর্শন ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
                adb.setNegativeButton("না", null);
                adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                    public void onClick(DialogInterface dialog, int which) {
@@ -574,7 +574,6 @@ import Common.Global;
 
          if(OLDNEWHH.equalsIgnoreCase("old"))
          {
-
              final int Resp = Integer.parseInt(Global.Left(spnResp.getSelectedItem().toString(),2));
              g.setRsNo(Global.Left(spnResp.getSelectedItem().toString(),2));
 
@@ -850,7 +849,7 @@ import Common.Global;
                      String SQLSTR = "";
                      //------------------------------------------------------------------
                      SQLSTR = "Insert into tmpHousehold";
-                     SQLSTR += "(Vill, Bari, HH, EnType, EnDate, ExType, ExDate, Religion, HHHead, EnDt,Rnd)Values(";
+                     SQLSTR += "(Vill, Bari, HH, EnType, EnDate, ExType, ExDate, Religion, MobileNo1, MobileNo2, HHHead, Rnd,StartTime, EndTime, DeviceID, EntryUser, Lat, Lon,EnDt,Upload)Values(";
                      SQLSTR += "'" + VILL + "',";
                      SQLSTR += "'" + BARI + "',";
                      SQLSTR += "'" + HH + "',";
@@ -859,9 +858,18 @@ import Common.Global;
                      SQLSTR += "'',"; //ExType
                      SQLSTR += "'',";
                      SQLSTR += "'" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "',"; //Religion
+                     SQLSTR += "'" + txtMobileNo1.getText() + "',";
+                     SQLSTR += "'" + txtMobileNo2.getText() + "',";
                      SQLSTR += "'" + txtHHHead.getText() + "',";
+                     SQLSTR += "'" + ROUNDNO + "',"; //round
+                     SQLSTR += "'" + STARTTIME + "',"; //StartTime
+                     SQLSTR += "'" + g.CurrentTime24() + "',"; //EndTime
+                     SQLSTR += "'" + DEVICEID + "',"; //DeviceID
+                     SQLSTR += "'" + ENTRYUSER + "',"; //EntryUser code
+                     SQLSTR += "'" + Double.toString(currentLatitude) + "',"; // Lat
+                     SQLSTR += "'" + Double.toString(currentLongitude) + "',"; // Lon
                      SQLSTR += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
-                     SQLSTR += "'" + ROUNDNO + "')";   //Round number
+                     SQLSTR += "'" + 2 + "')"; //Upload
 
                      C.Save(SQLSTR);
 

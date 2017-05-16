@@ -301,6 +301,7 @@ import android.content.Context;
         public void setOthLand(String newValue){
               _OthLand = newValue;
          }
+
      private String _StartTime = "";
      public void setStartTime(String newValue){
          _StartTime = newValue;
@@ -316,6 +317,7 @@ import android.content.Context;
      public String getEndTime(){
          return _EndTime;
      }
+
      private String _DeviceID = "";
      public void setDeviceID(String newValue){
          _DeviceID = newValue;
@@ -469,6 +471,14 @@ import android.content.Context;
                 d._Homestead = cur.getString(cur.getColumnIndex("Homestead"));
                 d._HomesteadOth = cur.getString(cur.getColumnIndex("HomesteadOth"));
                 d._OthLand = cur.getString(cur.getColumnIndex("OthLand"));
+
+                d._EnDt = cur.getString(cur.getColumnIndex("EnDt"));
+                d._StartTime = cur.getString(cur.getColumnIndex("StartTime"));
+                d._EndTime = cur.getString(cur.getColumnIndex("EndTime"));
+                d._DeviceID = cur.getString(cur.getColumnIndex("DeviceID"));
+                d._EntryUser = cur.getString(cur.getColumnIndex("EntryUser"));
+                d._Lat = cur.getString(cur.getColumnIndex("Lat"));
+                d._Lon = cur.getString(cur.getColumnIndex("Lon"));
                 data.add(d);
 
                 cur.moveToNext();

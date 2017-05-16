@@ -351,6 +351,14 @@ import android.content.Context;
                 d._TotPregOut = cur.getString(cur.getColumnIndex("TotPregOut"));
                 d._CurPreg = cur.getString(cur.getColumnIndex("CurPreg"));
                 d._LMPDate = cur.getString(cur.getColumnIndex("LMPDate"));
+
+                d._EnDt = cur.getString(cur.getColumnIndex("EnDt"));
+                d._StartTime = cur.getString(cur.getColumnIndex("StartTime"));
+                d._EndTime = cur.getString(cur.getColumnIndex("EndTime"));
+                d._DeviceID = cur.getString(cur.getColumnIndex("DeviceID"));
+                d._EntryUser = cur.getString(cur.getColumnIndex("EntryUser"));
+                d._Lat = cur.getString(cur.getColumnIndex("Lat"));
+                d._Lon = cur.getString(cur.getColumnIndex("Lon"));
                 data.add(d);
 
                 cur.moveToNext();

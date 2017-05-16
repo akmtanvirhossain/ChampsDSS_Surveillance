@@ -126,7 +126,7 @@ public class Household_list extends Activity  {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
                  adb.setTitle("Close");
-                 adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
+                 adb.setMessage("আপনি কি খানার তালিকা থেকে বের হতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
                  {

@@ -1762,6 +1762,7 @@ import Utility.*;
              setResult(Activity.RESULT_OK, returnIntent);
 
              Connection.MessageBox(SES.this, "Saved Successfully");
+             finish();
          }
          else{
              Connection.MessageBox(SES.this, status);

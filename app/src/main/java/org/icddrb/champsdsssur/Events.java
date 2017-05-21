@@ -984,7 +984,7 @@
              DV = Global.DateValidate(dtpEvDate.getText().toString());
              if(DV.length()!=0 & secEvDate.isShown())
              {
-                 Connection.MessageBox(Events.this, "ঘটনার তারিখ খালি রাখা যাবেনা");
+                 Connection.MessageBox(Events.this, "ঘটনার তারিখ সঠিক নয়");
                  dtpEvDate.requestFocus();
                  return;
              }
@@ -1001,19 +1001,19 @@
              {
                  if (txtInfo1.getText().toString().length()==0  & txtInfo1.isShown())
                  {
-                     Connection.MessageBox(Events.this, "Required field: txtInfo1.");
+                     Connection.MessageBox(Events.this, "স্বামী/স্ত্রীর বয়স খালি রাখা যাবেনা.");
                      txtInfo1.requestFocus();
                      return;
                  }
                  if (txtInfo2.getText().toString().length()==0  & txtInfo2.isShown())
                  {
-                     Connection.MessageBox(Events.this, "Required field: txtInfo2.");
+                     Connection.MessageBox(Events.this, "Required field: খালি রাখা যাবেনা.");
                      txtInfo2.requestFocus();
                      return;
                  }
                  else if (txtInfo3.getText().toString().length()==0  & txtInfo3.isShown())
                  {
-                     Connection.MessageBox(Events.this, "Required field: txtInfo3.");
+                     Connection.MessageBox(Events.this, "Required field: খালি রাখা যাবেনা.");
                      txtInfo3.requestFocus();
                      return;
                  }
@@ -1505,6 +1505,7 @@
                      }
                      else if (ECode == 42)
                      {
+                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
                          /*if (spnInfo1.getSelectedItemPosition()==0) {
                              Connection.MessageBox(Events.this, "Required field: Info2.");
                              txtInfo2.requestFocus();
@@ -1533,23 +1534,31 @@
                          }
 
                          //difference between LMP and EDD Check
-                         int outcode_difference = Global.DateDifferenceDays(dtpEvDate.getText().toString(), LMP.toString());
+                         int outcode_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(LMP.toString()));
                          int outcome_result = Integer.valueOf(Global.Left(spnInfo1.getSelectedItem().toString(), 2));
 
-                         if (outcome_result == 11 | outcome_result == 12 | outcome_result == 21 | outcome_result == 22 | outcome_result == 23 | outcome_result == 31 | outcome_result == 32 | outcome_result == 33 | outcome_result == 34) {
+                         if(outcode_difference < 0)
+                         {
+                             Connection.MessageBox(Events.this, "প্রসবের তারিখ অবশ্যই LMP " + LMP + "  এর তারিখের বেশী হতে হবে।");
+                             return;
+                         }
+                         else if (outcome_result == 11 | outcome_result == 12 | outcome_result == 21 | outcome_result == 22 | outcome_result == 23 | outcome_result == 31 | outcome_result == 32 | outcome_result == 33 | outcome_result == 34)
+                         {
                              if (outcode_difference < 180) {
-                                 Connection.MessageBox(Events.this, "LMP এবং প্রসবের তারিখের পার্থক্য ১৮০ দিনের বেশী হতে হবে।");
+                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ১৮০ দিনের বেশী হতে হবে।");
                                  return;
                              } else if (outcode_difference > 310) {
-                                 Connection.MessageBox(Events.this, "LMP এবং প্রসবের তারিখের পার্থক্য অবশ্যই ৩১০ দিনের বেশী হতে পারে না।");
+                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য অবশ্যই ৩১০ দিনের বেশী হতে পারে না।");
                                  return;
                              }
-                         } else if (outcome_result == 1 | outcome_result == 2) {
+                         }
+                         else if (outcome_result == 1 | outcome_result == 2)
+                         {
                              if (outcode_difference < 42) {
-                                 Connection.MessageBox(Events.this, "LMP এবং প্রসবের তারিখের পার্থক্য ৪২ দিনের কম হতে পারে না।");
+                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ৪২ দিনের কম হতে পারে না।");
                                  return;
                              } else if (outcode_difference > 180) {
-                                 Connection.MessageBox(Events.this, "LMP এবং প্রসবের তারিখের পার্থক্য ১৮০ দিনের বেশী হতে পারে না।");
+                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ১৮০ দিনের বেশী হতে পারে না।");
                                  return;
                              }
                          }

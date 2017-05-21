@@ -410,20 +410,20 @@ public class Member_list extends Activity {
          Button cmdEvList = (Button)findViewById(R.id.cmdEvList);
          Button cmdVisitList = (Button)findViewById(R.id.cmdVisitList);
 
-//         final RadioGroup roMemberOption =(RadioGroup)findViewById(R.id.roMemberOption);
-//         roMemberOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//             public void onCheckedChanged(RadioGroup arg0, int id) {
-//                 if(id == R.id.roActiveMember)
-//                 {
-//                     DataRetrieve(VILL+BARI+HH, false,"active");
-//                 }
-//                 else if(id == R.id.roAllMember)
-//                 {
-//                     DataRetrieve(VILL+BARI+HH, false,"all");
-//                 }
-//             }});
-//
-//         DataRetrieve(VILL+BARI+HH, true,"active");
+         final RadioGroup roMemberOption =(RadioGroup)findViewById(R.id.roMemberOption);
+         roMemberOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+             public void onCheckedChanged(RadioGroup arg0, int id) {
+                 if(id == R.id.roActiveMember)
+                 {
+                     DataRetrieve(VILL+BARI+HH, false,"active");
+                 }
+                 else if(id == R.id.roAllMember)
+                 {
+                     DataRetrieve(VILL+BARI+HH, false,"all");
+                 }
+             }});
+
+         DataRetrieve(VILL+BARI+HH, true,"active");
 
          cmdEvList.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
@@ -890,7 +890,7 @@ public class Member_list extends Activity {
 
             if(ActiveOrAll.equalsIgnoreCase("active"))
             {
-                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.mslno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age,Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
+                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.mslno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as AgeY,Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
                 SQLStr += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
                 SQLStr += " (case when cast(strftime('%Y', ifnull(t.ExDate,'')) as int)>=2014 and t.ExType='55' then '1' else '2' end)as deathrep,";
                 SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tmpMember t";
@@ -899,14 +899,13 @@ public class Member_list extends Activity {
             }
             else if(ActiveOrAll.equalsIgnoreCase("all"))
             {
-                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.mslno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as Age, Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
+                SQLStr = "Select  (case when m.vill is null then 'n' else 'o' end)as NewOld, t.Vill, t.Bari, t.Hh, t.mslno, t.Pno, t.Name, t.Rth, t.Sex, t.BDate, Cast(((julianday(date('now'))-julianday(t.BDate))/365.25) as int) as AgeY, Cast(((julianday(t.ExDate)-julianday(t.BDate))/365.25) as int) as DeathAge, t.Mono, t.Fano, t.Edu,";
                 SQLStr += " t.Ms, t.Pstat, t.LmpDt, t.Sp1, t.Sp2, t.Sp3, t.Sp4, t.Ocp, t.EnType, t.EnDate,";
                 SQLStr += " (case when cast(strftime('%Y', ifnull(t.ExDate,'')) as int)>=2014 and t.ExType='55' then '1' else '2' end)as deathrep,";
                 SQLStr += " ifnull(t.ExType,'')ExType,ifnull(t.ExDate,'')ExDate,cast(strftime('%Y', ifnull(t.ExDate,'')) as int)ExYear,ifnull(t.PosMig,'')PosMig,ifnull(t.PosMigDate,'')PosMigDate from tmpMember t";
                 SQLStr += " left outer join member m on t.vill||t.bari||t.hh||t.MslNo = m.vill||m.bari||m.hh||m.MslNo";
                 SQLStr += " where t.vill||t.bari||t.hh='"+ HH +"' order by cast(t.MslNo as int) asc";
             }
-
 
             Cursor cur1 = C.ReadData(SQLStr);
 
@@ -934,45 +933,43 @@ public class Member_list extends Activity {
 //                map.put("vill", cur1.getString(cur1.getColumnIndex("Vill")));
 //                map.put("bari", cur1.getString(cur1.getColumnIndex("Bari")));
 //                map.put("hh", cur1.getString(cur1.getColumnIndex("Hh")));
-                map.put("mslno", cur1.getString(cur1.getColumnIndex("mslno")));
-                map.put("pno", cur1.getString(cur1.getColumnIndex("pno")));
-                map.put("name", cur1.getString(cur1.getColumnIndex("name")));
-                map.put("rth", cur1.getString(cur1.getColumnIndex("rth")));
-                map.put("sex", cur1.getString(cur1.getColumnIndex("sex")));
-                map.put("bdate", cur1.getString(cur1.getColumnIndex("bdate")));
-                map.put("age", cur1.getString(cur1.getColumnIndex("age")));
-                map.put("mono", cur1.getString(cur1.getColumnIndex("mono")));
-                map.put("fano", cur1.getString(cur1.getColumnIndex("fano")));
-                map.put("edu", cur1.getString(cur1.getColumnIndex("edu")));
-                map.put("ms", cur1.getString(cur1.getColumnIndex("ms")));
-                map.put("pstat", cur1.getString(cur1.getColumnIndex("pstat")));
-                map.put("lmpdt", cur1.getString(cur1.getColumnIndex("lmpdt")));
-                map.put("ocp", cur1.getString(cur1.getColumnIndex("ocp")));
-                map.put("sp1", cur1.getString(cur1.getColumnIndex("sp1")));
-                map.put("sp2", cur1.getString(cur1.getColumnIndex("sp2")));
-                map.put("sp3", cur1.getString(cur1.getColumnIndex("sp3")));
-                map.put("sp4", cur1.getString(cur1.getColumnIndex("sp4")));
-                map.put("entype", cur1.getString(cur1.getColumnIndex("entype")));
-                map.put("endate", cur1.getString(cur1.getColumnIndex("endate")));
-                map.put("extype", cur1.getString(cur1.getColumnIndex("extype")));
-                map.put("exdate", cur1.getString(cur1.getColumnIndex("exdate")));
-                map.put("posmig", cur1.getString(cur1.getColumnIndex("posmig")));
-                map.put("posmigdate", cur1.getString(cur1.getColumnIndex("posmigdate")));
+                map.put("MSlNo", cur1.getString(cur1.getColumnIndex("MSlNo")));
+                map.put("Name", cur1.getString(cur1.getColumnIndex("Name")));
+                map.put("PNo", cur1.getString(cur1.getColumnIndex("PNo")));
+                map.put("Rth", cur1.getString(cur1.getColumnIndex("Rth")));
+                map.put("Sex", cur1.getString(cur1.getColumnIndex("Sex")));
+                map.put("BDate", cur1.getString(cur1.getColumnIndex("BDate")));
+                map.put("AgeY", cur1.getString(cur1.getColumnIndex("AgeY")));
+                map.put("MoNo", cur1.getString(cur1.getColumnIndex("MoNo")));
+                map.put("FaNo", cur1.getString(cur1.getColumnIndex("FaNo")));
+                map.put("Edu", cur1.getString(cur1.getColumnIndex("Edu")));
+                map.put("MS", cur1.getString(cur1.getColumnIndex("MS")));
+                map.put("Pstat", cur1.getString(cur1.getColumnIndex("Pstat")));
+                map.put("LmpDt", cur1.getString(cur1.getColumnIndex("LmpDt")));
+                map.put("Ocp", cur1.getString(cur1.getColumnIndex("Ocp")));
+                map.put("Sp1", cur1.getString(cur1.getColumnIndex("Sp1")));
+                map.put("Sp2", cur1.getString(cur1.getColumnIndex("Sp2")));
+                map.put("Sp3", cur1.getString(cur1.getColumnIndex("Sp3")));
+                map.put("Sp4", cur1.getString(cur1.getColumnIndex("Sp4")));
+                map.put("EnType", cur1.getString(cur1.getColumnIndex("EnType")));
+                map.put("EnDate", cur1.getString(cur1.getColumnIndex("EnDate")));
+                map.put("ExType", cur1.getString(cur1.getColumnIndex("ExType")));
+                map.put("ExDate", cur1.getString(cur1.getColumnIndex("ExDate")));
+                map.put("PosMig", cur1.getString(cur1.getColumnIndex("PosMig")));
+                map.put("PosMigDate", cur1.getString(cur1.getColumnIndex("PosMigDate")));
 //                map.put("exyear", cur1.getString(cur1.getColumnIndex("ExYear")));
 //                map.put("deathage", cur1.getString(cur1.getColumnIndex("DeathAge")));
 //                map.put("deathrep", cur1.getString(cur1.getColumnIndex("deathrep")));
 
                 mylist.add(map);
-                mSchedule = new SimpleAdapter(Member_list.this, mylist, R.layout.memberheading,new String[] {"mslno","name","pno","rth","sex","dob","age","mono","fano","edu","ms","pstat","lmpdt","ocp","sp1","sp2","sp3","sp4","entype","endate","extype","exdate","posmig","posmigdate"},
-                        new int[] {R.id.MSlNo,R.id.name,R.id.pno,R.id.rth,R.id.sex,R.id.bdate,R.id.AgeY,R.id.mono,R.id.fano,R.id.edu,R.id.ms,R.id.pstat,R.id.lmpdt,R.id.ocp,R.id.sp1,R.id.sp2,R.id.sp3,R.id.sp4,R.id.entype,R.id.endate,R.id.extype,R.id.exdate,R.id.posmig,R.id.posmigdate});
+                mSchedule = new SimpleAdapter(Member_list.this, mylist, R.layout.memberheading,new String[] {"MSlNo","Name","PNo","Rth","Sex","BDate","AgeY","MoNo","FaNo","Edu","MS","Pstat","LmpDt","Ocp","Sp1","Sp2","Sp3","Sp4","EnType","EnDate","ExType","ExDate","PosMig","PosMigDate"},
+                        new int[] {R.id.MSlNo,R.id.Name,R.id.PNo,R.id.Rth,R.id.Sex,R.id.BDate,R.id.AgeY,R.id.MoNo,R.id.FaNo,R.id.Edu,R.id.MS,R.id.Pstat,R.id.LmpDt,R.id.Ocp,R.id.Sp1,R.id.Sp2,R.id.Sp3,R.id.Sp4,R.id.EnType,R.id.EnDate,R.id.ExType,R.id.ExDate,R.id.PosMig,R.id.PosMigDate});
                 list.setAdapter(new MemberListAdapter(this));
 
                 i+=1;
                 cur1.moveToNext();
             }
             cur1.close();
-
-
         }
         catch(Exception  e)
         {
@@ -1008,188 +1005,189 @@ public class Member_list extends Activity {
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.memberheading, null);
             }
-            TextView mslno= (TextView) convertView.findViewById(R.id.MSlNo);
-            TextView name= (TextView) convertView.findViewById(R.id.name);
-            TextView pno= (TextView) convertView.findViewById(R.id.pno);
-            TextView rth= (TextView) convertView.findViewById(R.id.rth);
-            TextView sex= (TextView) convertView.findViewById(R.id.sex);
-            TextView bdate= (TextView) convertView.findViewById(R.id.bdate);
-            TextView age= (TextView) convertView.findViewById(R.id.AgeY);
-            TextView mono= (TextView) convertView.findViewById(R.id.mono);
-            TextView fano= (TextView) convertView.findViewById(R.id.fano);
-            TextView edu= (TextView) convertView.findViewById(R.id.edu);
-            TextView ms= (TextView) convertView.findViewById(R.id.ms);
-            TextView pstat= (TextView) convertView.findViewById(R.id.pstat);
-            TextView lmpdt= (TextView) convertView.findViewById(R.id.lmpdt);
-            TextView ocp= (TextView) convertView.findViewById(R.id.ocp);
-            TextView sp1= (TextView) convertView.findViewById(R.id.sp1);
-            TextView sp2= (TextView) convertView.findViewById(R.id.sp2);
-            TextView sp3= (TextView) convertView.findViewById(R.id.sp3);
-            TextView sp4= (TextView) convertView.findViewById(R.id.sp4);
-            TextView entype= (TextView) convertView.findViewById(R.id.entype);
-            TextView endate= (TextView) convertView.findViewById(R.id.endate);
-            TextView extype= (TextView) convertView.findViewById(R.id.extype);
-            TextView exdate= (TextView) convertView.findViewById(R.id.exdate);
-            TextView posmig= (TextView) convertView.findViewById(R.id.posmig);
-            TextView posmigdate= (TextView) convertView.findViewById(R.id.posmigdate);
+            TextView MSlNo= (TextView) convertView.findViewById(R.id.MSlNo);
+            TextView Name= (TextView) convertView.findViewById(R.id.Name);
+            TextView PNo= (TextView) convertView.findViewById(R.id.PNo);
+            TextView Rth= (TextView) convertView.findViewById(R.id.Rth);
+            TextView Sex= (TextView) convertView.findViewById(R.id.Sex);
+            TextView BDate= (TextView) convertView.findViewById(R.id.BDate);
+            TextView AgeY= (TextView) convertView.findViewById(R.id.AgeY);
+            TextView MoNo= (TextView) convertView.findViewById(R.id.MoNo);
+            TextView FaNo= (TextView) convertView.findViewById(R.id.FaNo);
+            TextView Edu= (TextView) convertView.findViewById(R.id.Edu);
+            TextView MS= (TextView) convertView.findViewById(R.id.MS);
+            TextView Pstat= (TextView) convertView.findViewById(R.id.Pstat);
+            TextView LmpDt= (TextView) convertView.findViewById(R.id.LmpDt);
+            TextView Ocp= (TextView) convertView.findViewById(R.id.Ocp);
+            TextView Sp1= (TextView) convertView.findViewById(R.id.Sp1);
+            TextView Sp2= (TextView) convertView.findViewById(R.id.Sp2);
+            TextView Sp3= (TextView) convertView.findViewById(R.id.Sp3);
+            TextView Sp4= (TextView) convertView.findViewById(R.id.Sp4);
+            TextView EnType= (TextView) convertView.findViewById(R.id.EnType);
+            TextView EnDate= (TextView) convertView.findViewById(R.id.EnDate);
+            TextView ExType= (TextView) convertView.findViewById(R.id.ExType);
+            TextView ExDate= (TextView) convertView.findViewById(R.id.ExDate);
+            TextView PosMig= (TextView) convertView.findViewById(R.id.PosMig);
+            TextView PosMigDate= (TextView) convertView.findViewById(R.id.PosMigDate);
 
             final HashMap<String, String> o = (HashMap<String, String>) mSchedule.getItem(position);
 
-            mslno.setText(o.get("mslno"));
-            name.setText(o.get("name"));
-            pno.setText(o.get("pno"));
-            rth.setText(o.get("rth"));
-            sex.setText(o.get("sex"));
-            bdate.setText(Global.DateConvertDMY(o.get("dob")));
-            age.setText(o.get("age"));
-            mono.setText(o.get("mono"));
-            fano.setText(o.get("fano"));
-            edu.setText(o.get("edu"));
-            ms.setText(o.get("ms"));
+            MSlNo.setText(o.get("MSlNo"));
+            Name.setText(o.get("Name"));
+            PNo.setText(o.get("Pno"));
+            Rth.setText(o.get("Rth"));
+            Sex.setText(o.get("Sex"));
+            BDate.setText(Global.DateConvertDMY(o.get("BDate")));
+            AgeY.setText(o.get("AgeY"));
+            MoNo.setText(o.get("MoNo"));
+            FaNo.setText(o.get("FaNo"));
+            Edu.setText(o.get("Edu"));
+            MS.setText(o.get("MS"));
 
-            pstat.setText(o.get("pstat"));
-            if(o.get("lmpdt")==null | o.get("lmpdt").trim().length()==0)
-                lmpdt.setText(o.get("lmpdt"));
+            Pstat.setText(o.get("Pstat"));
+
+            if(o.get("LmpDt")==null | o.get("LmpDt").trim().length()==0)
+                LmpDt.setText(o.get("LmpDt"));
             else
-                lmpdt.setText(Global.DateConvertDMY(o.get("lmpdt")));
+                LmpDt.setText(Global.DateConvertDMY(o.get("LmpDt")));
 
-            ocp.setText(o.get("ocp"));
-            sp1.setText(o.get("sp1"));
-            sp2.setText(o.get("sp2"));
-            sp3.setText(o.get("sp3"));
-            sp4.setText(o.get("sp4"));
-            entype.setText(o.get("entype"));
-            endate.setText(Global.DateConvertDMY(o.get("endate")));
-            extype.setText(o.get("extype"));
+            Ocp.setText(o.get("Ocp"));
+            Sp1.setText(o.get("Sp1"));
+            Sp2.setText(o.get("Sp2"));
+            Sp3.setText(o.get("Sp3"));
+            Sp4.setText(o.get("Sp4"));
+            EnType.setText(o.get("EnType"));
+            EnDate.setText(Global.DateConvertDMY(o.get("EnDate")));
+            ExType.setText(o.get("ExType"));
 
-            if(o.get("exdate")==null | o.get("exdate").trim().length()==0)
-                exdate.setText(o.get("exdate"));
+            if(o.get("ExDate")==null | o.get("ExDate").trim().length()==0)
+                ExDate.setText(o.get("ExDate"));
             else
-                exdate.setText(Global.DateConvertDMY(o.get("exdate")));
+                ExDate.setText(Global.DateConvertDMY(o.get("ExDate")));
 
              //show only if possible migration
-            if(o.get("posmig").equals("54"))
-                posmig.setText(o.get("posmig"));
+            if(o.get("PosMig").equals("54"))
+                PosMig.setText(o.get("PosMig"));
             else
-                posmig.setText("");
+                PosMig.setText("");
 
-            if(o.get("posmigdate")==null | o.get("posmigdate").trim().length()==0)
-                posmigdate.setText(o.get("posmigdate"));
+            if(o.get("PosMigDate")==null | o.get("PosMigDate").trim().length()==0)
+                PosMigDate.setText(o.get("PosMigDate"));
             else
-                posmigdate.setText(Global.DateConvertDMY(o.get("posmigdate")));
+                PosMigDate.setText(Global.DateConvertDMY(o.get("PosMigDate")));
 
-            if(o.get("extype").trim().length()==0 & (o.get("posmig").trim().length()==0 | !o.get("posmig").trim().equals("54")))
+            if(o.get("ExType").trim().length()==0 & (o.get("PosMig").trim().length()==0 | !o.get("PosMig").trim().equals("54")))
             {
-                mslno.setTextColor(Color.BLACK);
-                pno.setTextColor(Color.BLACK);
-                name.setTextColor(Color.BLACK);
-                rth.setTextColor(Color.BLACK);
-                sex.setTextColor(Color.BLACK);
-                bdate.setTextColor(Color.BLACK);
-                mono.setTextColor(Color.BLACK);
-                fano.setTextColor(Color.BLACK);
-                edu.setTextColor(Color.BLACK);
-                ms.setTextColor(Color.BLACK);
-                pstat.setTextColor(Color.BLACK);
-                lmpdt.setTextColor(Color.BLACK);
-                sp1.setTextColor(Color.BLACK);
-                sp2.setTextColor(Color.BLACK);
-                sp3.setTextColor(Color.BLACK);
-                sp4.setTextColor(Color.BLACK);
-                ocp.setTextColor(Color.BLACK);
-                entype.setTextColor(Color.BLACK);
-                endate.setTextColor(Color.BLACK);
-                extype.setTextColor(Color.BLACK);
-                exdate.setTextColor(Color.BLACK);
+                MSlNo.setTextColor(Color.BLACK);
+                PNo.setTextColor(Color.BLACK);
+                Name.setTextColor(Color.BLACK);
+                Rth.setTextColor(Color.BLACK);
+                Sex.setTextColor(Color.BLACK);
+                BDate.setTextColor(Color.BLACK);
+                MoNo.setTextColor(Color.BLACK);
+                FaNo.setTextColor(Color.BLACK);
+                Edu.setTextColor(Color.BLACK);
+                MS.setTextColor(Color.BLACK);
+                Pstat.setTextColor(Color.BLACK);
+                LmpDt.setTextColor(Color.BLACK);
+                Sp1.setTextColor(Color.BLACK);
+                Sp2.setTextColor(Color.BLACK);
+                Sp3.setTextColor(Color.BLACK);
+                Sp4.setTextColor(Color.BLACK);
+                Ocp.setTextColor(Color.BLACK);
+                EnType.setTextColor(Color.BLACK);
+                EnDate.setTextColor(Color.BLACK);
+                ExType.setTextColor(Color.BLACK);
+                ExDate.setTextColor(Color.BLACK);
             }
-            else if(o.get("extype").trim().length()==0 & o.get("posmig").trim().equals("54"))
+            else if(o.get("ExType").trim().length()==0 & o.get("PosMig").trim().equals("54"))
             {
-                mslno.setTextColor(Color.BLUE);
-                pno.setTextColor(Color.BLUE);
-                name.setTextColor(Color.BLUE);
-                rth.setTextColor(Color.BLUE);
-                sex.setTextColor(Color.BLUE);
-                bdate.setTextColor(Color.BLUE);
-                mono.setTextColor(Color.BLUE);
-                fano.setTextColor(Color.BLUE);
-                edu.setTextColor(Color.BLUE);
-                ms.setTextColor(Color.BLUE);
-                pstat.setTextColor(Color.BLUE);
-                lmpdt.setTextColor(Color.BLUE);
-                sp1.setTextColor(Color.BLUE);
-                sp2.setTextColor(Color.BLUE);
-                sp3.setTextColor(Color.BLUE);
-                sp4.setTextColor(Color.BLUE);
-                ocp.setTextColor(Color.BLUE);
-                entype.setTextColor(Color.BLUE);
-                endate.setTextColor(Color.BLUE);
-                extype.setTextColor(Color.BLUE);
-                exdate.setTextColor(Color.BLUE);
-                posmig.setTextColor(Color.BLUE);
-                posmigdate.setTextColor(Color.BLUE);
+                MSlNo.setTextColor(Color.BLUE);
+                PNo.setTextColor(Color.BLUE);
+                Name.setTextColor(Color.BLUE);
+                Rth.setTextColor(Color.BLUE);
+                Sex.setTextColor(Color.BLUE);
+                BDate.setTextColor(Color.BLUE);
+                MoNo.setTextColor(Color.BLUE);
+                FaNo.setTextColor(Color.BLUE);
+                Edu.setTextColor(Color.BLUE);
+                MS.setTextColor(Color.BLUE);
+                Pstat.setTextColor(Color.BLUE);
+                LmpDt.setTextColor(Color.BLUE);
+                Sp1.setTextColor(Color.BLUE);
+                Sp2.setTextColor(Color.BLUE);
+                Sp3.setTextColor(Color.BLUE);
+                Sp4.setTextColor(Color.BLUE);
+                Ocp.setTextColor(Color.BLUE);
+                EnType.setTextColor(Color.BLUE);
+                EnDate.setTextColor(Color.BLUE);
+                ExType.setTextColor(Color.BLUE);
+                ExDate.setTextColor(Color.BLUE);
+                PosMig.setTextColor(Color.BLUE);
+                PosMigDate.setTextColor(Color.BLUE);
 
             }
             else
             {
-                mslno.setTextColor(Color.RED);
-                pno.setTextColor(Color.RED);
-                name.setTextColor(Color.RED);
-                rth.setTextColor(Color.RED);
-                sex.setTextColor(Color.RED);
-                bdate.setTextColor(Color.RED);
-                mono.setTextColor(Color.RED);
-                fano.setTextColor(Color.RED);
-                edu.setTextColor(Color.RED);
-                ms.setTextColor(Color.RED);
-                pstat.setTextColor(Color.RED);
-                lmpdt.setTextColor(Color.RED);
-                sp1.setTextColor(Color.RED);
-                sp2.setTextColor(Color.RED);
-                sp3.setTextColor(Color.RED);
-                sp4.setTextColor(Color.RED);
-                ocp.setTextColor(Color.RED);
-                entype.setTextColor(Color.RED);
-                endate.setTextColor(Color.RED);
-                extype.setTextColor(Color.RED);
-                exdate.setTextColor(Color.RED);
+                MSlNo.setTextColor(Color.RED);
+                PNo.setTextColor(Color.RED);
+                Name.setTextColor(Color.RED);
+                Rth.setTextColor(Color.RED);
+                Sex.setTextColor(Color.RED);
+                BDate.setTextColor(Color.RED);
+                MoNo.setTextColor(Color.RED);
+                FaNo.setTextColor(Color.RED);
+                Edu.setTextColor(Color.RED);
+                MS.setTextColor(Color.RED);
+                Pstat.setTextColor(Color.RED);
+                LmpDt.setTextColor(Color.RED);
+                Sp1.setTextColor(Color.RED);
+                Sp2.setTextColor(Color.RED);
+                Sp3.setTextColor(Color.RED);
+                Sp4.setTextColor(Color.RED);
+                Ocp.setTextColor(Color.RED);
+                EnType.setTextColor(Color.RED);
+                EnDate.setTextColor(Color.RED);
+                ExType.setTextColor(Color.RED);
+                ExDate.setTextColor(Color.RED);
             }
 
             if(o.get("newold").equals("n"))
             {
-                mslno.setTextColor(Color.GREEN);
-                pno.setTextColor(Color.GREEN);
-                name.setTextColor(Color.GREEN);
-                rth.setTextColor(Color.GREEN);
-                sex.setTextColor(Color.GREEN);
-                bdate.setTextColor(Color.GREEN);
-                mono.setTextColor(Color.GREEN);
-                fano.setTextColor(Color.GREEN);
-                edu.setTextColor(Color.GREEN);
-                ms.setTextColor(Color.GREEN);
-                pstat.setTextColor(Color.GREEN);
-                lmpdt.setTextColor(Color.GREEN);
-                sp1.setTextColor(Color.GREEN);
-                sp2.setTextColor(Color.GREEN);
-                sp3.setTextColor(Color.GREEN);
-                sp4.setTextColor(Color.GREEN);
-                ocp.setTextColor(Color.GREEN);
-                entype.setTextColor(Color.GREEN);
-                endate.setTextColor(Color.GREEN);
-                extype.setTextColor(Color.GREEN);
-                exdate.setTextColor(Color.GREEN);
+                MSlNo.setTextColor(Color.GREEN);
+                PNo.setTextColor(Color.GREEN);
+                Name.setTextColor(Color.GREEN);
+                Rth.setTextColor(Color.GREEN);
+                Sex.setTextColor(Color.GREEN);
+                BDate.setTextColor(Color.GREEN);
+                MoNo.setTextColor(Color.GREEN);
+                FaNo.setTextColor(Color.GREEN);
+                Edu.setTextColor(Color.GREEN);
+                MS.setTextColor(Color.GREEN);
+                Pstat.setTextColor(Color.GREEN);
+                LmpDt.setTextColor(Color.GREEN);
+                Sp1.setTextColor(Color.GREEN);
+                Sp2.setTextColor(Color.GREEN);
+                Sp3.setTextColor(Color.GREEN);
+                Sp4.setTextColor(Color.GREEN);
+                Ocp.setTextColor(Color.GREEN);
+                EnType.setTextColor(Color.GREEN);
+                EnDate.setTextColor(Color.GREEN);
+                ExType.setTextColor(Color.GREEN);
+                ExDate.setTextColor(Color.GREEN);
             }
 
-            if(o.get("extype").trim().equals("55"))
+            if(o.get("ExType").trim().equals("55"))
             {
                 if(o.get("deathrep").equals("1"))
                 {
-                    name.setBackgroundColor(Color.RED);
-                    name.setTextColor( Color.WHITE );
+                    Name.setBackgroundColor(Color.RED);
+                    Name.setTextColor( Color.WHITE );
                 }
                 else
                 {
-                    name.setBackgroundColor(Color.WHITE);
-                    name.setTextColor( Color.RED );
+                    Name.setBackgroundColor(Color.WHITE);
+                    Name.setTextColor( Color.RED );
                 }
             }
 
@@ -1202,9 +1200,9 @@ public class Member_list extends Activity {
 
             memtab.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if(o.get("extype").trim().length()==0)
+                    if(o.get("ExType").trim().length()==0)
                     {
-                        if(o.get("posmigdate")==null | o.get("posmigdate").trim().length()==0)
+                        if(o.get("PosMigDate")==null | o.get("PosMigDate").trim().length()==0)
                         {
 //                            ShowEventForm(o.get("vill"),o.get("bari"),o.get("hh"),o.get("sno"),o.get("pno"),o.get("name"));
                         }
@@ -1229,13 +1227,12 @@ public class Member_list extends Activity {
 
                             adb.show();
                         }
-
                     }
                     else
                     {
-                        if(o.get("extype").trim().equals("55") & Integer.valueOf(o.get("exyear"))>=2014)
+                        if(o.get("ExType").trim().equals("55") & Integer.valueOf(o.get("exyear"))>=2014)
                         {
-                            if(Integer.valueOf(o.get("deathage"))>=13 & Integer.valueOf(o.get("deathage"))<=49 & o.get("sex").equals("2"))
+                            if(Integer.valueOf(o.get("deathage"))>=13 & Integer.valueOf(o.get("deathage"))<=49 & o.get("Sex").equals("2"))
                             {
                                 g.setPregOnDeath("1");
                             }

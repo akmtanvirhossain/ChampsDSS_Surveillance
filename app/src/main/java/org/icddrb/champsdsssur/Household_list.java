@@ -373,7 +373,6 @@ public class Household_list extends Activity  {
      }
  }
 
-
  public void DataSearch(String Cluster, String Block, String Vill, String Bari)
      {
        try
@@ -386,7 +385,6 @@ public class Household_list extends Activity  {
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQL += " left outer join Visits v on h.Vill=v.Vill and h.Bari=v.Bari and h.HH=v.HH and v.Rnd='"+ ROUNDNO +"'";
             SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%')";
-
 
             List<Household_DataModel> data = d.SelectAllVisit(this, SQL);
             dataList.clear();

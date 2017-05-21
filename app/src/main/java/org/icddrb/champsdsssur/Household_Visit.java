@@ -448,7 +448,8 @@ import Common.Global;
                  SQL +=" Select '77-সমগ্র পরিবার অন্যত্র  চলেগেছে' union";
                  SQL +=" Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
              }
-             else if(TOTALMEM.equals("0")){
+             else if(TOTALMEM.equals("0"))
+             {
 
                  SQL = " Select ' ' union";
                  SQL += " Select '01-Member 1' union";
@@ -463,7 +464,8 @@ import Common.Global;
                  SQL += " Select '99-খানার সকল সদস্য অনুপস্থিত'";
                  //SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
              }
-             else {
+             else
+             {
 
                  SQL = " Select ' ' union";
                  SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0) union";
@@ -513,8 +515,6 @@ import Common.Global;
          return Global.Right("00"+SL,2);
      }
 
-
-
  private void DataSave()
  {
    try
@@ -523,13 +523,13 @@ import Common.Global;
 
          if(txtHHHead.getText().toString().length()==0 & secHHHead.isShown())
          {
-             Connection.MessageBox(Household_Visit.this, "Required field: খানা প্রধানের নাম.");
+             Connection.MessageBox(Household_Visit.this, "খানা প্রধানের নাম খালি রাখা যাবেনা.");
              txtHHHead.requestFocus();
              return;
          }
          else if(spnReligion.getSelectedItemPosition()==0  & secReligion.isShown())
            {
-             Connection.MessageBox(Household_Visit.this, "Required field: ধর্ম.");
+             Connection.MessageBox(Household_Visit.this, "ধর্ম খালি রাখা যাবেনা.");
              spnReligion.requestFocus();
              return;
            }
@@ -555,7 +555,7 @@ import Common.Global;
            }
          else if(spnResp.getSelectedItemPosition()==0  & spnResp.isShown())
          {
-             Connection.MessageBox(Household_Visit.this, "Required field: উত্তরদাতা.");
+             Connection.MessageBox(Household_Visit.this, "উত্তরদাতা খালি রাখা যাবেনা.");
              spnResp.requestFocus();
              return;
          }

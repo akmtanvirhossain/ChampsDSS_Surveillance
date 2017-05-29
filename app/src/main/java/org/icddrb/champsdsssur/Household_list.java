@@ -194,7 +194,6 @@ public class Household_list extends Activity  {
                  IDbundle.putString("Bari", "");
                  IDbundle.putString("cluster", CLUSTER);
                  IDbundle.putString("block", BLOCK);
-
                  Intent intent = new Intent(getApplicationContext(),Baris.class);
                  intent.putExtras(IDbundle);
                  startActivityForResult(intent, 1);

@@ -105,6 +105,7 @@ import Common.Global;
      static String CLUSTER = "";
      static String BLOCK   = "";
 
+
  public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
    try
@@ -124,6 +125,7 @@ import Common.Global;
          ROUNDNO = IDbundle.getString("roundno");
          CLUSTER = IDbundle.getString("cluster");
          BLOCK   = IDbundle.getString("block");
+
 
          TableName = "Baris";
 
@@ -159,6 +161,7 @@ import Common.Global;
          secBari=(LinearLayout)findViewById(R.id.secBari);
          lineBari=(View)findViewById(R.id.lineBari);
          VlblBari=(TextView) findViewById(R.id.VlblBari);
+
          txtBari=(EditText) findViewById(R.id.txtBari);
          if(BARI.length()==0) {
              txtBari.setText(NewBariNo(VILL));
@@ -193,7 +196,6 @@ import Common.Global;
          ArrayAdapter<String> adptrBlock= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listBlock);
          spnBlock.setAdapter(adptrBlock);
 
-
          secBariName=(LinearLayout)findViewById(R.id.secBariName);
          lineBariName=(View)findViewById(R.id.lineBariName);
          VlblBariName=(TextView) findViewById(R.id.VlblBariName);
@@ -202,7 +204,6 @@ import Common.Global;
          lineBariLoc=(View)findViewById(R.id.lineBariLoc);
          VlblBariLoc=(TextView) findViewById(R.id.VlblBariLoc);
          txtBariLoc=(EditText) findViewById(R.id.txtBariLoc);
-
 
 
          //Hide all skip variables
@@ -226,7 +227,6 @@ import Common.Global;
  {
    try
      {
- 
          String DV="";
 
          if(txtVill.getText().toString().length()==0 & secVill.isShown())
@@ -326,19 +326,24 @@ import Common.Global;
         {
             spnCluster.setEnabled(false);
             spnBlock.setEnabled(false);
+            spnCluster.setSelection(Global.SpinnerItemPositionAnyLength(spnCluster, CLUSTER));
+            spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock, BLOCK));
+
            RadioButton rb;
            Baris_DataModel d = new Baris_DataModel();
            String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"'";
            List<Baris_DataModel> data = d.SelectAll(this, SQL);
-           for(Baris_DataModel item : data){
-               spnCluster.setEnabled(true);
-               spnBlock.setEnabled(true);
-             //txtVill.setText(item.getVill());
-             //txtBari.setText(item.getBari());
-             spnCluster.setSelection(Global.SpinnerItemPositionAnyLength(spnCluster, item.getCluster()));
-             spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock, item.getBlock()));
-             txtBariName.setText(item.getBariName());
-             txtBariLoc.setText(item.getBariLoc());
+
+            for(Baris_DataModel item : data){
+                    spnCluster.setEnabled(true);
+                    spnBlock.setEnabled(true);
+                    //txtVill.setText(item.getVill());
+                    //txtBari.setText(item.getBari());
+                    spnCluster.setSelection(Global.SpinnerItemPositionAnyLength(spnCluster, item.getCluster()));
+                    spnBlock.setSelection(Global.SpinnerItemPositionAnyLength(spnBlock, item.getBlock()));
+
+                    txtBariName.setText(item.getBariName());
+                    txtBariLoc.setText(item.getBariLoc());
            }
         }
         catch(Exception  e)

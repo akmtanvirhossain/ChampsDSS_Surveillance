@@ -719,7 +719,7 @@
    try
      {
          String DV="";
-
+         String Household = VILL + BARI + HH;
          if(txtVill.getText().toString().length()==0 & secVill.isShown())
            {
              Connection.MessageBox(Member.this, "Required field: গ্রাম.");
@@ -962,12 +962,18 @@
                  txtAgeY.requestFocus();
                  return;
          }
-         else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("01") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
+//         else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("01") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
+//             Connection.MessageBox(Member.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
+//             txtName.requestFocus();
+//             return;
+//         }
+
+         else if(C.Existence("select count(*) from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0) group by vill||bari||hh having count(*)>1"))
+         {
              Connection.MessageBox(Member.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
              txtName.requestFocus();
              return;
          }
-
          else if(txtPNo.getText().length()!=11)
          {
              Connection.MessageBox(Member.this, "PNo অবশ্যই ১১ ডিজিট হতে হবে।");

@@ -934,7 +934,7 @@
                          txtName.requestFocus();
                          return;
                      }
-                     String PregResult = C.ReturnSingleValue("Select EVType from Events Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and Rnd='"+ ROUNDNO + "' and EVType='42'");
+                     String PregResult = C.ReturnSingleValue("Select EVType from tmpEvents Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and Rnd='"+ ROUNDNO + "' and EVType='42'");
 
                      if(!PregResult.equals("42"))
                      {

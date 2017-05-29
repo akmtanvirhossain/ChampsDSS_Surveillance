@@ -1042,13 +1042,9 @@
              EVTYPE = spnEvType.getSelectedItem().toString().split("-")[0];
 
              String VDate  = C.ReturnSingleValue("select VDate from tmpVisits Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Rnd='"+ ROUNDNO +"'");
-
              String EnDate  = C.ReturnSingleValue("select EnDate from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Mslno='"+ MSLNO + "'");
-
              String EvDate = Global.DateConvertYMD(dtpEvDate.getText().toString());
-
              String Code   = txtInfo1.getText().toString();
-
              String SpNo   = txtInfo1.getText().toString();
 
              String CodeList = "";
@@ -1241,7 +1237,6 @@
                      return;
                  }
 
-
                  String[] RTH = spnRth.getSelectedItem().toString().split("-");
                  String[] MS = spnMS.getSelectedItem().toString().split("-");
                  String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
@@ -1253,7 +1248,8 @@
                      spnRth.requestFocus();
                      return;
                  }
-                 else if ((RTH[0].equals("02")) & MS[0].equals("32")) {
+                 else if ((RTH[0].equals("02")) & MS[0].equals("32"))
+                 {
                      Connection.MessageBox(Events.this, "খানা প্রধানের সাথে সম্পর্ক  ০২-খানা প্রধানের স্বামী/স্ত্রী হলে বৈবাহিক অবস্থা ৩১-বর্তমানে বিবাহিতা/বিবাহিত হবে.");
                      spnRth.requestFocus();
                      return;
@@ -1832,6 +1828,13 @@
                  objSave.setInfo3(txtInfo3.getText().toString());
                  objSave.setInfo4(txtInfo4.getText().toString());
              }
+             else if(EVT.equals("63"))
+             {
+                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                 objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
+                 objSave.setInfo3(txtInfo3.getText().toString());
+                 objSave.setInfo4(txtInfo4.getText().toString());
+             }
              else if(EVT.equals("64"))
              {
                  objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
@@ -1953,6 +1956,11 @@
              else if(EVTYPE.equals("62"))
              {
                  SQL3 = "Update tmpMember set FaNo='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
+                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
+             }
+             else if(EVTYPE.equals("63"))
+             {
+                 SQL3 = "Update tmpMember set Sp1='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
                  SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
              }
 

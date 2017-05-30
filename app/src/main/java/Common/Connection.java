@@ -2144,8 +2144,9 @@ public class Connection extends SQLiteOpenHelper {
             //Reqular data sync
             //--------------------------------------------------------------------------------------
             C.Sync_DatabaseStructure(UniqueID);
+            C.Sync_Download("migMember",UniqueID,"");
             //C.Sync_Download("DataCollector", UniqueID, "");
-            //C.Sync_Download("Village", UniqueID, "");
+            C.Sync_Download("Village", UniqueID, "");
 
             //Sync_Download
             // Parameter 1: table Name

@@ -2299,6 +2299,10 @@ public class Member_list extends Activity {
             objSave.setSp2(item.getSp2());
             objSave.setSp3(item.getSp3());
             objSave.setSp4(item.getSp4());
+
+            objSave.setPstat(item.getPstat());
+            objSave.setLmpDt(item.getLmpDt());
+
             objSave.setEnType(item.getEnType());
             objSave.setEnDate(item.getEnDate());
             objSave.setExType(item.getExType());

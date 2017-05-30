@@ -130,7 +130,6 @@ public class MainMenu extends Activity {
                                     try {
                                         String r = C.ExecuteCommandOnServer("Insert into UploadMonitor(DeviceID)Values('"+ DEVICEID +"')");
 
-
                                         List<String> tableList = new ArrayList<String>();
                                         tableList.add("Baris");
                                         tableList.add("Household");

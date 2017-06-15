@@ -382,7 +382,7 @@ public class Household_list extends Activity  {
             SQL = "Select h.Vill, h.Bari,h.HH, Religion, MobileNo1, MobileNo2, HHHead, ifnull(TotMem,'0')TotMem,TotRWo, h.EnType, h.EnDate, h.ExType, h.ExDate, ifnull(h.Note,'')Note,h.Rnd,b.BariName,";
             SQL += " ifnull(v.VStatus,'') as vstatus,ifnull(v.vstatusoth,'') vstatusoth,ifnull(v.Resp,'') as resp";
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
-            SQL += " left outer join Visits v on h.Vill=v.Vill and h.Bari=v.Bari and h.HH=v.HH and v.Rnd='"+ ROUNDNO +"'";
+            SQL += " left outer join Visits v on h.Vill=v.Vill and h.Bari=v.Bari and h.HH=v.HH and (case when v.Resp='77' then '"+ ROUNDNO +"' else v.Rnd end)='"+ ROUNDNO +"'";
             SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%')";
 
             List<Household_DataModel> data = d.SelectAllVisit(this, SQL);
@@ -475,7 +475,7 @@ public class Household_list extends Activity  {
          VNote.setText(VisitNote);
 
          secRowVStatus.setVisibility(View.GONE);
-         String resp = o.get("resp").toString().length()==0?"":o.get("resp").toString();
+         final String resp = o.get("resp").toString().length()==0?"":o.get("resp").toString();
          if(resp.length()==0){
              Bari.setTextColor(Color.RED);
              if(o.get("Note").toString().length()>0){
@@ -504,10 +504,7 @@ public class Household_list extends Activity  {
              Bari.setTextColor(Color.GREEN);
              secRowVStatus.setVisibility(View.VISIBLE);
              lblVStatus.setText("খানার সকল সদস্য অনুপস্থিত, "+ o.get("Note"));
-         }
-
-
-         if(o.get("TotMem").equals("0")||o.get("TotMem").length()==0){
+         }else if(o.get("TotMem").equals("0")||o.get("TotMem").length()==0){
              secRowVStatus.setVisibility(View.VISIBLE);
              lblVStatus.setText("বেজলাইনে অনুপস্থিত");
          }
@@ -534,6 +531,7 @@ public class Household_list extends Activity  {
                IDbundle.putString("cluster",CLUSTER);
                IDbundle.putString("block",BLOCK);
                IDbundle.putString("OldNew", "old");
+                IDbundle.putString("resp", resp);
                IDbundle.putString("totalmem", o.get("TotMem").length()==0?"0":o.get("TotMem"));
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);

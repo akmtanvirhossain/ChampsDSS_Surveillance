@@ -224,6 +224,7 @@ import Common.Global;
        BName = IDbundle.getString("BariName");
        HH = IDbundle.getString("HH");
        TOTALMEM = IDbundle.getString("totalmem");
+       RsNo     = IDbundle.getString("resp");
 
        sp = new MySharedPreferences();
        ROUNDNO = sp.getValue(this,"roundno");
@@ -433,7 +434,7 @@ import Common.Global;
 
 
        String SQL = "";
-       g.setRsNo("");
+       //g.setRsNo("");
 
          if (OLDNEWHH.equals("old"))
          {
@@ -448,9 +449,17 @@ import Common.Global;
                  SQL +=" Select '77-সমগ্র পরিবার অন্যত্র  চলেগেছে' union";
                  SQL +=" Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
              }
+             else if(TOTALMEM.equals("0") & (RsNo.equals("77")|RsNo.equals("88")|RsNo.equals("99")))
+             {
+                 SQL = " Select ' ' union";
+                 SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0) union";
+                 SQL += " Select '00-অনিবার্য পরিস্থিতির কারণে পরিদর্শন করা হয়নি' union";
+                 SQL += " Select '77-সমগ্র পরিবার অন্যত্র  চলেগেছে' union";
+                 SQL += " Select '88-ইন্টারভিউ দিতে রাজী নয়' union";
+                 SQL += " Select '99-খানার সকল সদস্য অনুপস্থিত'";
+             }
              else if(TOTALMEM.equals("0"))
              {
-
                  SQL = " Select ' ' union";
                  SQL += " Select '01-Member 1' union";
                  SQL += " Select '02-Member 2' union";
@@ -459,14 +468,11 @@ import Common.Global;
                  SQL += " Select '05-Member 5' union";
                  SQL += " Select '06-Member 6' union";
                  SQL += " Select '00-অনিবার্য পরিস্থিতির কারণে পরিদর্শন করা হয়নি' union";
-//                 SQL += " Select '77-সমগ্র পরিবার অন্যত্র  চলেগেছে' union";
                  SQL += " Select '88-ইন্টারভিউ দিতে রাজী নয়' union";
                  SQL += " Select '99-খানার সকল সদস্য অনুপস্থিত'";
-                 //SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
              }
              else
              {
-
                  SQL = " Select ' ' union";
                  SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0) union";
                  SQL += " Select '00-অনিবার্য পরিস্থিতির কারণে পরিদর্শন করা হয়নি' union";

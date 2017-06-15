@@ -2266,6 +2266,7 @@ public class Connection extends SQLiteOpenHelper {
             Res = C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Code List
+            C.Sync_Download("migMember",UniqueID,"");
             C.Sync_Download("EventCode",UniqueID,"");
             C.Sync_Download("EDU",UniqueID,"");
             C.Sync_Download("OCP",UniqueID,"");

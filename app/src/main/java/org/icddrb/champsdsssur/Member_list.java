@@ -252,6 +252,8 @@ public class Member_list extends Activity {
                              C.Save("Delete from tmpPregHis where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
                              C.Save("Delete from tmpEvents where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
 
+                             String totalMem = C.ReturnSingleValue("Select count(*)Total from Member where Vill||Bari||HH='" + (VILL + BARI + HH) + "' and length(ExType)=0");
+                             C.Save("Update Household set TotMem='"+ totalMem +"' where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
                              finish();
                          }
                      }

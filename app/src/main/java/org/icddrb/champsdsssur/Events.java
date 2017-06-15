@@ -1466,8 +1466,7 @@
                      }
                      m.close();
 
-                     if (ECode == 40 | ECode == 49)
-                     {
+                     if (ECode == 40 | ECode == 49) {
                          if (Sex.equals("1")) {
                              Connection.MessageBox(Events.this, "সদস্য অবশ্যই মহিলা হতে হবে।");
                              return;
@@ -1503,6 +1502,15 @@
                              Connection.MessageBox(Events.this, "ইভেন্ট কোড ("+ EVTYPE +") রউন্ড নাম্বার "+ ROUNDNO +" এ ঘটানো হয়েছে।");
                              return;
                          }
+
+                         //(Event Table) check the information is available or not
+                         if(ECode==41 & C.Existence("Select * from Events where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EVTYPE.toString() +"' and Rnd='"+ ROUNDNO +"'"))
+                         {
+                             Connection.MessageBox(Events.this, "ইভেন্ট কোড ("+ EVTYPE +") রউন্ড নাম্বার "+ ROUNDNO +" এ ঘটানো হয়েছে।");
+                             return;
+                         }
+
+                         //difference between lmp and visit date should be equal or greater than 40 days
                      }
                      else if (ECode == 42)
                      {

@@ -1127,7 +1127,6 @@ public class Member_list extends Activity {
                 ExDate.setTextColor(Color.BLUE);
                 PosMig.setTextColor(Color.BLUE);
                 PosMigDate.setTextColor(Color.BLUE);
-
             }
             else
             {

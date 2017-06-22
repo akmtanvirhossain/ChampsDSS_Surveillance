@@ -59,7 +59,7 @@ public class LoginActivity extends Activity {
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
-            SystemUpdateDT = "04062017";  //Format: DDMMYYYY
+            SystemUpdateDT = "18062017";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
 
             //Check for Internet connectivity
@@ -96,6 +96,8 @@ public class LoginActivity extends Activity {
             g.setDeviceNo(UniqueID);
             sp.save(this,"deviceid",UniqueID);
 
+//            C.Save("update Events set Upload='2'");
+//            C.Save("update Member set Upload='2'");
             //Only for removing the data of training: 17 Nov 2015
             /*if(Global.DateNowDMY().equals("11/03/2017") | Global.DateNowDMY().equals("12/03/2017")  | Global.DateNowDMY().equals("13/03/2017") | Global.DateNowDMY().equals("14/03/2017") | Global.DateNowDMY().equals("15/03/2017"))
             {

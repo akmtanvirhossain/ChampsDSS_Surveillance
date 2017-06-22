@@ -1186,12 +1186,15 @@
                      return;
                  }
 
-                 int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
+                 int ageday = Global.DateDifferenceDays(dtpEvDate.getText().toString(),dtpBDate.getText().toString());
                  int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString());
 
-                 if(ageday/365!=ageyear)
+                 Double  D=ageday/365.25;
+                 int i = Integer.valueOf(D.intValue());
+
+                 if(i!=ageyear)
                  {
-                     Connection.MessageBox(Events.this, "বয়স এর সাথে জন্মতারিখ মিল নেই, বয়স "+ ageday/365 +" বছর হতে হবে।");
+                     Connection.MessageBox(Events.this, "বয়স এর সাথে জন্মতারিখ মিল নেই, বয়স "+ i +" বছর হতে হবে।");
                      return;
                  }
                  else if(Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "0" : txtAgeY.getText().toString()) < 0 || Integer.valueOf(txtAgeY.getText().toString().length()==0 ? "110" : txtAgeY.getText().toString()) > 110)

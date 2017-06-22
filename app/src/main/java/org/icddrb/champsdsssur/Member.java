@@ -792,6 +792,8 @@
 
          int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
          int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString());
+
+
          if(ageday/365!=ageyear){
              Connection.MessageBox(Member.this, "বয়স এর সাথে জন্মতারিখ মিল নেই, বয়স "+ ageday/365 +" বছর হতে হবে।");
              return;

@@ -1245,6 +1245,8 @@
                  String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
                  String[] Sp1 = spnSp1.getSelectedItem().toString().split("-");
                  String[] MoSl = spnMoNo.getSelectedItem().toString().split("-");
+                 String[] FaSl = spnFaNo.getSelectedItem().toString().split("-");
+                 String[] Edu = spnEdu.getSelectedItem().toString().split("-");
 
                  if ((RTH[0].equals("02") | RTH[0].equals("04") | RTH[0].equals("07") | RTH[0].equals("10") | RTH[0].equals("11") | RTH[0].equals("15") | RTH[0].equals("17")) & MS[0].equals("30")) {
                      Connection.MessageBox(Events.this, "খানা প্রধানের সাথে সম্পর্ক  ০২, ০৪, ০৭, ১০, ১১, ১৫, ১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
@@ -1322,12 +1324,13 @@
                      txtAgeY.requestFocus();
                      return;
                  }
-                 else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("01") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
+
+                 else if(C.Existence("select count(*) from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0) group by vill||bari||hh having count(*)>1"))
+                 {
                      Connection.MessageBox(Events.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
                      txtName.requestFocus();
                      return;
                  }
-
                  if(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00") ||(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00")))
                  {
 
@@ -1421,6 +1424,36 @@
                  else if (Connection.SelectedSpinnerValue(spnSp3.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp4.getSelectedItem().toString(), "-"))& spnSp4.isShown()) {
                      Connection.MessageBox(Events.this, "প্রশ্ন ১৫) ৩য় স্বামী/স্ত্রী সিরিয়াল নং  এবং প্রশ্ন ১৬) ৪র্থ স্বামী/স্ত্রী সিরিয়াল নং একই হবে না");
                      spnSp1.requestFocus();
+                     return;
+                 }
+                 //------------------------Add on 18_07_17-----------------------------------------------------------------------------
+                 else if ((MS[0].equals("31") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 10))
+                 {
+                     Connection.MessageBox(Events.this, "সদস্যের বৈবাহিক অবস্থা ৩১ হবেনা, সদস্যের  বয়স ১০ বছরের নিচে");
+                     txtAgeY.requestFocus();
+                     return;
+                 }
+
+                 else if ((Ocp[0].equals("31")) & Edu[0].equals("00")) {
+                     Connection.MessageBox(Events.this, "পেশা মেধা সম্পন্ন হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
+                     spnEdu.requestFocus();
+                     return;
+                 }
+                 else if ((Ocp[0].equals("34")) & Edu[0].equals("00")) {
+                     Connection.MessageBox(Events.this, "পেশা পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
+                     spnEdu.requestFocus();
+                     return;
+                 }
+                 else if ((RTH[0].equals("03")) & MoSl[0].equals("00") & FaSl[0].equals("00")) {
+                     Connection.MessageBox(Events.this, "খানা প্রধানের সাথে সম্পর্ক  ছেলে/মেয়ে হলে বাবা এবং মা এর সিরিয়াল নং ০০ হবেনা.");
+                     spnRth.requestFocus();
+                     return;
+                 }
+
+                 else if ((Ocp[0].equals("03")) & rdoSex1.isChecked())
+                 {
+                     Connection.MessageBox(Events.this, "পেশা গৃহিনী হলে সদস্য পুরুষ হবেনা.");
+                     spnRth.requestFocus();
                      return;
                  }
              }
@@ -3059,7 +3092,20 @@
                  }
                  dtpBDate.setText(item.getBDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getBDate()));
                  dtpBDate.setEnabled(false);
-                 txtAgeY.setText(item.getAgeY());
+
+                 int ageday = Global.DateDifferenceDays(dtpEvDate.getText().toString(),dtpBDate.getText().toString());
+                 Double  D=ageday/365.25;
+                 int Age = Integer.valueOf(D.intValue());
+
+                 String SL=Age+"";
+                 int length=SL.length();
+                 if(length==1)
+                 {
+                     SL="0"+SL;
+                 }
+                 txtAgeY.setText(SL);
+
+//                 txtAgeY.setText(item.getAgeY());
                  txtAgeY.setEnabled(false);
                  spnMoNo.setSelection(0);
                  spnFaNo.setSelection(0);

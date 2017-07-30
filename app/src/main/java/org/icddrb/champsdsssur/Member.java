@@ -895,6 +895,8 @@
          String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
          String[] Sp1 = spnSp1.getSelectedItem().toString().split("-");
          String[] MoSl = spnMoNo.getSelectedItem().toString().split("-");
+         String[] FaSl = spnFaNo.getSelectedItem().toString().split("-");
+         String[] Edu = spnEdu.getSelectedItem().toString().split("-");
 
          if ((RTH[0].equals("02") | RTH[0].equals("04") | RTH[0].equals("07") | RTH[0].equals("10") | RTH[0].equals("11") | RTH[0].equals("15") | RTH[0].equals("17")) & MS[0].equals("30")) {
              Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক  ০২, ০৪, ০৭, ১০, ১১, ১৫, ১৭ হলে বৈবাহিক অবস্থা অবিবাহিত হতে পারে না.");
@@ -1123,8 +1125,39 @@
 //             dtpBDate.requestFocus();
 //             return;
 //         }
+//------------------------Add on 18_07_17-----------------------------------------------------------------------------
 
-
+         else if ((MS[0].equals("31") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 10))
+         {
+             Connection.MessageBox(Member.this, "সদস্যের বৈবাহিক অবস্থা ৩১ হবেনা, সদস্যের  বয়স ১০ বছরের নিচে");
+             txtAgeY.requestFocus();
+             return;
+         }
+         else if ((Ocp[0].equals("31")) & Edu[0].equals("00"))
+         {
+             Connection.MessageBox(Member.this, "পেশা মেধা সম্পন্ন হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
+             spnEdu.requestFocus();
+             return;
+         }
+         else if ((Ocp[0].equals("34")) & Edu[0].equals("00"))
+         {
+             Connection.MessageBox(Member.this, "পেশা পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
+             spnEdu.requestFocus();
+             return;
+         }
+         else if ((RTH[0].equals("03")) & MoSl[0].equals("00") & FaSl[0].equals("00"))
+         {
+             Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক ছেলে/মেয়ে হলে বাবা এবং মা এর সিরিয়াল নং ০০ হবেনা.");
+             spnRth.requestFocus();
+             return;
+         }
+         else if ((Ocp[0].equals("03")) & rdoSex1.isChecked())
+         {
+             Connection.MessageBox(Member.this, "পেশা গৃহিনী হলে সদস্য পুরুষ হবেনা.");
+             spnRth.requestFocus();
+             return;
+         }
+//-----------------------------------------------------------------------------------------------------------------------------------------
 
          dtpEnDate.setText(Global.DateConvertDMY(C.ReturnSingleValue("select VDate from Visits where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")));
 

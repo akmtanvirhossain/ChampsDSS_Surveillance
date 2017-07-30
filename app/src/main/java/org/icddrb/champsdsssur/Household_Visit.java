@@ -821,6 +821,7 @@ import Common.Global;
          else  if(OLDNEWHH.equalsIgnoreCase("new"))
          {
              final int Resp = Integer.parseInt(Global.Left(spnResp.getSelectedItem().toString(),2));
+                g.setRsNo(String.valueOf(Resp));
 
                  String SQL = "";
                  try {

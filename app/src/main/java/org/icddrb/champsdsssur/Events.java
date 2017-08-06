@@ -1345,8 +1345,8 @@
                  }
 
                  String s[]=spnMoNo.getSelectedItem().toString().split("-");
-                 String MoSex= C.ReturnSingleValue("Select Sex from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
-                 String MoMS= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
+                 String MoSex= C.ReturnSingleValue("Select Sex from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
+                 String MoMS= C.ReturnSingleValue("Select MS from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
 
                  if ((MoSex.equals("1")))
                  {
@@ -1362,8 +1362,8 @@
                  }
 
                  String f[]=spnFaNo.getSelectedItem().toString().split("-");
-                 String FoSex= C.ReturnSingleValue("Select Sex from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
-                 String FaMS= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
+                 String FoSex= C.ReturnSingleValue("Select Sex from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
+                 String FaMS= C.ReturnSingleValue("Select MS from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
 
                  if ((FoSex.equals("2")))
                  {

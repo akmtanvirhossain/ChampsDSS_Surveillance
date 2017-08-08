@@ -261,25 +261,39 @@
             </ScrollView>
         </LinearLayout>
     </HorizontalScrollView>
+
     <LinearLayout android:layout_width="fill_parent" android:visibility="gone" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0" android:background="#F3F3F3">
-        <RadioGroup
-            android:id="@+id/roMemberOption" android:layout_column="0" android:layout_span="4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/roActiveMember"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Active Members"
-                android:checked="true" />
+        <Button
+            android:id="@+id/cmdCardRequest"
+            android:layout_width="20sp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10sp"
+            android:layout_marginBottom="5sp"
+            android:layout_marginTop="5sp"
+            android:layout_weight="1"
+            android:text="শিশু কার্ড"
+            android:background="@drawable/button_style"
+            android:textSize="16sp" />
 
-            <RadioButton
-                android:id="@+id/roAllMember"
-                android:layout_width="200sp"
-                android:layout_height="wrap_content"
-                android:text="All Members" />
-        </RadioGroup>
+        <!--<RadioGroup-->
+            <!--android:id="@+id/roMemberOption" android:layout_column="0" android:layout_span="4"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" android:orientation="horizontal">-->
+
+            <!--<RadioButton-->
+                <!--android:id="@+id/roActiveMember"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Active Members"-->
+                <!--android:checked="true" />-->
+
+            <!--<RadioButton-->
+                <!--android:id="@+id/roAllMember"-->
+                <!--android:layout_width="200sp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="All Members" />-->
+        <!--</RadioGroup>-->
 
     </LinearLayout>
 

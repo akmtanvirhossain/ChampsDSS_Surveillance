@@ -1325,12 +1325,12 @@
                      return;
                  }
 
-                 else if(C.Existence("select count(*) from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0) group by vill||bari||hh having count(*)>1"))
-                 {
-                     Connection.MessageBox(Events.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
-                     txtName.requestFocus();
-                     return;
-                 }
+//                 else if(C.Existence("select count(*) from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0) group by vill||bari||hh having count(*)>1"))
+//                 {
+//                     Connection.MessageBox(Events.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
+//                     txtName.requestFocus();
+//                     return;
+//                 }
                  if(Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00") ||(Connection.SelectedSpinnerValue(spnMoNo.getSelectedItem().toString(), "-").equalsIgnoreCase("00")))
                  {
 
@@ -2132,7 +2132,8 @@
          lineMoNo = (View) findViewById(R.id.lineMoNo);
          VlblMoNo = (TextView) findViewById(R.id.VlblMoNo);
          spnMoNo = (Spinner) findViewById(R.id.spnMoNo);
-         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' union Select '00-এই খানার সদস্য নয়'"));
+//         spnMoNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and Sex='2' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
 
 //         if (EvType.equals("25"))
 //         {
@@ -2147,7 +2148,8 @@
          lineFaNo = (View) findViewById(R.id.lineFaNo);
          VlblFaNo = (TextView) findViewById(R.id.VlblFaNo);
          spnFaNo = (Spinner) findViewById(R.id.spnFaNo);
-         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
+         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' union Select '00-এই খানার সদস্য নয়'"));
+//         spnFaNo.setAdapter(C.getArrayAdapter("Select '' union Select MSlNo||'-'||Name from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Sex='1' and MS<>'30' union Select '00-এই খানার সদস্য নয়'"));
 
 //         secMoNo=(LinearLayout)findViewById(R.id.secMoNo);
 //         lineMoNo=(View)findViewById(R.id.lineMoNo);

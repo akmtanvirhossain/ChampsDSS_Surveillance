@@ -973,18 +973,6 @@
                  txtAgeY.requestFocus();
                  return;
          }
-//         else if (Connection.SelectedSpinnerValue(spnRth.getSelectedItem().toString(), "-").equals("01") & !isHhHeadValid(txtVill.getText().toString(), txtBari.getText().toString(),txtHH.getText().toString(), txtMSlNo.getText().toString())) {
-//             Connection.MessageBox(Member.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
-//             txtName.requestFocus();
-//             return;
-//         }
-
-         else if(C.Existence("select count(*) from tmpMember where vill||bari||hh='"+ Household +"' and rth='01' and (extype is null or length(extype)=0) group by vill||bari||hh having count(*)>1"))
-         {
-             Connection.MessageBox(Member.this, "এক খানায় ২ জন খানা প্রধান হতে পারেনা");
-             txtName.requestFocus();
-             return;
-         }
          else if(txtPNo.getText().length()!=11)
          {
              Connection.MessageBox(Member.this, "PNo অবশ্যই ১১ ডিজিট হতে হবে।");
@@ -1005,8 +993,8 @@
          }
 //      ---------------Add Saleheen on 03_04_2017--------------------------------------------------------
          String s[]=spnMoNo.getSelectedItem().toString().split("-");
-         String MoSex= C.ReturnSingleValue("Select Sex from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
-         String MoMS= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
+         String MoSex= C.ReturnSingleValue("Select Sex from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
+         String MoMS= C.ReturnSingleValue("Select MS from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
 
          if ((MoSex.equals("1")))
          {
@@ -1022,8 +1010,8 @@
          }
 
          String f[]=spnFaNo.getSelectedItem().toString().split("-");
-         String FoSex= C.ReturnSingleValue("Select Sex from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
-         String FaMS= C.ReturnSingleValue("Select MS from Member where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
+         String FoSex= C.ReturnSingleValue("Select Sex from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
+         String FaMS= C.ReturnSingleValue("Select MS from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ f[0] + "'");
 
          if ((FoSex.equals("2")))
          {
@@ -1159,7 +1147,7 @@
          }
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
-         dtpEnDate.setText(Global.DateConvertDMY(C.ReturnSingleValue("select VDate from Visits where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")));
+         dtpEnDate.setText(Global.DateConvertDMY(C.ReturnSingleValue("select VDate from tmpVisits where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")));
 
          String SQL = "";
          RadioButton rb;

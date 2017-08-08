@@ -412,18 +412,18 @@ public class Member_list extends Activity {
          Button cmdEvList = (Button)findViewById(R.id.cmdEvList);
          Button cmdVisitList = (Button)findViewById(R.id.cmdVisitList);
 
-         final RadioGroup roMemberOption =(RadioGroup)findViewById(R.id.roMemberOption);
-         roMemberOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-             public void onCheckedChanged(RadioGroup arg0, int id) {
-                 if(id == R.id.roActiveMember)
-                 {
-                     DataRetrieve(VILL+BARI+HH, false,"active");
-                 }
-                 else if(id == R.id.roAllMember)
-                 {
-                     DataRetrieve(VILL+BARI+HH, false,"all");
-                 }
-             }});
+//         final RadioGroup roMemberOption =(RadioGroup)findViewById(R.id.roMemberOption);
+//         roMemberOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//             public void onCheckedChanged(RadioGroup arg0, int id) {
+//                 if(id == R.id.roActiveMember)
+//                 {
+//                     DataRetrieve(VILL+BARI+HH, false,"active");
+//                 }
+//                 else if(id == R.id.roAllMember)
+//                 {
+//                     DataRetrieve(VILL+BARI+HH, false,"all");
+//                 }
+//             }});
 
          DataRetrieve(VILL+BARI+HH, true,"active");
 

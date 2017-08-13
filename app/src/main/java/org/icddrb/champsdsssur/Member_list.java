@@ -2157,7 +2157,7 @@ public class Member_list extends Activity {
         cur40.moveToFirst();
         while(!cur40.isAfterLast())
         {
-            ErrMsg += "\n-> ইভেন্ট ৪০ ঘটানো হয় নাই (সিরিয়াল নাম্বার= "+  cur40.getString(cur40.getColumnIndex("sno")) +" নাম= "+ cur40.getString(cur40.getColumnIndex("name")) +" ).";
+            ErrMsg += "\n-> ইভেন্ট ৪০/৪৯ ঘটানো হয় নাই (সিরিয়াল নাম্বার= "+  cur40.getString(cur40.getColumnIndex("sno")) +" নাম= "+ cur40.getString(cur40.getColumnIndex("name")) +" ).";
 
             cur40.moveToNext();
         }

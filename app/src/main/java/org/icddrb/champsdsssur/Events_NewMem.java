@@ -559,6 +559,8 @@
                      VlblOth.setVisibility(View.GONE);
                      VlblInfo1.setText("পূর্বের খানা নাম্বার");
                      txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(11))});
+                     txtInfo1.setEnabled(false);
+                     dtpEvDate.setEnabled(false);
                      MigrationForm(dialog,"52");
                  }
                  else if(EVCODE.equals("23"))
@@ -569,6 +571,8 @@
                      VlblOth.setVisibility(View.GONE);
                      VlblInfo1.setText("মূর্বের খানা নাম্বার");
                      txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(11))});
+                     txtInfo1.setEnabled(false);
+                     dtpEvDate.setEnabled(false);
                      MigrationForm(dialog,"53");
                  }
 
@@ -670,7 +674,7 @@
                          if  (!PMoNo.equals("00")) {
                             spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PMoNo.toString() + "'"));
                         }
-                         if  (PMoNo.equals("00")) {
+                         if  (PMoNo.equals("00") || PMoNo.equals("")) {
                              spnInfo2.setAdapter(C.getArrayAdapter("Select '00-এই খানার সদস্য নয়'"));
                          }
                      }
@@ -698,7 +702,7 @@
                          if  (!PFoNo.equals("00")) {
                              spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PFoNo.toString() + "'"));
                          }
-                         if  (PFoNo.equals("00")) {
+                         if  (PFoNo.equals("00") || PFoNo.equals("")){
                              spnInfo2.setAdapter(C.getArrayAdapter("Select '00-এই খানার সদস্য নয়'"));
                          }
                      }
@@ -726,9 +730,9 @@
 
                          if  (!PSpNo.equals("00"))
                          {
-                             spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PSpNo.toString() + "'"));
+                             spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PSpNo.toString() + "'"));
                          }
-                         if  (PSpNo.equals("00"))
+                         if  (PSpNo.equals("00") || PSpNo.equals(""))
                          {
                              spnInfo2.setAdapter(C.getArrayAdapter("Select '00-এই খানার সদস্য নয়'"));
                          }

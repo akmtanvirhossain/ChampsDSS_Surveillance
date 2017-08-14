@@ -948,7 +948,7 @@
                      }
                  }
              }
-//-----------------------------------------------------------------------------------------------------------------------------------------
+            //-----------------------------------------------------------------------------------------------------------------------------------------
              //Member Validation Check
 
                  if(txtName.getText().toString().length()==0 & secName.isShown())
@@ -1013,17 +1013,20 @@
              String SQL1 = "";
              String SQL2 = "";
              String SQL3 = "";
+             String SQL4 = "";
 
              //Save Events
              SQL1 = objSave.TransactionSQL(this);
 
              //Save Member
-
              if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23") |EVTYPE.equals("25")) {
                  SQL2 = DataSaveMember(MSL);
+                 if(EVTYPE.equals("22") | EVTYPE.equals("23")){
+                     SQL4 = DataSavePregHis(txtInfo1.getText().toString(), txtPNo.getText().toString() ,MSL);
+                 }
              }
-             //Update Member Data
 
+             //Update Member Data
              if(EVTYPE.equals("12"))
              {
 
@@ -1049,7 +1052,14 @@
              }
 
              //Transaction Process
-             String status = C.TransactionDataInsert(SQL1,SQL2,SQL3,"");
+             //String status = C.TransactionDataInsert(SQL1,SQL2,SQL3,SQL4);
+             String status = "";
+             if(EVTYPE.equals("22") | EVTYPE.equals("23"))
+             {
+                 status = C.TransactionDataInsert(SQL1,SQL2,SQL3,SQL4);
+             }else{
+                 status = C.TransactionDataInsert(SQL1,SQL2,SQL3,"");
+             }
 
              if(status.length()==0) {
                  Intent returnIntent = new Intent();
@@ -1229,9 +1239,6 @@
          String SQL = "";
          try
          {
-//             String DV="";
-//             RadioButton rb;
-
              Member_DataModel objSave = new Member_DataModel();
              objSave.setVill(txtVill.getText().toString());
              objSave.setBari(txtBari.getText().toString());
@@ -1263,6 +1270,63 @@
          return SQL;
      }
 
+     private String DataSavePregHis(String HHNo, String PNo, String NewMSlNo)
+     {
+         String SQL = "";
+         C=new Connection(this);
+         Cursor Pcur = C.ReadData("Select * from migPregHis where Vill||Bari||HH='"+ HHNo +"' and PNo='"+ PNo +"'");
+         if(Pcur.getCount()>0) {
+             Pcur.moveToFirst();
+             PregHis_DataModel objSave = new PregHis_DataModel();
+             while (!Pcur.isAfterLast()) {
+                 //New Data
+                 objSave.setVill(VILL);
+                 objSave.setBari(BARI);
+                 objSave.setHH(HH);
+                 objSave.setMSlNo(NewMSlNo);
+
+                 //Old Data
+                 objSave.setPNo(Pcur.getString(Pcur.getColumnIndex("PNo")));
+                 objSave.setVDate(Pcur.getString(Pcur.getColumnIndex("VDate")));
+                 objSave.setVStatus(Pcur.getString(Pcur.getColumnIndex("VStatus")));
+                 objSave.setVStatusOth(Pcur.getString(Pcur.getColumnIndex("VStatusOth")));
+                 objSave.setMarriageStatus(Pcur.getString(Pcur.getColumnIndex("MarriageStatus")));
+                 objSave.setMarMon(Pcur.getString(Pcur.getColumnIndex("MarMon")));
+                 objSave.setMarYear(Pcur.getString(Pcur.getColumnIndex("MarYear")));
+                 objSave.setMarDK(Pcur.getString(Pcur.getColumnIndex("MarDK")));
+                 objSave.setGaveBirth(Pcur.getString(Pcur.getColumnIndex("GaveBirth")));
+                 objSave.setChildLivWWo(Pcur.getString(Pcur.getColumnIndex("ChildLivWWo")));
+                 objSave.setSonLivWWo(Pcur.getString(Pcur.getColumnIndex("SonLivWWo")));
+                 objSave.setDaugLivWWo(Pcur.getString(Pcur.getColumnIndex("DaugLivWWo")));
+                 objSave.setChldLivOut(Pcur.getString(Pcur.getColumnIndex("ChldLivOut")));
+                 objSave.setSonLivOut(Pcur.getString(Pcur.getColumnIndex("SonLivOut")));
+                 objSave.setDaugLivOut(Pcur.getString(Pcur.getColumnIndex("DaugLivOut")));
+                 objSave.setChldDie(Pcur.getString(Pcur.getColumnIndex("ChldDie")));
+                 objSave.setBoyDied(Pcur.getString(Pcur.getColumnIndex("BoyDied")));
+                 objSave.setGirlDied(Pcur.getString(Pcur.getColumnIndex("GirlDied")));
+                 objSave.setNotLivBrth(Pcur.getString(Pcur.getColumnIndex("NotLivBrth")));
+                 objSave.setTotLB(Pcur.getString(Pcur.getColumnIndex("TotLB")));
+                 objSave.setTotPregOut(Pcur.getString(Pcur.getColumnIndex("TotPregOut")));
+                 objSave.setCurPreg(Pcur.getString(Pcur.getColumnIndex("PcurPreg")));
+                 objSave.setLMPDate(Pcur.getString(Pcur.getColumnIndex("LMPDate")));
+
+                 objSave.setEnDt(Global.DateTimeNowYMDHMS());
+                 objSave.setStartTime(STARTTIME);
+                 objSave.setEndTime(g.CurrentTime24());
+                 objSave.setDeviceID(DEVICEID);
+                 objSave.setEntryUser(ENTRYUSER); //from data entry user list
+                 objSave.setLat("");
+                 objSave.setLon("");
+                 SQL = objSave.TransactionSQL(this);
+
+                 Pcur.moveToNext();
+             }
+         }
+         Pcur.close();
+         C.close();
+
+         return SQL;
+     }
 
      public void DataSearchMember(String Vill, String Bari, String HH, String MSlNo, String TableName)
      {
@@ -1532,51 +1596,8 @@
                      lblName.setText("Name: "+ o.get("name") +" [Outdate: "+ o.get("exdate").toString() + "]");
                      lblMigParameter.setText(o.get("vill")+"^"+o.get("bari")+"^"+o.get("hh")+"^"+o.get("sno")+"^"+o.get("pno")+"^"+o.get("exdate"));
                      g.setPNo(o.get("pno").toString());
-
-
-
-                     //*txtPNo.setText(o.get("pno"));
-                     /*dtpEvDate.setText(Global.DateConvertDMY(o.get("exdate").toString()));
-                     secInfo1.setVisibility(View.VISIBLE);
-                     txtInfo1.setText(o.get("hh"));
-                     g.setPNo(o.get("pno").toString());
-                     formMember.setVisibility(View.VISIBLE);
-                     DataSearchMember(o.get("vill"),o.get("bari"),o.get("hh"),o.get("sno"));*/
                  }
              });
-
-            /* secRow.setOnClickListener(new View.OnClickListener() {
-                 public void onClick(View v) {
-                     txtPNo.setText(o.get("pno"));
-                     dtpEvDate.setText(Global.DateConvertDMY(o.get("exdate").toString()));
-                     secInfo1.setVisibility(View.VISIBLE);
-                     txtInfo1.setText(o.get("hh"));
-                     g.setPNo(o.get("pno").toString());
-                     formMember.setVisibility(View.VISIBLE);
-                     DataSearchMember(o.get("vill"),o.get("bari"),o.get("hh"),o.get("sno"));
-
-                     //lblName.setText(o.get("name").toString());
-                 }
-             });*/
-             /*m_pno.setOnClickListener(new View.OnClickListener() {
-                 public void onClick(View v) {
-                     g.setPNo(o.get("pno").toString());
-                     //lblName.setText(o.get("name").toString());
-                 }
-             });*/
-             /*m_name.setOnClickListener(new View.OnClickListener() {
-                 public void onClick(View v) {
-                     lblName.setText("Name: "+ o.get("name") +" [Outdate: "+ Global.DateConvertDMY(o.get("exdate").toString()) + "]");
-                     g.setPNo(o.get("pno").toString());
-                     //lblName.setText(o.get("name").toString());
-                 }
-             });*/
-             /*m_exdate.setOnClickListener(new View.OnClickListener() {
-                 public void onClick(View v) {
-                     g.setPNo(o.get("pno").toString());
-                     //lblName.setText(o.get("name").toString());
-                 }
-             });*/
 
              return convertView;
          }
@@ -1622,6 +1643,8 @@
                  dtpExDate.setText("");
                  if(item.getNeedReview().equals("1")) chkNeedReview.setChecked(true); else chkNeedReview.setChecked(false);*/
              }
+
+
          }
          catch(Exception  e)
          {

@@ -2,6 +2,7 @@ package Common;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
@@ -239,6 +241,20 @@ public class Connection extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(SQL);
         db.close();
+    }
+
+    //Date: 22 Jun 2017 for DataSync
+    public String SaveData(String SQL) {
+        String response = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.execSQL(SQL);
+        }catch(Exception ex){
+            response = ex.getMessage();
+        }finally {
+            db.close();
+        }
+        return response;
     }
 
     //Generate data list
@@ -954,6 +970,7 @@ public class Connection extends SQLiteOpenHelper {
             DataClass dt = new DataClass();
             dt.settablename(TableName);
             dt.setcolumnlist(ColumnList);
+            dt.setuniquefields(UniqueFields);
 
             dt.setdata(data);
             Gson gson = new Gson();
@@ -1003,7 +1020,7 @@ public class Connection extends SQLiteOpenHelper {
 
     //Rebuild Local Database from Server
     //----------------------------------------------------------------------------------------------
-    public void RebuildDatabase(String DeviceID, String Cluster) {
+    public void RebuildDatabase(String DeviceID, String Cluster, final ProgressDialog progDialog, Handler progHandler) {
         List<String> listItem = new ArrayList<String>();
         listItem = DownloadJSONList("Select TableName+'^'+TableScript from DatabaseTab");
 
@@ -1026,9 +1043,6 @@ public class Connection extends SQLiteOpenHelper {
             //--------------------------------------------------------------------------------------
             ExecuteCommandOnServer("Delete from Sync_Management where UserId='" + DeviceID + "'");
 
-
-
-
             //Master Database Sync (Required for any database system)
             //--------------------------------------------------------------------------------------
             SQLStr = "Select TableName, TableScript, ColumnList, UniqueID, BatchSize from DatabaseTab";
@@ -1037,25 +1051,34 @@ public class Connection extends SQLiteOpenHelper {
             UniqueField = "TableName";
             Res = DownloadJSON(SQLStr, TableName, VariableList, UniqueField);
 
-            this.Sync_Download_Rebuild("DeviceList", "DeviceId='" + DeviceID + "'");
-            this.Sync_Download_Rebuild("DataCollector", "Status='d'");
+            this.Sync_Download("DeviceList", DeviceID, "DeviceId='" + DeviceID + "'");
+            this.Sync_Download("DataCollector",DeviceID, "Status='d'");
 
             //Project Specific Database Sync
             //--------------------------------------------------------------------------------------
-            this.Sync_Download_Rebuild("Upazila", "");
-            this.Sync_Download_Rebuild("Unions", "");
-            this.Sync_Download_Rebuild("Mouza", "");
-            this.Sync_Download_Rebuild("Village", "");
+            this.Sync_Download("Upazila",DeviceID, "");
+            this.Sync_Download("Unions",DeviceID, "");
+            this.Sync_Download("Mouza",DeviceID, "");
+
+            //progDialog.setMessage("Downloading Village Data...");
+            //Global.getInstance().setProgressMessage("Downloading Village Data...");
+            //progressHandler.sendMessage(progressHandler.obtainMessage());
+            this.Sync_Download("Village",DeviceID, "");
 
             //Download data from server
             //------------------------------------------------------------------------------
-            //Sync_Download("Baris",DeviceID,"Cluster='"+ Cluster +"'");
             Integer batchSize = 0;
             Integer total     = 0;
 
 
             //Baris
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(5);
+                    progDialog.setMessage("Downloading Bari Data ...");
+                }
+            });
             TableName    = "Baris";
             SQLStr1 = "Select count(*)total " +
                     " from Baris where Cluster='"+ Cluster +"'";
@@ -1069,11 +1092,16 @@ public class Connection extends SQLiteOpenHelper {
 
             VariableList = "Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari";
-            //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQLStr, TableName, VariableList, UniqueField,DeviceID);
             Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
 
             //Household
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(10);
+                    progDialog.setMessage("Downloading Household Data ...");
+                }
+            });
             TableName    = "Household";
 
             SQLStr  = "Select count(*)";
@@ -1100,6 +1128,12 @@ public class Connection extends SQLiteOpenHelper {
 
             //SES
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(30);
+                    progDialog.setMessage("Downloading SES Data ...");
+                }
+            });
             TableName    = "SES";
             SQLStr  = " Select count(*)";
             SQLStr += " from Baris b";
@@ -1126,6 +1160,12 @@ public class Connection extends SQLiteOpenHelper {
 
             //Member
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(40);
+                    progDialog.setMessage("Downloading Member Data ...");
+                }
+            });
             TableName    = "Member";
             SQLStr  = "Select count(*) from Baris b " +
                     "inner join Member m on b.Vill=m.vill and b.Bari=m.Bari " +
@@ -1149,6 +1189,12 @@ public class Connection extends SQLiteOpenHelper {
 
             //PregHis
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(70);
+                    progDialog.setMessage("Downloading Pregnancy History Data ...");
+                }
+            });
             TableName    = "PregHis";
             SQLStr  = " Select count(*)";
             SQLStr += " from Baris b";
@@ -1176,6 +1222,12 @@ public class Connection extends SQLiteOpenHelper {
 
             //Visits
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(80);
+                    progDialog.setMessage("Downloading Visits Data ...");
+                }
+            });
             TableName    = "Visits";
             SQLStr  = " Select count(*)";
             SQLStr += " from Baris b";
@@ -1200,6 +1252,12 @@ public class Connection extends SQLiteOpenHelper {
 
             //Events
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(95);
+                    progDialog.setMessage("Downloading Events Data ...");
+                }
+            });
             TableName    = "Events";
             SQLStr  = "Select count(*) from Events e " +
                     "inner join Baris b on e.Vill=b.Vill and e.Bari=b.Bari " +
@@ -1221,6 +1279,12 @@ public class Connection extends SQLiteOpenHelper {
 
             //Code List
             //--------------------------------------------------------------------------------------
+            progHandler.post(new Runnable() {
+                public void run() {
+                    progDialog.setProgress(100);
+                    progDialog.setMessage("Finishing Download Process ...");
+                }
+            });
             Sync_Download("EventCode",DeviceID,"");
             Sync_Download("EDU",DeviceID,"");
             Sync_Download("OCP",DeviceID,"");
@@ -1230,7 +1294,7 @@ public class Connection extends SQLiteOpenHelper {
             Sync_Download("RTH",DeviceID,"");
 
             //Round Visit
-            this.Sync_Download_Rebuild("RoundVisit", "CurrRound='1'");
+            this.Sync_Download("RoundVisit", DeviceID, "CurrRound='1'");
 
             //Update status on server
             //--------------------------------------------------------------------------------------
@@ -1241,6 +1305,153 @@ public class Connection extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
+
+    private String DownloadJSON_Batch(String SQL, String TableName, String ColumnList, String UniqueField, String UserId) {
+        String WhereClause = "";
+        int varPos = 0;
+        int varPos_modifyDate = 0;
+
+        String response = "";
+        String resp = "";
+
+        try {
+
+            DownloadDataJSON dload = new DownloadDataJSON();
+            response = dload.execute(SQL).get();
+
+            //Process Response
+            DownloadClass d = new DownloadClass();
+            Gson gson = new Gson();
+            Type collType = new TypeToken<DownloadClass>() {
+            }.getType();
+            DownloadClass responseData = gson.fromJson(response, collType);
+
+            String UField[] = UniqueField.split(",");
+            String VarList[] = ColumnList.split(",");
+
+            List<String> dataStatus = new ArrayList<>();
+            String modifyDate = "";
+            String UID = "";
+            String USID = "";
+            String DataList = "";
+            DataClassProperty dd;
+            List<DataClassProperty> dataTemp = new ArrayList<DataClassProperty>();
+            List<DataClassProperty> data     = new ArrayList<DataClassProperty>();
+
+            String downloadSyncStatus = "";
+
+            if (responseData != null & responseData.getdata().size()>0) {
+                SQL = "Insert or replace into "+ TableName +"("+ ColumnList +")Values";
+                for (int i = 0; i < responseData.getdata().size(); i++) {
+                    String VarData[] = split(responseData.getdata().get(i).toString(), '^');
+
+                    //Generate where clause/Unique ID
+                    //------------------------------------------------------------------------------
+                    //Generate Unique ID
+                    //------------------------------------------------------------------------------
+                    for (int j = 0; j < UField.length; j++) {
+                        varPos = VarPosition(UField[j].toString(), VarList);
+
+                        if (j == 0) {
+                            UID += VarData[varPos].toString();
+                        } else {
+                            UID += VarData[varPos].toString();
+                        }
+                    }
+
+                    varPos_modifyDate = VarPosition("modifyDate", VarList);
+                    modifyDate = VarData[varPos_modifyDate].toString();//.replace("null", "");
+
+                    //UID = Sync_UID(UField, VarList, VarData);
+                    //modifyDate = Sync_modifyDate("modifyDate", VarList, VarData);
+
+                    //------------------------------------------------------------------------------
+                    if (i == 0) {
+                        SQL += "('" + responseData.getdata().get(i).toString().replace("^","','").replace("null","") +"')";
+                    } else {
+                        SQL += ",('" + responseData.getdata().get(i).toString().replace("^","','").replace("null","") +"')";
+                    }
+
+                    //Populate class with data for sync_management
+                    //------------------------------------------------------------------------------
+                    DataList = TableName + "^" + UID + "^" + UserId + "^" + modifyDate;
+                    dd = new DataClassProperty();
+                    dd.setdatalist(DataList);
+                    dd.setuniquefieldwithdata("" +
+                            "TableName='" + TableName + "' and " +
+                            "UniqueID='" + UID + "' and " +
+                            "UserId='" + UserId + "' and " +
+                            "modifyDate='" + modifyDate + "'");
+                    dataTemp.add(dd);
+
+                    UID = "";
+                }
+
+                //If there have no error then response send back to server
+                downloadSyncStatus = SaveData(SQL);
+                if(downloadSyncStatus.length()==0){
+                    data = dataTemp;
+                }else{
+                    resp = downloadSyncStatus;
+                }
+
+
+                //30 Jul 2017
+                //Update data to Server on sync management
+                //------------------------------------------------------------------------------
+                DataClass dt = new DataClass();
+                dt.settablename("Sync_Management");
+                dt.setcolumnlist("TableName, UniqueID, UserId, modifyDate");
+                dt.setuniquefields("TableName, UniqueID, UserId, modifyDate");
+                dt.setdata(data);
+
+                Gson gson1 = new Gson();
+                String json1 = gson1.toJson(dt);
+                String resp1 = "";
+
+                UploadDataJSON u = new UploadDataJSON();
+
+                try {
+                    resp1 = u.execute(json1).get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        } catch (Exception e) {
+            resp += e.getMessage();
+            e.printStackTrace();
+        }
+
+        return resp;
+    }
+
+
+    private String Sync_UID(String[] UField, String[] VarList, String[] VarData){
+        String UID = "";
+        for (int x = 0; x < UField.length; x++) {
+            for (int y = 0; y < VarList.length; y++) {
+                if (UField[x].trim().equalsIgnoreCase(VarList[y].toString().trim())) {
+                    UID +=  VarData[y].toString();
+                    y = VarList.length;
+                }
+            }
+        }
+        return UID;
+    }
+
+    private String Sync_modifyDate(String modifyDate, String[] VarList, String[] VarData){
+        String ModDate = "";
+        for (int y = 0; y < VarList.length; y++) {
+            if (modifyDate.trim().equalsIgnoreCase(VarList[y].toString().trim())) {
+                ModDate +=  VarData[y].toString();
+                y = VarList.length;
+            }
+        }
+        return ModDate;
+    }
+
 
     //For Rebuild database: done
     public void Sync_Download_Rebuild(String TableName, String WhereCondition) {
@@ -1301,7 +1512,8 @@ public class Connection extends SQLiteOpenHelper {
         //Execute batch download
         //------------------------------------------------------------------------------------------
         for (int i = 0; i < totalBatch; i++) {
-            Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQL, TableName, VariableList, UniqueField, UserId);
+            //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQL, TableName, VariableList, UniqueField, UserId);
+            Res = DownloadJSON_Batch(SQL, TableName, VariableList, UniqueField, UserId);
         }
     }
 
@@ -1368,24 +1580,29 @@ public class Connection extends SQLiteOpenHelper {
 
         //Execute batch download
         //------------------------------------------------------------------------------------------
-        for (int i = 0; i < totalBatch; i++) {
-            SQL = "Select top " + batchSize + " " + SQL_VariableList + " from " + TableName + " as t";
-            SQL += " where not exists(select * from Sync_Management where";
-            SQL += " lower(TableName)  = lower('" + TableName + "') and";
-            SQL += " UniqueID   = " + UID + " and";
-            SQL += " convert(varchar(19),modifydate,120) = convert(varchar(19),t.modifydate,120) and";
-            SQL += " UserId   ='" + UserId + "')";
-            if (WhereClause.length() > 0) {
-                SQL += " and " + WhereClause;
-            }
+        try {
+            for (int i = 0; i < totalBatch; i++) {
+                SQL = "Select top " + batchSize + " " + SQL_VariableList + " from " + TableName + " as t";
+                SQL += " where not exists(select * from Sync_Management where";
+                SQL += " lower(TableName)  = lower('" + TableName + "') and";
+                SQL += " UniqueID   = " + UID + " and";
+                SQL += " convert(varchar(19),modifydate,120) = convert(varchar(19),t.modifydate,120) and";
+                SQL += " UserId   ='" + UserId + "')";
+                if (WhereClause.length() > 0) {
+                    SQL += " and " + WhereClause;
+                }
 
-            Res = DownloadJSON_Update_Sync_Management(SQL, TableName, VariableList, UniqueField, UserId);
+                //Res = DownloadJSON_Update_Sync_Management(SQL, TableName, VariableList, UniqueField, UserId);
+                Res = DownloadJSON_Batch(SQL, TableName, VariableList, UniqueField, UserId);
+            }
+        }catch(Exception ex){
+
         }
     }
 
     //done
     //download data from server and include those id's into Table: Sync_Management
-    private String DownloadJSON_Update_Sync_Management(String SQL, String TableName, String ColumnList, String UniqueField, String UserId) {
+    /*private String DownloadJSON_Update_Sync_Management(String SQL, String TableName, String ColumnList, String UniqueField, String UserId) {
         String WhereClause = "";
         int varPos = 0;
 
@@ -1487,6 +1704,7 @@ public class Connection extends SQLiteOpenHelper {
             DataClass dt = new DataClass();
             dt.settablename("Sync_Management");
             dt.setcolumnlist("TableName, UniqueID, UserId, modifyDate");
+            dt.setuniquefields(UniqueField);
             dt.setdata(data);
 
             Gson gson1 = new Gson();
@@ -1509,7 +1727,7 @@ public class Connection extends SQLiteOpenHelper {
         }
 
         return resp;
-    }
+    }*/
 
 
     private String DownloadJSON_Update_Sync_Management_InsertOnly(String SQL, String TableName, String ColumnList, String UniqueField, String UserId) {
@@ -1588,6 +1806,7 @@ public class Connection extends SQLiteOpenHelper {
             DataClass dt = new DataClass();
             dt.settablename("Sync_Management");
             dt.setcolumnlist("TableName, UniqueID, UserId, modifyDate");
+            dt.setuniquefields(UniqueField);
             dt.setdata(data);
 
             Gson gson1 = new Gson();
@@ -1698,7 +1917,11 @@ public class Connection extends SQLiteOpenHelper {
     //Upload data to server
     public void Sync_Upload(List<String> tableList) {
         for (int i = 0; i < tableList.size(); i++) {
-            Sync_Upload_Process(tableList.get(i).toString());
+            try {
+                Sync_Upload_Process(tableList.get(i).toString());
+            }catch (Exception ex){
+
+            }
         }
     }
 
@@ -1990,6 +2213,7 @@ public class Connection extends SQLiteOpenHelper {
             DataClass dt = new DataClass();
             dt.settablename("Sync_Management");
             dt.setcolumnlist("TableName, UniqueID, UserId, modifyDate");
+            dt.setuniquefields(UniqueField);
             dt.setdata(data);
 
             Gson gson1   = new Gson();
@@ -2144,23 +2368,11 @@ public class Connection extends SQLiteOpenHelper {
             //Reqular data sync
             //--------------------------------------------------------------------------------------
             C.Sync_DatabaseStructure(UniqueID);
-            C.Sync_Download("migMember",UniqueID,"");
-            //C.Sync_Download("DataCollector", UniqueID, "");
-            C.Sync_Download("Village", UniqueID, "");
+            C.Sync_Download("RoundVisit",UniqueID,"CurrRound='1'");
+            //C.Sync_Download("DataCollector",UniqueID,"Status='d'");
 
-            //Sync_Download
-            // Parameter 1: table Name
-            // Parameter 2: UniqueID of Device
-            // Parameter 3: Where Condition
-            //--------------------------------------------------------------------------------------
-            //C.Sync_Download("Baris", UniqueID, "");
-            //C.Sync_Download("migMember", UniqueID, "");
-
-            //Sync_Upload
-            // Parameter 1: table list
-            //--------------------------------------------------------------------------------------
             //Download data from server
-            //------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
             String SQLStr = "";
             String SQLStr1 = "";
             String TableName;
@@ -2180,7 +2392,7 @@ public class Connection extends SQLiteOpenHelper {
 
             VariableList = "Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate";
             UniqueField  = "Vill, Bari";
-            Res = C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Household
             TableName    = "Household";
@@ -2194,7 +2406,7 @@ public class Connection extends SQLiteOpenHelper {
 
             VariableList = "Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH";
-            Res = C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //SES
             TableName    = "SES";
@@ -2209,7 +2421,7 @@ public class Connection extends SQLiteOpenHelper {
 
             VariableList = "Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth, Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon, Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, SESNo";
-            Res = C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Member
             TableName    = "Member";
@@ -2223,7 +2435,7 @@ public class Connection extends SQLiteOpenHelper {
             VariableList = "Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, EnType, EnDate, ExType, ExDate, NeedReview, PosMig, PosMigDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo";
 
-            C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //PregHis
             TableName    = "PregHis";
@@ -2238,7 +2450,7 @@ public class Connection extends SQLiteOpenHelper {
 
             VariableList = "Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo, SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut, CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo";
-            Res = C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Visits
             TableName    = "Visits";
@@ -2251,7 +2463,7 @@ public class Connection extends SQLiteOpenHelper {
 
             VariableList = "Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, Rnd";
-            Res = C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Events
             TableName    = "Events";
@@ -2263,10 +2475,12 @@ public class Connection extends SQLiteOpenHelper {
 
             VariableList = "Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo, EvType, EvDate, Rnd";
-            Res = C.DownloadJSON_Update_Sync_Management(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Code List
+            C.Sync_Download("Village", UniqueID, "");
             C.Sync_Download("migMember",UniqueID,"");
+            C.Sync_Download("migPregHis",UniqueID,"");
             C.Sync_Download("EventCode",UniqueID,"");
             C.Sync_Download("EDU",UniqueID,"");
             C.Sync_Download("OCP",UniqueID,"");
@@ -2275,11 +2489,12 @@ public class Connection extends SQLiteOpenHelper {
             C.Sync_Download("POR",UniqueID,"");
             C.Sync_Download("RTH",UniqueID,"");
 
+            //Data Correction Note
+            C.Sync_Download("DataCorrectionNote",UniqueID,"Cluster='"+ Cluster +"'");
         }
         catch(Exception ex)
         {
         }
-
     }
 
     public String TransactionDataInsert(String SQL1,String SQL2,String SQL3,String SQL4) {

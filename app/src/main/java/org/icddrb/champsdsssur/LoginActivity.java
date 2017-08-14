@@ -96,34 +96,13 @@ public class LoginActivity extends Activity {
             g.setDeviceNo(UniqueID);
             sp.save(this,"deviceid",UniqueID);
 
-//            C.Save("update Events set Upload='2'");
-//            C.Save("update Member set Upload='2'");
-            //Only for removing the data of training: 17 Nov 2015
-            /*if(Global.DateNowDMY().equals("11/03/2017") | Global.DateNowDMY().equals("12/03/2017")  | Global.DateNowDMY().equals("13/03/2017") | Global.DateNowDMY().equals("14/03/2017") | Global.DateNowDMY().equals("15/03/2017"))
-            {
-                String Count = C.ReturnSingleValue("select count(*) total from DataCollector");
-                if(Integer.valueOf(Count)>87) {
-                    C.Save("Delete from DataCollector");
-                    C.Save("Delete from Baris");
-                }
-                C.Save("Delete from Household where date(endt)     <= '2017-03-15'");
-                C.Save("Delete from Visits where date(endt)        <= '2017-03-15'");
-                C.Save("Delete from SES where date(endt)           <= '2017-03-15'");
-                C.Save("Delete from PregHis where date(endt)       <= '2017-03-15'");
-                C.Save("Delete from Member where date(endt)        <= '2017-03-15'");
-            }*/
-
-
             //**************************************************************************************
             if (networkAvailable)
             {
-                //Reqular data sync
-                C.Sync_DatabaseStructure(UniqueID);
                 C.Sync_Download("DataCollector",UniqueID,"Status='d'");
-                C.Sync_Download("RoundVisit",UniqueID,"CurrRound='1'");
 
-                Intent syncService = new Intent(this, Sync_Service.class);
-                startService(syncService);
+                /*Intent syncService = new Intent(this, Sync_Service.class);
+                startService(syncService);*/
             }
             //**************************************************************************************
             uid.setAdapter(C.getArrayAdapter("select UserId||'-'||UserName User from DataCollector order by UserName"));
@@ -164,6 +143,9 @@ public class LoginActivity extends Activity {
                         //...................................................................................
                         if (networkAvailable == true)
                         {
+                            Intent syncService = new Intent(LoginActivity.this, Sync_Service.class);
+                            startService(syncService);
+
                             //Retrieve data from server for checking local device
                             String[] ServerVal  = Connection.split(C.ReturnResult("ReturnSingleValue","sp_ServerCheckDSS '"+ UniqueID +"'"),',');
                             String ServerDate   = ServerVal[0].toString();

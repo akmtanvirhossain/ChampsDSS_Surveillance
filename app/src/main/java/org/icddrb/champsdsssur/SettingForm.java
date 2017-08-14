@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +28,9 @@ public class SettingForm extends Activity {
 
     Spinner spnCluster;
     //Spinner spnBlock;
+
+    ProgressDialog progDailog;
+    int jumpTime = 0;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,25 +68,40 @@ public class SettingForm extends Activity {
             cmdSave.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
                     try {
-                        String SQLStr   = "";
+                        String SQLStr = "";
 
                         String[] User = spnUser.getSelectedItem().toString().split("-");
                         UserID = User[0];
 
-                        String Setting = C.ReturnResult("Existence", "Select DeviceID from DeviceList where DeviceId='"+ Connection.SelectedSpinnerValue(spnUser.getSelectedItem().toString(),"-") +"' and Setting='1'");
+                        String Setting = C.ReturnResult("Existence", "Select DeviceID from DeviceList where DeviceId='" + Connection.SelectedSpinnerValue(spnUser.getSelectedItem().toString(), "-") + "' and Setting='1'");
                         if (Setting.equals("2")) {
-                            Connection.MessageBox(SettingForm.this, "Device ID :"+ spnUser.getSelectedItem().toString() +" is not allowed to configure a mobile device, contact with administrator.");
+                            Connection.MessageBox(SettingForm.this, "Device ID :" + spnUser.getSelectedItem().toString() + " is not allowed to configure a mobile device, contact with administrator.");
                             return;
                         }
 
-                        String ResponseString="Status:";
+                        String ResponseString = "Status:";
 
-                        final ProgressDialog progDailog = ProgressDialog.show(SettingForm.this, "", "Please Wait . . .", true);
+                        progDailog = new ProgressDialog(SettingForm.this);
+                        progDailog.setMessage("Rebuilding database, Please Wait . . .");
+                        progDailog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progDailog.setIcon(R.drawable.champsicon);
+                        progDailog.setIndeterminate(false);
+                        progDailog.setCancelable(false);
+                        progDailog.setProgress(0);
+                        progDailog.show();
+                        //progDailog = ProgressDialog.show(SettingForm.this, "", "Please Wait . . .", true);
 
                         new Thread() {
                             public void run() {
                                 try {
-                                    C.RebuildDatabase(UserID,spnCluster.getSelectedItem().toString());
+                                    C.RebuildDatabase(UserID, spnCluster.getSelectedItem().toString(), progDailog, progressHandler);
+
+                                    // Update the progress bar
+                                    /*progressHandler.post(new Runnable() {
+                                        public void run() {
+                                            progDailog.setProgress(10);
+                                        }
+                                    });*/
                                 } catch (Exception e) {
 
                                 }
@@ -94,13 +114,18 @@ public class SettingForm extends Activity {
 
                             }
                         }.start();
-                    }
-                    catch(Exception ex)
-                    {
+                    } catch (Exception ex) {
                         Connection.MessageBox(SettingForm.this, ex.getMessage());
                         return;
                     }
                 }
+
+                    Handler progressHandler = new Handler() {
+                        public void handleMessage(Message msg) {
+                            progDailog.setMessage(Global.getInstance().getProgressMessage());
+                            progDailog.incrementProgressBy(jumpTime);
+                        }
+                    };
             });
         }
         catch(Exception ex)

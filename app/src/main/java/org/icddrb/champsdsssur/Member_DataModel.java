@@ -284,6 +284,8 @@ import android.content.Context;
          catch(Exception  e)
          {
              SQL = e.getMessage();
+         }finally {
+             C.close();
          }
          return SQL;
      }
@@ -304,6 +306,9 @@ import android.content.Context;
             {
                  response = e.getMessage();
             }
+            finally {
+                C.close();
+            }
            return response;
         }
         Connection C;
@@ -317,12 +322,14 @@ import android.content.Context;
               {
                  SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,Name,Rth,Sex,BDate,AgeY,MoNo,FaNo,Edu,MS,Pstat,LmpDt,Ocp,Sp1,Sp2,Sp3,Sp4,EnType,EnDate,ExType,ExDate,PosMig,PosMigDate,NeedReview,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _Name +"', '"+ _Rth +"', '"+ _Sex +"', '"+ _BDate +"', '"+ _AgeY +"', '"+ _MoNo +"', '"+ _FaNo +"', '"+ _Edu +"', '"+ _MS + "', '"+ _Pstat +  "', '"+ _LmpDt +"', '"+ _Ocp +"', '"+ _Sp1 +"', '"+ _Sp2 +"', '"+ _Sp3 +"', '"+ _Sp4 +"', '"+ _EnType +"', '"+ _EnDate +"', '"+ _ExType +"', '"+ _ExDate + "','"+ _PosMig +  "', '"+ _PosMigDate + _NeedReview +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
                  C.Save(SQL);
-                 C.close();
               }
               catch(Exception  e)
               {
                  response = e.getMessage();
               }
+            finally {
+                C.close();
+            }
            return response;
         }
 
@@ -335,12 +342,14 @@ import android.content.Context;
               {
                  SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',Name = '"+ _Name +"',Rth = '"+ _Rth +"',Sex = '"+ _Sex +"',BDate = '"+ _BDate +"',AgeY = '"+ _AgeY +"',MoNo = '"+ _MoNo +"',FaNo = '"+ _FaNo +"',Edu = '"+ _Edu +"',MS = '"+ _MS + "',Pstat = '"+ _Pstat + "',LmpDt = '"+ _LmpDt +"',Ocp = '"+ _Ocp +"',Sp1 = '"+ _Sp1 +"',Sp2 = '"+ _Sp2 +"',Sp3 = '"+ _Sp3 +"',Sp4 = '"+ _Sp4 +"',EnType = '"+ _EnType +"',EnDate = '"+ _EnDate +"',ExType = '"+ _ExType +"',ExDate = '"+ _ExDate + "',PosMig = '"+ _PosMig +  "',PosMigDate = '"+ _PosMigDate +"',NeedReview='"+ _NeedReview +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
                  C.Save(SQL);
-                 C.close();
               }
               catch(Exception  e)
               {
                  response = e.getMessage();
               }
+            finally {
+                C.close();
+            }
            return response;
         }
 
@@ -399,6 +408,7 @@ import android.content.Context;
                 cur.moveToNext();
             }
             cur.close();
+            C.close();
           return data;
         }
 
@@ -445,6 +455,7 @@ import android.content.Context;
              cur.moveToNext();
          }
          cur.close();
+         C.close();
          return data;
      }
  }

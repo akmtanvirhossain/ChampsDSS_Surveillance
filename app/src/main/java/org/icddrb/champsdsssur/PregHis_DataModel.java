@@ -256,6 +256,27 @@ import android.content.Context;
 
         String TableName = "tmpPregHis";
 
+     public String TransactionSQL(Context context)
+     {
+         C = new Connection(context);
+         String SQL = "";
+         try
+         {
+             if(C.Existence("Select * from "+ TableName +"  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' "))
+                 SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',VDate = '"+ _VDate +"',VStatus = '"+ _VStatus +"',VStatusOth = '"+ _VStatusOth +"',MarriageStatus = '"+ _MarriageStatus +"',MarMon = '"+ _MarMon +"',MarYear = '"+ _MarYear +"',MarDK = '"+ _MarDK +"',GaveBirth = '"+ _GaveBirth +"',ChildLivWWo = '"+ _ChildLivWWo +"',SonLivWWo = '"+ _SonLivWWo +"',DaugLivWWo = '"+ _DaugLivWWo +"',ChldLivOut = '"+ _ChldLivOut +"',SonLivOut = '"+ _SonLivOut +"',DaugLivOut = '"+ _DaugLivOut +"',ChldDie = '"+ _ChldDie +"',BoyDied = '"+ _BoyDied +"',GirlDied = '"+ _GirlDied +"',NotLivBrth = '"+ _NotLivBrth +"',TotLB = '"+ _TotLB +"',TotPregOut = '"+ _TotPregOut +"',CurPreg = '"+ _CurPreg +"',LMPDate = '"+ _LMPDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
+             else
+                 SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,VDate,VStatus,VStatusOth,MarriageStatus,MarMon,MarYear,MarDK,GaveBirth,ChildLivWWo,SonLivWWo,DaugLivWWo,ChldLivOut,SonLivOut,DaugLivOut,ChldDie,BoyDied,GirlDied,NotLivBrth,TotLB,TotPregOut,CurPreg,LMPDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _VDate +"', '"+ _VStatus +"', '"+ _VStatusOth +"', '"+ _MarriageStatus +"', '"+ _MarMon +"', '"+ _MarYear +"', '"+ _MarDK +"', '"+ _GaveBirth +"', '"+ _ChildLivWWo +"', '"+ _SonLivWWo +"', '"+ _DaugLivWWo +"', '"+ _ChldLivOut +"', '"+ _SonLivOut +"', '"+ _DaugLivOut +"', '"+ _ChldDie +"', '"+ _BoyDied +"', '"+ _GirlDied +"', '"+ _NotLivBrth +"', '"+ _TotLB +"', '"+ _TotPregOut +"', '"+ _CurPreg +"', '"+ _LMPDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
+
+         }
+         catch(Exception  e)
+         {
+             SQL = e.getMessage();
+         }finally {
+             C.close();
+         }
+         return SQL;
+     }
+
         public String SaveUpdateData(Context context)
         {
             String response = "";
@@ -271,6 +292,8 @@ import android.content.Context;
             catch(Exception  e)
             {
                  response = e.getMessage();
+            }finally {
+                C.close();
             }
            return response;
         }
@@ -285,12 +308,13 @@ import android.content.Context;
               {
                  SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,VDate,VStatus,VStatusOth,MarriageStatus,MarMon,MarYear,MarDK,GaveBirth,ChildLivWWo,SonLivWWo,DaugLivWWo,ChldLivOut,SonLivOut,DaugLivOut,ChldDie,BoyDied,GirlDied,NotLivBrth,TotLB,TotPregOut,CurPreg,LMPDate,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _VDate +"', '"+ _VStatus +"', '"+ _VStatusOth +"', '"+ _MarriageStatus +"', '"+ _MarMon +"', '"+ _MarYear +"', '"+ _MarDK +"', '"+ _GaveBirth +"', '"+ _ChildLivWWo +"', '"+ _SonLivWWo +"', '"+ _DaugLivWWo +"', '"+ _ChldLivOut +"', '"+ _SonLivOut +"', '"+ _DaugLivOut +"', '"+ _ChldDie +"', '"+ _BoyDied +"', '"+ _GirlDied +"', '"+ _NotLivBrth +"', '"+ _TotLB +"', '"+ _TotPregOut +"', '"+ _CurPreg +"', '"+ _LMPDate +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"')";
                  C.Save(SQL);
-                 C.close();
               }
               catch(Exception  e)
               {
                  response = e.getMessage();
-              }
+              }finally {
+                C.close();
+            }
            return response;
         }
 
@@ -303,12 +327,13 @@ import android.content.Context;
               {
                  SQL = "Update "+ TableName +" Set Upload='2',Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',VDate = '"+ _VDate +"',VStatus = '"+ _VStatus +"',VStatusOth = '"+ _VStatusOth +"',MarriageStatus = '"+ _MarriageStatus +"',MarMon = '"+ _MarMon +"',MarYear = '"+ _MarYear +"',MarDK = '"+ _MarDK +"',GaveBirth = '"+ _GaveBirth +"',ChildLivWWo = '"+ _ChildLivWWo +"',SonLivWWo = '"+ _SonLivWWo +"',DaugLivWWo = '"+ _DaugLivWWo +"',ChldLivOut = '"+ _ChldLivOut +"',SonLivOut = '"+ _SonLivOut +"',DaugLivOut = '"+ _DaugLivOut +"',ChldDie = '"+ _ChldDie +"',BoyDied = '"+ _BoyDied +"',GirlDied = '"+ _GirlDied +"',NotLivBrth = '"+ _NotLivBrth +"',TotLB = '"+ _TotLB +"',TotPregOut = '"+ _TotPregOut +"',CurPreg = '"+ _CurPreg +"',LMPDate = '"+ _LMPDate +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"'";
                  C.Save(SQL);
-                 C.close();
               }
               catch(Exception  e)
               {
                  response = e.getMessage();
-              }
+              }finally {
+                C.close();
+            }
            return response;
         }
 
@@ -364,6 +389,7 @@ import android.content.Context;
                 cur.moveToNext();
             }
             cur.close();
+            C.close();
           return data;
         }
  }

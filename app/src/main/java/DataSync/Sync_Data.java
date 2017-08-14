@@ -36,7 +36,7 @@ public class Sync_Data {
         }
         cur_H.close();
 
-        Res = C.DownloadJSON(SQLStr,TableName,VariableList,UniqueField);
+        //Res = C.DownloadJSON(SQLStr,TableName,VariableList,UniqueField);
     }
 
     //upload data to server(working)

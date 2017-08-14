@@ -1,8 +1,10 @@
 package org.icddrb.champsdsssur;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -141,18 +143,11 @@ public class MainMenu extends Activity {
 
                                         C.Sync_Upload(tableList);
 
-                                        /*Tran_Download td = new Tran_Download(MainMenu.this);
-                                        td.Sync_Download("migMember",DEVICEID,"");
-                                        td.Sync_Download("EventCode",DEVICEID,"");
-                                        td.Sync_Download("EDU",DEVICEID,"");
-                                        td.Sync_Download("OCP",DEVICEID,"");
-                                        td.Sync_Download("POA",DEVICEID,"");
-                                        td.Sync_Download("POP",DEVICEID,"");
-                                        td.Sync_Download("POR",DEVICEID,"");
-                                        td.Sync_Download("RTH",DEVICEID,"");*/
 
-                                        Intent syncService = new Intent(MainMenu.this, Sync_Service.class);
-                                        startService(syncService);
+                                        if(!isMyServiceRunning(Sync_Service.class)) {
+                                            Intent syncService = new Intent(MainMenu.this, Sync_Service.class);
+                                            startService(syncService);
+                                        }
 
                                     } catch (Exception e) {
 
@@ -286,5 +281,17 @@ public class MainMenu extends Activity {
         // TODO Auto-generated method stub
         super.onDestroy();
         turnGPSOff();
+    }
+
+
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

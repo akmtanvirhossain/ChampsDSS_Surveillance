@@ -59,6 +59,10 @@ public class Global {
 	public static String PNo;
 
 
+	private String _progressMessage;
+	public void setProgressMessage(String progressMessage){this._progressMessage = progressMessage;}
+	public String getProgressMessage(){ return this._progressMessage;}
+
 	private String _UserId;
 	private String _userType; public void setuserType(String userType){this._userType = userType;} public String getuserType(){ return this._userType;}
 

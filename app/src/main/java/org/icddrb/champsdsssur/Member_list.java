@@ -720,7 +720,9 @@ public class Member_list extends Activity {
                             else if(EV.equals("20") | EV.equals("21") | EV.equals("22") | EV.equals("23"))
                             {
                                 C.Save("Delete from tmpMember where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
+                                C.Save("Delete from tmpPregHis where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
                                 C.Save("Delete from tmpEvents where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
+
                             }
                             else if(EV.equals("25"))
                             {
@@ -1268,7 +1270,7 @@ public class Member_list extends Activity {
     private void DataStatus()
     {
         if (C.Existence("Select VStatus from tmpSES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "'")) {
-            btnSES.setBackgroundColor(Color.GREEN);
+            btnSES.setBackgroundResource(R.drawable.button_style_green);
             btnSES.setTextColor(Color.BLACK);
         }
         else{
@@ -1276,7 +1278,7 @@ public class Member_list extends Activity {
         }
 
         if (C.Existence("Select VStatus from tmpSES where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"' and VStatus <>'1'")) {
-            btnSES.setBackgroundColor(Color.BLUE);
+            btnSES.setBackgroundResource(R.drawable.button_style_blue);
             btnSES.setTextColor(Color.WHITE);
         }
 
@@ -1285,7 +1287,8 @@ public class Member_list extends Activity {
 
         if (Integer.valueOf(TotRh)>0 & Integer.valueOf(TotRh) == Integer.valueOf(PregHis))
         {
-            btnPregHis.setBackgroundColor(Color.GREEN);
+            //btnPregHis.setBackgroundColor(Color.GREEN);
+            btnPregHis.setBackgroundResource(R.drawable.button_style_green);
             btnPregHis.setTextColor(Color.BLACK);
         }
         else{
@@ -1293,7 +1296,7 @@ public class Member_list extends Activity {
         }
 
         if (C.Existence("Select VStatus from tmpPregHis where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"' and VStatus <>'1'")) {
-            btnPregHis.setBackgroundColor(Color.BLUE);
+            btnPregHis.setBackgroundResource(R.drawable.button_style_blue);
             btnPregHis.setTextColor(Color.WHITE);
         }
     }
@@ -2279,7 +2282,6 @@ public class Member_list extends Activity {
         CROcp1.close();
 
         //Housewife but male person
-
         SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
         SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.extype)=0 and length(t.posmig)=0";
         SQLS += " and t.ocp='03' and t.sex='1'";

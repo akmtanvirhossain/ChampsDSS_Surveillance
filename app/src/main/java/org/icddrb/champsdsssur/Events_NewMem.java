@@ -290,7 +290,6 @@
          int MAge   = 0;
 
          //New Member
-
          if (OLDNEWHH.equals("new")) {
              EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EvName)Ev FROM EventCode where EvType in('20','21','22','23','25')"));
 
@@ -848,7 +847,7 @@
 
               if(spnEvType.getSelectedItemPosition()==0  & spnEvType.isShown())
              {
-                 Connection.MessageBox(Events_NewMem.this, "ঘটনার ধরন খালি রাখা যাবেনা");
+                 Connection.MessageBox(Events_NewMem.this, "ঘটনার ধরন খালি রাখা যাবে না");
                  spnEvType.requestFocus();
                  return;
              }
@@ -950,7 +949,6 @@
              }
             //-----------------------------------------------------------------------------------------------------------------------------------------
              //Member Validation Check
-
                  if(txtName.getText().toString().length()==0 & secName.isShown())
                  {
                      Connection.MessageBox(Events_NewMem.this, "সদস্যদের নাম খালি রাখা যাবেনা.");
@@ -1273,8 +1271,8 @@
      private String DataSavePregHis(String HHNo, String PNo, String NewMSlNo)
      {
          String SQL = "";
-         C=new Connection(this);
-         Cursor Pcur = C.ReadData("Select * from migPregHis where Vill||Bari||HH='"+ HHNo +"' and PNo='"+ PNo +"'");
+         Connection Con=new Connection(this);
+         Cursor Pcur = Con.ReadData("Select * from migPregHis where Vill||Bari||HH='"+ HHNo +"' and PNo='"+ PNo +"'");
          if(Pcur.getCount()>0) {
              Pcur.moveToFirst();
              PregHis_DataModel objSave = new PregHis_DataModel();
@@ -1307,7 +1305,7 @@
                  objSave.setNotLivBrth(Pcur.getString(Pcur.getColumnIndex("NotLivBrth")));
                  objSave.setTotLB(Pcur.getString(Pcur.getColumnIndex("TotLB")));
                  objSave.setTotPregOut(Pcur.getString(Pcur.getColumnIndex("TotPregOut")));
-                 objSave.setCurPreg(Pcur.getString(Pcur.getColumnIndex("PcurPreg")));
+                 objSave.setCurPreg(Pcur.getString(Pcur.getColumnIndex("CurPreg")));
                  objSave.setLMPDate(Pcur.getString(Pcur.getColumnIndex("LMPDate")));
 
                  objSave.setEnDt(Global.DateTimeNowYMDHMS());
@@ -1323,7 +1321,7 @@
              }
          }
          Pcur.close();
-         C.close();
+         Con.close();
 
          return SQL;
      }

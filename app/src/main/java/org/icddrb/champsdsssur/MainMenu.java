@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -36,6 +38,8 @@ public class MainMenu extends Activity {
     Spinner spnBlock;
     Spinner spnRound;
     MySharedPreferences sp;
+    ProgressDialog progDailog;
+    int jumpTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +129,15 @@ public class MainMenu extends Activity {
                     adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             C = new Connection(MainMenu.this);
-                            final ProgressDialog progDailog = ProgressDialog.show(MainMenu.this, "", "Please Wait . . .", true);
+                            //final ProgressDialog progDailog = ProgressDialog.show(MainMenu.this, "", "Please Wait . . .", true);
+                            progDailog = new ProgressDialog(MainMenu.this);
+                            progDailog.setMessage("Syncing database, Please Wait . . .");
+                            progDailog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progDailog.setIcon(R.drawable.champsicon);
+                            progDailog.setIndeterminate(false);
+                            progDailog.setCancelable(false);
+                            progDailog.setProgress(0);
+                            progDailog.show();
 
                             new Thread() {
                                 public void run() {
@@ -141,7 +153,7 @@ public class MainMenu extends Activity {
                                         tableList.add("PregHis");
                                         tableList.add("Events");
 
-                                        C.Sync_Upload(tableList);
+                                        C.Sync_Upload(tableList, progDailog, progressHandler);
 
 
                                         if(!isMyServiceRunning(Sync_Service.class)) {
@@ -155,11 +167,16 @@ public class MainMenu extends Activity {
                                     progDailog.dismiss();
                                 }
                             }.start();
-
                         }
                     });
                     adb.show();
                 }
+                Handler progressHandler = new Handler() {
+                    public void handleMessage(Message msg) {
+                        progDailog.setMessage(Global.getInstance().getProgressMessage());
+                        progDailog.incrementProgressBy(jumpTime);
+                    }
+                };
             });
 
             Button cmdExit = (Button) findViewById(R.id.cmdExit);

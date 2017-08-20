@@ -96,12 +96,6 @@ public class SettingForm extends Activity {
                                 try {
                                     C.RebuildDatabase(UserID, spnCluster.getSelectedItem().toString(), progDailog, progressHandler);
 
-                                    // Update the progress bar
-                                    /*progressHandler.post(new Runnable() {
-                                        public void run() {
-                                            progDailog.setProgress(10);
-                                        }
-                                    });*/
                                 } catch (Exception e) {
 
                                 }
@@ -120,12 +114,12 @@ public class SettingForm extends Activity {
                     }
                 }
 
-                    Handler progressHandler = new Handler() {
-                        public void handleMessage(Message msg) {
-                            progDailog.setMessage(Global.getInstance().getProgressMessage());
-                            progDailog.incrementProgressBy(jumpTime);
-                        }
-                    };
+                        Handler progressHandler = new Handler() {
+                            public void handleMessage(Message msg) {
+                                progDailog.setMessage(Global.getInstance().getProgressMessage());
+                                progDailog.incrementProgressBy(jumpTime);
+                            }
+                        };
             });
         }
         catch(Exception ex)

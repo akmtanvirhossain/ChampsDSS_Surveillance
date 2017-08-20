@@ -1915,10 +1915,21 @@ public class Connection extends SQLiteOpenHelper {
 
     //done
     //Upload data to server
-    public void Sync_Upload(List<String> tableList) {
+    int tabIndex = 0;
+    int count = 0;
+    public void Sync_Upload(final List<String> tableList, final ProgressDialog progDialog, Handler progHandler) {
+        count = 0;
         for (int i = 0; i < tableList.size(); i++) {
             try {
-                Sync_Upload_Process(tableList.get(i).toString());
+                tabIndex = i;
+                count += 15;
+                progHandler.post(new Runnable() {
+                    public void run() {
+                        progDialog.setProgress(count);
+                        progDialog.setMessage("Uploading "+ tableList.get(tabIndex).toString() +" Data ... ");
+                    }
+                });
+                Sync_Upload_Process(tableList.get(i).toString(),progDialog,progHandler);
             }catch (Exception ex){
 
             }
@@ -1926,7 +1937,7 @@ public class Connection extends SQLiteOpenHelper {
     }
 
     //done
-    private void Sync_Upload_Process(String TableName) {
+    public void Sync_Upload_Process(String TableName,ProgressDialog progDialog, Handler progHandler) {
         String VariableList = "";
         String UniqueField = "";
         String SQLStr = "";

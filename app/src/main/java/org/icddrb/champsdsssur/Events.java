@@ -446,37 +446,56 @@
              PS   = temp[3];
 
              //1-Sex wise event
-             if(Sex.equals("1"))
+             if(Sex.equals("1") & MAge >= 5)
              {
                  //MS
                  if(MS.equals("30"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','63')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','63','80')"));
                  else if(MS.equals("31"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','42','43','44','49','56','57')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','42','43','44','49','56','57','80')"));
                  else if(MS.equals("33"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','80')"));
                  else
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','40','41','42','43','44','49','56','57')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','40','41','42','43','44','49','56','57','80')"));
              }
-             else if(Sex.equals("2"))
+             else if(Sex.equals("2") & MAge >= 5)
              {
                  //MS
                  if(MS.equals("30"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57','63')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57','63','80')"));
                      //married and pregnant
                  else if(MS.equals("31") & PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','41','43','44','56','57')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','41','43','44','56','57','80')"));
                      //married and not pregnant
                  else if(MS.equals("31") & !PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','42','43','44','56','57')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','42','43','44','56','57','80')"));
+
+                 else if(MS.equals("32") & PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','43','44','56','57','80')"));
+                 else if(MS.equals("32") & !PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','42','43','44','56','57','80')"));
+
+                 else if(MS.equals("34") & PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','34','41','43','44','56','57','80')"));
+                 else if(MS.equals("34") & !PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','34','42','43','44','56','57','80')"));
+
                      //widowed but pregnant
-                 else if(MS.equals("33"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','43','44','56','57')"));
+                 else if(MS.equals("33") & PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','43','44','56','57','80')"));
                      //widowed not pregnant
-                 else if(MS.equals("33"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57')"));
+                 else if(MS.equals("33") & !PS.equals("41"))
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','42','43','44','56','57','80')"));
                  else
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','43','44','56','57')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','43','44','56','57','80')"));
+             }
+
+//             if(MAge >=5)
+//             {
+//                 EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','80')"));
+//             }
+             if(MAge <5) {
+                 EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType in('12','51','52','53','54','55','61','62','64','71','72','80')"));
              }
          }
 
@@ -902,6 +921,9 @@
                          spnInfo1.setAdapter(C.getArrayAdapter("Select distinct ' 'Name union SELECT Code||'-'||Name FROM OCP"));
                          txtInfo2.setText(C.ReturnSingleValue("select Ocp from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MslNo='"+ MSLNO +"'"));
                      }
+                 }
+                 else if(EVCODE.equals("80")) {
+                     dtpEvDate.setText(Global.DateNowDMY());
                  }
                  else
                  {
@@ -1834,216 +1856,187 @@
              RadioButton rb;
              //String MSL = "";
 
-             Events_DataModel objSave = new Events_DataModel();
-             objSave.setVill(txtVill.getText().toString());
-             objSave.setBari(txtBari.getText().toString());
-             objSave.setHH(txtHH.getText().toString());
-
-             objSave.setMSlNo(txtMSlNo.getText().toString());
-             objSave.setPNo(txtPNo.getText().toString());
-
-             String EVT = "";
-             if(spnEvType.getCount()==1) {
-                 objSave.setEvType(spnEvType.getSelectedItem().toString().split("-")[0]);
-                 EVT = spnEvType.getSelectedItem().toString().split("-")[0];
-             }
-             else {
-                 objSave.setEvType((spnEvType.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-")));
-                 EVT = (spnEvType.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-"));
-             }
-
-             objSave.setEvDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
-
-             if(EVT.equals("25"))
-             {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(txtInfo2.getText().toString());
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-             else if(EVT.equals("42"))
-             {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo3(spnInfo3.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-             else if(EVT.equals("61"))
-             {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-             else if(EVT.equals("62"))
-             {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-             else if(EVT.equals("63"))
-             {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-             else if(EVT.equals("64"))
-             {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(txtInfo2.getText().toString());
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-             else if(EVT.equals("71"))
-             {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(txtInfo2.getText().toString());
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-            }
-            else if(EVT.equals("72"))
-            {
-                 objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
-                 objSave.setInfo2(txtInfo2.getText().toString());
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-             else
-             {
-                 objSave.setInfo1(txtInfo1.getText().toString());
-                 objSave.setInfo2(txtInfo2.getText().toString());
-                 objSave.setInfo3(txtInfo3.getText().toString());
-                 objSave.setInfo4(txtInfo4.getText().toString());
-             }
-
-             objSave.setVDate(VISITDATE);
-             objSave.setRnd(txtRnd.getText().toString());
-             objSave.setEnDt(Global.DateTimeNowYMDHMS());
-             objSave.setStartTime(STARTTIME);
-             objSave.setEndTime(g.CurrentTime24());
-             objSave.setDeviceID(DEVICEID);
-             objSave.setEntryUser(ENTRYUSER); //from data entry user list
-             objSave.setmodifyDate(Global.DateTimeNowYMDHMS());
-             objSave.setLat("");
-             objSave.setLon("");
-
              String SQL1 = "";
              String SQL2 = "";
              String SQL3 = "";
+             String SQL4 = "";
 
-             //Save Events
-             SQL1 = objSave.TransactionSQL(this);
+             if(!EVTYPE.equals("80"))
+             {
+                 Events_DataModel objSave = new Events_DataModel();
+                 objSave.setVill(txtVill.getText().toString());
+                 objSave.setBari(txtBari.getText().toString());
+                 objSave.setHH(txtHH.getText().toString());
 
-             //Save Member
-             if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23") |EVTYPE.equals("25"))
-             {
-                 SQL2 = DataSaveMember(txtMSlNo.getText().toString());
-             }
-             //Update Member Data
-             if(EVTYPE.equals("12"))
-             {
+                 objSave.setMSlNo(txtMSlNo.getText().toString());
+                 objSave.setPNo(txtPNo.getText().toString());
 
-             }else if(EVTYPE.equals("20"))
-             {
+                 String EVT = "";
+                 if (spnEvType.getCount() == 1) {
+                     objSave.setEvType(spnEvType.getSelectedItem().toString().split("-")[0]);
+                     EVT = spnEvType.getSelectedItem().toString().split("-")[0];
+                 } else {
+                     objSave.setEvType((spnEvType.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-")));
+                     EVT = (spnEvType.getSelectedItemPosition() == 0 ? "" : Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-"));
+                 }
 
-             }else if(EVTYPE.equals("21"))
-             {
+                 objSave.setEvDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
 
-             }
-             //Internal Movement
-             else if(EVTYPE.equals("22"))
-             {
+                 if (EVT.equals("25")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(txtInfo2.getText().toString());
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else if (EVT.equals("42")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo3(spnInfo3.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else if (EVT.equals("61")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else if (EVT.equals("62")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else if (EVT.equals("63")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else if (EVT.equals("64")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(txtInfo2.getText().toString());
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else if (EVT.equals("71")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(txtInfo2.getText().toString());
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else if (EVT.equals("72")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                     objSave.setInfo2(txtInfo2.getText().toString());
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 } else {
+                     objSave.setInfo1(txtInfo1.getText().toString());
+                     objSave.setInfo2(txtInfo2.getText().toString());
+                     objSave.setInfo3(txtInfo3.getText().toString());
+                     objSave.setInfo4(txtInfo4.getText().toString());
+                 }
 
-             }else if(EVTYPE.equals("23"))
-             {
+                 objSave.setVDate(VISITDATE);
+                 objSave.setRnd(txtRnd.getText().toString());
+                 objSave.setEnDt(Global.DateTimeNowYMDHMS());
+                 objSave.setStartTime(STARTTIME);
+                 objSave.setEndTime(g.CurrentTime24());
+                 objSave.setDeviceID(DEVICEID);
+                 objSave.setEntryUser(ENTRYUSER); //from data entry user list
+                 objSave.setmodifyDate(Global.DateTimeNowYMDHMS());
+                 objSave.setLat("");
+                 objSave.setLon("");
 
-             }
-             //Birth
-             else if(EVTYPE.equals("25"))
-             {
+//                 String SQL1 = "";
+//                 String SQL2 = "";
+//                 String SQL3 = "";
+//                 String SQL4 = "";
 
-             }
-             //Marital Status
-             else if(EVTYPE.equals("31")|EVTYPE.equals("32")|EVTYPE.equals("33")|EVTYPE.equals("34"))
-             {
-                 SQL3 = "Update tmpMember set MS='"+ EVTYPE +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
-             //Pregnancy Information
+                 //Save Events
+                 SQL1 = objSave.TransactionSQL(this);
+
+                 //Save Member
+                 if (EVTYPE.equals("12") | EVTYPE.equals("20") | EVTYPE.equals("21") | EVTYPE.equals("22") | EVTYPE.equals("23") | EVTYPE.equals("25")) {
+                     SQL2 = DataSaveMember(txtMSlNo.getText().toString());
+                 }
+                 //Update Member Data
+                 if (EVTYPE.equals("12")) {
+
+                 } else if (EVTYPE.equals("20")) {
+
+                 } else if (EVTYPE.equals("21")) {
+
+                 }
+                 //Internal Movement
+                 else if (EVTYPE.equals("22")) {
+
+                 } else if (EVTYPE.equals("23")) {
+
+                 }
+                 //Birth
+                 else if (EVTYPE.equals("25")) {
+
+                 }
+                 //Marital Status
+                 else if (EVTYPE.equals("31") | EVTYPE.equals("32") | EVTYPE.equals("33") | EVTYPE.equals("34")) {
+                     SQL3 = "Update tmpMember set MS='" + EVTYPE + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }
+                 //Pregnancy Information
 //             else if(EVTYPE.equals("40")|EVTYPE.equals("49"))
-             else if(EVTYPE.equals("40"))
-             {
-                 SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt=''";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
-             else if(EVTYPE.equals("41"))
-             {
-                 SQL3 = "Update tmpMember set PStat='"+ EVTYPE +"',LmpDt='"+ Global.DateConvertYMD(dtpEvDate.getText().toString()) +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
+                 else if (EVTYPE.equals("40")) {
+                     SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt=''";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 } else if (EVTYPE.equals("41")) {
+                     SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt='" + Global.DateConvertYMD(dtpEvDate.getText().toString()) + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
 
-             }else if(EVTYPE.equals("42"))
-             {
-                 SQL3 = "Update tmpMember set PStat='',LmpDt='' ";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
-             //Migration out
-             else if(EVTYPE.equals("51")|EVTYPE.equals("52")|EVTYPE.equals("53")|EVTYPE.equals("55")|EVTYPE.equals("56"))
-             {
-                 SQL3 = "Update tmpMember set ExType='"+ EVTYPE +"',ExDate='"+ Global.DateConvertYMD(dtpEvDate.getText().toString()) +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
+                 } else if (EVTYPE.equals("42")) {
+                     SQL3 = "Update tmpMember set PStat='',LmpDt='' ";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }
+                 //Migration out
+                 else if (EVTYPE.equals("51") | EVTYPE.equals("52") | EVTYPE.equals("53") | EVTYPE.equals("55") | EVTYPE.equals("56")) {
+                     SQL3 = "Update tmpMember set ExType='" + EVTYPE + "',ExDate='" + Global.DateConvertYMD(dtpEvDate.getText().toString()) + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }
 
-             //Possible migration-out
-             else if(EVTYPE.equals("54"))
-             {
-                 SQL3 = "Update tmpMember set PosMig='"+ EVTYPE +"',PosMigDate='"+ EvDate +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
-             //Mother's serial no update
-             else if(EVTYPE.equals("61"))
-             {
-                 SQL3 = "Update tmpMember set MoNo='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
+                 //Possible migration-out
+                 else if (EVTYPE.equals("54")) {
+                     SQL3 = "Update tmpMember set PosMig='" + EVTYPE + "',PosMigDate='" + EvDate + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }
+                 //Mother's serial no update
+                 else if (EVTYPE.equals("61")) {
+                     SQL3 = "Update tmpMember set MoNo='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
 
-             }
-             else if(EVTYPE.equals("62"))
-             {
-                 SQL3 = "Update tmpMember set FaNo='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
-             else if(EVTYPE.equals("63"))
-             {
-                 SQL3 = "Update tmpMember set Sp1='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
+                 } else if (EVTYPE.equals("62")) {
+                     SQL3 = "Update tmpMember set FaNo='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 } else if (EVTYPE.equals("63")) {
+                     SQL3 = "Update tmpMember set Sp1='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }
 
-             //Relation to head update
-             else if(EVTYPE.equals("64"))
-             {
-                 SQL3 = "Update tmpMember set Rth='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
+                 //Relation to head update
+                 else if (EVTYPE.equals("64")) {
+                     SQL3 = "Update tmpMember set Rth='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }
+                 //Education update
+                 else if (EVTYPE.equals("71")) {
+                     SQL3 = "Update tmpMember set Edu='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }
+                 //Occupation update
+                 else if (EVTYPE.equals("72")) {
+                     SQL3 = "Update tmpMember set Ocp='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 } else {
+                     formMember.setVisibility(View.GONE);
+                 }
              }
-             //Education update
-             else if(EVTYPE.equals("71"))
+             if(EVTYPE.equals("80"))
              {
-                 SQL3 = "Update tmpMember set Edu='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
-             //Occupation update
-             else if(EVTYPE.equals("72"))
-             {
-                 SQL3 = "Update tmpMember set Ocp='"+ Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") +"'";
-                 SQL3 += " Where  Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO + "'";
-             }
-             else
-             {
-                 formMember.setVisibility(View.GONE);
+                 SQL4 = DataSaveChildCardRequest(Household,PNO,MSLNO);
              }
 
              //Transaction Process
-             String status = C.TransactionDataInsert(SQL1,SQL2,SQL3,"");
+             String status = C.TransactionDataInsert(SQL1,SQL2,SQL3,SQL4);
 
              if(status.length()==0) {
                  Intent returnIntent = new Intent();
@@ -2064,6 +2057,29 @@
              Connection.MessageBox(Events.this, e.getMessage());
              return;
          }
+     }
+
+     private String DataSaveChildCardRequest(String Household, String PNo, String MSlNo)
+     {
+         String SQL = "";
+          try
+          {
+             ChildCard_DataModel objSave = new ChildCard_DataModel();
+             objSave.setVill(txtVill.getText().toString());
+             objSave.setBari(txtBari.getText().toString());
+             objSave.setHH(txtHH.getText().toString());
+             objSave.setMSlNo(txtMSlNo.getText().toString());
+             objSave.setPNo(txtPNo.getText().toString());
+             objSave.setReqDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
+             objSave.setProcess("2");
+             objSave.setProcessDT("");
+             SQL = objSave.TransactionSQL(this);
+          }
+             catch(Exception  e)
+          {
+             SQL = e.getMessage();
+          }
+             return SQL;
      }
 
      private void MemberInitialize()

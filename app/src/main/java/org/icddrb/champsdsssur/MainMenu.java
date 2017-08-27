@@ -152,6 +152,7 @@ public class MainMenu extends Activity {
                                         tableList.add("SES");
                                         tableList.add("PregHis");
                                         tableList.add("Events");
+                                        tableList.add("ChildCardRequest");
 
                                         C.Sync_Upload(tableList, progDailog, progressHandler);
 

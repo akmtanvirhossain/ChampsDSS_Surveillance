@@ -106,6 +106,7 @@ public class Member_list extends Activity {
     static String CLUSTER = "";
     static String BLOCK   = "";
 
+    Button btnErrorCheck;
     Button btnMemberName;
     Button btnSES;
     Button btnPregHis;
@@ -409,8 +410,26 @@ public class Member_list extends Activity {
              }
 
          });
+
+         btnErrorCheck = (Button) findViewById(R.id.btnErrorCheck);
+         btnErrorCheck.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent f1 = new Intent(getApplicationContext(),Member_list.class);
+                 IDbundle.putString("Vill", VILL);
+                 IDbundle.putString("Bari", BARI);
+                 IDbundle.putString("HH", HH);
+                 IDbundle.putString("roundno",ROUNDNO);
+                 IDbundle.putString("OldNew", "new");
+                 f1.putExtras(IDbundle);
+                 startActivityForResult(f1, 1);
+             }
+
+         });
+
          Button cmdEvList = (Button)findViewById(R.id.cmdEvList);
          Button cmdVisitList = (Button)findViewById(R.id.cmdVisitList);
+         Button btnErrorCheck = (Button)findViewById(R.id.btnErrorCheck);
 
 //         final RadioGroup roMemberOption =(RadioGroup)findViewById(R.id.roMemberOption);
 //         roMemberOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -442,6 +461,13 @@ public class Member_list extends Activity {
              }
          });
 
+         btnErrorCheck.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View arg0) {
+
+                 ErrorList(VILL,BARI,HH);
+             }
+         });
+
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
          txtHH.setEnabled(false);
@@ -466,6 +492,151 @@ public class Member_list extends Activity {
          DataStatus();
      }
  }
+
+    //***************************************************************************************************************************
+    private void ErrorList(final String Vill, final String Bari, final String HH)
+    {
+        try
+        {
+            final Dialog dialog = new Dialog(Member_list.this);
+
+            dialog .requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.errorlist);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(true);
+
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+
+            wlp.gravity = Gravity.TOP;
+            wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            window.setAttributes(wlp);
+
+            final ListView evlist = (ListView)dialog.findViewById(R.id.LstError);
+            View header = getLayoutInflater().inflate(R.layout.errorlistheading, null);
+            evlist.addHeaderView(header);
+            Cursor cur = C.ReadData("select vill,bari,hh,mslno,note,status from DataCorrectionNote Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and status='2' order by vill,bari,hh,Mslno desc");
+
+            cur.moveToFirst();
+            evmylist.clear();
+            eList = null;
+            evlist.setAdapter(null);
+
+            while(!cur.isAfterLast())
+            {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("vill", cur.getString(cur.getColumnIndex("Vill")));
+                map.put("bari", cur.getString(cur.getColumnIndex("Bari")));
+                map.put("hh", cur.getString(cur.getColumnIndex("HH")));
+                map.put("mslno", cur.getString(cur.getColumnIndex("MSlNo")));
+                map.put("status", cur.getString(cur.getColumnIndex("Status")));
+                map.put("note", cur.getString(cur.getColumnIndex("Note")));
+
+                evmylist.add(map);
+
+                eList = new SimpleAdapter(Member_list.this, evmylist, R.layout.errorlistrow,
+                        new String[] {"vill","bari","hh","mslno","status","note"},
+                        new int[] {R.id.v_vill,R.id.v_bari,R.id.v_hh,R.id.v_Mslno,R.id.v_Status,R.id.v_note});
+                evlist.setAdapter(new ErrorListAdapter(this,dialog,evlist));
+
+                cur.moveToNext();
+            }
+            cur.close();
+
+            Button cmdErrorListClose = (Button)dialog.findViewById(R.id.cmdErrorListClose);
+            cmdErrorListClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+        catch(Exception  e)
+        {
+            Connection.MessageBox(Member_list.this, e.getMessage());
+            return;
+        }
+    }
+
+    public class ErrorListAdapter extends BaseAdapter
+    {
+        private Context context;
+        Dialog dg;
+        ListView lv;
+        public ErrorListAdapter(Context c,Dialog d,ListView Errorlist){
+            context = c;
+            dg=d;
+            lv=Errorlist;
+        }
+
+        public int getCount() {
+            return eList.getCount();
+        }
+
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.errorlistrow, null);
+            }
+
+            final HashMap<String, String> o = (HashMap<String, String>) eList.getItem(position);
+
+            TextView v_vill=(TextView)convertView.findViewById(R.id.v_vill);
+            TextView v_bari=(TextView)convertView.findViewById(R.id.v_bari);
+            TextView v_hh=(TextView)convertView.findViewById(R.id.v_hh);
+            TextView v_Mslno=(TextView)convertView.findViewById(R.id.v_Mslno);
+            TextView v_note=(TextView)convertView.findViewById(R.id.v_note);
+            final TextView v_status=(TextView)convertView.findViewById(R.id.v_Status);
+
+            v_vill.setText(o.get("vill").toString());
+            v_bari.setText(o.get("bari").toString());
+            v_hh.setText((o.get("hh").toString()));
+            v_Mslno.setText(o.get("mslno").toString());
+            v_status.setText(o.get("status").toString());
+            v_note.setText(o.get("note").toString());
+
+            final Button cmdErroeListUpdate = (Button)convertView.findViewById(R.id.cmdErrorListUpdate);
+
+            cmdErroeListUpdate.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
+                    adb.setTitle("List Update");
+                    adb.setMessage("সদস্য নং "+ o.get("mslno").toString() +" এর তথ্য কি আপডেট করা হয়েছে [হ্যাঁ/না]?");
+
+                    adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog1, int which) {
+
+                        }});
+
+                    adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog1, int which) {
+                            String HH = o.get("vill")+o.get("bari")+o.get("hh");
+                            String SN = o.get("mslno").toString();
+                            String ST = o.get("status").toString();
+                            String Note = o.get("note").toString();
+                            C.Save("Update DataCorrectionNote set Status='1' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
+                            cmdErroeListUpdate.setEnabled(false);
+                            cmdErroeListUpdate.setText("Solve");
+                            v_status.setText("1");
+
+                        }});
+                    adb.show();
+                }});
+
+            return convertView;
+        }
+    }
 
     //***************************************************************************************************************************
     private void VisitList(final String Vill, final String Bari, final String HH)
@@ -661,7 +832,6 @@ public class Member_list extends Activity {
         public long getItemId(int position) {
             return position;
         }
-
 
         public View getView(final int position, View convertView, ViewGroup parent) {
 

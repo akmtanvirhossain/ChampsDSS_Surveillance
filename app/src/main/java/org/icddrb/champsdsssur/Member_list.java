@@ -465,6 +465,7 @@ public class Member_list extends Activity {
              public void onClick(View arg0) {
 
                  ErrorList(VILL,BARI,HH);
+
              }
          });
 
@@ -515,7 +516,7 @@ public class Member_list extends Activity {
             final ListView evlist = (ListView)dialog.findViewById(R.id.LstError);
             View header = getLayoutInflater().inflate(R.layout.errorlistheading, null);
             evlist.addHeaderView(header);
-            Cursor cur = C.ReadData("select vill,bari,hh,mslno,note,status from DataCorrectionNote Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and status='2' order by vill,bari,hh,Mslno desc");
+            Cursor cur = C.ReadData("select D.vill,D.bari,D.hh,M.Name,D.mslno,D.note,D.status from DataCorrectionNote D left outer join Member M on D.vill||D.bari||D.hh||D.Mslno=M.vill||M.bari||M.hh||M.Mslno Where d.Vill='"+ Vill +"' and d.Bari='"+ Bari +"' and d.HH='"+ HH +"' and status='2' order by D.vill,D.bari,D.hh,D.Mslno asc");
 
             cur.moveToFirst();
             evmylist.clear();
@@ -528,6 +529,7 @@ public class Member_list extends Activity {
                 map.put("vill", cur.getString(cur.getColumnIndex("Vill")));
                 map.put("bari", cur.getString(cur.getColumnIndex("Bari")));
                 map.put("hh", cur.getString(cur.getColumnIndex("HH")));
+                map.put("name", cur.getString(cur.getColumnIndex("Name")));
                 map.put("mslno", cur.getString(cur.getColumnIndex("MSlNo")));
                 map.put("status", cur.getString(cur.getColumnIndex("Status")));
                 map.put("note", cur.getString(cur.getColumnIndex("Note")));
@@ -535,10 +537,9 @@ public class Member_list extends Activity {
                 evmylist.add(map);
 
                 eList = new SimpleAdapter(Member_list.this, evmylist, R.layout.errorlistrow,
-                        new String[] {"vill","bari","hh","mslno","status","note"},
-                        new int[] {R.id.v_vill,R.id.v_bari,R.id.v_hh,R.id.v_Mslno,R.id.v_Status,R.id.v_note});
+                        new String[] {"vill","bari","hh","name","mslno","status","note"},
+                        new int[] {R.id.v_vill,R.id.v_bari,R.id.v_hh,R.id.v_Name,R.id.v_Mslno,R.id.v_Status,R.id.v_note});
                 evlist.setAdapter(new ErrorListAdapter(this,dialog,evlist));
-
                 cur.moveToNext();
             }
             cur.close();
@@ -546,6 +547,13 @@ public class Member_list extends Activity {
             Button cmdErrorListClose = (Button)dialog.findViewById(R.id.cmdErrorListClose);
             cmdErrorListClose.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
+                    if (C.Existence("select D.status from DataCorrectionNote D Where d.Vill='"+ VILL +"' and d.Bari='"+ BARI +"' and d.HH='"+ HH +"' and status='2'")) {
+                        btnErrorCheck.setBackgroundResource(R.drawable.button_style_red);
+                        btnErrorCheck.setTextColor(Color.BLACK);
+                    }
+                    else{
+                        btnErrorCheck.setBackgroundResource(R.drawable.button_style);
+                    }
                     dialog.dismiss();
                 }
             });
@@ -595,6 +603,7 @@ public class Member_list extends Activity {
             TextView v_vill=(TextView)convertView.findViewById(R.id.v_vill);
             TextView v_bari=(TextView)convertView.findViewById(R.id.v_bari);
             TextView v_hh=(TextView)convertView.findViewById(R.id.v_hh);
+            TextView v_Name=(TextView)convertView.findViewById(R.id.v_Name);
             TextView v_Mslno=(TextView)convertView.findViewById(R.id.v_Mslno);
             TextView v_note=(TextView)convertView.findViewById(R.id.v_note);
             final TextView v_status=(TextView)convertView.findViewById(R.id.v_Status);
@@ -602,6 +611,7 @@ public class Member_list extends Activity {
             v_vill.setText(o.get("vill").toString());
             v_bari.setText(o.get("bari").toString());
             v_hh.setText((o.get("hh").toString()));
+            v_Name.setText(o.get("name").toString());
             v_Mslno.setText(o.get("mslno").toString());
             v_status.setText(o.get("status").toString());
             v_note.setText(o.get("note").toString());
@@ -625,7 +635,7 @@ public class Member_list extends Activity {
                             String SN = o.get("mslno").toString();
                             String ST = o.get("status").toString();
                             String Note = o.get("note").toString();
-                            C.Save("Update DataCorrectionNote set Status='1' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN +"'");
+                            C.Save("Update DataCorrectionNote set Status='1' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN + "' and note='"+ Note +"'");
                             cmdErroeListUpdate.setEnabled(false);
                             cmdErroeListUpdate.setText("Solve");
                             v_status.setText("1");
@@ -1468,6 +1478,14 @@ public class Member_list extends Activity {
         if (C.Existence("Select VStatus from tmpPregHis where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"' and VStatus <>'1'")) {
             btnPregHis.setBackgroundResource(R.drawable.button_style_blue);
             btnPregHis.setTextColor(Color.WHITE);
+        }
+
+        if (C.Existence("select D.status from DataCorrectionNote D Where d.Vill='"+ VILL +"' and d.Bari='"+ BARI +"' and d.HH='"+ HH +"' and status='2'")) {
+            btnErrorCheck.setBackgroundResource(R.drawable.button_style_red);
+            btnErrorCheck.setTextColor(Color.BLACK);
+        }
+        else{
+            btnErrorCheck.setBackgroundResource(R.drawable.button_style);
         }
     }
  private void DataSearch(String Vill, String Bari, String HH )

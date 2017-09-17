@@ -156,7 +156,6 @@ public class MainMenu extends Activity {
 
                                         C.Sync_Upload(tableList, progDailog, progressHandler);
 
-
                                         if(!isMyServiceRunning(Sync_Service.class)) {
                                             Intent syncService = new Intent(MainMenu.this, Sync_Service.class);
                                             startService(syncService);

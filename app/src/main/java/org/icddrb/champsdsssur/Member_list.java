@@ -256,6 +256,10 @@ public class Member_list extends Activity {
                              String totalMem = C.ReturnSingleValue("Select count(*)Total from Member where Vill||Bari||HH='" + (VILL + BARI + HH) + "' and length(ExType)=0");
                              C.Save("Update Household set TotMem='"+ totalMem +"' where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
                              finish();
+
+                             Intent returnIntent = new Intent();
+                             returnIntent.putExtra("res", "mem");
+                             setResult(Activity.RESULT_OK, returnIntent);
                          }
                      }
 
@@ -1539,7 +1543,7 @@ public class Member_list extends Activity {
              dataAdapter = new SimpleAdapter(Member_list.this, dataList, R.layout.member_list,new String[] {"rowsec"},
                            new int[] {R.id.secListRow});
              list.setAdapter(new DataListAdapter(this, dataAdapter));
-            Utility.setListViewHeightBasedOnChildren(list);
+             Utility.setListViewHeightBasedOnChildren(list);
         }
         catch(Exception  e)
         {
@@ -2482,6 +2486,9 @@ public class Member_list extends Activity {
             CRHHWife.moveToNext();
         }
         CRHHWife.close();
+
+
+
 
         //Father number is available but father is not in member list
 

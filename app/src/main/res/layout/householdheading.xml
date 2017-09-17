@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scrollbars="vertical">
-    <LinearLayout android:id="@+id/secListRow" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:background="#C2E0EC" android:paddingTop="8px" android:paddingBottom="5px">
-        <TextView android:text="" android:layout_width="50dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
-
-        <TextView
+    <LinearLayout android:id="@+id/secListRow" android:weightSum="8" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:background="#C2E0EC" android:paddingTop="8px" android:paddingBottom="5px">
+        <TextView android:layout_weight="1"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="center"
             android:text="বাড়ি #"
             android:textSize="16sp" />
-        <TextView android:text="বাড়ির নাম" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
-        <TextView android:text="খানা #" android:layout_width="80dp" android:layout_marginLeft="50sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
-        <TextView android:text="খানা প্রধান" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
-        <TextView android:text="ফলাফল" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp" android:visibility="gone" />
-        <TextView android:text="মন্তব্য" android:layout_width="70dp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp" android:visibility="gone" />
-
+        <TextView android:text="বাড়ির নাম" android:layout_weight="3" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="খানা #" android:layout_weight="1" android:layout_width="80dp" android:layout_marginLeft="50sp" android:gravity="center" android:layout_height="wrap_content" android:textSize="16sp"/>
+        <TextView android:text="খানা প্রধান" android:layout_weight="3" android:layout_width="190sp" android:gravity="left" android:layout_height="wrap_content" android:textSize="16sp"/>
     </LinearLayout>
  </LinearLayout>

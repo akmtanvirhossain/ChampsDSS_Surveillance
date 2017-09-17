@@ -91,6 +91,9 @@ public class Household_list extends Activity  {
     static String BLOCK   = "";
     MySharedPreferences sp;
 
+    static Spinner spnVillageName;
+    static Spinner spnBariName;
+
  public void onCreate(Bundle savedInstanceState)
  {
          super.onCreate(savedInstanceState);
@@ -120,6 +123,9 @@ public class Household_list extends Activity  {
 
          TableName = "Household";
          lblHeading = (TextView)findViewById(R.id.lblHeading);
+
+         spnVillageName = (Spinner)findViewById(R.id.spnVill);
+         spnBariName = (Spinner)findViewById(R.id.spnBari);
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +187,13 @@ public class Household_list extends Activity  {
              @Override
              public void onNothingSelected(AdapterView<?> parentView) {
 
+             }
+         });
+
+         Button cmdRefresh = (Button)findViewById(R.id.cmdRefresh);
+         cmdRefresh.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View arg0) {
+                RefreshList();
              }
          });
 
@@ -355,8 +368,13 @@ public class Household_list extends Activity  {
  @Override
  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
      super.onActivityResult(requestCode, resultCode, data);
+
      if (resultCode == Activity.RESULT_CANCELED) {
          //Write your code if there's no result
+         /*String V = spnVill.getSelectedItem().toString().split("-")[0];
+         String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari")?"":spnBari.getSelectedItem().toString().split("-")[0];
+
+         DataSearch(CLUSTER, BLOCK, V, B);*/
      } else {
          if(data.getExtras().getString("res").equals("bari")) {
              //if (spnVill.getSelectedItemPosition() == 0) return;
@@ -368,11 +386,27 @@ public class Household_list extends Activity  {
              String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari")?"":spnBari.getSelectedItem().toString().split("-")[0];
 
              DataSearch(CLUSTER, BLOCK, V, B);
+         }else if(data.getExtras().getString("res").equals("mem")) {
+             String V = spnVill.getSelectedItem().toString().split("-")[0];
+             String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari")?"":spnBari.getSelectedItem().toString().split("-")[0];
+
+             DataSearch(CLUSTER, BLOCK, V, B);
          }
      }
  }
 
- public void DataSearch(String Cluster, String Block, String Vill, String Bari)
+ public void RefreshList(){
+     try {
+         String V = spnVill.getSelectedItem().toString().split("-")[0];
+         String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari") ? "" : spnBari.getSelectedItem().toString().split("-")[0];
+         DataSearch(CLUSTER, BLOCK, V, B);
+     }catch (Exception ex){
+
+     }
+ }
+
+
+ private void DataSearch(String Cluster, String Block, String Vill, String Bari)
      {
        try
         {
@@ -398,6 +432,7 @@ public class Household_list extends Activity  {
                  map = new HashMap<String, String>();
                  map.put("Vill", item.getVill());
                  map.put("Bari", item.getBari());
+                 map.put("BariName", item.getBariName());
                  map.put("HH", item.getHH());
                  map.put("Religion", item.getReligion());
                  map.put("MobileNo1", item.getMobileNo1());
@@ -455,9 +490,9 @@ public class Household_list extends Activity  {
          final TextView BariN= (TextView) convertView.findViewById(R.id.BariN);
          final TextView HH     = (TextView)convertView.findViewById(R.id.HH);
          final TextView HHHead = (TextView)convertView.findViewById(R.id.HHHead);
-         final TextView Visit  = (TextView)convertView.findViewById(R.id.Visit);
-         final TextView VNote = (TextView)convertView.findViewById(R.id.VisitNote);
-         final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
+         //final TextView Visit  = (TextView)convertView.findViewById(R.id.Visit);
+         //final TextView VNote = (TextView)convertView.findViewById(R.id.VisitNote);
+         //final TextView TotMem = (TextView)convertView.findViewById(R.id.TotMem);
 
          final LinearLayout secRowVStatus = (LinearLayout)convertView.findViewById(R.id.secRowVStatus);
          final TextView lblVStatus = (TextView)convertView.findViewById(R.id.lblVStatus);
@@ -466,13 +501,13 @@ public class Household_list extends Activity  {
 
          Bari.setText(o.get("Bari"));
 
-         final String BName=C.ReturnSingleValue("Select BariName from Baris where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"'");
-         BariN.setText(BName);
+         //final String BName=C.ReturnSingleValue("Select BariName from Baris where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"'");
+         BariN.setText(o.get("BariName"));
 
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
-         String VisitNote=C.ReturnSingleValue("Select Note from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
-         VNote.setText(VisitNote);
+         //String VisitNote=C.ReturnSingleValue("Select Note from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
+         //VNote.setText(VisitNote);
 
          secRowVStatus.setVisibility(View.GONE);
          final String resp = o.get("resp").toString().length()==0?"":o.get("resp").toString();
@@ -509,7 +544,7 @@ public class Household_list extends Activity  {
              lblVStatus.setText("বেজলাইনে অনুপস্থিত");
          }
 
-         TotMem.setText(o.get("TotMem"));
+         //TotMem.setText(o.get("TotMem"));
 
          if(Integer.valueOf(o.get("sl"))%2==0) {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
@@ -526,12 +561,12 @@ public class Household_list extends Activity  {
                IDbundle.putString("Bari", o.get("Bari"));
                IDbundle.putString("HH", o.get("HH"));
                IDbundle.putString("HHHead",o.get("HHHead"));
-               IDbundle.putString("BariName",BName);
+               IDbundle.putString("BariName",o.get("BariName"));
                IDbundle.putString("roundno",ROUNDNO);
                IDbundle.putString("cluster",CLUSTER);
                IDbundle.putString("block",BLOCK);
                IDbundle.putString("OldNew", "old");
-                IDbundle.putString("resp", resp);
+               IDbundle.putString("resp", resp);
                IDbundle.putString("totalmem", o.get("TotMem").length()==0?"0":o.get("TotMem"));
                Intent f1;
                f1 = new Intent(getApplicationContext(), Household_Visit.class);

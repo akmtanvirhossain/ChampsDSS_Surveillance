@@ -618,10 +618,14 @@ import Common.Global;
                  C.Save("Update tmpHousehold set upload='2',HHHead='" + txtHHHead.getText() + "',Note='" + txtNote.getText() + "',MobileNo1='" + txtMobileNo1.getText() + "',MobileNo2='" + txtMobileNo2.getText() + "',Religion='" + Global.Left(spnReligion.getSelectedItem().toString(), 1) + "' where vill||bari||hh='" + (VILL + BARI + HH) + "'");
 
                  finish();
+                 /*Intent f1;
+                 f1 = new Intent(getApplicationContext(), Member_list.class);
+                 f1.putExtras(IDbundle);
+                 startActivity(f1);*/
                  Intent f1;
                  f1 = new Intent(getApplicationContext(), Member_list.class);
                  f1.putExtras(IDbundle);
-                 startActivity(f1);
+                 startActivityForResult(f1, 2);
 
                 /* AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
                  adb.setTitle("Close");
@@ -767,10 +771,15 @@ import Common.Global;
 
 
                  finish();
+                 /*Intent f1;
+                 f1 = new Intent(getApplicationContext(), Member_list.class);
+                 f1.putExtras(IDbundle);
+                 startActivity(f1);*/
+
                  Intent f1;
                  f1 = new Intent(getApplicationContext(), Member_list.class);
                  f1.putExtras(IDbundle);
-                 startActivity(f1);
+                 startActivityForResult(f1, 2);
              }
              else if(Resp == 0 | Resp == 88 | Resp == 99)
              {
@@ -891,9 +900,15 @@ import Common.Global;
 
                      g.setMigVillage("");
                      g.setHouseholdNo(HH);
-                     Intent f2 = new Intent(getApplicationContext(),Member_list.class);
+                     /*Intent f2 = new Intent(getApplicationContext(),Member_list.class);
                      f2.putExtras(IDbundle);
-                     startActivity(f2);
+                     startActivity(f2);*/
+
+                     Intent f1;
+                     f1 = new Intent(getApplicationContext(), Member_list.class);
+                     f1.putExtras(IDbundle);
+                     startActivityForResult(f1, 2);
+
                  } catch (Exception ex) {
                      Connection.MessageBox(Household_Visit.this, ex.getMessage());
                      return;

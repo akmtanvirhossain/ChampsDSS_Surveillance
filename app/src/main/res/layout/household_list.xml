@@ -54,87 +54,104 @@
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
 
 
-    <LinearLayout android:id="@+id/secHHMenu" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
-
-        <Button android:id="@+id/cmdHHList" android:visibility="gone"  android:layout_marginLeft="20sp" android:layout_marginRight="20sp" android:background="@drawable/button_style_blue"
-            android:layout_width="wrap_content"  android:textSize="18sp" android:textColor="#ffffff" android:layout_height="40sp" android:text="খানার তালিকা তৈরি"/>
+    <LinearLayout
+        android:id="@+id/secHHMenu"
+        style="@style/rowStyle0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" android:weightSum="2" android:paddingLeft="20dp" android:paddingRight="20dp">
 
         <Button
             android:id="@+id/cmdHH"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="45sp"
-            android:layout_marginLeft="20sp"
-            android:layout_marginRight="20sp"
             android:background="@drawable/button_style_blue"
             android:text="নতুন খানা নিবন্ধন"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="18sp" android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/cmdRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="45sp"
+            android:layout_marginLeft="20sp"
+            android:background="@drawable/button_style_blue"
+            android:text="Refresh"
+            android:textColor="#ffffff"
+            android:textSize="18sp" android:layout_weight="1"/>
     </LinearLayout>
+
     <View android:id="@+id/lineHHMenu" android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="0sp" android:background="#CCCCCC" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-          <HorizontalScrollView
+        <View
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="1dip"
+            android:layout_marginBottom="0sp"
+            android:background="#CCCCCC" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+        <include
+            layout="@layout/householdheading"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginBottom="0sp"
+            android:background="#CCCCCC" />
+
+<!--        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:isScrollContainer="true"
+            android:overScrollMode="always"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbars="vertical">-->
+<!--            <LinearLayout
+                android:id="@+id/secListView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginBottom="0sp"
-                    android:background="#CCCCCC" />
-
-                <include
-                    layout="@layout/householdheading"
+                <ListView
+                    android:id="@+id/lstData"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="550sp"
+                    android:clickable="true"
+                    android:divider="#000000"
+                    android:dividerHeight="1px"
+                    android:scrollbars="vertical"></ListView>
+            </LinearLayout>-->
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginBottom="0sp"
-                    android:background="#CCCCCC" />
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_below="@+id/navToolbar"
+            android:layout_alignParentBottom="true">
+            <ListView
+                android:id="@+id/lstData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#000000"
+                android:dividerHeight="1px"
+                android:layout_marginBottom="10dp"
+                android:clickable="true">
+            </ListView>
+        </FrameLayout>
+        <!--</ScrollView>-->
+    </LinearLayout>
 
-                <ScrollView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:isScrollContainer="true"
-                    android:overScrollMode="always"
-                    android:scrollbarAlwaysDrawVerticalTrack="true"
-                    android:scrollbarStyle="outsideInset"
-                    android:scrollbars="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0sp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:id="@+id/secListView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <ListView
-                                android:id="@+id/lstData"
-                                android:layout_width="match_parent"
-                                android:layout_height="550sp"
-                                android:clickable="true"
-                                android:divider="#000000"
-                                android:dividerHeight="1px"
-                                android:scrollbars="vertical"></ListView>
-                        </LinearLayout>
-                    </LinearLayout>
-                </ScrollView>
-            </LinearLayout>
-        </HorizontalScrollView>
-
-
-        <View android:layout_height="2dip" android:layout_width="fill_parent" android:layout_marginBottom="20sp" android:background="#CCCCCC" />
+    <View android:layout_height="2dip" android:layout_width="fill_parent" android:layout_marginBottom="20sp" android:background="#D7D7D7" />
     <!--</LinearLayout>-->
 <!--</ScrollView>-->
 </LinearLayout>

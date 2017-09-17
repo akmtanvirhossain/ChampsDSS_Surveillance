@@ -21,6 +21,15 @@ import android.content.Context;
         public void setBari(String newValue){
               _Bari = newValue;
          }
+
+     private String _BariName = "";
+     public String getBariName(){
+         return _BariName;
+     }
+     public void setBariName(String newValue){
+         _BariName = newValue;
+     }
+
         private String _HH = "";
         public String getHH(){
               return _HH;
@@ -272,7 +281,6 @@ import android.content.Context;
          return data;
      }
 
-
      public List<Household_DataModel> SelectAll_DataTransfer(Context context, String SQL)
      {
          Connection C = new Connection(context);
@@ -342,6 +350,7 @@ import android.content.Context;
              d = new Household_DataModel();
              d._Vill = cur.getString(cur.getColumnIndex("Vill"));
              d._Bari = cur.getString(cur.getColumnIndex("Bari"));
+             d._BariName = cur.getString(cur.getColumnIndex("BariName"));
              d._HH = cur.getString(cur.getColumnIndex("HH"));
              d._Religion = cur.getString(cur.getColumnIndex("Religion"));
              d._MobileNo1 = cur.getString(cur.getColumnIndex("MobileNo1"));

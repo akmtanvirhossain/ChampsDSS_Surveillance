@@ -1803,8 +1803,8 @@
 
                          //occupation
                          if (ocp >= 1) {
-                             if (age < 12) {
-                                 Connection.MessageBox(Events.this, "সদস্যের বয়স ১২ বছরের কম হলে ইভেন্ট ৭২ প্রযোজ্য নয়।");
+                             if (age < 5) {
+                                 Connection.MessageBox(Events.this, "সদস্যের বয়স ৫ বছরের কম হলে ইভেন্ট ৭২ প্রযোজ্য নয়।");
                                  return;
                              }
                              //check education code should be greater 12 for occupation code 34

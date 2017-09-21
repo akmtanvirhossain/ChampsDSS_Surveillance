@@ -639,7 +639,7 @@ public class Member_list extends Activity {
                             String SN = o.get("mslno").toString();
                             String ST = o.get("status").toString();
                             String Note = o.get("note").toString();
-                            C.Save("Update DataCorrectionNote set Status='1' where vill||bari||hh='"+ HH +"' and MslNo='"+ SN + "' and note='"+ Note +"'");
+                            C.Save("Update DataCorrectionNote set Status='1' where vill||bari||hh='"+ HH +"' and mslno='"+ SN + "' and note='"+ Note +"'");
                             cmdErroeListUpdate.setEnabled(false);
                             cmdErroeListUpdate.setText("Solve");
                             v_status.setText("1");

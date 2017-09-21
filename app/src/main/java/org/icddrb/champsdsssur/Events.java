@@ -244,7 +244,7 @@
      //Member
      TextView lblName;
 
-
+//     Button cmdSave;
     static String TableName;
 
     static String STARTTIME = "";
@@ -986,6 +986,29 @@
          Button cmdSave = (Button) findViewById(R.id.cmdSave);
          cmdSave.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
+
+                 String PMS  = C.ReturnSingleValue("select MS from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Mslno='"+ MSLNO + "'");
+                 Integer ECode = Integer.parseInt(spnEvType.getSelectedItem().toString().substring(0, 2));
+
+                 if (!PMS.equals("31") & ECode == 41)
+                 {
+                     AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                     adb.setTitle("Message");
+                     adb.setMessage("সদস্য বর্তমানে বিবাহিত নয়, কোড-("+ PMS +")  আপনি কি সদস্যকে গর্ভবতী দেখাতে চান [হ্যাঁ/না]?");
+
+                     adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                             finish();
+                         }});
+                     adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                             C.Save("Update tmpMember set PStat='" + EVTYPE + "',LmpDt='" + Global.DateConvertYMD(dtpEvDate.getText().toString()) +"' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             DataSave();
+                             finish();
+                         }});
+                     adb.show();
+                     return;
+                 }
                  DataSave();
              }});
      }
@@ -1526,7 +1549,8 @@
                      }
                      m.close();
 
-                     if (ECode == 40 | ECode == 49) {
+                     if (ECode == 40 | ECode == 49)
+                     {
                          if (Sex.equals("1")) {
                              Connection.MessageBox(Events.this, "সদস্য অবশ্যই মহিলা হতে হবে।");
                              return;
@@ -1538,7 +1562,8 @@
                              return;
                          }
                      }
-                     if (ECode == 40 ) {
+                     if (ECode == 40 )
+                     {
                          if (PStat.equals("41")) {
                              Connection.MessageBox(Events.this, "সদস্য বর্তমানে গর্ভবতী, ইভেন্ট ৪০ প্রযোজ্য নয়।");
                              return;
@@ -1552,10 +1577,12 @@
                          } else if (Sex.equals("1")) {
                              Connection.MessageBox(Events.this, "সদস্য অবশ্যই মহিলা হতে হবে।");
                              return;
-                         } else if (!PMStatus.equals("31")) {
+                         }
+                         if (PMStatus.equals("30")) {
                              Connection.MessageBox(Events.this, "সদস্য অবশ্যই বিবাহিত হতে হবে।");
                              return;
-                         } else if (age < 10) {
+                         }
+                         if (age < 10) {
                              Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১০ বছরের বেশী হতে হবে।");
                              return;
                          }
@@ -1573,6 +1600,24 @@
                              return;
                          }
 
+//                         if (!PMStatus.equals("31") & ECode == 41)
+//                         {
+//                             AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+//                             adb.setTitle("Message");
+//                             adb.setMessage("সদস্য বর্তমানে বিবাহিত নয় আপনি কি সদস্যকে গর্ভবতী দেখাতে চান [হ্যাঁ/না]?");
+//
+//                             adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+//                                 public void onClick(DialogInterface dialog, int which) {
+//                                     finish();
+//                                 }});
+//                             adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+//                                 public void onClick(DialogInterface dialog, int which) {
+//                                     C.Save("Update tmpMember set PStat='" + EVTYPE + "',LmpDt='" + Global.DateConvertYMD(dtpEvDate.getText().toString()) +"' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+//                                     finish();
+//                                 }});
+//
+//                             adb.show();
+//                         }
                          //difference between lmp and visit date should be equal or greater than 40 days
                      }
                      else if (ECode == 42)
@@ -1867,7 +1912,6 @@
                  objSave.setVill(txtVill.getText().toString());
                  objSave.setBari(txtBari.getText().toString());
                  objSave.setHH(txtHH.getText().toString());
-
                  objSave.setMSlNo(txtMSlNo.getText().toString());
                  objSave.setPNo(txtPNo.getText().toString());
 
@@ -2011,7 +2055,6 @@
                      SQL3 = "Update tmpMember set Sp1='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
                      SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
                  }
-
                  //Relation to head update
                  else if (EVTYPE.equals("64")) {
                      SQL3 = "Update tmpMember set Rth='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";

@@ -2839,7 +2839,7 @@ public class Member_list extends Activity {
                 C.Save("Delete from migMember where pno='"+ item.getPNo() +"' and extype='53'");
             }
 
-            //Prepare migration database
+            //Prepare migration database for Member
             else if(item.getEvType().equals("52") | item.getEvType().equals("53")){
                 Member_DataModel d1 = new Member_DataModel();
                 String SQL1 = "Select * from tmpMember  Where Vill='"+ item.getVill() +"' and Bari='"+ item.getBari() +"' and HH='"+ item.getHH() +"' and MSlNo='"+ item.getMSlNo() +"'";
@@ -2872,6 +2872,50 @@ public class Member_list extends Activity {
 
                     String status1 = objSave1.SaveUpdateData(this);
                 }
+            }
+
+            //Pregnancy History Data Transfer
+            PregHis_DataModel ph = new PregHis_DataModel();
+            String SQL1 = "Select * from tmpPregHis  Where Vill='"+ item.getVill() +"' and Bari='"+ item.getBari() +"' and HH='"+ item.getHH() +"' and MSlNo='"+ item.getMSlNo() +"'";
+            List<PregHis_DataModel> dataPH = ph.SelectAll(this, SQL1);
+            for(PregHis_DataModel itemPH : dataPH) {
+                MigrationPregHis_DataModel objSavePH = new MigrationPregHis_DataModel();
+                objSavePH.setVill(itemPH.getVill());
+                objSavePH.setBari(itemPH.getBari());
+                objSavePH.setHH(itemPH.getHH());
+                objSavePH.setMSlNo(itemPH.getMSlNo());
+                objSavePH.setPNo(itemPH.getPNo());
+                objSavePH.setVDate(itemPH.getVDate());
+                objSavePH.setVStatus(itemPH.getVStatus());
+                objSavePH.setVStatusOth(itemPH.getVStatusOth());
+                objSavePH.setMarriageStatus(itemPH.getMarriageStatus());
+                objSavePH.setMarMon(itemPH.getMarMon());
+                objSavePH.setMarYear(itemPH.getMarYear());
+                objSavePH.setMarDK(itemPH.getMarDK());
+                objSavePH.setGaveBirth(itemPH.getGaveBirth());
+                objSavePH.setChildLivWWo(itemPH.getChildLivWWo());
+                objSavePH.setSonLivWWo(itemPH.getSonLivWWo());
+                objSavePH.setDaugLivWWo(itemPH.getDaugLivWWo());
+                objSavePH.setChldLivOut(itemPH.getChldLivOut());
+                objSavePH.setSonLivOut(itemPH.getSonLivWWo());
+                objSavePH.setDaugLivOut(itemPH.getDaugLivOut());
+                objSavePH.setChldDie(itemPH.getChldDie());
+                objSavePH.setBoyDied(itemPH.getBoyDied());
+                objSavePH.setGirlDied(itemPH.getGirlDied());
+                objSavePH.setNotLivBrth(itemPH.getNotLivBrth());
+                objSavePH.setTotLB(itemPH.getTotLB());
+                objSavePH.setTotPregOut(itemPH.getTotPregOut());
+                objSavePH.setCurPreg("");
+                objSavePH.setLMPDate("");
+                objSavePH.setEnDt(Global.DateTimeNowYMDHMS());
+                objSavePH.setStartTime(STARTTIME);
+                objSavePH.setEndTime(g.CurrentTime24());
+                objSavePH.setDeviceID(DEVICEID);
+                objSavePH.setEntryUser(ENTRYUSER); //from data entry user list
+                //objSavePH.setLat(Double.toString(currentLatitude));
+                //objSavePH.setLon(Double.toString(currentLongitude));
+
+                String statusPH = objSavePH.SaveUpdateData(this);
             }
         }
     }

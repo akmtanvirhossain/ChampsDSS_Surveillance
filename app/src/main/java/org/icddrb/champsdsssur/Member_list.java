@@ -882,14 +882,14 @@ public class Member_list extends Activity {
                 public void onClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                     adb.setTitle("Event Delete");
-                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("mslno").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি মুছে ফেলতে চান [Yes/No]?");
+                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("mslno").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি মুছে ফেলতে চান [হ্যাঁ/না]?");
 
-                    adb.setNegativeButton("No", new AlertDialog.OnClickListener() {
+                    adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
 
                         }});
 
-                    adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                    adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
                             String HH = o.get("vill")+o.get("bari")+o.get("hh");
                             String SN = o.get("mslno").toString();
@@ -1008,17 +1008,17 @@ public class Member_list extends Activity {
                 public void onClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                     adb.setTitle("Event Update");
-                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("MslNo").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি আপডেট করতে চান [Yes/No]?");
+                    adb.setMessage("সদস্যের নাম্বারঃ "+ o.get("mslno").toString() +" এবং ইভেন্ট কোডঃ "+ o.get("evtype").toString() +" কি আপডেট করতে চান [হ্যাঁ/না]?");
 
-                    adb.setNegativeButton("No", new AlertDialog.OnClickListener() {
+                    adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
 
                         }});
 
-                    adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+                    adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                         public void onClick(DialogInterface dialog1, int which) {
                             //Show event update form
-//                            UpdateEventForm(o.get("evtype"),o.get("evdate"), VILL, BARI, HH, o.get("MslNo"),o.get("pno"),lv,o.get("info3"));
+//                            UpdateEventForm(o.get("evtype"),o.get("evdate"), VILL, BARI, HH, o.get("mslno"),o.get("pno"),lv,o.get("info3"));
 
                         }});
                     adb.show();

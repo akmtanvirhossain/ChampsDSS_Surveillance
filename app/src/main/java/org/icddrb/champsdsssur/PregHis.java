@@ -1546,8 +1546,10 @@ import Common.Global;
          objSave.setMarMon(txtMarMon.getText().toString());
          objSave.setMarYear(txtMarYear.getText().toString());
          objSave.setMarDK((chkMarDK.isChecked()?"1":(secMarMon.isShown()?"2":"")));
+
          String[] d_rdogrpGaveBirth = new String[] {"1","2"};
          objSave.setGaveBirth("");
+
          for (int i = 0; i < rdogrpGaveBirth.getChildCount(); i++)
          {
              rb = (RadioButton)rdogrpGaveBirth.getChildAt(i);

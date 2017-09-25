@@ -639,7 +639,7 @@ public class Member_list extends Activity {
                             String SN = o.get("mslno").toString();
                             String ST = o.get("status").toString();
                             String Note = o.get("note").toString();
-                            C.Save("Update DataCorrectionNote set Status='1' where vill||bari||hh='"+ HH +"' and mslno='"+ SN + "' and note='"+ Note +"'");
+                            C.Save("Update DataCorrectionNote set Status='1',ClearDate='"+Global.DateTimeNowYMDHMS()+"',Upload='2' where vill||bari||hh='"+ HH +"' and mslno='"+ SN + "' and note='"+ Note +"'");
                             cmdErroeListUpdate.setEnabled(false);
                             cmdErroeListUpdate.setText("Solve");
                             v_status.setText("1");
@@ -1034,7 +1034,7 @@ public class Member_list extends Activity {
             {
                 if(o.get("evtype").toString().equals("41"))
                 {
-                    cmdEvListDel.setEnabled(true);
+                    cmdEvListDel.setEnabled(false);
                     cmdEvListEdit.setEnabled(true);
                 }
                 else if(o.get("evtype").toString().equals("31"))
@@ -2897,7 +2897,7 @@ public class Member_list extends Activity {
                 objSavePH.setSonLivWWo(itemPH.getSonLivWWo());
                 objSavePH.setDaugLivWWo(itemPH.getDaugLivWWo());
                 objSavePH.setChldLivOut(itemPH.getChldLivOut());
-                objSavePH.setSonLivOut(itemPH.getSonLivWWo());
+                objSavePH.setSonLivOut(itemPH.getSonLivOut());
                 objSavePH.setDaugLivOut(itemPH.getDaugLivOut());
                 objSavePH.setChldDie(itemPH.getChldDie());
                 objSavePH.setBoyDied(itemPH.getBoyDied());

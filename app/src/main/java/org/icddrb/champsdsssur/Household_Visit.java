@@ -449,7 +449,8 @@ import Common.Global;
                  SQL +=" Select '77-সমগ্র পরিবার অন্যত্র  চলেগেছে' union";
                  SQL +=" Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0)";
              }
-             else if(TOTALMEM.equals("0") & (RsNo.equals("77")|RsNo.equals("88")|RsNo.equals("99")))
+//             else if(TOTALMEM.equals("0") & (RsNo.equals("77")|RsNo.equals("88")|RsNo.equals("99")))
+             else if(TOTALMEM.equals("0") & (RsNo.equals("77")|RsNo.equals("88")))
              {
                  SQL = " Select ' ' union";
                  SQL += " Select (MSlNo||'-'||Name)  from Member where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and ((julianday(date('now'))-julianday(BDate))/365.25)>10 and (ExType is null or length(ExType)=0) union";

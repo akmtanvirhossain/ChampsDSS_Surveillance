@@ -733,7 +733,7 @@
                      spnInfo1.setVisibility(View.GONE);
                      txtInfo1.setVisibility(View.VISIBLE);
                      VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
-                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(2))});
+                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(3))});
                  }
                  else if(EVCODE.equals("32")){
                      dtpEvDate.setText("");
@@ -742,7 +742,7 @@
                      spnInfo1.setVisibility(View.GONE);
                      txtInfo1.setVisibility(View.VISIBLE);
                      VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
-                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(2))});
+                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(3))});
 
                  }else if(EVCODE.equals("33")){
                      dtpEvDate.setText("");
@@ -751,7 +751,7 @@
                      spnInfo1.setVisibility(View.GONE);
                      txtInfo1.setVisibility(View.VISIBLE);
                      VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
-                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(2))});
+                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(3))});
 
                  }else if(EVCODE.equals("34")){
                      dtpEvDate.setText("");
@@ -761,7 +761,7 @@
                      spnInfo1.setVisibility(View.GONE);
                      txtInfo1.setVisibility(View.VISIBLE);
                      VlblInfo1.setText("স্বামী/স্ত্রীর বয়স");
-                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(2))});
+                     txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(3))});
                  }
 
                  //Pregnancy Information

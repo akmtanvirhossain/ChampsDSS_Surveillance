@@ -223,7 +223,7 @@ import Common.Global;
        BARI = IDbundle.getString("Bari");
        BName = IDbundle.getString("BariName");
        HH = IDbundle.getString("HH");
-       TOTALMEM = IDbundle.getString("totalmem");
+//       TOTALMEM = IDbundle.getString("totalmem");
        RsNo     = IDbundle.getString("resp");
 
        sp = new MySharedPreferences();
@@ -234,7 +234,11 @@ import Common.Global;
        /*ROUNDNO = IDbundle.getString("roundno");
        CLUSTER = IDbundle.getString("cluster");
        BLOCK = IDbundle.getString("block");*/
+
        OLDNEWHH = IDbundle.getString("OldNew");
+
+       String TotMember = C.ReturnSingleValue("Select COUNT(*)TotMember from Member m where length(exType)=0  and m.Vill='"+ VILL +"' and m.Bari='"+ BARI +"'and m.HH='"+ HH +"' group by m.Vill,m.Bari,m.HH");
+       TOTALMEM = TotMember;
 
        TableName = "Household";
 
@@ -376,7 +380,6 @@ import Common.Global;
        txtRnd.setEnabled(false);
 
 
-
        dtpVDate.setOnTouchListener(new View.OnTouchListener() {
            @Override
            public boolean onTouch(View v, MotionEvent event) {
@@ -438,6 +441,7 @@ import Common.Global;
 
          if (OLDNEWHH.equals("old"))
          {
+
              lblHeading1.setVisibility(View.GONE);
              lblHeading.setVisibility(View.VISIBLE);
 
@@ -459,7 +463,7 @@ import Common.Global;
                  SQL += " Select '88-ইন্টারভিউ দিতে রাজী নয়' union";
                  SQL += " Select '99-খানার সকল সদস্য অনুপস্থিত'";
              }
-             else if(TOTALMEM.equals("0"))
+             else if(TOTALMEM.equals("0") | TOTALMEM.equals(""))
              {
                  SQL = " Select ' ' union";
                  SQL += " Select '01-Member 1' union";

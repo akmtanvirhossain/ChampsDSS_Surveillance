@@ -71,6 +71,7 @@ public class Household_list extends Activity  {
     ArrayList<HashMap<String, String>> mylist;
     SimpleAdapter mSchedule;
     TextView lblHeading;
+    TextView lblHHVisited;
     Button btnAdd;
     Button btnRefresh;
 
@@ -127,6 +128,8 @@ public class Household_list extends Activity  {
          spnVillageName = (Spinner)findViewById(R.id.spnVill);
          spnBariName = (Spinner)findViewById(R.id.spnBari);
 
+         lblHHVisited=(TextView)findViewById(R.id.lblHHVisited);
+
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
@@ -148,7 +151,6 @@ public class Household_list extends Activity  {
                  adb.show();
              }});
 
-
          spnVill = (Spinner)findViewById(R.id.spnVill);
          spnVill.setAdapter(C.getArrayAdapter("Select distinct v.VCode||'-'||v.VName from Baris b inner join Village v on b.Vill=v.VCode where b.Cluster='"+ CLUSTER +"' and b.Block='"+ BLOCK +"'"));
          spnVill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -162,7 +164,6 @@ public class Household_list extends Activity  {
 
              }
          });
-
          spnBari = (Spinner)findViewById(R.id.spnBari);
          spnBari.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
@@ -172,6 +173,41 @@ public class Household_list extends Activity  {
                  String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari")?"":spnBari.getSelectedItem().toString().split("-")[0];
                  DataSearch(CLUSTER, BLOCK,V,B);
 
+                 if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari")) {
+
+                     String Vill = spnVill.getSelectedItem().toString().split("-")[0];
+                     String BCode = spnBari.getSelectedItem().toString().split("-")[0];
+                     String SQL = "";
+                     SQL = "select count(v.vill)Totvisit";
+                     SQL += " from Baris h left outer join Visits v on h.vill||h.bari=v.vill||v.bari and v.rnd='" + ROUNDNO + "'";
+                     SQL += " where h.Cluster='" + CLUSTER + "' and h.block='" + BLOCK + "' and v.vill='" + Vill + "'";
+
+                     Cursor cur = C.ReadData(SQL);
+
+                     cur.moveToFirst();
+                     while (!cur.isAfterLast()) {
+                         lblHHVisited.setText("পরিদর্শন: " + cur.getString(cur.getColumnIndex("Totvisit")));
+                         cur.moveToNext();
+                     }
+                     cur.close();
+                 }
+                 else {
+                     String Vill = spnVill.getSelectedItem().toString().split("-")[0];
+                     String BCode = spnBari.getSelectedItem().toString().split("-")[0];
+                     String SQL = "";
+                     SQL = "select count(v.vill)Totvisit";
+                     SQL += " from Baris h left outer join Visits v on h.vill||h.bari=v.vill||v.bari and v.rnd='" + ROUNDNO + "'";
+                     SQL += " where h.Cluster='" + CLUSTER + "' and h.block='" + BLOCK + "' and v.vill='" + Vill + "' and v.Bari='" + BCode + "'";
+
+                     Cursor cur = C.ReadData(SQL);
+
+                     cur.moveToFirst();
+                     while (!cur.isAfterLast()) {
+                         lblHHVisited.setText("পরিদর্শন: " + cur.getString(cur.getColumnIndex("Totvisit")));
+                         cur.moveToNext();
+                     }
+                     cur.close();
+                 }
                  /*if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari"))
                  {
                      DataSearch(CLUSTER, BLOCK,"");
@@ -399,6 +435,42 @@ public class Household_list extends Activity  {
      try {
          String V = spnVill.getSelectedItem().toString().split("-")[0];
          String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari") ? "" : spnBari.getSelectedItem().toString().split("-")[0];
+
+         if(spnBari.getSelectedItem().toString().trim().equalsIgnoreCase(".all bari")) {
+
+             String Vill = spnVill.getSelectedItem().toString().split("-")[0];
+             String BCode = spnBari.getSelectedItem().toString().split("-")[0];
+             String SQL = "";
+             SQL = "select count(v.vill)Totvisit";
+             SQL += " from Baris h left outer join Visits v on h.vill||h.bari=v.vill||v.bari and v.rnd='" + ROUNDNO + "'";
+             SQL += " where h.Cluster='" + CLUSTER + "' and h.block='" + BLOCK + "' and v.vill='" + Vill + "'";
+
+             Cursor cur = C.ReadData(SQL);
+
+             cur.moveToFirst();
+             while (!cur.isAfterLast()) {
+                 lblHHVisited.setText("পরিদর্শন: " + cur.getString(cur.getColumnIndex("Totvisit")));
+                 cur.moveToNext();
+             }
+             cur.close();
+         }
+         else {
+             String Vill = spnVill.getSelectedItem().toString().split("-")[0];
+             String BCode = spnBari.getSelectedItem().toString().split("-")[0];
+             String SQL = "";
+             SQL = "select count(v.vill)Totvisit";
+             SQL += " from Baris h left outer join Visits v on h.vill||h.bari=v.vill||v.bari and v.rnd='" + ROUNDNO + "'";
+             SQL += " where h.Cluster='" + CLUSTER + "' and h.block='" + BLOCK + "' and v.vill='" + Vill + "' and v.Bari='" + BCode + "'";
+
+             Cursor cur = C.ReadData(SQL);
+
+             cur.moveToFirst();
+             while (!cur.isAfterLast()) {
+                 lblHHVisited.setText("পরিদর্শন: " + cur.getString(cur.getColumnIndex("Totvisit")));
+                 cur.moveToNext();
+             }
+             cur.close();
+         }
          DataSearch(CLUSTER, BLOCK, V, B);
      }catch (Exception ex){
 
@@ -457,7 +529,7 @@ public class Household_list extends Activity  {
                  dataList.add(map);
              }
              lblHeading.setText("খানার তালিকা (মোট খানা: "+totalHH +" )");
-             dataAdapter = new SimpleAdapter(Household_list.this, dataList, R.layout.household_list,new String[] {"rowsec"},
+            dataAdapter = new SimpleAdapter(Household_list.this, dataList, R.layout.household_list,new String[] {"rowsec"},
                            new int[] {R.id.secListRow});
              list.setAdapter(new DataListAdapter(this, dataAdapter));
             //Utility.setListViewHeightBasedOnChildren(list);

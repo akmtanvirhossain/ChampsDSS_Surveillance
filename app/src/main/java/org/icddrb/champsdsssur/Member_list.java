@@ -2307,6 +2307,9 @@ public class Member_list extends Activity {
         String Household = Vill + Bari + HH;
         ErrMsg = "";
 
+        String TotMember = C.ReturnSingleValue("Select COUNT(*)TotMember from Member m where length(exType)=0  and m.Vill='"+ VILL +"' and m.Bari='"+ BARI +"'and m.HH='"+ HH +"' group by m.Vill,m.Bari,m.HH");
+        C.Save("Update Household set TotMem='"+TotMember+"' where vill||bari||hh='"+ HH +"'");
+
         if(!g.getRsNo().equals("77"))
         {
             //household member available/not

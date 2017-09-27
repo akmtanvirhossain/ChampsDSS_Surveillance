@@ -2490,6 +2490,7 @@ public class Connection extends SQLiteOpenHelper {
             Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Code List
+
             C.Sync_Download("Village", UniqueID, "");
             C.Sync_Download("migMember",UniqueID,"");
             C.Sync_Download("migPregHis",UniqueID,"");

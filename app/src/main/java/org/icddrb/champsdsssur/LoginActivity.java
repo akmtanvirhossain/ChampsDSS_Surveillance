@@ -1,6 +1,7 @@
 package org.icddrb.champsdsssur;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -101,8 +102,13 @@ public class LoginActivity extends Activity {
             {
                 C.Sync_Download("DataCollector",UniqueID,"Status='d'");
 
-                /*Intent syncService = new Intent(this, Sync_Service.class);
-                startService(syncService);*/
+                if(!isMyServiceRunning(Sync_Service.class)) {
+                    Intent syncService = new Intent(this, Sync_Service.class);
+                    startService(syncService);
+                }
+
+                //Intent syncService = new Intent(this, Sync_Service.class);
+                //startService(syncService);
             }
             //**************************************************************************************
             uid.setAdapter(C.getArrayAdapter("select UserId||'-'||UserName User from DataCollector order by UserName"));
@@ -320,5 +326,15 @@ public class LoginActivity extends Activity {
         }
     }
 
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

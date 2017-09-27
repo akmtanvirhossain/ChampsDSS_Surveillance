@@ -2381,7 +2381,6 @@ public class Connection extends SQLiteOpenHelper {
             //--------------------------------------------------------------------------------------
             C.Sync_DatabaseStructure(UniqueID);
             C.Sync_Download("RoundVisit",UniqueID,"CurrRound='1'");
-            //C.Sync_Download("DataCollector",UniqueID,"Status='d'");
 
             //Download data from server
             //--------------------------------------------------------------------------------------
@@ -2398,11 +2397,11 @@ public class Connection extends SQLiteOpenHelper {
 
             //Baris
             TableName    = "Baris";
-            SQLStr = "Select Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate " +
-                    " from Baris where Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=m.Vill+m.Bari)";
+            SQLStr = "Select Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate " +
+                    " from Baris b where Cluster='"+ Cluster +"' and" +
+                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=b.Vill+b.Bari and convert(varchar(19),modifydate,120) = convert(varchar(19),b.modifydate,120))";
 
-            VariableList = "Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate";
+            VariableList = "Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari";
             Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
@@ -2413,7 +2412,7 @@ public class Connection extends SQLiteOpenHelper {
                     " from Baris b" +
                     " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari" +
                     " where b.Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=h.Vill+h.Bari+h.HH)";
+                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=h.Vill+h.Bari+h.HH and convert(varchar(19),modifydate,120) = convert(varchar(19),h.modifydate,120))";
 
 
             VariableList = "Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
@@ -2429,7 +2428,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join SES s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
             SQLStr += " where b.Cluster='"+ Cluster +"' and " +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.SESNo)";
+                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.SESNo and convert(varchar(19),modifydate,120) = convert(varchar(19),s.modifydate,120))";
 
             VariableList = "Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth, Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon, Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, SESNo";
@@ -2442,12 +2441,11 @@ public class Connection extends SQLiteOpenHelper {
                     " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari " +
                     " inner join Member m on h.Vill=m.vill and h.Bari=m.Bari and h.hh=m.hh " +
                     " where b.Cluster='"+ Cluster +"' and " +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo)";
+                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo and convert(varchar(19),modifydate,120) = convert(varchar(19),m.modifydate,120))";
 
             VariableList = "Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, EnType, EnDate, ExType, ExDate, NeedReview, PosMig, PosMigDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo";
-
-            C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
+            Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //PregHis
             TableName    = "PregHis";
@@ -2458,7 +2456,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join PregHis s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
             SQLStr += " where b.Cluster='"+ Cluster +"' and " +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.MslNo)";
+                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.MslNo and convert(varchar(19),modifydate,120) = convert(varchar(19),s.modifydate,120))";
 
             VariableList = "Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo, SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut, CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo";
@@ -2471,7 +2469,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join Visits s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
             SQLStr += " where b.Cluster='"+ Cluster +"' and " +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.Rnd)";
+                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.Rnd and convert(varchar(19),modifydate,120) = convert(varchar(19),s.modifydate,120))";
 
             VariableList = "Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, Rnd";
@@ -2480,17 +2478,16 @@ public class Connection extends SQLiteOpenHelper {
             //Events
             TableName    = "Events";
             SQLStr  = "Select e.Vill, e.Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd," +
-                    " e.StartTime, e.EndTime, e.DeviceID, e.EntryUser, e.Lat, e.Lon, e.EnDt, '1' Upload, e.UploadDT, e.modifyDate from Events e " +
+                    " e.StartTime, e.EndTime, e.DeviceID, e.EntryUser, e.Lat, e.Lon, e.EnDt, '1' Upload, e.modifyDate from Events e " +
                     "inner join Baris b on e.Vill=b.Vill and e.Bari=b.Bari " +
                     " where b.Cluster='"+ Cluster +"' and " +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=e.Vill+e.Bari+e.HH+e.MSlNo+e.EvType+e.EvDate+e.Rnd)";
+                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ UniqueID +"' and UniqueId=e.Vill+e.Bari+e.HH+e.MSlNo+e.EvType+e.EvDate+e.Rnd and convert(varchar(19),modifydate,120) = convert(varchar(19),e.modifydate,120))";
 
-            VariableList = "Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, UploadDT, modifyDate";
+            VariableList = "Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo, EvType, EvDate, Rnd";
             Res = C.DownloadJSON_Batch(SQLStr, TableName, VariableList, UniqueField,UniqueID);
 
             //Code List
-
             C.Sync_Download("Village", UniqueID, "");
             C.Sync_Download("migMember",UniqueID,"");
             C.Sync_Download("migPregHis",UniqueID,"");

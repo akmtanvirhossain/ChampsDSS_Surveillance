@@ -55,6 +55,8 @@ public class Connection extends SQLiteOpenHelper {
         //Save("Delete from tmpVisits");
         //Save("Delete from Visits");
         //Save("Delete from migMember");
+        //Save("Update Member set Pstat='', lmpdt='' where pno='27600160202'");
+        //Save("Delete from Events  where pno='27600160202' and evtype=41");
     }
 
     //Split function

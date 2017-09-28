@@ -2618,14 +2618,16 @@
                  objSave.setExType("");
                  objSave.setExDate("");
              }else if(EVTYPE.equals("12")) {
-                 objSave.setPstat(PStat.toString());
-                 objSave.setLmpDt(LMP);
                  objSave.setEnType(txtEnType.getText().toString());
                  objSave.setEnType(txtEnType.getText().toString());
                  objSave.setEnDate(Global.DateConvertYMD(dtpEnDate.getText().toString()));
                  objSave.setExType("");
                  objSave.setExDate("");
              }
+
+             objSave.setPstat(PStat.toString());
+             objSave.setLmpDt(LMP);
+
              //objSave.setExType("");
              //objSave.setExDate("");
              //objSave.setEnDt(Global.DateTimeNowYMDHMS());

@@ -2873,6 +2873,9 @@ public class Member_list extends Activity {
                     objSave1.setExType(item1.getExType());
                     objSave1.setExDate(item1.getExDate());
 
+                    objSave1.setPstat(item1.getPstat());
+                    objSave1.setLmpDt(item1.getLmpDt());
+
                     String status1 = objSave1.SaveUpdateData(this);
                 }
             }

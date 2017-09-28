@@ -1252,10 +1252,11 @@
                  objSave.setExType("");
                  objSave.setExDate("");
 
-                 String PStatus  = C.ReturnSingleValue("select Pstat ||'#'|| LmpDt from migMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Pno='"+ txtPNo + "'");
-                 objSave.setPstat(PStatus.split("#")[0]);
-                 objSave.setLmpDt(PStatus.split("#")[1]);
-
+                 String PStatus  = C.ReturnSingleValue("select distinct Pstat ||'#'|| LmpDt from migMember Where Pno='"+ txtPNo.getText().toString() + "'");
+                 if(PStatus.length()>1) {
+                     objSave.setPstat(PStatus.split("#")[0]);
+                     objSave.setLmpDt(PStatus.split("#")[1]);
+                 }
              }
 
              objSave.setEnDt(Global.DateTimeNowYMDHMS());

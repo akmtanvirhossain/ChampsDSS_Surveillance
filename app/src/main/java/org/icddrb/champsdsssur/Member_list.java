@@ -553,7 +553,7 @@ public class Member_list extends Activity {
                 public void onClick(View arg0) {
                     if (C.Existence("select D.status from DataCorrectionNote D Where d.Vill='"+ VILL +"' and d.Bari='"+ BARI +"' and d.HH='"+ HH +"' and status='2'")) {
                         btnErrorCheck.setBackgroundResource(R.drawable.button_style_red);
-                        btnErrorCheck.setTextColor(Color.BLACK);
+                        btnErrorCheck.setTextColor(Color.WHITE);
                     }
                     else{
                         btnErrorCheck.setBackgroundResource(R.drawable.button_style);
@@ -1486,7 +1486,7 @@ public class Member_list extends Activity {
 
         if (C.Existence("select D.status from DataCorrectionNote D Where d.Vill='"+ VILL +"' and d.Bari='"+ BARI +"' and d.HH='"+ HH +"' and status='2'")) {
             btnErrorCheck.setBackgroundResource(R.drawable.button_style_red);
-            btnErrorCheck.setTextColor(Color.BLACK);
+            btnErrorCheck.setTextColor(Color.WHITE);
         }
         else{
             btnErrorCheck.setBackgroundResource(R.drawable.button_style);

@@ -1248,8 +1248,14 @@
              if(EVTYPE.equals("20")|EVTYPE.equals("21")|EVTYPE.equals("22")|EVTYPE.equals("23")|EVTYPE.equals("25")) {
                  objSave.setEnType(spnEvType.getSelectedItem().toString().split("-")[0]);
                  objSave.setEnDate(dtpEvDate.getText().toString().length() > 0 ? Global.DateConvertYMD(dtpEvDate.getText().toString()) : dtpEvDate.getText().toString());
+
                  objSave.setExType("");
                  objSave.setExDate("");
+
+                 String PStatus  = C.ReturnSingleValue("select Pstat ||'#'|| LmpDt from migMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Pno='"+ txtPNo + "'");
+                 objSave.setPstat(PStatus.split("#")[0]);
+                 objSave.setLmpDt(PStatus.split("#")[1]);
+
              }
 
              objSave.setEnDt(Global.DateTimeNowYMDHMS());
@@ -1492,7 +1498,7 @@
      private void MigrationData(String Village,String EvCode, String Name,final Dialog d,final ListView evlist, String Search)
      {
          String SQL = "";
-         SQL = "Select vill as vill,bari as bari, hh as hh, mslno Sno,Pno as Pno,Name as Name,ExDate as ExDate from migMember where Vill='"+ Village +"' and ExType='"+ EvCode +"' and (Name like('"+ Name +"%') or PNo like('"+ Name +"%'))order by name asc";
+         SQL = "Select vill as vill,bari as bari, hh as hh, mslno Sno,Pno as Pno,Name as Name,ExDate as ExDate,Pstat as Pstat,LmpDt as LmpDt from migMember where Vill='"+ Village +"' and ExType='"+ EvCode +"' and (Name like('"+ Name +"%') or PNo like('"+ Name +"%'))order by name asc";
 
 
          if(EvCode.equals("53"))
@@ -1520,6 +1526,9 @@
              map.put("pno",  cur1.getString(cur1.getColumnIndex("Pno")));
              map.put("name", cur1.getString(cur1.getColumnIndex("Name")));
              map.put("exdate", Global.DateConvertDMY(cur1.getString(cur1.getColumnIndex("ExDate"))));
+
+             map.put("pstat", cur1.getString(cur1.getColumnIndex("Pstat")));
+             map.put("lmpDt", Global.DateConvertDMY(cur1.getString(cur1.getColumnIndex("LmpDt"))));
 
              evmylist.add(map);
 

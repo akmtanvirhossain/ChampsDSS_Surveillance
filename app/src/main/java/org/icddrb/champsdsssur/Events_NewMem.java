@@ -1324,6 +1324,7 @@
                  objSave.setLon("");
                  SQL = objSave.TransactionSQL(this);
 
+
                  Pcur.moveToNext();
              }
          }

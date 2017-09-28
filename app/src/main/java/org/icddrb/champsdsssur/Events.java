@@ -59,6 +59,7 @@
  import Utility.*;
  import Common.*;
 
+
  public class Events extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 

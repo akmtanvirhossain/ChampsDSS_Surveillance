@@ -183,15 +183,15 @@ public class Member_list extends Activity {
          btncanceltran.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
 
-                 C.Save("Delete from tmpHousehold where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                 C.Save("Delete from tmpVisits where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                 C.Save("Delete from tmpMember where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                 C.Save("Delete from tmpSES where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                 C.Save("Delete from tmpPregHis where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-                 C.Save("Delete from tmpEvents where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
-
-                 g.setBariCode("");
-                 g.setHouseholdNo("");
+//                 C.Save("Delete from tmpHousehold where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+//                 C.Save("Delete from tmpVisits where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+//                 C.Save("Delete from tmpMember where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+//                 C.Save("Delete from tmpSES where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+//                 C.Save("Delete from tmpPregHis where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+//                 C.Save("Delete from tmpEvents where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+//
+//                 g.setBariCode("");
+//                 g.setHouseholdNo("");
 
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                  adb.setTitle("Close");
@@ -199,6 +199,16 @@ public class Member_list extends Activity {
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
+
+                         C.Save("Delete from tmpHousehold where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpVisits where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpMember where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpSES where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpPregHis where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+                         C.Save("Delete from tmpEvents where Vill||Bari||HH='"+ (VILL+BARI+HH) +"'");
+
+                         g.setBariCode("");
+                         g.setHouseholdNo("");
 
                          Intent returnIntent = new Intent();
                          returnIntent.putExtra("res", "hh");
@@ -2490,8 +2500,36 @@ public class Member_list extends Activity {
         }
         CRHHWife.close();
 
+        // Add on 01_09_2017-------------------------------------------------------------------------------
+        //Delivery: Live birth delivery occured but child dose not exist
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno from tmpevents a left join ";
+        SQLS += " (select e.*,mo.mono from tmpevents e,tmpMember mo where e.vill||e.bari||e.hh=mo.vill||mo.bari||mo.hh and e.Mslno=mo.Mslno and evtype='25') b";
+        SQLS += " on a.vill||a.bari||a.hh||a.Mslno=b.vill||b.bari||b.hh||b.mono";
+        SQLS += " where a.evtype='42' and a.info1 in('12', '22', '23', '32', '33', '34') and case when a.vill||a.bari||a.hh||a.Mslno=b.vill||b.bari||b.hh||b.mono then 1 else 0 end=0";
 
+        Cursor CRLBMiss = C.ReadData(SQLS);
+        CRLBMiss.moveToFirst();
+        while(!CRLBMiss.isAfterLast())
+        {
+            ErrMsg += "\n-> জীবিত জন্ম হয়েছে কিন্তু ইভেন্ট ২৫ ঘটানো হয়নি (সিরিয়াল নাম্বার= "+  CRLBMiss.getString(CRLBMiss.getColumnIndex("sno")) +" ).";
+            CRLBMiss.moveToNext();
+        }
+        CRLBMiss.close();
 
+        //Birth & Event Date: Birth date not same Event Date
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,d.name as name from tmpevents a left join ";
+        SQLS += " tmpMember d ";
+        SQLS += " on a.pno=d.pno";
+        SQLS += " where d.bdate<>a.evdate and a.evtype='25'";
+
+        Cursor CRBDate = C.ReadData(SQLS);
+        CRBDate.moveToFirst();
+        while(!CRBDate.isAfterLast())
+        {
+            ErrMsg += "\n-> সদস্যের জন্ম তারিখ এবং ঘটনার তারিখ এক নয় (সিরিয়াল নাম্বার= "+  CRBDate.getString(CRBDate.getColumnIndex("sno"))  +" এবং নাম= "+ CRBDate.getString(CRBDate.getColumnIndex("name")) +" ).";
+            CRBDate.moveToNext();
+        }
+        CRBDate.close();
 
         //Father number is available but father is not in member list
 

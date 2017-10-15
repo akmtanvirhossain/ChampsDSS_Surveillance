@@ -506,7 +506,8 @@
                  }
                  else if(EVCODE.equals("20"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
+//                     dtpEvDate.setText(Global.DateNowDMY());
                      secName.setVisibility(View.VISIBLE);
                  }
                  else if(EVCODE.equals("21"))
@@ -945,6 +946,21 @@
                          spnInfo2.requestFocus();
                          return;
                      }
+
+                     String s[]=spnInfo1.getSelectedItem().toString().split("-");
+                     String MothNo= C.ReturnSingleValue("Select MSlNo from tmpEvents where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ s[0] + "'");
+                     String EvDate  = C.ReturnSingleValue("select EvDate from tmpEvents Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and MSlNo='"+ MothNo + "' and Rnd='"+ ROUNDNO + "'");
+
+                     String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                     int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(EvDate.toString()));
+
+                     if(ExitDate_difference != 0)
+                     {
+                         Connection.MessageBox(Events_NewMem.this, "ঘটনার তারিখ অবশ্যই, ঘটনা ৪২ এর তারিখ  " + EvDate + "  এর সমান হতে হবে ।");
+                         dtpEvDate.requestFocus();
+                         return;
+                     }
+
                  }
              }
             //-----------------------------------------------------------------------------------------------------------------------------------------

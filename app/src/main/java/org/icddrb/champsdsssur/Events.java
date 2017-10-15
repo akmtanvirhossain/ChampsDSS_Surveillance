@@ -639,7 +639,8 @@
                  }
                  else if(EVCODE.equals("20"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(ENDATE);
+//                     dtpEvDate.setText(Global.DateNowDMY());
                      dtpEvDate.setEnabled(false);
                      formMember.setVisibility(View.VISIBLE);
                  }
@@ -988,10 +989,9 @@
          cmdSave.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
 
-                 String PMS  = C.ReturnSingleValue("select MS from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Mslno='"+ MSLNO + "'");
-                 Integer ECode = Integer.parseInt(spnEvType.getSelectedItem().toString().substring(0, 2));
-
-                 if (!PMS.equals("31") & ECode == 41)
+                 String PMS  = C.ReturnSingleValue("select MS from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and MSlNo='"+ MSLNO + "'");
+                 EVTYPE = spnEvType.getSelectedItem().toString().split("-")[0];
+                 if (!PMS.equals("31") & EVTYPE.equals("41"))
                  {
                      AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                      adb.setTitle("Message");
@@ -1025,7 +1025,6 @@
          try
          {
              String Household = VILL+BARI+HH;
-
              //====================================================================================================================
              String DV="";
 
@@ -1234,7 +1233,8 @@
                      return;
                  }
 
-                 int ageday = Global.DateDifferenceDays(dtpEvDate.getText().toString(),dtpBDate.getText().toString());
+//                 int ageday = Global.DateDifferenceDays(dtpEvDate.getText().toString(),dtpBDate.getText().toString());
+                 int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
                  int ageyear = Integer.parseInt(txtAgeY.getText().toString().length()==0?"0":txtAgeY.getText().toString());
 
                  Double  D=ageday/365.25;
@@ -1446,7 +1446,6 @@
                      spnSp4.requestFocus();
                      return;
                  }
-
                  //17 Mar 2017
                  else if (!Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-").equals("00") & Connection.SelectedSpinnerValue(spnFaNo.getSelectedItem().toString(), "-").equalsIgnoreCase(Connection.SelectedSpinnerValue(spnSp1.getSelectedItem().toString(), "-"))& spnSp1.isShown()) {
                      Connection.MessageBox(Events.this, "প্রশ্ন ৯) বাবার সিরিয়াল এবং ১ম স্বামী/স্ত্রী  সিরিয়াল একই হবে না");
@@ -1497,20 +1496,54 @@
                      spnRth.requestFocus();
                      return;
                  }
-
                  else if ((Ocp[0].equals("03")) & rdoSex1.isChecked())
                  {
                      Connection.MessageBox(Events.this, "পেশা গৃহিনী হলে সদস্য পুরুষ হবেনা.");
                      spnRth.requestFocus();
                      return;
                  }
+                //----------Add on 07_10_17-----------------------------------------------------------------------------
+                 else if ((!Edu[0].equals("00") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) == 00))
+                 {
+                     Connection.MessageBox(Events.this, "সদস্যের শিক্ষাগত যোগ্যতা সঠিক নয়, সদস্যের  বয়স ০০ বছর ");
+                     txtAgeY.requestFocus();
+                     return;
+                 }
+                 else if ((!Ocp[0].equals("01") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) == 00))
+                 {
+                     Connection.MessageBox(Events.this, "সদস্যের পেশা সঠিক নয়, সদস্যের  বয়স ০০ বছর ");
+                     txtAgeY.requestFocus();
+                     return;
+                 }
+                 if (EVTYPE.equals("25")) {
+
+                     String EventDate = C.ReturnSingleValue("select EvDate from tmpEvents Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                     String BDate = Global.DateConvertYMD(dtpBDate.getText().toString());
+                     int EventDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(BDate.toString()), Global.DateConvertDMY(EventDate.toString()));
+
+                     if (EventDate_difference != 0) {
+                         Connection.MessageBox(Events.this, " সদস্যের জন্ম তারিখ এবং ২৫ এর ঘটনার তারিখ  " + EventDate + "  এর সমান হবে ।");
+                         return;
+                     }
+                 }
+
+                 if (EVTYPE.equals("20") | EVTYPE.equals("21")) {
+
+                     String EventDate = C.ReturnSingleValue("select EvDate from tmpEvents Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                     String BDate = Global.DateConvertYMD(dtpBDate.getText().toString());
+                     int EventDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(BDate.toString()), Global.DateConvertDMY(EventDate.toString()));
+
+                     if (EventDate_difference > 0) {
+                         Connection.MessageBox(Events.this, " সদস্যের জন্ম তারিখ অবশ্যই ঘটনার তারিখ  " + EventDate + "  এর সমান অথবা ছোট হবে ।");
+                         return;
+                     }
+                 }
              }
 
              //----------------------------------------------------------------------------------------------------------------------------
              if (OLDNEWHH.equals("old"))
              {
-                 if ((ECode >= 12 & ECode <= 72))
-                 {
+                 if ((ECode >= 12 & ECode <= 72)) {
                      int age = 0;
                      String PStat = "";
                      String PMStatus = "";
@@ -1529,8 +1562,9 @@
                      String sp3 = "";
                      String sp4 = "";
                      String endate = "";
+                     String bdate = "";
 
-                     Cursor m = C.ReadData("Select rth,sex,ms,mono,fano,pstat,ifnull(lmpdt,'')lmpdt,edu,ocp,sp1,cast((julianday(date('now'))-julianday(bdate))/365.25 as int)age,ifnull(PStat,''),endate,name from tmpMember where Vill||Bari||HH='" + Household + "' and MslNo='" + MSLNO + "'");
+                     Cursor m = C.ReadData("Select rth,sex,ms,mono,fano,pstat,ifnull(lmpdt,'')lmpdt,edu,ocp,sp1,cast((julianday(date('now'))-julianday(bdate))/365.25 as int)age,ifnull(PStat,''),endate,name,ifnull(bdate,'')bdate from tmpMember where Vill||Bari||HH='" + Household + "' and MslNo='" + MSLNO + "'");
                      m.moveToFirst();
                      while (!m.isAfterLast()) {
                          PRth = m.getString(0).toString();
@@ -1546,20 +1580,40 @@
                          PStat = m.getString(11).toString();
                          endate = m.getString(12).toString();
                          name = m.getString(13).toString();
+                         bdate = m.getString(14).toString();
                          m.moveToNext();
                      }
                      m.close();
 
+                     if ((ECode >= 51 & ECode <= 55)){
+                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                         int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
+
+                         if(ExitDate_difference < 0)
+                         {
+                             Connection.MessageBox(Events.this, " সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             return;
+                         }
+
+                         String EvDate2 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                         int ExitDate_difference1 = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate2.toString()), Global.DateConvertDMY(bdate.toString()));
+
+                         if(ExitDate_difference1 < 0)
+                         {
+                             Connection.MessageBox(Events.this, " সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই জন্ম তারিখ  " + bdate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             return;
+                         }
+                     }
                      if (ECode == 40 | ECode == 49)
                      {
                          if (Sex.equals("1")) {
-                             Connection.MessageBox(Events.this, "সদস্য অবশ্যই মহিলা হতে হবে।");
+                             Connection.MessageBox(Events.this, "সদস্য অবশ্যই মহিলা হতে হবে ।");
                              return;
                          } else if (!PMStatus.equals("31")) {
-                             Connection.MessageBox(Events.this, "সদস্য অবশ্যই বিবাহিত হতে হবে।");
+                             Connection.MessageBox(Events.this, "সদস্য অবশ্যই বিবাহিত হতে হবে ।");
                              return;
                          } else if (age < 10 | age > 49) {
-                             Connection.MessageBox(Events.this, "সদস্যের বয়স ১০ এর কম অথবা ৪৯ এর বেশী হলে ইভেন্ট ৪০/৪৯ প্রযোজ্য নয়।");
+                             Connection.MessageBox(Events.this, "সদস্যের বয়স ১০ এর কম অথবা ৪৯ এর বেশী হলে ইভেন্ট ৪০/৪৯ প্রযোজ্য নয় ।");
                              return;
                          }
                      }
@@ -2184,7 +2238,7 @@
          VlblBDate=(TextView) findViewById(R.id.VlblBDate);
          dtpBDate=(EditText) findViewById(R.id.dtpBDate);
 
-         String EnDate  = C.ReturnSingleValue("select EnDate from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Mslno='"+ MSLNO + "'");
+         String EnDate  = C.ReturnSingleValue("select EnDate from tmpMember Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and MSlNo='"+ MSLNO + "'");
          if (EvType.equals("25")){
              dtpBDate.setText(ENDATE);
          }

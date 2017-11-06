@@ -569,7 +569,7 @@
                      secInfo1.setVisibility(View.VISIBLE);
                      secName.setVisibility(View.VISIBLE);
                      VlblOth.setVisibility(View.GONE);
-                     VlblInfo1.setText("মূর্বের খানা নাম্বার");
+                     VlblInfo1.setText("পূর্বের খানা নাম্বার");
                      txtInfo1.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Integer.valueOf(11))});
                      txtInfo1.setEnabled(false);
                      dtpEvDate.setEnabled(false);
@@ -1270,11 +1270,10 @@
 
                  String PStatus  = C.ReturnSingleValue("select distinct Pstat ||'#'|| LmpDt from migMember Where Pno='"+ txtPNo.getText().toString() + "'");
                  if(PStatus.length()>1) {
-                     objSave.setPstat(PStatus.split("#")[0]);
-                     objSave.setLmpDt(PStatus.split("#")[1]);
+                     objSave.setPstat(Connection.split(PStatus,'#')[0]);
+                     objSave.setLmpDt(Connection.split(PStatus,'#')[1]);
                  }
              }
-
              objSave.setEnDt(Global.DateTimeNowYMDHMS());
              objSave.setStartTime(STARTTIME);
              objSave.setEndTime(g.CurrentTime24());

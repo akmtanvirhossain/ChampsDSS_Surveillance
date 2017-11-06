@@ -1716,21 +1716,22 @@
                          }
                          else if (outcome_result == 11 | outcome_result == 12 | outcome_result == 21 | outcome_result == 22 | outcome_result == 23 | outcome_result == 31 | outcome_result == 32 | outcome_result == 33 | outcome_result == 34)
                          {
-                             if (outcode_difference < 180) {
-                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ১৮০ দিনের বেশী হতে হবে।");
+                             if (outcode_difference < 196) {
+                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ১৯৬ দিনের বেশী হতে হবে।");
                                  return;
                              } else if (outcode_difference > 310) {
                                  Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য অবশ্যই ৩১০ দিনের বেশী হতে পারে না।");
                                  return;
                              }
+
                          }
                          else if (outcome_result == 1 | outcome_result == 2)
                          {
                              if (outcode_difference < 42) {
                                  Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ৪২ দিনের কম হতে পারে না।");
                                  return;
-                             } else if (outcode_difference > 180) {
-                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ১৮০ দিনের বেশী হতে পারে না।");
+                             } else if (outcode_difference > 196) {
+                                 Connection.MessageBox(Events.this, "LMP " + LMP + " এবং প্রসবের তারিখের পার্থক্য ১৯৬ দিনের বেশী হতে পারে না।");
                                  return;
                              }
                          }
@@ -2225,6 +2226,7 @@
              ArrayAdapter<String> adptrRth= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listRth);
              spnRth.setAdapter(adptrRth);
          }
+
          secSex=(LinearLayout)findViewById(R.id.secSex);
          lineSex=(View)findViewById(R.id.lineSex);
          VlblSex = (TextView) findViewById(R.id.VlblSex);
@@ -2916,8 +2918,8 @@
 
      private boolean isAgeDifferenceWithParentsValid(String VILL, String BARI,String HH, String fatherSL, String motherSL, String Age) {
          // Cursor fCursor,mCursor;
-         String fAge = C.ReturnSingleValue("select AgeY from MEMBER where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + fatherSL + "'");
-         String mAge = C.ReturnSingleValue("select AgeY from MEMBER where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + motherSL + "'");
+         String fAge = C.ReturnSingleValue("select AgeY from tmpMEMBER where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + fatherSL + "'");
+         String mAge = C.ReturnSingleValue("select AgeY from tmpMEMBER where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + motherSL + "'");
 
          if (fAge.isEmpty()) {
              fAge = "0";
@@ -3235,7 +3237,7 @@
                  dtpBDate.setText(item.getBDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getBDate()));
                  dtpBDate.setEnabled(false);
 
-                 int ageday = Global.DateDifferenceDays(dtpEvDate.getText().toString(),dtpBDate.getText().toString());
+                 int ageday = Global.DateDifferenceDays(Global.DateNowDMY(),dtpBDate.getText().toString());
                  Double  D=ageday/365.25;
                  int Age = Integer.valueOf(D.intValue());
 

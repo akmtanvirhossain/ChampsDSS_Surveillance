@@ -52,11 +52,6 @@ public class Connection extends SQLiteOpenHelper {
         dbContext = context;
         ud_context = context;
 
-        //Save("Delete from tmpVisits");
-        //Save("Delete from Visits");
-        //Save("Delete from migMember");
-        //Save("Update Member set Pstat='', lmpdt='' where pno='27600160202'");
-        //Save("Delete from Events  where pno='27600160202' and evtype=41");
     }
 
     //Split function
@@ -441,7 +436,9 @@ public class Connection extends SQLiteOpenHelper {
             }
 
             //Prepare Where Clause
-            VarData = DataList.split("\\^");
+            //VarData = DataList.split("\\^");
+            VarData = Connection.split(DataList,'^');
+
             varPos = 0;
 
 
@@ -1932,6 +1929,7 @@ public class Connection extends SQLiteOpenHelper {
                         progDialog.setMessage("Uploading "+ tableList.get(tabIndex).toString() +" Data ... ");
                     }
                 });
+                //Save("Update "+ tableList.get(i).toString() +" set modifyDate='2017-11-08'  where modifyDate is null or modifyDate='1900-01-01'");
                 Sync_Upload_Process(tableList.get(i).toString(),progDialog,progHandler);
             }catch (Exception ex){
 

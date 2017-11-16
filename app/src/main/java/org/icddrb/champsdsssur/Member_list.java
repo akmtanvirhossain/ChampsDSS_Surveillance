@@ -150,7 +150,6 @@ public class Member_list extends Activity {
          /*ROUNDNO        = IDbundle.getString("roundno");
          CLUSTER        = IDbundle.getString("cluster");
          BLOCK          = IDbundle.getString("block");*/
-
          final TextView txtVill = (TextView) findViewById(R.id.txtVill);
          final TextView txtBari = (TextView) findViewById(R.id.txtBari);
          final TextView txtHH = (TextView) findViewById(R.id.txtHH);
@@ -1507,7 +1506,7 @@ public class Member_list extends Activity {
        try
         {
              Member_DataModel d = new Member_DataModel();
-             String SQL = "Select * from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
+             String SQL = "Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate,Cast(((julianday(date('now'))-julianday(BDate))/365.25) as int) as AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, EnType, EnDate, ExType, ExDate, NeedReview, PosMig, PosMigDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              dataList.clear();
 
@@ -1547,6 +1546,7 @@ public class Member_list extends Activity {
                  map.put("PosMigDate", item.getPosMigDate().toString().length()==0 ? "" : Global.DateConvertDMY(item.getPosMigDate()));
 
                  map.put("sl", i.toString());
+                 map.put("needreview", item.getNeedReview());
                  i+=1;
                  dataList.add(map);
              }
@@ -1777,6 +1777,8 @@ public class Member_list extends Activity {
              Name.setTextColor(Color.BLACK);
              delMember.setVisibility(View.INVISIBLE);
          }*/
+         ImageView review = (ImageView)convertView.findViewById(R.id.review);
+         ImageView card = (ImageView)convertView.findViewById(R.id.card);
 
          delMember.setVisibility(View.INVISIBLE);
          if (o.get("Rth").length() == 0)
@@ -1861,57 +1863,25 @@ public class Member_list extends Activity {
              EnDate.setTextColor(Color.RED);
              ExType.setTextColor(Color.RED);
              ExDate.setTextColor(Color.RED);
-         }else if(o.get("NeedReview").toString().equals("1"))
-         {
-             MSlNo.setTextColor(Color.GREEN);
-             PNo.setTextColor(Color.GREEN);
-             Name.setTextColor(Color.GREEN);
-             Rth.setTextColor(Color.GREEN);
-             Sex.setTextColor(Color.GREEN);
-             BDate.setTextColor(Color.GREEN);
-             AgeY.setTextColor(Color.GREEN);
-             MoNo.setTextColor(Color.GREEN);
-             FaNo.setTextColor(Color.GREEN);
-             Edu.setTextColor(Color.GREEN);
-             MS.setTextColor(Color.GREEN);
-             Pstat.setTextColor(Color.GREEN);
-             LmpDt.setTextColor(Color.GREEN);
-             Sp1.setTextColor(Color.GREEN);
-             Sp2.setTextColor(Color.GREEN);
-             Sp3.setTextColor(Color.GREEN);
-             Sp4.setTextColor(Color.GREEN);
-             Ocp.setTextColor(Color.GREEN);
-             EnType.setTextColor(Color.GREEN);
-             EnDate.setTextColor(Color.GREEN);
-             ExType.setTextColor(Color.GREEN);
-             ExDate.setTextColor(Color.GREEN);
          }
-         else
+         if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & o.get("needreview").equals("1"))
          {
-             MSlNo.setTextColor(Color.BLACK);
-             PNo.setTextColor(Color.BLACK);
-             Name.setTextColor(Color.BLACK);
-             Rth.setTextColor(Color.BLACK);
-             Sex.setTextColor(Color.BLACK);
-             BDate.setTextColor(Color.BLACK);
-             AgeY.setTextColor(Color.BLACK);
-             MoNo.setTextColor(Color.BLACK);
-             FaNo.setTextColor(Color.BLACK);
-             Edu.setTextColor(Color.BLACK);
-             MS.setTextColor(Color.BLACK);
-             Pstat.setTextColor(Color.BLACK);
-             LmpDt.setTextColor(Color.BLACK);
-             Sp1.setTextColor(Color.BLACK);
-             Sp2.setTextColor(Color.BLACK);
-             Sp3.setTextColor(Color.BLACK);
-             Sp4.setTextColor(Color.BLACK);
-             Ocp.setTextColor(Color.BLACK);
-             EnType.setTextColor(Color.BLACK);
-             EnDate.setTextColor(Color.BLACK);
-             ExType.setTextColor(Color.BLACK);
-             ExDate.setTextColor(Color.BLACK);
+             review.setVisibility(View.VISIBLE);
          }
 
+         String ChildCard = C.ReturnSingleValue("select Process from ChildCardRequest where Vill||Bari||HH='"+ (o.get("Vill")+o.get("Bari")+o.get("HH")) +"' and MSlNo='"+ o.get("MSlNo") +"'");
+         if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & ChildCard.equals("2")) {
+             review.setVisibility(View.GONE);
+             card.setVisibility(View.VISIBLE);
+             Vill.setVisibility(View.VISIBLE);
+             Vill.setText("");
+         }
+        if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & o.get("needreview").equals("1") & ChildCard.equals("2"))
+        {
+            review.setVisibility(View.VISIBLE);
+            card.setVisibility(View.VISIBLE);
+            Vill.setVisibility(View.GONE);
+        }
          if(Integer.valueOf(o.get("sl"))%2==0)
          {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));

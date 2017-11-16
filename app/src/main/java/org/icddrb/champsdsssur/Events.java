@@ -1642,19 +1642,42 @@
                              return;
                          }
                          //(Temporary Table) check the information is available or not
-                         if(ECode==41  & C.Existence("Select * from tmpEvents where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EVTYPE.toString() +"' and Rnd='"+ ROUNDNO +"'"))
-                         {
-                             Connection.MessageBox(Events.this, "ইভেন্ট কোড ("+ EVTYPE +") রউন্ড নাম্বার "+ ROUNDNO +" এ ঘটানো হয়েছে।");
-                             return;
+                         String OutType = C.ReturnSingleValue("select Info1 from tmpEvents Where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='42' and Rnd='"+ ROUNDNO +"'");
+
+                         if (!OutType.equals("01") & !OutType.equals("02")) {
+                             if (ECode == 41 & C.Existence("Select * from tmpEvents where vill||Bari||hh='" + Household + "' and MSlNo='" + MSLNO + "' and EvType='" + EVTYPE.toString() + "' and Rnd='" + ROUNDNO + "'")) {
+                                 Connection.MessageBox(Events.this, "ইভেন্ট কোড (" + EVTYPE + ") রউন্ড নাম্বার " + ROUNDNO + " এ ঘটানো হয়েছে।");
+                                 return;
+                             }
+
+                             //(Event Table) check the information is available or not
+                             if (ECode == 41 & C.Existence("Select * from Events where vill||Bari||hh='" + Household + "' and MSlNo='" + MSLNO + "' and EvType='" + EVTYPE.toString() + "' and Rnd='" + ROUNDNO + "'")) {
+                                 Connection.MessageBox(Events.this, "ইভেন্ট কোড (" + EVTYPE + ") রউন্ড নাম্বার " + ROUNDNO + " এ ঘটানো হয়েছে।");
+                                 return;
+                             }
                          }
 
-                         //(Event Table) check the information is available or not
-                         if(ECode==41 & C.Existence("Select * from Events where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EVTYPE.toString() +"' and Rnd='"+ ROUNDNO +"'"))
+                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                         String LastOutDate = C.ReturnSingleValue("select max(EvDate) from tmpEvents Where PNo='" + PNO + "' and EvType='42'");
+
+                         if (C.Existence("Select * from tmpEvents where PNo='" + PNO + "' and EvType='42'"))
                          {
-                             Connection.MessageBox(Events.this, "ইভেন্ট কোড ("+ EVTYPE +") রউন্ড নাম্বার "+ ROUNDNO +" এ ঘটানো হয়েছে।");
-                             return;
+                             int outcode_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(LastOutDate.toString()));
+                             if (outcode_difference < 0) {
+                                 Connection.MessageBox(Events.this, "LMP তারিখ অবশ্যই এই মহিলার শেষ গর্ভের ফলাফলের তারিখ " + LastOutDate + "  এর বেশী হতে হবে।");
+                                 return;
+                             }
                          }
 
+                         //Pregnancy identified before 30 days
+                         String VisitDate  = C.ReturnSingleValue("select VDate from tmpVisits Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Rnd='"+ ROUNDNO +"'");
+                         int outcode_difference = Global.DateDifferenceDays(Global.DateConvertDMY(VisitDate.toString()), Global.DateConvertDMY(EvDate1.toString()));
+
+                         if(outcode_difference < 30)
+                         {
+                             Connection.MessageBox(Events.this, "LMP " + LMP + " এবং পরিদর্শনের তারিখ " + VisitDate + " এর পার্থক্য ৩০ দিনের বেশী হতে হবে।");
+                             return;
+                         }
 //                         if (!PMStatus.equals("31") & ECode == 41)
 //                         {
 //                             AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
@@ -2714,7 +2737,7 @@
          {
              RadioButton rb;
              Member_DataModel d = new Member_DataModel();
-             String SQL = "Select * from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
+             String SQL = "Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate,Cast(((julianday(date('now'))-julianday(BDate))/365.25) as int) as AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, EnType, EnDate, ExType, ExDate, NeedReview, PosMig, PosMigDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate from "+ TableName +"  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"' and MSlNo='"+ MSlNo +"'";
              List<Member_DataModel> data = d.SelectAll(this, SQL);
              for(Member_DataModel item : data){
              /*txtVill.setText(item.getVill());

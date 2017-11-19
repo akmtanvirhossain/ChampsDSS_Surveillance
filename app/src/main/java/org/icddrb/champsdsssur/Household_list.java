@@ -4,14 +4,17 @@ package org.icddrb.champsdsssur;
  import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
+ import android.app.ProgressDialog;
+ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
  import android.database.Cursor;
  import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.Gravity;
+ import android.os.Handler;
+ import android.os.Message;
+ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +40,7 @@ import java.util.List;
 
 import Common.Connection;
 import Common.Global;
+ import Common.ProjectSetting;
  import Utility.MySharedPreferences;
 
 public class Household_list extends Activity  {
@@ -94,6 +98,9 @@ public class Household_list extends Activity  {
 
     static Spinner spnVillageName;
     static Spinner spnBariName;
+    Button cmdQAData;
+    ProgressDialog progDailog;
+    int jumpTime = 0;
 
  public void onCreate(Bundle savedInstanceState)
  {
@@ -123,12 +130,60 @@ public class Household_list extends Activity  {
          BLOCK = sp.getValue(this,"block");
 
          TableName = "Household";
+
+         cmdQAData = (Button)findViewById(R.id.cmdQAData);
          lblHeading = (TextView)findViewById(R.id.lblHeading);
 
          spnVillageName = (Spinner)findViewById(R.id.spnVill);
          spnBariName = (Spinner)findViewById(R.id.spnBari);
 
          lblHHVisited=(TextView)findViewById(R.id.lblHHVisited);
+
+         cmdQAData.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+                 String totalRec = C.ReturnResult("ReturnSingleValue","Select COUNT(*) totalRec from CHAMPSDSS.dbo.Visits v inner join CHAMPSDSS.dbo.Baris b on v.Vill=b.Vill and v.Bari=b.Bari where v.Rnd='"+ ROUNDNO +"' and b.Cluster='"+ CLUSTER +"' and b.Block='"+ BLOCK +"'");
+                 if(totalRec.equals("0")){
+                 }else {
+                     Connection.MessageBox(Household_list.this,"ক্লাস্টার "+ CLUSTER +" এবং ব্লক "+ BLOCK +" এর ইন্টারভিউ সম্পন্ন হয় গেছে.");
+                     return;
+                 }
+
+                 AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
+                 adb.setTitle("ডাটা ডাউনলোড");
+                 adb.setMessage("আপনি কি গুণ নিশ্চয়তা সাক্ষাতকার এর ডাটা ডাউনলোড করতে চান[হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
+                 {
+                     public void onClick(DialogInterface dialog, int which) {
+                         progDailog = new ProgressDialog(Household_list.this);
+                         progDailog.setMessage("Downloading Data, Please Wait . . .");
+                         progDailog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                         progDailog.setIcon(R.drawable.champsicon);
+                         progDailog.setIndeterminate(false);
+                         progDailog.setCancelable(false);
+                         progDailog.setProgress(0);
+                         progDailog.show();
+                         new Thread() {
+                             public void run() {
+                                 try {
+                                     C.ExecuteCommandOnServer("sp_QA_DataTransfer '" + CLUSTER + "','" + BLOCK + "','" + ROUNDNO + "'");
+                                     C.QA_DataDownload(DEVICEID, CLUSTER, progDailog, progressHandler);
+                                 } catch (Exception e) {
+
+                                 }
+                                 progDailog.dismiss();
+                             }
+                         }.start();
+                     }});
+                 adb.show();
+             }
+             Handler progressHandler = new Handler() {
+                 public void handleMessage(Message msg) {
+                     progDailog.setMessage(Global.getInstance().getProgressMessage());
+                     progDailog.incrementProgressBy(jumpTime);
+                 }
+             };
+         });
 
          ImageButton cmdBack = (ImageButton) findViewById(R.id.cmdBack);
          cmdBack.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +201,11 @@ public class Household_list extends Activity  {
                          C.Save("Insert into LastVillBari(Vill, Bari)Values('"+ V +"','"+ B +"')");*/
 
                          finish();
-                         startActivity(new Intent(Household_list.this, MainMenu.class));
+                         if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview))
+                             startActivity(new Intent(Household_list.this, MainMenu_QA.class));
+                         else
+                             startActivity(new Intent(Household_list.this, MainMenu.class));
+
                      }});
                  adb.show();
              }});
@@ -229,14 +288,18 @@ public class Household_list extends Activity  {
          Button cmdRefresh = (Button)findViewById(R.id.cmdRefresh);
          cmdRefresh.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
-                RefreshList();
+                 spnVill.setAdapter(C.getArrayAdapter("Select distinct v.VCode||'-'||v.VName from Baris b inner join Village v on b.Vill=v.VCode where b.Cluster='"+ CLUSTER +"' and b.Block='"+ BLOCK +"'"));
+                 if(spnVill.getCount()>0)
+                    spnBari.setAdapter(C.getArrayAdapter("Select '.All Bari' union Select Bari||'-'||BariName from Baris where Vill='"+ spnVill.getSelectedItem().toString().split("-")[0] +"' and Cluster='"+ CLUSTER +"' and Block='"+ BLOCK +"'"));
+
+                 RefreshList();
              }
          });
 
          Button cmdBari = (Button)findViewById(R.id.cmdBari);
          cmdBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
-
+                 if(spnVill.getCount()==0) return;
                  String V = Connection.SelectedSpinnerValue(spnVill.getSelectedItem().toString(),"-");
                  Bundle IDbundle = new Bundle();
                  IDbundle.putString("Vill", V);
@@ -252,6 +315,7 @@ public class Household_list extends Activity  {
          Button cmdUpdateBari = (Button)findViewById(R.id.cmdUpdateBari);
          cmdUpdateBari.setOnClickListener(new View.OnClickListener() {
              public void onClick(View arg0) {
+                 if(spnVill.getCount()==0) return;
                  if(spnBari.getSelectedItemPosition()==0){
                      Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
@@ -273,6 +337,8 @@ public class Household_list extends Activity  {
          cmdHH.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                 if(spnVill.getCount()==0) return;
+
                  if(spnBari.getSelectedItemPosition()==0){
                      Connection.MessageBox(Household_list.this,"বাড়ির তালিকা থেকে সঠিক বাড়ির নাম নির্বাচন করুন.");
                      return;
@@ -311,7 +377,7 @@ public class Household_list extends Activity  {
              }
          });
 
-         String V = spnVill.getSelectedItem().toString().split("-")[0];
+         String V = spnVill.getCount()>0 ? spnVill.getSelectedItem().toString().split("-")[0]:"";
          DataSearch(CLUSTER, BLOCK,V,"");
 
      }
@@ -433,6 +499,8 @@ public class Household_list extends Activity  {
 
  public void RefreshList(){
      try {
+
+
          String V = spnVill.getSelectedItem().toString().split("-")[0];
          String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari") ? "" : spnBari.getSelectedItem().toString().split("-")[0];
 
@@ -489,7 +557,7 @@ public class Household_list extends Activity  {
             SQL += " ifnull(v.VStatus,'') as vstatus,ifnull(v.vstatusoth,'') vstatusoth,ifnull(v.Resp,'') as resp";
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQL += " left outer join Visits v on h.Vill=v.Vill and h.Bari=v.Bari and h.HH=v.HH and (case when v.Resp='77' then '"+ ROUNDNO +"' else v.Rnd end)='"+ ROUNDNO +"'";
-            SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%')";
+            SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%') and h.Rnd='"+ ROUNDNO +"'";
 
             List<Household_DataModel> data = d.SelectAllVisit(this, SQL);
             dataList.clear();

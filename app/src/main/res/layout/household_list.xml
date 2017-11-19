@@ -60,7 +60,7 @@
         style="@style/rowStyle0"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" android:weightSum="2" android:paddingLeft="20dp" android:paddingRight="20dp">
+        android:orientation="horizontal" android:weightSum="3" android:paddingLeft="20dp" android:paddingRight="20dp">
 
         <Button
             android:id="@+id/cmdHH"
@@ -78,6 +78,15 @@
             android:layout_marginLeft="20sp"
             android:background="@drawable/button_style_blue"
             android:text="Refresh"
+            android:textColor="#ffffff"
+            android:textSize="18sp" android:layout_weight="1"/>
+        <Button
+            android:id="@+id/cmdQAData"
+            android:layout_width="wrap_content"
+            android:layout_height="45sp"
+            android:layout_marginLeft="20sp"
+            android:background="@drawable/button_style_green"
+            android:text="QA Data"
             android:textColor="#ffffff"
             android:textSize="18sp" android:layout_weight="1"/>
     </LinearLayout>

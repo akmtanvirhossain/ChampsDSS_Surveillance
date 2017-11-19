@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,6 +41,7 @@ public class LoginActivity extends Activity {
     private ProgressDialog dialog;
     private  String Password="";
     MySharedPreferences sp;
+    TextView lblQA;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,11 +60,18 @@ public class LoginActivity extends Activity {
             final Spinner uid      = (Spinner)findViewById(R.id.userId);
             final EditText pass    = (EditText)findViewById(R.id.pass);
             TextView lblSystemDate = (TextView)findViewById(R.id.lblSystemDate);
+            lblQA = (TextView)findViewById(R.id.lblQA);
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
             SystemUpdateDT = "16112017";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
+
+            if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){
+                lblQA.setVisibility(View.VISIBLE);
+            }else{
+                lblQA.setVisibility(View.GONE);
+            }
 
             //Check for Internet connectivity
             networkAvailable = Connection.haveNetworkConnection(LoginActivity.this);
@@ -76,7 +86,12 @@ public class LoginActivity extends Activity {
                 {
                     //Call Setting Form
                     finish();
-                    Intent f1 = new Intent(getApplicationContext(), SettingForm.class);
+                    Intent f1 = null;
+                    if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){
+                        f1 = new Intent(getApplicationContext(), SettingForm_QA.class);
+                    }else{
+                        f1 = new Intent(getApplicationContext(), SettingForm.class);
+                    }
                     startActivity(f1);
                     return;
                 }
@@ -179,7 +194,14 @@ public class LoginActivity extends Activity {
                                     public void run() {
                                         try {
                                             finish();
-                                            Intent f1 = new Intent(getApplicationContext(),MainMenu.class);
+                                            Intent f1 = null;
+                                            if(ProjectSetting.InterviewType.equals(ProjectSetting.MainInterview)){
+                                                f1 = new Intent(getApplicationContext(),MainMenu.class);
+
+                                            }else if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){
+                                                f1 = new Intent(getApplicationContext(),MainMenu_QA.class);
+                                            }
+
                                             startActivity(f1);
                                         } catch (Exception e) {
 
@@ -197,7 +219,13 @@ public class LoginActivity extends Activity {
                                 public void run() {
                                     try {
                                         finish();
-                                        Intent f1 = new Intent(getApplicationContext(),MainMenu.class);
+                                        Intent f1 = null;
+                                        if(ProjectSetting.InterviewType.equals(ProjectSetting.MainInterview)){
+                                            f1 = new Intent(getApplicationContext(),MainMenu.class);
+
+                                        }else if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){
+                                            f1 = new Intent(getApplicationContext(),MainMenu_QA.class);
+                                        }
                                         startActivity(f1);
                                     } catch (Exception e) {
 
@@ -217,7 +245,13 @@ public class LoginActivity extends Activity {
                             public void run() {
                                 try {
                                     finish();
-                                    Intent f1 = new Intent(getApplicationContext(),MainMenu.class);
+                                    Intent f1 = null;
+                                    if(ProjectSetting.InterviewType.equals(ProjectSetting.MainInterview)){
+                                        f1 = new Intent(getApplicationContext(),MainMenu.class);
+
+                                    }else if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){
+                                        f1 = new Intent(getApplicationContext(),MainMenu_QA.class);
+                                    }
                                     startActivity(f1);
                                 } catch (Exception e) {
 

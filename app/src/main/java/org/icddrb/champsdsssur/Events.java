@@ -2183,6 +2183,7 @@
                                  C.Save("Update tmpMember Set Sp4='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
                              }
                          }
+
                          else if (sex.equals("1") & Integer.valueOf(Code1) != 0)
                          {
                              if(sp1.length()==0 | sp1.equals("0") | sp1.equals("00"))

@@ -605,8 +605,11 @@ import Common.Global;
                      SQL += "'" + g.CurrentTime24() + "',"; //EndTime
                      SQL += "'" + DEVICEID + "',"; //DeviceID
                      SQL += "'" + ENTRYUSER + "',"; //EntryUser code
-                     SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
-                     SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                     SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lat") + "',"; // Lat
+                     SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lon") + "',"; // Lon
+
+//                     SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+//                     SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
                      SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                      SQL += "'" + 2 + "',"; //Upload
                      SQL += "'" + txtNote.getText() + "')";
@@ -757,8 +760,11 @@ import Common.Global;
                      SQL += "'" + g.CurrentTime24() + "',"; //EndTime
                      SQL += "'" + DEVICEID + "',"; //DeviceID
                      SQL += "'" + ENTRYUSER + "',"; //EntryUser code
-                     SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
-                     SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                     SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lat") + "',"; // Lat
+                     SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lon") + "',"; // Lon
+
+//                     SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+//                     SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
                      SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                      SQL += "'" + 2 + "',"; //Upload
                      SQL += "'" + txtNote.getText() + "')";
@@ -802,8 +808,11 @@ import Common.Global;
                          SQL += "'" + g.CurrentTime24() + "',"; //EndTime
                          SQL += "'" + DEVICEID + "',"; //DeviceID
                          SQL += "'" + ENTRYUSER + "',"; //EntryUser code
-                         SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
-                         SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                         SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lat") + "',"; // Lat
+                         SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lon") + "',"; // Lon
+
+//                         SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+//                         SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
                          SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                          SQL += "'" + 2 + "',"; //Upload
                          SQL += "'" + txtNote.getText() + "')";
@@ -852,8 +861,11 @@ import Common.Global;
                          SQL += "'" + g.CurrentTime24() + "',"; //EndTime
                          SQL += "'" + DEVICEID + "',"; //DeviceID
                          SQL += "'" + ENTRYUSER + "',"; //EntryUser code
-                         SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
-                         SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                         SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lat") + "',"; // Lat
+                         SQL += "'" + MySharedPreferences.getValue(Household_Visit.this,"lon") + "',"; // Lon
+
+//                         SQL += "'" + Double.toString(currentLatitude) + "',"; // Lat
+//                         SQL += "'" + Double.toString(currentLongitude) + "',"; // Lon
                          SQL += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                          SQL += "'" + 2 + "',"; //Upload
                          SQL += "'" + txtNote.getText() + "')";
@@ -887,8 +899,11 @@ import Common.Global;
                      SQLSTR += "'" + g.CurrentTime24() + "',"; //EndTime
                      SQLSTR += "'" + DEVICEID + "',"; //DeviceID
                      SQLSTR += "'" + ENTRYUSER + "',"; //EntryUser code
-                     SQLSTR += "'" + Double.toString(currentLatitude) + "',"; // Lat
-                     SQLSTR += "'" + Double.toString(currentLongitude) + "',"; // Lon
+                     SQLSTR += "'" + MySharedPreferences.getValue(Household_Visit.this,"lat") + "',"; // Lat
+                     SQLSTR += "'" + MySharedPreferences.getValue(Household_Visit.this,"lon") + "',"; // Lon
+
+//                     SQLSTR += "'" + Double.toString(currentLatitude) + "',"; // Lat
+//                     SQLSTR += "'" + Double.toString(currentLongitude) + "',"; // Lon
                      SQLSTR += "'" + Global.DateTimeNowYMDHMS() + "',"; //EnDt Date
                      SQLSTR += "'" + 2 + "')"; //Upload
 

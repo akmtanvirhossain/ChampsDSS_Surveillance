@@ -139,6 +139,11 @@ public class Household_list extends Activity  {
 
          lblHHVisited=(TextView)findViewById(R.id.lblHHVisited);
 
+         if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview))
+             cmdQAData.setVisibility(View.VISIBLE);
+         else
+             cmdQAData.setVisibility(View.GONE);
+
          cmdQAData.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  String totalRec = C.ReturnResult("ReturnSingleValue","Select COUNT(*) totalRec from CHAMPSDSS.dbo.Visits v inner join CHAMPSDSS.dbo.Baris b on v.Vill=b.Vill and v.Bari=b.Bari where v.Rnd='"+ ROUNDNO +"' and b.Cluster='"+ CLUSTER +"' and b.Block='"+ BLOCK +"'");
@@ -150,7 +155,7 @@ public class Household_list extends Activity  {
 
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
                  adb.setTitle("ডাটা ডাউনলোড");
-                 adb.setMessage("আপনি কি গুণ নিশ্চয়তা সাক্ষাতকার এর ডাটা ডাউনলোড করতে চান[হ্যাঁ/না]?");
+                 adb.setMessage("আপনি কি QA সাক্ষাতকার এর ডাটা ডাউনলোড করতে চান[হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
                  {
@@ -205,7 +210,6 @@ public class Household_list extends Activity  {
                              startActivity(new Intent(Household_list.this, MainMenu_QA.class));
                          else
                              startActivity(new Intent(Household_list.this, MainMenu.class));
-
                      }});
                  adb.show();
              }});
@@ -557,7 +561,11 @@ public class Household_list extends Activity  {
             SQL += " ifnull(v.VStatus,'') as vstatus,ifnull(v.vstatusoth,'') vstatusoth,ifnull(v.Resp,'') as resp";
             SQL += " from Baris b inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQL += " left outer join Visits v on h.Vill=v.Vill and h.Bari=v.Bari and h.HH=v.HH and (case when v.Resp='77' then '"+ ROUNDNO +"' else v.Rnd end)='"+ ROUNDNO +"'";
-            SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%') and h.Rnd='"+ ROUNDNO +"'";
+
+            if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview))
+                SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%') and h.Rnd='"+ ROUNDNO +"'";
+            else
+                SQL += " Where b.Cluster='"+ Cluster +"' and b.Block='"+ Block +"' and b.Vill='"+ Vill +"' and b.Bari Like('%"+ Bari +"%')";
 
             List<Household_DataModel> data = d.SelectAllVisit(this, SQL);
             dataList.clear();

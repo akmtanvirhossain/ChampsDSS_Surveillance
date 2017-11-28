@@ -50,9 +50,7 @@ import android.content.Context;
               _Name = newValue;
          }
         private String _Rth = "";
-        public String getRth(){
-              return _Rth;
-         }
+        public String getRth(){return _Rth;}
         public void setRth(String newValue){
               _Rth = newValue;
          }

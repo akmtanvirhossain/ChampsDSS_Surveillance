@@ -223,9 +223,10 @@ public class Member_list extends Activity {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                  adb.setTitle("Process Transaction");
-                 adb.setMessage("Do you want to process current transaction[Yes/No]?");
-                 adb.setNegativeButton("No", null);
-                 adb.setPositiveButton("Yes", new AlertDialog.OnClickListener() {
+//                 adb.setMessage("Do you want to process current transaction[Yes/No]?");
+                 adb.setMessage("আপনি কি র্বতমান কাজ সংরক্ষণ করতে চান [হ্যাঁ/না]?");
+                 adb.setNegativeButton("না", null);
+                 adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                      public void onClick(DialogInterface dialog, int which) {
 
                          String Status = ProcessTransaction(VILL,BARI,HH,ROUNDNO);
@@ -1780,6 +1781,9 @@ public class Member_list extends Activity {
          ImageView review = (ImageView)convertView.findViewById(R.id.review);
          ImageView card = (ImageView)convertView.findViewById(R.id.card);
 
+         final TextView lblReview = (TextView) findViewById(R.id.VlblReview);
+         final TextView lblcard = (TextView) findViewById(R.id.VlblCCard);
+
          delMember.setVisibility(View.INVISIBLE);
          if (o.get("Rth").length() == 0)
          {
@@ -1864,24 +1868,33 @@ public class Member_list extends Activity {
              ExType.setTextColor(Color.RED);
              ExDate.setTextColor(Color.RED);
          }
+//-----------------------------------------------------------------------------------------------
+         String ChildCard = C.ReturnSingleValue("select Process from ChildCardRequest where Vill||Bari||HH='"+ (o.get("Vill")+o.get("Bari")+o.get("HH")) +"' and MSlNo='"+ o.get("MSlNo") +"'");
+         String MemReview = C.ReturnSingleValue("select NeedReview from tmpMember where Vill||Bari||HH='"+ (o.get("Vill")+o.get("Bari")+o.get("HH")) +"' and MSlNo='"+ o.get("MSlNo") +"'");
+
          if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & o.get("needreview").equals("1"))
          {
              review.setVisibility(View.VISIBLE);
+             lblReview.setVisibility(View.VISIBLE);
          }
-
-         String ChildCard = C.ReturnSingleValue("select Process from ChildCardRequest where Vill||Bari||HH='"+ (o.get("Vill")+o.get("Bari")+o.get("HH")) +"' and MSlNo='"+ o.get("MSlNo") +"'");
-         if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & ChildCard.equals("2")) {
+         if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & o.get("needreview").equals("1") & ChildCard.equals("2"))
+         {
+            review.setVisibility(View.VISIBLE);
+            card.setVisibility(View.VISIBLE);
+            lblReview.setVisibility(View.VISIBLE);
+            lblcard.setVisibility(View.VISIBLE);
+            Vill.setVisibility(View.GONE);
+         }
+         if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & o.get("needreview").equals("2") & ChildCard.equals("2"))
+         {
              review.setVisibility(View.GONE);
+//             lblReview.setVisibility(View.GONE);
              card.setVisibility(View.VISIBLE);
+             lblcard.setVisibility(View.VISIBLE);
              Vill.setVisibility(View.VISIBLE);
              Vill.setText("");
          }
-        if (o.get("ExType").trim().length()==0 & o.get("PosMig").trim().length()==0 & o.get("needreview").equals("1") & ChildCard.equals("2"))
-        {
-            review.setVisibility(View.VISIBLE);
-            card.setVisibility(View.VISIBLE);
-            Vill.setVisibility(View.GONE);
-        }
+//-----------------------------------------------------------------------------------------------
          if(Integer.valueOf(o.get("sl"))%2==0)
          {
              secListRow.setBackgroundColor(Color.parseColor("#F3F3F3"));
@@ -2604,8 +2617,11 @@ public class Member_list extends Activity {
             objSave.setEndTime(item.getEndTime());
             objSave.setDeviceID(item.getDeviceID());
             objSave.setEntryUser(item.getEntryUser());
-            objSave.setLat(item.getLat());
-            objSave.setLon(item.getLon());
+            objSave.setLat(MySharedPreferences.getValue(Member_list.this,"lat"));
+            objSave.setLon(MySharedPreferences.getValue(Member_list.this,"lon"));
+
+//            objSave.setLat(item.getLat());
+//            objSave.setLon(item.getLon());
             objSave.setEnDt(item.getEnDt());
 
             String status = objSave.SaveUpdateData(this);
@@ -2640,8 +2656,11 @@ public class Member_list extends Activity {
             objSave.setEndTime(item.getEndTime());
             objSave.setDeviceID(item.getDeviceID());
             objSave.setEntryUser(item.getEntryUser());
-            objSave.setLat(item.getLat());
-            objSave.setLon(item.getLon());
+            objSave.setLat(MySharedPreferences.getValue(Member_list.this,"lat"));
+            objSave.setLon(MySharedPreferences.getValue(Member_list.this,"lon"));
+
+//            objSave.setLat(item.getLat());
+//            objSave.setLon(item.getLon());
             objSave.setEnDt(item.getEnDt());
 
             String status = objSave.SaveUpdateData(this);

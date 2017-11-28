@@ -499,9 +499,11 @@
                  secInfo3.setVisibility(View.GONE);
                  secInfo4.setVisibility(View.GONE);
 
+                 String VDate  = C.ReturnSingleValue("select VDate from tmpVisits Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Rnd='"+ ROUNDNO +"'");
                  if(EVCODE.equals("12"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                      DataSearchMember(VILL,BARI,HH,MSLNO,"tmpMember");
                  }
                  else if(EVCODE.equals("20"))
@@ -622,7 +624,8 @@
                  //Pregnancy Information
                  else if(EVCODE.equals("40"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                  }
                  else if(EVCODE.equals("41"))
                  {
@@ -639,7 +642,8 @@
                  }
                  else if(EVCODE.equals("49"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                  }
                  //Migration out
                  else if(EVCODE.equals("51")){
@@ -682,7 +686,8 @@
                  //Father Serial Number
                  else if(EVCODE.equals("62"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
+//                     dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
                      VlblInfo2.setVisibility(View.VISIBLE);
@@ -711,7 +716,8 @@
                  //Spouses Serial Number
                  else if(EVCODE.equals("63"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText("");
+//                     dtpEvDate.setText(Global.DateNowDMY());
                      secInfo1.setVisibility(View.VISIBLE);
                      secInfo2.setVisibility(View.VISIBLE);
                      VlblInfo2.setVisibility(View.VISIBLE);

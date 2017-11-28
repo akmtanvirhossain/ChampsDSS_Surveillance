@@ -630,9 +630,12 @@
                  txtInfo4.setText("");
                  spnInfo4.setSelection(0);
 
+                 String VDate  = C.ReturnSingleValue("select VDate from tmpVisits Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Rnd='"+ ROUNDNO +"'");
+
                  if(EVCODE.equals("12"))
                  {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                      dtpEvDate.setEnabled(false);
                      formMember.setVisibility(View.VISIBLE);
                      DataSearchMember(VILL,BARI,HH,MSLNO,"tmpMember");
@@ -768,7 +771,8 @@
 
                  //Pregnancy Information
                  else if(EVCODE.equals("40")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                  }else if(EVCODE.equals("41")){
                      dtpEvDate.setText("");
                  }else if(EVCODE.equals("42")){
@@ -797,7 +801,8 @@
                      spnInfo4.setVisibility(View.VISIBLE);
 
                  }else if(EVCODE.equals("49")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                  }
                  //Migration out
                  else if(EVCODE.equals("51")){
@@ -807,7 +812,8 @@
                  }else if(EVCODE.equals("53")){
                      dtpEvDate.setText("");
                  }else if(EVCODE.equals("54")){
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                  }else if(EVCODE.equals("55")){
                      dtpEvDate.setText("");
                  }
@@ -925,7 +931,8 @@
                      }
                  }
                  else if(EVCODE.equals("80")) {
-                     dtpEvDate.setText(Global.DateNowDMY());
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
+//                     dtpEvDate.setText(Global.DateNowDMY());
                  }
                  else
                  {
@@ -2218,13 +2225,13 @@
          VlblRth=(TextView) findViewById(R.id.VlblRth);
          spnRth=(Spinner) findViewById(R.id.spnRth);
 
-         if (MSLNO.equals("01")){
+         if (MSLNO.equals("01"))
+         {
              spnRth.setAdapter(C.getArrayAdapter("Select '' union Select distinct '01-নিজেই খানা প্রধান'"));// Name from RTH where Code in('01')"));
          }
          else
          {
              List<String> listRth = new ArrayList<String>();
-
              listRth.add("");
              listRth.add("00-খানা প্রধানের সাথে স¤পর্ক নেই");
              listRth.add("01-নিজেই খানা প্রধান");

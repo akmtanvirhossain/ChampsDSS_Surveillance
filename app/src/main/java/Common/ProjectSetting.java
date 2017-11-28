@@ -11,13 +11,13 @@ public class ProjectSetting {
 
     //Main Interview
     //----------------------------------------------------------------------------------------------
-    //public static String InterviewType  = MainInterview;
-    //public static String ProjectName    = "CHAMPS_DSS";
+    public static String InterviewType  = MainInterview;
+    public static String ProjectName    = "CHAMPS_DSS";
 
     //QA Interview
     //----------------------------------------------------------------------------------------------
-    public static String InterviewType  = QAInterview;
-    public static String ProjectName    = "CHAMPS_DSS_QA";
+//    public static String InterviewType  = QAInterview;
+//    public static String ProjectName    = "CHAMPS_DSS_QA";
 
 
 

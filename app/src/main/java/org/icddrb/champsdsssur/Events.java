@@ -2137,10 +2137,81 @@
                  } else if (EVTYPE.equals("62")) {
                      SQL3 = "Update tmpMember set FaNo='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
                      SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
-                 } else if (EVTYPE.equals("63")) {
-                     SQL3 = "Update tmpMember set Sp1='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
-                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
                  }
+                 else if (EVTYPE.equals("63"))
+                 {
+//                     SQL3 = "Update tmpMember set Sp1='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";
+//                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+
+                     //Update Husband's serial no
+                     String Code1 = "";
+                     String a = spnInfo1.getSelectedItemPosition() == 0 ? "" : spnInfo1.getSelectedItem().toString().split("-")[0];
+                     Code1 = a;
+
+                     String sex="";
+                     String sp1="";
+                     String sp2="";
+                     String sp3="";
+                     String sp4="";
+                     Cursor cur = C.ReadData("Select sex,sp1,sp2,sp3,sp4 from tmpMember Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                     cur.moveToFirst();
+                     while(!cur.isAfterLast())
+                     {
+                         sex = cur.getString(0).toString();
+                         sp1 = cur.getString(1).toString();
+                         sp2 = cur.getString(2).toString();
+                         sp3 = cur.getString(3).toString();
+                         sp4 = cur.getString(4).toString();
+
+                         //Male
+                         if (sex.equals("1") & Integer.valueOf(Code1) == 0)
+                         {
+                             if(sp1.equals(SpNo))
+                             {
+                                 C.Save("Update tmpMember Set Sp1='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                             else if(sp2.equals(SpNo))
+                             {
+                                 C.Save("Update tmpMember Set Sp2='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                             else if(sp3.equals(SpNo))
+                             {
+                                 C.Save("Update tmpMember Set Sp3='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                             else if(sp4.equals(SpNo))
+                             {
+                                 C.Save("Update tmpMember Set Sp4='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                         }
+                         else if (sex.equals("1") & Integer.valueOf(Code1) != 0)
+                         {
+                             if(sp1.length()==0 | sp1.equals("0") | sp1.equals("00"))
+                             {
+                                 C.Save("Update tmpMember Set Sp1='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                             else if(sp2.length()==0 | sp2.equals("0") | sp2.equals("00"))
+                             {
+                                 C.Save("Update tmpMember Set Sp2='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                             else if(sp3.length()==0 | sp3.equals("0") | sp3.equals("00"))
+                             {
+                                 C.Save("Update tmpMember Set Sp3='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                             else if(sp4.length()==0 | sp4.equals("0") | sp4.equals("00"))
+                             {
+                                 C.Save("Update tmpMember Set Sp4='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                             }
+                         }
+                         //Female
+                         else
+                         {
+                             C.Save("Update tmpMember Set Sp1='"+ Code1 +"' Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO +"'");
+                         }
+                         cur.moveToNext();
+                     }
+                     cur.close();
+                 }
+
                  //Relation to head update
                  else if (EVTYPE.equals("64")) {
                      SQL3 = "Update tmpMember set Rth='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "'";

@@ -64,7 +64,7 @@ public class LoginActivity extends Activity {
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
-            SystemUpdateDT = "23112017";  //Format: DDMMYYYY
+            SystemUpdateDT = "29112017";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
 
             if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){
@@ -151,7 +151,8 @@ public class LoginActivity extends Activity {
 
                         if (!C.Existence("Select * from DataCollector where UserId='" + U[0] + "' and Pass='" + pass.getText().toString() + "'"))
                         {
-                            Connection.MessageBox(LoginActivity.this,"This is not a valid user id or password");
+                            Connection.MessageBox(LoginActivity.this,"ইউজার আইডি বা পাসওয়ার্ড সঠিক নয়");
+//                            Connection.MessageBox(LoginActivity.this,"This is not a valid user id or password");
                             return;
                         }
 

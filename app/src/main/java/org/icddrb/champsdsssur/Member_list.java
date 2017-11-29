@@ -193,7 +193,7 @@ public class Member_list extends Activity {
 //                 g.setHouseholdNo("");
 
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
-                 adb.setTitle("Close");
+                 adb.setTitle("বাহির");
                  adb.setMessage("আপনি কি খানা সদস্যদের তালিকা থেকে বের হতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {

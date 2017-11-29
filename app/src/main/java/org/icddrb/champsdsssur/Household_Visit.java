@@ -256,7 +256,7 @@ import Common.Global;
        cmdBack.setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
                AlertDialog.Builder adb = new AlertDialog.Builder(Household_Visit.this);
-               adb.setTitle("Close");
+               adb.setTitle("বাহির");
                adb.setMessage("আপনি কি খানা পরিদর্শন ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
                adb.setNegativeButton("না", null);
                adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {

@@ -184,7 +184,7 @@ public class MainMenu extends Activity {
             cmdExit.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(MainMenu.this);
-                    adb.setTitle("Exit");
+                    adb.setTitle("বাহির");
                     adb.setMessage("আপনি কি এই সিস্টেম থেকে বের হতে চান [হ্যাঁ/না]?");
                     adb.setNegativeButton("না", null);
                     adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {

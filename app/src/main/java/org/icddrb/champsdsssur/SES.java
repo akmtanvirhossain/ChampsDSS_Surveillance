@@ -352,7 +352,7 @@ import Utility.*;
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(SES.this);
-                 adb.setTitle("Close");
+                 adb.setTitle("বাহির");
                  adb.setMessage("আপনি কি খানার তথ্য ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {

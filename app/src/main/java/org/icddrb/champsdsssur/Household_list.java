@@ -194,7 +194,7 @@ public class Household_list extends Activity  {
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Household_list.this);
-                 adb.setTitle("Close");
+                 adb.setTitle("বাহির");
                  adb.setMessage("আপনি কি খানার তালিকা থেকে বের হতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener()
@@ -291,12 +291,19 @@ public class Household_list extends Activity  {
 
          Button cmdRefresh = (Button)findViewById(R.id.cmdRefresh);
          cmdRefresh.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View arg0) {
-                 spnVill.setAdapter(C.getArrayAdapter("Select distinct v.VCode||'-'||v.VName from Baris b inner join Village v on b.Vill=v.VCode where b.Cluster='"+ CLUSTER +"' and b.Block='"+ BLOCK +"'"));
-                 if(spnVill.getCount()>0)
-                    spnBari.setAdapter(C.getArrayAdapter("Select '.All Bari' union Select Bari||'-'||BariName from Baris where Vill='"+ spnVill.getSelectedItem().toString().split("-")[0] +"' and Cluster='"+ CLUSTER +"' and Block='"+ BLOCK +"'"));
+             public void onClick(View arg0)
+             {
+                 if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview))
+                 {
+                     spnVill.setAdapter(C.getArrayAdapter("Select distinct v.VCode||'-'||v.VName from Baris b inner join Village v on b.Vill=v.VCode where b.Cluster='" + CLUSTER + "' and b.Block='" + BLOCK + "'"));
+                     if (spnVill.getCount() > 0)
+                         spnBari.setAdapter(C.getArrayAdapter("Select '.All Bari' union Select Bari||'-'||BariName from Baris where Vill='" + spnVill.getSelectedItem().toString().split("-")[0] + "' and Cluster='" + CLUSTER + "' and Block='" + BLOCK + "'"));
 
-                 RefreshList();
+                     RefreshList();
+                 }
+                 else {
+                     RefreshList();
+                 }
              }
          });
 
@@ -426,7 +433,7 @@ public class Household_list extends Activity  {
                 public void onClick(View arg0) {
 
                     if (txtName.getText().toString().length() == 0) {
-                        Connection.MessageBox(Household_list.this, "Required field: খানা প্রধানের নাম");
+                        Connection.MessageBox(Household_list.this, "খানা প্রধানের নাম খালি রাখা যাবেনা");
                         txtName.requestFocus();
                         return;
                     }
@@ -654,6 +661,10 @@ public class Household_list extends Activity  {
 
          HH.setText(o.get("HH"));
          HHHead.setText(o.get("HHHead"));
+
+//         String HeadName=C.ReturnSingleValue("Select HHHead from Household where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
+//         HHHead.setText(HeadName);
+
          //String VisitNote=C.ReturnSingleValue("Select Note from Visits where Vill='"+  o.get("Vill")  +"' AND Bari='"+  o.get("Bari")  +"' AND HH='"+ o.get("HH") +"'");
          //VNote.setText(VisitNote);
 

@@ -141,7 +141,7 @@ import Common.Global;
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Baris.this);
-                 adb.setTitle("Close");
+                 adb.setTitle("বাহির");
                  adb.setMessage("আপনি কি এই ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
@@ -267,7 +267,7 @@ import Common.Global;
            }*/
          else if(txtBariName.getText().toString().length()==0 & secBariName.isShown())
            {
-             Connection.MessageBox(Baris.this, "Required field: বাড়ির নাম খালি রাখা যাবেনা.");
+             Connection.MessageBox(Baris.this, "বাড়ির নাম খালি রাখা যাবেনা.");
              txtBariName.requestFocus(); 
              return;	
            }
@@ -307,6 +307,7 @@ import Common.Global;
              setResult(Activity.RESULT_OK, returnIntent);
 
              Connection.MessageBox(Baris.this, "Saved Successfully");
+             finish();
          }
          else{
              Connection.MessageBox(Baris.this, status);
@@ -426,7 +427,6 @@ import Common.Global;
      currentLatitude  = currentLocation.getLatitude();
      currentLongitude = currentLocation.getLongitude();
  }
-
 
  // Method to turn on GPS
  public void turnGPSOn(){

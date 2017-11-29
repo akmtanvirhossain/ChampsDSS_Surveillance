@@ -273,7 +273,7 @@ import Common.Global;
          cmdBack.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(PregHis.this);
-                 adb.setTitle("Close");
+                 adb.setTitle("বাহির");
                  adb.setMessage("আপনি কি গর্ভের ইতিহাস ফরম থেকে বের হতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
@@ -1620,6 +1620,7 @@ import Common.Global;
              setResult(Activity.RESULT_OK, returnIntent);
 
              Connection.MessageBox(PregHis.this, "Saved Successfully");
+             finish();
          }
          else{
              Connection.MessageBox(PregHis.this, status);

@@ -632,6 +632,15 @@
 
                  String VDate  = C.ReturnSingleValue("select VDate from tmpVisits Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Rnd='"+ ROUNDNO +"'");
 
+                 if (MSLNO.equals("01") & !EVCODE.equals("12"))
+                 {
+                     spnRth.setAdapter(C.getArrayAdapter("Select '' union Select distinct '01-নিজেই খানা প্রধান'"));// Name from RTH where Code in('01')"));
+                 }
+                 else
+                 {
+                     spnRth.setAdapter(C.getArrayAdapter("Select '' Union Select Code||'-'||Name from RTH"));
+                 }
+
                  if(EVCODE.equals("12"))
                  {
                      dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
@@ -2297,12 +2306,12 @@
          VlblRth=(TextView) findViewById(R.id.VlblRth);
          spnRth=(Spinner) findViewById(R.id.spnRth);
 
-         if (MSLNO.equals("01"))
-         {
-             spnRth.setAdapter(C.getArrayAdapter("Select '' union Select distinct '01-নিজেই খানা প্রধান'"));// Name from RTH where Code in('01')"));
-         }
-         else
-         {
+//         if (MSLNO.equals("01"))
+//         {
+//             spnRth.setAdapter(C.getArrayAdapter("Select '' union Select distinct '01-নিজেই খানা প্রধান'"));// Name from RTH where Code in('01')"));
+//         }
+//         else
+//         {
              List<String> listRth = new ArrayList<String>();
              listRth.add("");
              listRth.add("00-খানা প্রধানের সাথে স¤পর্ক নেই");
@@ -2327,7 +2336,7 @@
              listRth.add("77-অন্যান্য সম্পর্ক যা উপরের তালিকায় অন্তর্ভূক্ত নয়");
              ArrayAdapter<String> adptrRth= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listRth);
              spnRth.setAdapter(adptrRth);
-         }
+//         }
 
          secSex=(LinearLayout)findViewById(R.id.secSex);
          lineSex=(View)findViewById(R.id.lineSex);

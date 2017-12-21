@@ -483,7 +483,7 @@
          listOcp.add("");
          listOcp.add("01-বেকার");
          listOcp.add("02-ছাত্র /ছাত্রী (চাকুরী করে না)");
-         listOcp.add("03-গৃহিনী/গৃহস্থালীর কাজকর্ম করে (চাকুরী করে না)");
+         listOcp.add("03-গৃহিনী/গৃহস্থালীর কাজকর্ম করে (চাকুরী করে না) (শুধুমাত্র মহিলা)");
          listOcp.add("04-ভিক্ষুক (চাকুরী করে না)");
          listOcp.add("05-প্রতিবন্ধী (চাকুরী করে না)");
          listOcp.add("06-অবসরপ্রাপ্ত (চাকুরী করে না)");
@@ -1114,9 +1114,9 @@
 //         }
 //------------------------Add on 18_07_17-----------------------------------------------------------------------------
 
-         else if ((MS[0].equals("31") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 10))
+         else if ((!MS[0].equals("30") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) < 10))
          {
-             Connection.MessageBox(Member.this, "সদস্যের বৈবাহিক অবস্থা ৩১ হবেনা, সদস্যের  বয়স ১০ বছরের নিচে");
+             Connection.MessageBox(Member.this, "সদস্যের বৈবাহিক অবস্থা সঠিক নয়, সদস্যের  বয়স ১০ বছরের নিচে");
              txtAgeY.requestFocus();
              return;
          }

@@ -64,7 +64,7 @@ public class LoginActivity extends Activity {
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
-            SystemUpdateDT = "21122017";  //Format: DDMMYYYY
+            SystemUpdateDT = "04012018";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
 
             if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){

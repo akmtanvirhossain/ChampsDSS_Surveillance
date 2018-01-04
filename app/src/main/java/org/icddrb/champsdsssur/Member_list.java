@@ -1405,7 +1405,6 @@ public class Member_list extends Activity {
                         }
                         else
                         {
-                            //21 May 2014
                             AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                             adb.setTitle("Possible Migration");
                             adb.setMessage("আপনি কি ["+ o.get("name") +"]এর 54 Event এর তথ্য মুছে ফেলতে চান [Yes/No]?");
@@ -2440,18 +2439,18 @@ public class Member_list extends Activity {
         CRMoNoFaNo.close();
 
         //Professional but education < 10 class passed
-        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.extype)=0 and length(t.posmig)=0";
-        SQLS += " and t.ocp='34' and t.edu<'05'";
-
-        Cursor CROcp = C.ReadData(SQLS);
-        CROcp.moveToFirst();
-        while(!CROcp.isAfterLast())
-        {
-            ErrMsg += "\n-> পেশা কোড পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ 0৬ এর নিচে হবেনা (সিরিয়াল নাম্বার= "+  CROcp.getString(CROcp.getColumnIndex("sno")) +" নাম= "+ CROcp.getString(CROcp.getColumnIndex("name")) +" ).";
-            CROcp.moveToNext();
-        }
-        CROcp.close();
+//        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+//        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.extype)=0 and length(t.posmig)=0";
+//        SQLS += " and t.ocp='34' and t.edu<'05'";
+//
+//        Cursor CROcp = C.ReadData(SQLS);
+//        CROcp.moveToFirst();
+//        while(!CROcp.isAfterLast())
+//        {
+//            ErrMsg += "\n-> পেশা কোড পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ 0৬ এর নিচে হবেনা (সিরিয়াল নাম্বার= "+  CROcp.getString(CROcp.getColumnIndex("sno")) +" নাম= "+ CROcp.getString(CROcp.getColumnIndex("name")) +" ).";
+//            CROcp.moveToNext();
+//        }
+//        CROcp.close();
 
         // Add on 23_07_2017-------------------------------------------------------------------------------
 

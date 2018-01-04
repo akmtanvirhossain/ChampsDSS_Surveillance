@@ -262,6 +262,7 @@
     static String EVDATE = "";
 
     static String EVTYPE = "";
+    static String OcpType = "";
     static String OLDNEWHH = "";
 
      static String ROUNDNO = "";
@@ -1030,6 +1031,142 @@
                      adb.show();
                      return;
                  }
+
+                 if (EVTYPE.equals("72")) {
+                     OcpType = spnInfo1.getSelectedItem().toString().split("-")[0];
+                     String PEdu = C.ReturnSingleValue("select Edu from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+
+                     if (!PEdu.equals("12") & OcpType.equals("34")) {
+                         AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                         adb.setTitle("Message");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ")  আপনি কি তার পেশা ৩৪ দেখাতে চান [হ্যাঁ/না]?");
+
+                         adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 finish();
+                             }
+                         });
+                         adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 C.Save("Update tmpMember set Ocp='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                                 DataSave();
+                                 finish();
+                             }
+                         });
+                         adb.show();
+                         return;
+                     }
+                     else if (!PEdu.equals("05") & OcpType.equals("32")) {
+                         AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                         adb.setTitle("Message");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ")  আপনি কি তার পেশা ৩২ দেখাতে চান [হ্যাঁ/না]?");
+
+                         adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 finish();
+                             }
+                         });
+                         adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 C.Save("Update tmpMember set Ocp='" + Connection.SelectedSpinnerValue(spnInfo1.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                                 DataSave();
+                                 finish();
+                             }
+                         });
+                         adb.show();
+                         return;
+                     }
+                 }
+                 if (EVTYPE.equals("12")) {
+                     String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
+                     String[] Edu = spnEdu.getSelectedItem().toString().split("-");
+
+                     if ((Ocp[0].equals("34")) & !Edu[0].equals("12"))
+                     {
+                         AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                         adb.setTitle("Message");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + spnEdu.getSelectedItem() + ")  আপনি কি তার পেশা ৩৪ দেখাতে চান [হ্যাঁ/না]?");
+
+                         adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 finish();
+                             }
+                         });
+                         adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 DataSave();
+                                 finish();
+                             }
+                         });
+                         adb.show();
+                         return;
+                     }
+                     else if ((Ocp[0].equals("32")) & !Edu[0].equals("05"))
+                     {
+                         AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                         adb.setTitle("Message");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + spnEdu.getSelectedItem() + ")  আপনি কি তার পেশা ৩২ দেখাতে চান [হ্যাঁ/না]?");
+
+                         adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 finish();
+                             }
+                         });
+                         adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 DataSave();
+                                 finish();
+                             }
+                         });
+                         adb.show();
+                         return;
+                     }
+                 }
+                 else if (EVTYPE.equals("20") || EVTYPE.equals("21") || EVTYPE.equals("22") || EVTYPE.equals("23") || EVTYPE.equals("25")) {
+                     String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
+                     String[] Edu = spnEdu.getSelectedItem().toString().split("-");
+
+                     if ((Ocp[0].equals("34")) & !Edu[0].equals("12"))
+                     {
+                         AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                         adb.setTitle("Message");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + spnEdu.getSelectedItem() + ")  আপনি কি তার পেশা ৩৪ দেখাতে চান [হ্যাঁ/না]?");
+
+                         adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                return;
+                             }
+                         });
+                         adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 DataSave();
+                                 finish();
+                             }
+                         });
+                         adb.show();
+                         return;
+                     }
+                    else if ((Ocp[0].equals("32")) & !Edu[0].equals("05"))
+                     {
+                         AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                         adb.setTitle("Message");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + spnEdu.getSelectedItem() + ")  আপনি কি তার পেশা ৩২ দেখাতে চান [হ্যাঁ/না]?");
+
+                         adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 return;
+                             }
+                         });
+                         adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 DataSave();
+                                 finish();
+                             }
+                         });
+                         adb.show();
+                         return;
+                     }
+                 }
                  DataSave();
              }});
      }
@@ -1506,11 +1643,11 @@
                      spnEdu.requestFocus();
                      return;
                  }
-                 else if ((Ocp[0].equals("34")) & Edu[0].equals("00")) {
-                     Connection.MessageBox(Events.this, "পেশা পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
-                     spnEdu.requestFocus();
-                     return;
-                 }
+//                 else if ((Ocp[0].equals("34")) & Edu[0].equals("00")) {
+//                     Connection.MessageBox(Events.this, "পেশা পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
+//                     spnEdu.requestFocus();
+//                     return;
+//                 }
                  else if ((RTH[0].equals("03")) & MoSl[0].equals("00") & FaSl[0].equals("00")) {
                      Connection.MessageBox(Events.this, "খানা প্রধানের সাথে সম্পর্ক  ছেলে/মেয়ে হলে বাবা এবং মা এর সিরিয়াল নং ০০ হবেনা.");
                      spnRth.requestFocus();
@@ -1597,16 +1734,16 @@
                  if (ocp >= 1)
                  {
                      //check education code should be greater 12 for occupation code 34
-                     if (edu < 12 & ocp == 34) {
-                         Connection.MessageBox(Events.this, "পেশার কোড ৩৪ এর জন্য শিক্ষার কোড অবশ্যই ১২ এর কম হতে পারে না।");
-                         return;
-                     }
+//                     if (edu < 12 & ocp == 34) {
+//                         Connection.MessageBox(Events.this, "পেশার কোড ৩৪ এর জন্য শিক্ষার কোড অবশ্যই ১২ এর কম হতে পারে না।");
+//                         return;
+//                     }
                      //check education code should be greater 1 for occupation code 32
-                     else if (edu < 1 & ocp == 32) {
-                         Connection.MessageBox(Events.this, "পেশার কোড ৩২ এর জন্য সদস্য শিক্ষার কোড ০০ হবে। না");
-                         return;
-                     }
-                     else if (ocp == 32 & Mage < 10) {
+//                     if (edu < 1 & ocp == 32) {
+//                         Connection.MessageBox(Events.this, "পেশার কোড ৩২ এর জন্য সদস্য শিক্ষার কোড ০০ হবে। না");
+//                         return;
+//                     }
+                     if (ocp == 32 & Mage < 10) {
                          Connection.MessageBox(Events.this, "বয়স ১০ বছর এর কম হলে পেশা ৩২ হতে পারে না।");
                          return;
                      }
@@ -2033,16 +2170,16 @@
                                  Connection.MessageBox(Events.this, "সদস্যের বয়স ৫ বছরের কম হলে ইভেন্ট ৭২ প্রযোজ্য নয়।");
                                  return;
                              }
-                             //check education code should be greater 12 for occupation code 34
-                             else if (edu < 12 & ocp == 34) {
-                                 Connection.MessageBox(Events.this, "পেশার কোড ৩৪ এর জন্য শিক্ষার কোড অবশ্যই ১২ হতে হবে।");
-                                 return;
-                             }
-                             //check education code should be greater 1 for occupation code 32
-                             else if (edu < 1 & ocp == 32) {
-                                 Connection.MessageBox(Events.this, "পেশার কোড ৩২ এর জন্য সদস্য অবশ্যই শিক্ষিত হতে হবে।");
-                                 return;
-                             }
+//                             //check education code should be greater 12 for occupation code 34
+//                             else if (edu < 12 & ocp == 34) {
+//                                 Connection.MessageBox(Events.this, "পেশার কোড ৩৪ এর জন্য শিক্ষার কোড অবশ্যই ১২ হতে হবে।");
+//                                 return;
+//                             }
+//                             //check education code should be greater 1 for occupation code 32
+//                             else if (edu < 1 & ocp == 32) {
+//                                 Connection.MessageBox(Events.this, "পেশার কোড ৩২ এর জন্য সদস্য অবশ্যই শিক্ষিত হতে হবে।");
+//                                 return;
+//                             }
                              //student
                              else if (ocp == 2 & edu == 0 & age > 30) {
                                  Connection.MessageBox(Events.this, "পেশার কোড ০২ এর জন্য শিক্ষার কোড ০০ সঠিক নয়।");
@@ -2068,11 +2205,11 @@
                                  Connection.MessageBox(Events.this, "পেশা মেধাসম্পন্ন এর জন্য শিক্ষা ০০ হতে পারে না।");
                                  return;
                              }
-                             //Occupation (34), but education < 10
-                             else if (ocp == 34 & edu < 10) {
-                                 Connection.MessageBox(Events.this, "পেশা পেশাজীবি:ডাক্তার, কৃষিবিদ, শিক্ষক, প্রকৌশলী (মেধাসম্পন্ন) এর জন্য শিক্ষা ১০ এর কম হতে পারে না।");
-                                 return;
-                             }
+//                             //Occupation (34), but education < 10
+//                             else if (ocp == 34 & edu < 10) {
+//                                 Connection.MessageBox(Events.this, "পেশা পেশাজীবি:ডাক্তার, কৃষিবিদ, শিক্ষক, প্রকৌশলী (মেধাসম্পন্ন) এর জন্য শিক্ষা ১০ এর কম হতে পারে না।");
+//                                 return;
+//                             }
                          }
                      }
                  }

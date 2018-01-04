@@ -295,7 +295,7 @@
 
              String ECode = spnEvType.getSelectedItem().toString().substring(0, 2);
 
-             if(ECode.equals("21") )
+             if(ECode.equals("21"))
              {
                  dtpEvDate.setVisibility(View.VISIBLE);
                  txtInfo1.setVisibility(View.GONE);
@@ -1369,7 +1369,6 @@
                  txtHH  .setText(item.getName());
                  txtMSlNo.setText(item.getName());
                  txtName.setText(item.getName());
-
              }
          }
          catch(Exception  e)

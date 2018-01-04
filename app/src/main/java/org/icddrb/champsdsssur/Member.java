@@ -697,9 +697,6 @@
          secSp4.setVisibility(View.GONE);
 
         Button cmdSave = (Button) findViewById(R.id.cmdSave1);
-
-
-
         cmdSave.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
             DataSave();
@@ -1126,12 +1123,12 @@
              spnEdu.requestFocus();
              return;
          }
-         else if ((Ocp[0].equals("34")) & Edu[0].equals("00"))
-         {
-             Connection.MessageBox(Member.this, "পেশা পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
-             spnEdu.requestFocus();
-             return;
-         }
+//         else if ((Ocp[0].equals("34")) & Edu[0].equals("00"))
+//         {
+//             Connection.MessageBox(Member.this, "পেশা পেশাজীবি হলে সর্বোচ্চ শ্রেণি পাশ ০০ হবেনা.");
+//             spnEdu.requestFocus();
+//             return;
+//         }
          else if ((RTH[0].equals("03")) & MoSl[0].equals("00") & FaSl[0].equals("00"))
          {
              Connection.MessageBox(Member.this, "খানা প্রধানের সাথে সম্পর্ক ছেলে/মেয়ে হলে বাবা এবং মা এর সিরিয়াল নং ০০ হবেনা.");

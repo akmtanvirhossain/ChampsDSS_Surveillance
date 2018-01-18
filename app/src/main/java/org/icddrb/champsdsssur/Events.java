@@ -2128,9 +2128,9 @@
                                  Connection.MessageBox(Events.this, "শিক্ষার কোড অবশ্যই 00-10,12,14,15,16,17,30,31,32,33,34,35,99 হতে হবে।");
                                  return;
                              }
-                             else if (ECode == 71 & edu <= eduP )
+                             else if (ECode == 71 & edu <= eduP & eduP < 30)
                              {
-                                 Connection.MessageBox(Events.this, "সদস্যের বর্তমান শিক্ষাগত যোগ্যতা আগের শিক্ষাগত যোগ্যতা " + eduP + "এর সমান বা কম হবেনা");
+                                 Connection.MessageBox(Events.this, "সদস্যের বর্তমান শিক্ষাগত যোগ্যতা আগের শিক্ষাগত যোগ্যতা " + eduP + " এর সমান বা কম হবেনা");
                                  return;
                              }
                              //age should not have < 4 years

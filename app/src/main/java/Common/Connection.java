@@ -2930,6 +2930,9 @@ public class Connection extends SQLiteOpenHelper {
             //Data Correction Note
             C.Sync_Download("DataCorrectionNote",UniqueID,"Cluster='"+ Cluster +"'");
 
+            C.Sync_Download("ChildCardRequest",UniqueID,"Cluster='"+ Cluster +"'");
+            C.Sync_Download("Childcard",UniqueID,"Cluster='"+ Cluster +"'");
+
 
 
             //Delete data from the local device

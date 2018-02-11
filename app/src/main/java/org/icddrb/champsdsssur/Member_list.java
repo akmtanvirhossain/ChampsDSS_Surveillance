@@ -1396,7 +1396,8 @@ public class Member_list extends Activity {
 
 
 
-            memtab.setOnClickListener(new View.OnClickListener() {
+            memtab.setOnClickListener(new View.OnClickListener()
+            {
                 public void onClick(View v) {
                     if(o.get("ExType").trim().length()==0)
                     {

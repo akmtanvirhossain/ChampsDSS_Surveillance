@@ -2931,7 +2931,6 @@ public class Connection extends SQLiteOpenHelper {
             C.Sync_Download("DataCorrectionNote",UniqueID,"Cluster='"+ Cluster +"'");
 
 
-
             //Delete data from the local device
             //09 Jan 2018
             String UniqueID_Column = "";

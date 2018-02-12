@@ -2165,9 +2165,16 @@
                          int ocp = Integer.valueOf(CodeList);
 
                          //occupation
-                         if (ocp >= 1) {
-                             if (age < 5) {
+                         if (ocp >= 1)
+                         {
+                             if (age < 5 & ocp !=2)
+                             {
                                  Connection.MessageBox(Events.this, "সদস্যের বয়স ৫ বছরের কম হলে ইভেন্ট ৭২ প্রযোজ্য নয়।");
+                                 return;
+                             }
+                             else if (age < 3 & ocp ==2)
+                             {
+                                 Connection.MessageBox(Events.this, "সদস্যের বয়স ৩ বছরের কম হলে ইভেন্ট ৭২ প্রযোজ্য নয়।");
                                  return;
                              }
 //                             //check education code should be greater 12 for occupation code 34
@@ -2181,12 +2188,14 @@
 //                                 return;
 //                             }
                              //student
-                             else if (ocp == 2 & edu == 0 & age > 30) {
+                             else if (ocp == 2 & edu == 0 & age > 30)
+                             {
                                  Connection.MessageBox(Events.this, "পেশার কোড ০২ এর জন্য শিক্ষার কোড ০০ সঠিক নয়।");
                                  return;
                              }
                              //age>40, ocp should not 02
-                             else if (ocp == 2 & age > 40) {
+                             else if (ocp == 2 & age > 40)
+                             {
                                  Connection.MessageBox(Events.this, "যাদের বয়স ৪০ বছরের বেশী তাদের পেশার কোড ০২ হতে পারে না।");
                                  return;
                              }

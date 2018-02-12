@@ -2930,6 +2930,9 @@ public class Connection extends SQLiteOpenHelper {
             //Data Correction Note
             C.Sync_Download("DataCorrectionNote",UniqueID,"Cluster='"+ Cluster +"'");
 
+            C.Sync_Download("ChildCardRequest",UniqueID,"Cluster='"+ Cluster +"'");
+            C.Sync_Download("Childcard",UniqueID,"Cluster='"+ Cluster +"'");
+
 
             //Delete data from the local device
             //09 Jan 2018
@@ -2940,7 +2943,7 @@ public class Connection extends SQLiteOpenHelper {
             try {
                 C.Sync_Download("DeleteID_List", UniqueID, "");
 
-                Cursor cur_H = C.ReadData("Select TableName,ID from DeleteID_List Where DeleteStatus='N' limit 50");
+                Cursor cur_H = C.ReadData("Select TableName,ID from DeleteID_List Where DeleteStatus='N' limit 200");
                 cur_H.moveToFirst();
                 while (!cur_H.isAfterLast()) {
                     UniqueID_Column = "";

@@ -648,7 +648,7 @@ public class Member_list extends Activity {
                             String HH = o.get("vill")+o.get("bari")+o.get("hh");
                             String SN = o.get("mslno").toString();
                             String ST = o.get("status").toString();
-                            String Note = o.get("note").toString();
+                            String Note = o.get("note").toString();//
                             C.Save("Update DataCorrectionNote set Status='1',ClearDate='"+Global.DateTimeNowYMDHMS()+"',Upload='2' where vill||bari||hh='"+ HH +"' and mslno='"+ SN + "' and note='"+ Note +"'");
                             cmdErroeListUpdate.setEnabled(false);
                             cmdErroeListUpdate.setText("Solve");
@@ -656,6 +656,7 @@ public class Member_list extends Activity {
 
                         }});
                     adb.show();
+                    return;
                 }});
 
             return convertView;
@@ -1395,7 +1396,8 @@ public class Member_list extends Activity {
 
 
 
-            memtab.setOnClickListener(new View.OnClickListener() {
+            memtab.setOnClickListener(new View.OnClickListener()
+            {
                 public void onClick(View v) {
                     if(o.get("ExType").trim().length()==0)
                     {

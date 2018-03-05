@@ -2931,7 +2931,7 @@ public class Connection extends SQLiteOpenHelper {
             C.Sync_Download("DataCorrectionNote",UniqueID,"Cluster='"+ Cluster +"'");
 
             C.Sync_Download("ChildCardRequest",UniqueID,"Cluster='"+ Cluster +"'");
-            C.Sync_Download("Childcard",UniqueID,"Cluster='"+ Cluster +"'");
+            //C.Sync_Download("Childcard",UniqueID,"Cluster='"+ Cluster +"'");
 
 
             //Delete data from the local device
@@ -2970,6 +2970,7 @@ public class Connection extends SQLiteOpenHelper {
         }
         catch(Exception ex)
         {
+
         }
     }
 

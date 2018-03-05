@@ -1495,7 +1495,8 @@ public class Member_list extends Activity {
             btnPregHis.setTextColor(Color.WHITE);
         }
 
-        if (C.Existence("select D.status from DataCorrectionNote D Where d.Vill='"+ VILL +"' and d.Bari='"+ BARI +"' and d.HH='"+ HH +"' and status='2'")) {
+//        String Note1 = C.ReturnSingleValue("Select Note from DataCorrectionNote Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "'");
+        if (C.Existence("select D.status from DataCorrectionNote D Where d.Vill='"+ VILL +"' and d.Bari='"+ BARI +"' and d.HH='"+ HH + "' and status='2'")) {
             btnErrorCheck.setBackgroundResource(R.drawable.button_style_red);
             btnErrorCheck.setTextColor(Color.WHITE);
         }

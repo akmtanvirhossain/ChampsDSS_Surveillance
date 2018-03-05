@@ -153,7 +153,7 @@ public class MainMenu extends Activity {
                                         tableList.add("PregHis");
                                         tableList.add("Events");
                                         tableList.add("ChildCardRequest");
-                                        tableList.add("DataCorrectionNote");
+//                                        tableList.add("DataCorrectionNote");
 
                                         C.Sync_Upload(tableList, progDailog, progressHandler);
 

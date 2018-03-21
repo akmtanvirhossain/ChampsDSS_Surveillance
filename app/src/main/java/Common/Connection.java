@@ -401,7 +401,7 @@ public class Connection extends SQLiteOpenHelper {
     }
 
     public List<DataClassProperty> GetDataListJSON(String VariableList, String TableName, String UniqueField) {
-        Cursor cur_H = ReadData("Select " + VariableList + " from " + TableName + " where Upload='2'");
+        Cursor cur_H = ReadData("Select " + VariableList + " from " + TableName + " where Upload='2' limit 400");
         cur_H.moveToFirst();
         List<DataClassProperty> data = new ArrayList<DataClassProperty>();
         DataClassProperty d;

@@ -653,7 +653,6 @@ public class Member_list extends Activity {
                             cmdErroeListUpdate.setEnabled(false);
                             cmdErroeListUpdate.setText("Solve");
                             v_status.setText("1");
-
                         }});
                     adb.show();
                     return;
@@ -2295,7 +2294,6 @@ public class Member_list extends Activity {
 
  }
 
-
     private String ProcessTransaction(String Vill, String Bari, String HH, String Rnd)
     {
         String SQLS = "";
@@ -2515,6 +2513,80 @@ public class Member_list extends Activity {
             CRBDate.moveToNext();
         }
         CRBDate.close();
+
+        //Member Spouse marital status Unmaried ============================================
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
+        SQLS += " tmpMember d ";
+        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.MS='30'";
+        SQLS += " where length(d.extype)=0";
+
+        Cursor CRSPsl = C.ReadData(SQLS);
+        CRSPsl.moveToFirst();
+        while(!CRSPsl.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSPsl.getString(CRSPsl.getColumnIndex("sno"))  +" এবং নাম= "+ CRSPsl.getString(CRSPsl.getColumnIndex("name")) +"এই সদস্যের যে স্বামী/স্ত্রী তার বৈবাহিক অবস্থা অবিবাহিত আছে ).";
+            CRSPsl.moveToNext();
+        }
+        CRSPsl.close();
+
+        //Member Spouse Sex Same ============================================
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
+        SQLS += " tmpMember d ";
+        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sex=a.sex";
+        SQLS += " where length(d.extype)=0";
+
+        Cursor CRSpSex = C.ReadData(SQLS);
+        CRSpSex.moveToFirst();
+        while(!CRSpSex.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSpSex.getString(CRSpSex.getColumnIndex("sno"))  +" এবং নাম= "+ CRSpSex.getString(CRSpSex.getColumnIndex("name")) +"এই সদস্যের যে স্বামী/স্ত্রী তার লিঙ্গ একই ).";
+            CRSpSex.moveToNext();
+        }
+        CRSpSex.close();
+
+        //Member Spouse serial 00 ============================================
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
+        SQLS += " tmpMember d ";
+        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1='00'";
+        SQLS += " where length(d.extype)=0";
+
+        Cursor CRSPsl1 = C.ReadData(SQLS);
+        CRSPsl1.moveToFirst();
+        while(!CRSPsl1.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSPsl1.getString(CRSPsl1.getColumnIndex("sno"))  +" এবং নাম= "+ CRSPsl1.getString(CRSPsl1.getColumnIndex("name")) +"এই সদস্যের যে স্বামী/স্ত্রী তার (স্বামী/স্ত্রীর সিরিয়াল1) নাম্বার 00 আছে  ).";
+            CRSPsl1.moveToNext();
+        }
+        CRSPsl1.close();
+
+        //Member Spouse serial Blank ============================================
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
+        SQLS += " tmpMember d ";
+        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1=''";
+        SQLS += " where length(d.extype)=0";
+
+        Cursor CRSPsl2 = C.ReadData(SQLS);
+        CRSPsl2.moveToFirst();
+        while(!CRSPsl2.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSPsl2.getString(CRSPsl2.getColumnIndex("sno"))  +" এবং নাম= "+ CRSPsl2.getString(CRSPsl2.getColumnIndex("name")) + " এই সদস্যের যে স্বামী/স্ত্রী তার (স্বামী/স্ত্রীর সিরিয়াল1) নাম্বার খালি আছে ).";
+            CRSPsl2.moveToNext();
+        }
+        CRSPsl2.close();
+
+        //Husband/Wife of Household Head but Sp sl 00============================================
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a ";
+        SQLS += " where a.MS='31' and a.sp1='00' and length(a.extype)=0 and a.rth='02'";
+
+        Cursor CRSPsl3 = C.ReadData(SQLS);
+        CRSPsl3.moveToFirst();
+        while(!CRSPsl3.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSPsl3.getString(CRSPsl3.getColumnIndex("sno"))  +" নাম= "+ CRSPsl3.getString(CRSPsl3.getColumnIndex("name")) + "খানা প্রধানের স্বামী/স্ত্রী কিন্তু তার (স্বামী/স্ত্রীর সিরিয়াল1) নাম্বার 00 আছে ).";
+            CRSPsl3.moveToNext();
+        }
+        CRSPsl3.close();
+
 
         //Father number is available but father is not in member list
 

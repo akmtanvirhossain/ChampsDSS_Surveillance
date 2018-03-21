@@ -84,6 +84,7 @@
     private int mDay;
     private int mMonth;
     private int mYear;
+    private String ErrMsg;
     static final int DATE_DIALOG = 1;
     static final int TIME_DIALOG = 2;
 
@@ -263,6 +264,7 @@
 
     static String EVTYPE = "";
     static String OcpType = "";
+    static String Edu = "";
     static String OLDNEWHH = "";
 
      static String ROUNDNO = "";
@@ -467,13 +469,13 @@
                      EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57','63','80')"));
                      //married and pregnant
                  else if(MS.equals("31") & PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','41','43','44','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','43','44','56','57','80')"));
                      //married and not pregnant
                  else if(MS.equals("31") & !PS.equals("41"))
                      EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','42','43','44','56','57','80')"));
 
                  else if(MS.equals("32") & PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','43','44','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','43','44','56','57','80')"));
                  else if(MS.equals("32") & !PS.equals("41"))
                      EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','42','43','44','56','57','80')"));
 
@@ -912,9 +914,13 @@
                          {
                              spnInfo2.setAdapter(C.getArrayAdapter("Select MSlNo||'-'||Name from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + PSpNo.toString() + "'"));
                          }
-                         if  (PSpNo.equals("00") || PSpNo.equals(""))
+                         if  (PSpNo.equals("00"))
                          {
                              spnInfo2.setAdapter(C.getArrayAdapter("Select '00-এই খানার সদস্য নয়'"));
+                         }
+                         if  (PSpNo.equals(""))
+                         {
+                             spnInfo2.setAdapter(C.getArrayAdapter("Select ''"));
                          }
                      }
                  }
@@ -1032,11 +1038,14 @@
                      return;
                  }
 
-                 if (EVTYPE.equals("72")) {
+                 if (EVTYPE.equals("72"))
+                 {
                      OcpType = spnInfo1.getSelectedItem().toString().split("-")[0];
                      String PEdu = C.ReturnSingleValue("select Edu from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
 
-                     if (!PEdu.equals("12") & OcpType.equals("34")) {
+//                     if (!PEdu.equals("12") & OcpType.equals("34"))
+                     if (Integer.valueOf(PEdu) < 12 & OcpType.equals("34"))
+                     {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
                          adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ")  আপনি কি তার পেশা ৩৪ দেখাতে চান [হ্যাঁ/না]?");
@@ -1056,7 +1065,9 @@
                          adb.show();
                          return;
                      }
-                     else if (!PEdu.equals("05") & OcpType.equals("32")) {
+//                     else if (!PEdu.equals("05") & OcpType.equals("32"))
+                     else if (Integer.valueOf(PEdu)< 5 & OcpType.equals("32"))
+                    {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
                          adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ")  আপনি কি তার পেশা ৩২ দেখাতে চান [হ্যাঁ/না]?");
@@ -1077,11 +1088,13 @@
                          return;
                      }
                  }
-                 if (EVTYPE.equals("12")) {
+                 if (EVTYPE.equals("12"))
+                 {
                      String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
-                     String[] Edu = spnEdu.getSelectedItem().toString().split("-");
+//                     String[] Edu = spnEdu.getSelectedItem().toString().split("-");
+                     Edu = spnEdu.getSelectedItem().toString().split("-")[0];
 
-                     if ((Ocp[0].equals("34")) & !Edu[0].equals("12"))
+                     if ((Ocp[0].equals("34")) & Integer.valueOf(Edu)< 12 )
                      {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
@@ -1101,7 +1114,8 @@
                          adb.show();
                          return;
                      }
-                     else if ((Ocp[0].equals("32")) & !Edu[0].equals("05"))
+//                     else if ((Ocp[0].equals("32")) & !Edu[0].equals("05"))
+                     else if ((Ocp[0].equals("32")) & Integer.valueOf(Edu)< 5)
                      {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
@@ -1122,11 +1136,14 @@
                          return;
                      }
                  }
-                 else if (EVTYPE.equals("20") || EVTYPE.equals("21") || EVTYPE.equals("22") || EVTYPE.equals("23") || EVTYPE.equals("25")) {
+                 else if (EVTYPE.equals("20") || EVTYPE.equals("21") || EVTYPE.equals("22") || EVTYPE.equals("23") || EVTYPE.equals("25"))
+                 {
                      String[] Ocp = spnOcp.getSelectedItem().toString().split("-");
-                     String[] Edu = spnEdu.getSelectedItem().toString().split("-");
+//                     String[] Edu = spnEdu.getSelectedItem().toString().split("-");
+                     Edu = spnEdu.getSelectedItem().toString().split("-")[0];
 
-                     if ((Ocp[0].equals("34")) & !Edu[0].equals("12"))
+//                     if ((Ocp[0].equals("34")) & !Edu[0].equals("12"))
+                     if ((Ocp[0].equals("34")) & Integer.valueOf(Edu)< 12)
                      {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
@@ -1146,7 +1163,8 @@
                          adb.show();
                          return;
                      }
-                    else if ((Ocp[0].equals("32")) & !Edu[0].equals("05"))
+//                    else if ((Ocp[0].equals("32")) & !Edu[0].equals("05"))
+                    else if ((Ocp[0].equals("32")) & Integer.valueOf(Edu)<5)
                      {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
@@ -1782,7 +1800,8 @@
              //----------------------------------------------------------------------------------------------------------------------------
              if (OLDNEWHH.equals("old"))
              {
-                 if ((ECode >= 12 & ECode <= 72)) {
+                 if ((ECode >= 12 & ECode <= 72))
+                 {
                      int age = 0;
                      String PStat = "";
                      String PMStatus = "";
@@ -1839,10 +1858,22 @@
 
                          if(ExitDate_difference1 < 0)
                          {
-                             Connection.MessageBox(Events.this, " সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই জন্ম তারিখ  " + bdate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই জন্ম তারিখ  " + bdate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             return;
+                         }
+
+                         //----------------------------------------------------------------------
+                         String EvDate3 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                         String EventDate = C.ReturnSingleValue("select EvDate from tmpEvents Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                         int ExitDate_difference3 = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate3.toString()), Global.DateConvertDMY(EventDate.toString()));
+
+                         if(ExitDate_difference3 < 0)
+                         {
+                             Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই ইভেন্ট তারিখ  " + EventDate + "  এর সমান অথবা বেশী হতে হবে ।");
                              return;
                          }
                      }
+
                      if (ECode == 40 | ECode == 49)
                      {
                          if (Sex.equals("1")) {
@@ -1856,7 +1887,7 @@
                              return;
                          }
                      }
-                     if (ECode == 40 )
+                     if (ECode == 40)
                      {
                          if (PStat.equals("41")) {
                              Connection.MessageBox(Events.this, "সদস্য বর্তমানে গর্ভবতী, ইভেন্ট ৪০ প্রযোজ্য নয়।");
@@ -2222,6 +2253,7 @@
                          }
                      }
                  }
+
              }
 
              String SQL = "";
@@ -2322,6 +2354,7 @@
                  //Save Events
                  SQL1 = objSave.TransactionSQL(this);
 
+                 String PregStatus = C.ReturnSingleValue("select Pstat from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
                  //Save Member
                  if (EVTYPE.equals("12") | EVTYPE.equals("20") | EVTYPE.equals("21") | EVTYPE.equals("22") | EVTYPE.equals("23") | EVTYPE.equals("25")) {
                      SQL2 = DataSaveMember(txtMSlNo.getText().toString());
@@ -2354,7 +2387,10 @@
                  else if (EVTYPE.equals("40")) {
                      SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt=''";
                      SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
-                 } else if (EVTYPE.equals("41")) {
+                 }else if (EVTYPE.equals("49") & !PregStatus.equals("41")) {
+                     SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt=''";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }else if (EVTYPE.equals("41")) {
                      SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt='" + Global.DateConvertYMD(dtpEvDate.getText().toString()) + "'";
                      SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
 

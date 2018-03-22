@@ -511,7 +511,6 @@ public class Household_list extends Activity  {
  public void RefreshList(){
      try {
 
-
          String V = spnVill.getSelectedItem().toString().split("-")[0];
          String B = spnBari.getSelectedItem().toString().equalsIgnoreCase(".all bari") ? "" : spnBari.getSelectedItem().toString().split("-")[0];
 

@@ -2582,11 +2582,23 @@ public class Member_list extends Activity {
         CRSPsl3.moveToFirst();
         while(!CRSPsl3.isAfterLast())
         {
-            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSPsl3.getString(CRSPsl3.getColumnIndex("sno"))  +" নাম= "+ CRSPsl3.getString(CRSPsl3.getColumnIndex("name")) + "খানা প্রধানের স্বামী/স্ত্রী কিন্তু তার (স্বামী/স্ত্রীর সিরিয়াল1) নাম্বার 00 আছে ).";
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSPsl3.getString(CRSPsl3.getColumnIndex("sno"))  +"  নাম= "+ CRSPsl3.getString(CRSPsl3.getColumnIndex("name")) + "খানা প্রধানের স্বামী/স্ত্রী কিন্তু তার (স্বামী/স্ত্রীর সিরিয়াল1) নাম্বার 00 আছে ).";
             CRSPsl3.moveToNext();
         }
         CRSPsl3.close();
 
+        //Marital status can not be 30 for the following member's============================================
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a ";
+        SQLS += " where a.rth in('02','04','07','10','11','15','17') and a.MS='30'";
+
+        Cursor CRSMS = C.ReadData(SQLS);
+        CRSMS.moveToFirst();
+        while(!CRSMS.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSMS.getString(CRSMS.getColumnIndex("sno"))  +"  নাম= "+ CRSMS.getString(CRSMS.getColumnIndex("name")) + " এই সদস্যের সম্পর্ক কোড এবং বৈবাহিক অবস্থার কোড চেক করুন).";
+            CRSMS.moveToNext();
+        }
+        CRSMS.close();
 
         //Father number is available but father is not in member list
 

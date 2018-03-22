@@ -2600,6 +2600,7 @@ public class Member_list extends Activity {
         }
         CRSMS.close();
 
+
         //Father number is available but father is not in member list
 
 //        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";

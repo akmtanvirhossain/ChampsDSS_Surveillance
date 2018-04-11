@@ -2470,18 +2470,18 @@ public class Member_list extends Activity {
         CROcp1.close();
 
         //Housewife but male person
-        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.extype)=0 and length(t.posmig)=0";
-        SQLS += " and t.ocp='03' and t.sex='1'";
-
-        Cursor CRHHWife = C.ReadData(SQLS);
-        CRHHWife.moveToFirst();
-        while(!CRHHWife.isAfterLast())
-        {
-            ErrMsg += "\n-> পেশা গৃহিনী হলে সদস্য পুরুষ হবেনা(সিরিয়াল নাম্বার= "+  CRHHWife.getString(CRHHWife.getColumnIndex("sno")) +" এবং নাম= "+ CRHHWife.getString(CRHHWife.getColumnIndex("name")) +" ).";
-            CRHHWife.moveToNext();
-        }
-        CRHHWife.close();
+//        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+//        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.extype)=0 and length(t.posmig)=0";
+//        SQLS += " and t.ocp='03' and t.sex='1'";
+//
+//        Cursor CRHHWife = C.ReadData(SQLS);
+//        CRHHWife.moveToFirst();
+//        while(!CRHHWife.isAfterLast())
+//        {
+//            ErrMsg += "\n-> পেশা গৃহিনী হলে সদস্য পুরুষ হবেনা(সিরিয়াল নাম্বার= "+  CRHHWife.getString(CRHHWife.getColumnIndex("sno")) +" এবং নাম= "+ CRHHWife.getString(CRHHWife.getColumnIndex("name")) +" ).";
+//            CRHHWife.moveToNext();
+//        }
+//        CRHHWife.close();
 
         // Add on 01_09_2017-------------------------------------------------------------------------------
         //Delivery: Live birth delivery occured but child dose not exist
@@ -2529,7 +2529,7 @@ public class Member_list extends Activity {
         }
         CRSPsl.close();
 
-        //Member Spouse Sex Same ============================================
+        //Member Spouse Sex Same ===========================================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
         SQLS += " tmpMember d ";
         SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sex=a.sex";
@@ -2544,7 +2544,7 @@ public class Member_list extends Activity {
         }
         CRSpSex.close();
 
-        //Member Spouse serial 00 ============================================
+        //Member Spouse serial 00 =========================================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
         SQLS += " tmpMember d ";
         SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1='00'";
@@ -2559,7 +2559,7 @@ public class Member_list extends Activity {
         }
         CRSPsl1.close();
 
-        //Member Spouse serial Blank ============================================
+        //Member Spouse serial Blank =======================================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
         SQLS += " tmpMember d ";
         SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1=''";
@@ -2587,7 +2587,7 @@ public class Member_list extends Activity {
         }
         CRSPsl3.close();
 
-        //Marital status can not be 30 for the following member's============================================
+        //Marital status can not be 30 for the following member's===============================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a ";
         SQLS += " where a.rth in('02','04','07','10','11','15','17') and a.MS='30'";
 

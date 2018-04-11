@@ -1671,12 +1671,12 @@
                      spnRth.requestFocus();
                      return;
                  }
-                 else if ((Ocp[0].equals("03")) & rdoSex1.isChecked())
-                 {
-                     Connection.MessageBox(Events.this, "পেশা গৃহিনী হলে সদস্য পুরুষ হবেনা.");
-                     spnRth.requestFocus();
-                     return;
-                 }
+//                 else if ((Ocp[0].equals("03")) & rdoSex1.isChecked())
+//                 {
+//                     Connection.MessageBox(Events.this, "পেশা গৃহিনী হলে সদস্য পুরুষ হবেনা.");
+//                     spnRth.requestFocus();
+//                     return;
+//                 }
                 //----------Add on 07_10_17-----------------------------------------------------------------------------
                  else if ((!Edu[0].equals("00") & Integer.valueOf(txtAgeY.getText().toString().length() == 0 ? "0" : txtAgeY.getText().toString()) == 00))
                  {
@@ -1843,7 +1843,8 @@
                      }
                      m.close();
 
-                     if ((ECode >= 51 & ECode <= 55)){
+                     if ((ECode >= 51 & ECode <= 55))
+                     {
                          String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
                          int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
 
@@ -1865,11 +1866,48 @@
                          //----------------------------------------------------------------------
                          String EvDate3 = Global.DateConvertYMD(dtpEvDate.getText().toString());
                          String EventDate = C.ReturnSingleValue("select EvDate from tmpEvents Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                         String Event1 = C.ReturnSingleValue("select EvType from tmpEvents Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
                          int ExitDate_difference3 = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate3.toString()), Global.DateConvertDMY(EventDate.toString()));
 
-                         if(ExitDate_difference3 < 0)
+                         if (!Event1.equals("12") & !Event1.equals("54"))
                          {
-                             Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই ইভেন্ট তারিখ  " + EventDate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             if (ExitDate_difference3 < 0) {
+                                 Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই ইভেন্ট তারিখ  " + EventDate + "  এর সমান অথবা বেশী হতে হবে ।");
+                                 return;
+                             }
+                         }
+                     }
+
+                     if ((ECode >=31 & ECode <= 34))
+                     {
+                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                         int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
+
+                         if(ExitDate_difference < 0)
+                         {
+                             Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             return;
+                         }
+                     }
+                     if ((ECode >=42 & ECode <= 49))
+                     {
+                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                         int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
+
+                         if(ExitDate_difference < 0)
+                         {
+                             Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             return;
+                         }
+                     }
+                     if ((ECode >=51 & ECode <= 72))
+                     {
+                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                         int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
+
+                         if(ExitDate_difference < 0)
+                         {
+                             Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
                              return;
                          }
                      }
@@ -2231,10 +2269,10 @@
                                  return;
                              }
                              //check occupation event=03 for woman
-                             else if (ocp == 3 & Sex.equals("1")) {
-                                 Connection.MessageBox(Events.this, "পুরুষ লোকের পেশা ০৩ হতে পারে না।");
-                                 return;
-                             }
+//                             else if (ocp == 3 & Sex.equals("1")) {
+//                                 Connection.MessageBox(Events.this, "পুরুষ লোকের পেশা ০৩ হতে পারে না।");
+//                                 return;
+//                             }
                              //Retired person but age < 30
                              else if (ocp == 6 & age < 30) {
                                  Connection.MessageBox(Events.this, "বয়স ৩০ এর কম হলে পেশা অবসরপ্রাপ্ত (চাকুরি করেন না) হতে পারে না।");
@@ -2782,7 +2820,7 @@
          listOcp.add("");
          listOcp.add("01-বেকার");
          listOcp.add("02-ছাত্র /ছাত্রী (চাকুরী করে না)");
-         listOcp.add("03-গৃহিনী/গৃহস্থালীর কাজকর্ম করে (চাকুরী করে না) (শুধুমাত্র মহিলা)");
+         listOcp.add("03-গৃহিনী/গৃহস্থালীর কাজকর্ম করে (চাকুরী করে না)");
          listOcp.add("04-ভিক্ষুক (চাকুরী করে না)");
          listOcp.add("05-প্রতিবন্ধী (চাকুরী করে না)");
          listOcp.add("06-অবসরপ্রাপ্ত (চাকুরী করে না)");

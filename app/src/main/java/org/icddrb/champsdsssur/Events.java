@@ -1877,41 +1877,37 @@
                              }
                          }
                      }
+                     String Event1 = C.ReturnSingleValue("select EvType from tmpEvents Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
 
-                     if ((ECode >=31 & ECode <= 34))
-                     {
-                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
-                         int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
+                     if (!Event1.equals("22") & !Event1.equals("23")) {
+                         if ((ECode >= 31 & ECode <= 34)) {
+                             String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                             int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
 
-                         if(ExitDate_difference < 0)
-                         {
-                             Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
-                             return;
+                             if (ExitDate_difference < 0) {
+                                 Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
+                                 return;
+                             }
+                         }
+                         if ((ECode >= 42 & ECode <= 49)) {
+                             String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                             int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
+
+                             if (ExitDate_difference < 0) {
+                                 Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
+                                 return;
+                             }
+                         }
+                         if ((ECode >= 51 & ECode <= 72)) {
+                             String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
+                             int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
+
+                             if (ExitDate_difference < 0) {
+                                 Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
+                                 return;
+                             }
                          }
                      }
-                     if ((ECode >=42 & ECode <= 49))
-                     {
-                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
-                         int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
-
-                         if(ExitDate_difference < 0)
-                         {
-                             Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
-                             return;
-                         }
-                     }
-                     if ((ECode >=51 & ECode <= 72))
-                     {
-                         String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
-                         int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
-
-                         if(ExitDate_difference < 0)
-                         {
-                             Connection.MessageBox(Events.this, " সদস্যের ইভেন্ট তারিখ " + EvDate1 + " অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
-                             return;
-                         }
-                     }
-
                      if (ECode == 40 | ECode == 49)
                      {
                          if (Sex.equals("1")) {

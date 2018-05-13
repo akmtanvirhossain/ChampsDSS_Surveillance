@@ -2514,10 +2514,10 @@ public class Member_list extends Activity {
         }
         CRBDate.close();
 
-        //Member Spouse marital status Unmaried ============================================
+        //Member Spouse Number present but oposite member Marital status UnMarid ============================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
         SQLS += " tmpMember d ";
-        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.MS='30'";
+        SQLS += " on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.MS='30'";
         SQLS += " where length(d.extype)=0";
 
         Cursor CRSPsl = C.ReadData(SQLS);
@@ -2529,10 +2529,10 @@ public class Member_list extends Activity {
         }
         CRSPsl.close();
 
-        //Member Spouse Sex Same ===========================================================
+        //Member Spouse Number present but oposite member Sex Same ===========================================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
         SQLS += " tmpMember d ";
-        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sex=a.sex";
+        SQLS += " on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sex=a.sex";
         SQLS += " where length(d.extype)=0";
 
         Cursor CRSpSex = C.ReadData(SQLS);
@@ -2544,10 +2544,10 @@ public class Member_list extends Activity {
         }
         CRSpSex.close();
 
-        //Member Spouse serial 00 =========================================================
+        //Spouse number 00 but spouse present  =========================================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
         SQLS += " tmpMember d ";
-        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1='00'";
+        SQLS += " on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1='00'";
         SQLS += " where length(d.extype)=0";
 
         Cursor CRSPsl1 = C.ReadData(SQLS);
@@ -2559,10 +2559,10 @@ public class Member_list extends Activity {
         }
         CRSPsl1.close();
 
-        //Member Spouse serial Blank =======================================================
+        //Spouse number Blank but spouse present =======================================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a left join ";
         SQLS += " tmpMember d ";
-        SQLS += "on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1=''";
+        SQLS += " on a.vill||a.bari||a.hh||a.Sp1=d.vill||d.bari||d.hh||d.MSlNo and d.sp1=''";
         SQLS += " where length(d.extype)=0";
 
         Cursor CRSPsl2 = C.ReadData(SQLS);
@@ -2573,6 +2573,24 @@ public class Member_list extends Activity {
             CRSPsl2.moveToNext();
         }
         CRSPsl2.close();
+
+//        Spouse number is available but spouse not available in member list
+
+        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.extype)=0 and length(t.posmig)=0";
+        SQLS += " and cast(t.sp1 as int)<>0 and not exists";
+        SQLS += " (select * from tmpMember where VILL||BARI||hh=t.Vill||t.Bari||t.Hh and Mslno=t.sp1)";
+
+        Cursor SpouseNo = C.ReadData(SQLS);
+        SpouseNo.moveToFirst();
+        while(!SpouseNo.isAfterLast())
+        {
+            ErrMsg += "\n-> সদস্যের  স্বামী /স্ত্রীর  সিরিয়াল নং আছে কিন্তু তালিকায় স্বামী /স্ত্রী  নাই  (সিরিয়াল নাম্বার= "+  SpouseNo.getString(SpouseNo.getColumnIndex("sno")) +" নাম= "+ SpouseNo.getString(SpouseNo.getColumnIndex("name")) +" ).";
+
+            SpouseNo.moveToNext();
+        }
+        SpouseNo.close();
+
 
         //Husband/Wife of Household Head but Sp sl 00============================================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a ";
@@ -2587,6 +2605,19 @@ public class Member_list extends Activity {
         }
         CRSPsl3.close();
 
+        //Married and member active but Spouse Number Blank============================================
+        SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a ";
+        SQLS += " where a.MS='31' and a.sp1='' and length(a.extype)=0 ";
+
+        Cursor CRSPsl4 = C.ReadData(SQLS);
+        CRSPsl4.moveToFirst();
+        while(!CRSPsl4.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSPsl4.getString(CRSPsl4.getColumnIndex("sno"))  +"  নাম= "+ CRSPsl4.getString(CRSPsl4.getColumnIndex("name")) + " সদস্য বর্তমানে বিবাহিত কিন্তু তার (স্বামী/স্ত্রীর সিরিয়াল) নাম্বার খালি আছে ).";
+            CRSPsl4.moveToNext();
+        }
+        CRSPsl4.close();
+
         //Marital status can not be 30 for the following member's===============================
         SQLS  = "select a.MSlNo as sno,(case when a.pno is null or length(a.pno)=0 then 'pno' else a.pno end)as pno,a.name as name from tmpMember a ";
         SQLS += " where a.rth in('02','04','07','10','11','15','17') and a.MS='30'";
@@ -2600,59 +2631,138 @@ public class Member_list extends Activity {
         }
         CRSMS.close();
 
+        //son/daughter of household head but relationship does not matched (Father)
 
-        //Father number is available but father is not in member list
+        SQLS  = "select m.MSlNo as sno,(case when m.pno is null or length(m.pno)=0 then 'pno' else m.pno end)as pno,m.name as name from tmpMember m inner join ";
+        SQLS += " tmpMember m1 ";
+        SQLS += " on m.vill||m.Bari||m.HH||m.FaNo=m1.vill||m1.Bari||m1.HH||m1.MSlNo and m1.Rth='01'";
+        SQLS += " where m.Rth<>'03' and length(m.extype)=0 and length(m1.extype)=0 ";
 
-//        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-//        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
-//        SQLS += " and t.rth='01' ";
-//        SQLS += " and length(t.extype)=0 and cast(t.fano as int)<>0 and not exists";
-//        SQLS += " (select * from tmpMember where vill||bari||hh=t.vill||t.Bari||t.hh and Mslno=t.fano and rth='04' and sex='1' and length(extype)=0)";
-//
-//        Cursor HeadFaNo = C.ReadData(SQLS);
-//        HeadFaNo.moveToFirst();
-//        while(!HeadFaNo.isAfterLast())
-//        {
-//            ErrMsg += "\n-> খানা প্রধানের বাবার সিরিয়াল নং সঠিক নয়  (সিরিয়াল নাম্বার= "+  HeadFaNo.getString(HeadFaNo.getColumnIndex("sno")) +" নাম= "+ HeadFaNo.getString(HeadFaNo.getColumnIndex("name")) +" ).";
-//            HeadFaNo.moveToNext();
-//        }
-//        HeadFaNo.close();
+        Cursor CRSRelFa = C.ReadData(SQLS);
+        CRSRelFa.moveToFirst();
+        while(!CRSRelFa.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSRelFa.getString(CRSRelFa.getColumnIndex("sno"))  +" এবং নাম= "+ CRSRelFa.getString(CRSRelFa.getColumnIndex("name")) + "খানা প্রধানের সাথে সম্পর্কের কোড এবং সদস্যের বাবার সিরিয়াল নং চেক করুন ).";
+            CRSRelFa.moveToNext();
+        }
+        CRSRelFa.close();
 
-        //Father of household head is present (04), but father serial no is missing
+        //son/daughter of household head but relationship does not matched (Mother)
 
-//        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-//        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
-//        SQLS += " and t.rth='01' and exists";
-//        SQLS += " (select * from tmpMember where vill||bari||hh=t.vill||t.Bari||t.hh and rth='04' and sex='1' and length(extype)=0)";
-//        SQLS += " and cast(t.fano as int)=0)";
-//
-//        Cursor CRHeadFaNo = C.ReadData(SQLS);
-//        CRHeadFaNo.moveToFirst();
-//        while(!CRHeadFaNo.isAfterLast())
-//        {
-//            ErrMsg += "\n-> খানা প্রধানের বাবা খানায় উপস্থিত থাকলে বাবার সিরিয়াল নং ০০ হবেনা (সিরিয়াল নাম্বার= "+  CRHeadFaNo.getString(CRHeadFaNo.getColumnIndex("sno")) +" নাম= "+ CRHeadFaNo.getString(CRHeadFaNo.getColumnIndex("name")) +" ).";
-//
-//            CRHeadFaNo.moveToNext();
-//        }
-//        CRHeadFaNo.close();
+        SQLS  = "select m.MSlNo as sno,(case when m.pno is null or length(m.pno)=0 then 'pno' else m.pno end)as pno,m.name as name from tmpMember m inner join ";
+        SQLS += " tmpMember m1 ";
+        SQLS += " on m.vill|| m.Bari||m.HH|| m.MoNo=m1.vill||m1.Bari||m1.HH||m1.MSlNo and m1.Rth='01'";
+        SQLS += " where m.Rth<>'03' and length(m.extype)=0 and length(m1.extype)=0 ";
 
-        //Mother of household head is present (04), but Mother serial no is missing
+        Cursor CRSRelMo = C.ReadData(SQLS);
+        CRSRelMo.moveToFirst();
+        while(!CRSRelMo.isAfterLast())
+        {
+            ErrMsg += "\n-> সিরিয়াল নাম্বার= "+  CRSRelMo.getString(CRSRelMo.getColumnIndex("sno"))  +" এবং নাম= "+ CRSRelMo.getString(CRSRelMo.getColumnIndex("name")) + "খানা প্রধানের সাথে সম্পর্কের কোড এবং সদস্যের মায়ের সিরিয়াল নং চেক করুন ).";
+            CRSRelMo.moveToNext();
+        }
+        CRSRelMo.close();
 
-//        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
-//        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
-//        SQLS += " and t.rth='01' and exists";
-//        SQLS += " (select * from tmpMember where vill||bari||hh=t.vill||t.Bari||t.hh and rth='04' and sex='2' and length(extype)=0)";
-//        SQLS += " and cast(t.mono as int)=0)";
-//
-//        Cursor CRHeadMoNo = C.ReadData(SQLS);
-//        CRHeadMoNo.moveToFirst();
-//        while(!CRHeadMoNo.isAfterLast())
-//        {
-//            ErrMsg += "\n-> খানা প্রধানের মা খানায় উপস্থিত থাকলে মায়ের সিরিয়াল নং ০০ হবেনা (সিরিয়াল নাম্বার= "+  CRHeadMoNo.getString(CRHeadMoNo.getColumnIndex("sno")) +" নাম= "+ CRHeadMoNo.getString(CRHeadMoNo.getColumnIndex("name")) +" ).";
-//
-//            CRHeadMoNo.moveToNext();
-//        }
-//        CRHeadMoNo.close();
+//        Brother/Sister of household head, but father serial is missing (Father)
+
+        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.posmig)=0";
+        SQLS += " and t.rth='05' ";
+        SQLS += " and length(t.extype)=0 and cast(t.fano as int)=0 and exists";
+        SQLS += " (select * from tmpMember where vill||bari||hh=t.vill||t.Bari||t.hh and rth='01' and length(extype)=0 and cast(fano as int)<>0)";
+
+        Cursor FaSlMiss = C.ReadData(SQLS);
+        FaSlMiss.moveToFirst();
+        while(!FaSlMiss.isAfterLast())
+        {
+            ErrMsg += "\n-> খানা প্রধানের ভাই/বোন কিন্তু বাবার সিরিয়াল নাই  (সিরিয়াল নাম্বার= "+  FaSlMiss.getString(FaSlMiss.getColumnIndex("sno")) +" নাম= "+ FaSlMiss.getString(FaSlMiss.getColumnIndex("name")) +" ).";
+            FaSlMiss.moveToNext();
+        }
+        FaSlMiss.close();
+
+
+        // Brother/Sister of household head, but Mother serial is missing (Mother)
+
+        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(t.posmig)=0";
+        SQLS += " and t.rth='05' ";
+        SQLS += " and length(t.extype)=0 and cast(t.mono as int)=0 and exists";
+        SQLS += " (select * from tmpMember where vill||bari||hh=t.vill||t.Bari||t.hh and rth='01' and length(extype)=0 and cast(mono as int)<>0)";
+
+        Cursor MoSlMiss = C.ReadData(SQLS);
+        MoSlMiss.moveToFirst();
+        while(!MoSlMiss.isAfterLast())
+        {
+            ErrMsg += "\n-> খানা প্রধানের ভাই/বোন কিন্তু মায়ের সিরিয়াল নাই (সিরিয়াল নাম্বার= "+  MoSlMiss.getString(MoSlMiss.getColumnIndex("sno")) +" নাম= "+ MoSlMiss.getString(MoSlMiss.getColumnIndex("name")) +" ).";
+            MoSlMiss.moveToNext();
+        }
+        MoSlMiss.close();
+
+        //Father of household head is present, but father serial no is missing
+
+        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
+        SQLS += " and t.rth='01' ";
+        SQLS += " and length(t.extype)=0 and cast(t.fano as int)=0 and exists";
+        SQLS += " (select * from tmpMember where vill||bari||hh=t.vill||t.Bari||t.hh and rth='04' and sex='1' and length(extype)=0)";
+
+        Cursor HeadFaNo = C.ReadData(SQLS);
+        HeadFaNo.moveToFirst();
+        while(!HeadFaNo.isAfterLast())
+        {
+            ErrMsg += "\n-> খানা প্রধানের বাবা খানায় উপস্থিত কিন্তু বাবার সিরিয়াল নাই  (সিরিয়াল নাম্বার= "+  HeadFaNo.getString(HeadFaNo.getColumnIndex("sno")) +" নাম= "+ HeadFaNo.getString(HeadFaNo.getColumnIndex("name")) +" ).";
+            HeadFaNo.moveToNext();
+        }
+        HeadFaNo.close();
+
+        //Mother of household head is present, but mother serial no is missing
+
+        SQLS  = "select MSlNo as sno, (case when pno is null or length(pno)=0 then 'pno' else pno end)as pno, t.Name as name from tmpMember t where ";
+        SQLS += " t.Vill||t.Bari||t.Hh='"+ Household +"' and length(extype)=0 and length(posmig)=0";
+        SQLS += " and t.rth='01' ";
+        SQLS += " and length(t.extype)=0 and cast(t.mono as int)=0 and exists";
+        SQLS += " (select * from tmpMember where vill||bari||hh=t.vill||t.Bari||t.hh and rth='04' and sex='2' and length(extype)=0)";
+
+        Cursor HeadMoNo = C.ReadData(SQLS);
+        HeadMoNo.moveToFirst();
+        while(!HeadMoNo.isAfterLast())
+        {
+            ErrMsg += "\n-> খানা প্রধানের মা খানায় উপস্থিত কিন্তু মায়ের সিরিয়াল নাই  (সিরিয়াল নাম্বার= "+  HeadMoNo.getString(HeadMoNo.getColumnIndex("sno")) +" নাম= "+ HeadMoNo.getString(HeadMoNo.getColumnIndex("name")) +" ).";
+            HeadMoNo.moveToNext();
+        }
+        HeadMoNo.close();
+
+        //Father is available but father serial is missing for son/daughter
+
+        SQLS  = "select m.MSlNo as sno,(case when m.pno is null or length(m.pno)=0 then 'pno' else m.pno end)as pno,m.name as name from tmpMember m inner join ";
+        SQLS += " tmpMember h ";
+        SQLS += " on m.Vill||m.Bari||m.HH=h.Vill||h.Bari||h.HH and h.Rth='01' and h.Sex='1'";
+        SQLS += " where m.Rth='03' and m.FaNo='00' and m.FaNo<>h.MSlNo and length(m.extype)=0 and length(h.extype)=0 ";
+
+        Cursor FatSlMiss = C.ReadData(SQLS);
+        FatSlMiss.moveToFirst();
+        while(!FatSlMiss.isAfterLast())
+        {
+            ErrMsg += "\n-> বাবা আছে কিন্তু বাবার সিরিয়াল নাই, সম্পর্ক খানা প্রধানের ছেলে/মে  (সিরিয়াল নাম্বার= "+  FatSlMiss.getString(FatSlMiss.getColumnIndex("sno")) +" নাম= "+ FatSlMiss.getString(FatSlMiss.getColumnIndex("name")) +" ).";
+            FatSlMiss.moveToNext();
+        }
+        FatSlMiss.close();
+
+        //Mother is available but father serial is missing for son/daughter
+
+        SQLS  = "select m.MSlNo as sno,(case when m.pno is null or length(m.pno)=0 then 'pno' else m.pno end)as pno,m.name as name from tmpMember m inner join ";
+        SQLS += " tmpMember h ";
+        SQLS += " on m.Vill||m.Bari||m.HH=h.Vill||h.Bari||h.HH and h.Rth='01' and h.Sex='2'";
+        SQLS += " where m.Rth='03' and m.MoNo='00' and m.MoNo<>h.MSlNo and length(m.extype)=0 and length(h.extype)=0 ";
+
+        Cursor MotSlMiss = C.ReadData(SQLS);
+        MotSlMiss.moveToFirst();
+        while(!MotSlMiss.isAfterLast())
+        {
+            ErrMsg += "\n-> মা আছে কিন্তু মায়ের সিরিয়াল নাই,সম্পর্ক খানা প্রধানের ছেলে/মে (সিরিয়াল নাম্বার= "+  MotSlMiss.getString(MotSlMiss.getColumnIndex("sno")) +" নাম= "+ MotSlMiss.getString(MotSlMiss.getColumnIndex("name")) +" ).";
+            MotSlMiss.moveToNext();
+        }
+        MotSlMiss.close();
 
          //age of last SES collection
 //        if(C.Existence("select vill from tmpSES where vill||bari||hh='"+ Household +"'"))

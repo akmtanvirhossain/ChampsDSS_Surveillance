@@ -209,6 +209,7 @@
      TextView VlblSp1;
      Spinner spnSp1;
 
+
      LinearLayout secSp2;
      View lineSp2;
      TextView VlblSp2;
@@ -2118,10 +2119,14 @@
                              } else if (Code1.length() != 2) {
                                  Connection.MessageBox(Events.this, "সঠিক স্বামী/স্ত্রী এর সিরিয়াল নাম্বার ২ সংখ্যা হতে হবে(Code)।");
                                  return;
-                             } else if (Sex.equals("1") & Code1.equals("00") & SpNo.length() == 0) {
-                                 Connection.MessageBox(Events.this, "সঠিক স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Spouse's No)।");
-                                 return;
-                             } else if (age < 10) {
+                             }
+//                             else if (Sex.equals("1") & Code1.equals("00") & SpNo.length() == 0)
+//                             {
+//                                 Connection.MessageBox(Events.this, "সঠিক স্ত্রী এর সিরিয়াল নাম্বার লিখুন(Spouse's No)।");
+//                                 return;
+//                             }
+                             else if (age < 10)
+                             {
                                  Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১০ বছরের বেশী হতে হবে।");
                                  return;
                              } else if (MSLNO.equals(Code1)) {
@@ -2160,7 +2165,6 @@
                                  Connection.MessageBox(Events.this, "সদস্যের বয়স " + age + ",খানা প্রধান হতে হলে বয়স ১০ বছরের সমান/বেশী হতে হবে।");
                                  return;
                              }
-
                          }
                      }
                      else if (ECode == 71)
@@ -2752,25 +2756,25 @@
                  if (position != 2)
                  {
                      seclblSpsl.setVisibility(View.GONE);
-                     spnSp1.setSelection(0);
+//                     spnSp1.setSelection(0);
                      spnSp1.setVisibility(View.GONE);
                      lineSp1.setVisibility(View.GONE);
                      secSp1.setVisibility(View.GONE);
                      lineSp1.setVisibility(View.GONE);
 
-                     spnSp2.setSelection(0);
+//                     spnSp2.setSelection(0);
                      spnSp2.setVisibility(View.GONE);
                      lineSp2.setVisibility(View.GONE);
                      secSp2.setVisibility(View.GONE);
                      lineSp2.setVisibility(View.GONE);
 
-                     spnSp3.setSelection(0);
+//                     spnSp3.setSelection(0);
                      spnSp3.setVisibility(View.GONE);
                      lineSp3.setVisibility(View.GONE);
                      secSp3.setVisibility(View.GONE);
                      lineSp3.setVisibility(View.GONE);
 
-                     spnSp4.setSelection(0);
+//                     spnSp4.setSelection(0);
                      spnSp4.setVisibility(View.GONE);
                      lineSp4.setVisibility(View.GONE);
                      secSp4.setVisibility(View.GONE);

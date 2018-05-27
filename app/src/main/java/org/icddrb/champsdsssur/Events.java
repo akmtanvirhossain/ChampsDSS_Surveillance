@@ -1023,7 +1023,7 @@
                  {
                      AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                      adb.setTitle("Message");
-                     adb.setMessage("সদস্য বর্তমানে বিবাহিত নয়, কোড-("+ PMS +")  আপনি কি সদস্যকে গর্ভবতী দেখাতে চান [হ্যাঁ/না]?");
+                     adb.setMessage("সদস্য বর্তমানে বিবাহিত নয়, কোড-("+ PMS +") আপনি কি সদস্যকে গর্ভবতী দেখাতে চান [হ্যাঁ/না]?");
 
                      adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
                          public void onClick(DialogInterface dialog, int which) {
@@ -1031,7 +1031,7 @@
                          }});
                      adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                          public void onClick(DialogInterface dialog, int which) {
-                             C.Save("Update tmpMember set PStat='" + EVTYPE + "',LmpDt='" + Global.DateConvertYMD(dtpEvDate.getText().toString()) +"' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             C.Save("Update tmpMember set PStat='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "',LmpDt='" + Global.DateConvertYMD(dtpEvDate.getText().toString()) +"' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
                              DataSave();
                              finish();
                          }});
@@ -1049,7 +1049,7 @@
                      {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
-                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ")  আপনি কি তার পেশা ৩৪ দেখাতে চান [হ্যাঁ/না]?");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ") আপনি কি তার পেশা ৩৪ দেখাতে চান [হ্যাঁ/না]?");
 
                          adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
                              public void onClick(DialogInterface dialog, int which) {
@@ -1071,7 +1071,7 @@
                     {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
-                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ")  আপনি কি তার পেশা ৩২ দেখাতে চান [হ্যাঁ/না]?");
+                         adb.setMessage("সদস্যের বর্তমা্ন শিক্ষাগত যোগ্যতা (" + PEdu + ") আপনি কি তার পেশা ৩২ দেখাতে চান [হ্যাঁ/না]?");
 
                          adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
                              public void onClick(DialogInterface dialog, int which) {
@@ -1165,7 +1165,7 @@
                          return;
                      }
 //                    else if ((Ocp[0].equals("32")) & !Edu[0].equals("05"))
-                    else if ((Ocp[0].equals("32")) & Integer.valueOf(Edu)<5)
+                     else if ((Ocp[0].equals("32")) & Integer.valueOf(Edu)<5)
                      {
                          AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
                          adb.setTitle("Message");
@@ -1185,6 +1185,49 @@
                          adb.show();
                          return;
                      }
+                 }
+                 String PEvent  = C.ReturnSingleValue("select EvType from Events Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and MSlNo='"+ MSLNO + "' and Rnd='" + ROUNDNO + "'");
+                 if (PEvent.equals("49") & EVTYPE.equals("40"))
+                 {
+                     AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                     adb.setTitle("Message");
+                     adb.setMessage("এই মহিলার ইভেন্ট কোড ৪৯ রাউন্ড নাম্বার " + ROUNDNO + " এ ঘটানো হয়েছ, আপনি কি ৪০ ইভেন্ট ঘটাতে চান [হ্যাঁ/না]?");
+
+                     adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                             finish();
+                         }});
+                     adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                             C.Save("Update tmpMember set PStat='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             C.Save("Update tmpEvents set EvType='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             C.Save("delete from Events where vill||bari||hh='"+ (VILL + BARI + HH )  +"' and MslNo='"+ MSLNO +"' and EvType='49' and Rnd='" + ROUNDNO + "'");
+                             DataSave();
+                             finish();
+                         }});
+                     adb.show();
+                     return;
+                 }
+                 if (PEvent.equals("40") & EVTYPE.equals("49"))
+                 {
+                     AlertDialog.Builder adb = new AlertDialog.Builder(Events.this);
+                     adb.setTitle("Message");
+                     adb.setMessage("এই মহিলার ইভেন্ট কোড ৪০ রাউন্ড  নাম্বার " + ROUNDNO + " এ ঘটানো হয়েছ, আপনি কি ৪৯ ইভেন্ট ঘটাতে চান [হ্যাঁ/না]?");
+
+                     adb.setNegativeButton("না", new AlertDialog.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                             finish();
+                         }});
+                     adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
+                         public void onClick(DialogInterface dialog, int which) {
+                             C.Save("Update tmpMember set PStat='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             C.Save("Update tmpEvents set EvType='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             C.Save("delete from Events where vill||bari||hh='"+ (VILL + BARI + HH )  +"' and MslNo='"+ MSLNO +"' and EvType='40' and Rnd='" + ROUNDNO + "'");
+                             DataSave();
+                             finish();
+                         }});
+                     adb.show();
+                     return;
                  }
                  DataSave();
              }});
@@ -1911,6 +1954,8 @@
                      }
                      if (ECode == 40 | ECode == 49)
                      {
+                         String PregStatus = C.ReturnSingleValue("select VStatus from tmpPregHis Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+
                          if (Sex.equals("1")) {
                              Connection.MessageBox(Events.this, "সদস্য অবশ্যই মহিলা হতে হবে ।");
                              return;
@@ -1919,6 +1964,9 @@
                              return;
                          } else if (age < 10 | age > 49) {
                              Connection.MessageBox(Events.this, "সদস্যের বয়স ১০ এর কম অথবা ৪৯ এর বেশী হলে ইভেন্ট ৪০/৪৯ প্রযোজ্য নয় ।");
+                             return;
+                         }else if (ECode ==40 & PregStatus.equals("3")) {
+                             Connection.MessageBox(Events.this, "সদস্যের গর্ভের ইতিহাসে সাক্ষাৎকারের ফলাফল  "+PregStatus+"  এবং ইভেন্ট ৪০ সামঞ্জস্যপূর্ণ নয় ।");
                              return;
                          }
                      }
@@ -1931,6 +1979,7 @@
                      }
                      else if (ECode == 41)
                      {
+                         String PregStatus = C.ReturnSingleValue("select VStatus from tmpPregHis Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
                          if (EDT.length() != 0) {
                              Connection.MessageBox(Events.this, EDT);
                              return;
@@ -1944,6 +1993,10 @@
                          }
                          if (age < 10) {
                              Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১০ বছরের বেশী হতে হবে।");
+                             return;
+                         }
+                         if (PregStatus.equals("3")) {
+                             Connection.MessageBox(Events.this, "সদস্যের গর্ভের ইতিহাসে সাক্ষাৎকারের ফলাফল  "+PregStatus+"  এবং ইভেন্ট ৪১ সামঞ্জস্যপূর্ণ নয় ।");
                              return;
                          }
                          //(Temporary Table) check the information is available or not

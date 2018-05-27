@@ -46,7 +46,8 @@ import java.util.List;
 import Common.Connection;
 import Common.Global;
 import Common.Utility;
-import Utility.*;
+ import DataSync.Log;
+ import Utility.*;
 
 public class Member_list extends Activity {
     boolean networkAvailable=false;
@@ -223,7 +224,7 @@ public class Member_list extends Activity {
              public void onClick(View v) {
                  AlertDialog.Builder adb = new AlertDialog.Builder(Member_list.this);
                  adb.setTitle("Process Transaction");
-//                 adb.setMessage("Do you want to process current transaction[Yes/No]?");
+//               adb.setMessage("Do you want to process current transaction[Yes/No]?");
                  adb.setMessage("আপনি কি র্বতমান কাজ সংরক্ষণ করতে চান [হ্যাঁ/না]?");
                  adb.setNegativeButton("না", null);
                  adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
@@ -255,6 +256,9 @@ public class Member_list extends Activity {
 
                              //Table Name: Events
                              EventDataTransfer(VILL, BARI, HH);
+
+                             //Table Name: Member_SB
+//                             InsertMSB();
 
                              C.Save("Delete from tmpHousehold where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
                              C.Save("Delete from tmpVisits where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
@@ -2764,31 +2768,98 @@ public class Member_list extends Activity {
         }
         MotSlMiss.close();
 
-         //age of last SES collection
-//        if(C.Existence("select vill from tmpSES where vill||bari||hh='"+ Household +"'"))
-//        {
-//            //***need to collect ses again from 22 rnd
-//            //int sesage = Integer.parseInt(C.ReturnSingleValue("select cast((julianday(date('now'))-julianday(vdate))/365.25 as int)ageses from tTrans where status='s' and vill||bari||hh='"+ Household +"' order by sesno desc limit 1"));
-//            //if(sesage >= 3)
-//            //	ErrMsg += "-> SES এর বয়স ৩ বছরের বেশী হয়েছে, আবার সংগ্রহ করতে হবে।\n";
-//        }
-//        else
-//        {
-//            ErrMsg += "\n-> SES এর তথ্য সংগ্রহ করতে হবে।";
-//        }
-
-
-        //Stop process if any error have
-         /*if (ErrMsg.length()!=0)
-         {
-             return ErrMsg;
-         }
-         else
-         {
-             return FinalDataProcess(Household, Rnd);
-         }*/
-
         return ErrMsg;
+    }
+    public void InsertMSB()
+    {
+        String SQLS = "";
+        String Household = VILL + BARI + HH;
+        ErrMsg = "";
+        SQLS = "select v.UnCode,v.UnName as UnionName,m.Vill,v.VName as VillageName,m.Bari,b.BariName,b.BariLoc,m.HH, (select(ifnull(max(cast(MSlNo as int)),80)+1) from Member_SB where vill=e.vill and bari=e.bari and hh=e.hh)MSlNo,";
+        SQLS += " m.Vill||m.Bari||m.HH||cast((select(ifnull(max(cast(MSlNo as int)),80)+1) from Member_SB where vill=e.vill and bari=e.bari and hh=e.hh) as varchar(2))PNo,";
+        SQLS += " 'Baby of '|| m.Name as Name,e.Info1 as OutResut, e.EvDate as BDate, 0 AgeY, m.MSlNo as MoNo, m.PNO as MotPNo,m.Name as MotName, m. Sp1 as FaNo, ifnull(f.name,'') FatName,58 EnType, e.EvDate as EnDate, ";
+        SQLS += " 58 ExType, e.EvDate as ExDate, e.DeviceID, e.EntryUser, e.EnDt, 2 Upload, '' UploadDT, e.modifyDate from tmpEvents e";
+        SQLS += " inner join tmpMember m on e.vill=m.vill and e.bari=m.bari and e.hh=m.hh and e.mslno=m.mslno";
+        SQLS += " left outer join tmpMember f on m.vill=f.vill and m.bari=f.bari and m.hh=f.hh and m.sp1=f.MSlNo";
+        SQLS += " left outer join Village v";
+        SQLS += " on m.vill=v.vcode";
+        SQLS += " left outer join Baris b";
+        SQLS += " on m.vill=b.vill and m.bari=b.bari";
+        SQLS += " where m.vill||m.bari||m.hh='"+ Household +"' and evtype='42' and info1 in ('11','21','22','31','32','33') order by info1";
+
+        Cursor curMSB = C.ReadData(SQLS);
+        curMSB.moveToFirst();
+
+        if(curMSB.getCount()==0)
+        {
+            curMSB.close();
+            return ;
+        }
+        if (curMSB.getString(curMSB.getColumnIndex("OutResut")).equals("11")) {
+            stillBirthInsert(curMSB, 1);
+        }
+        if (curMSB.getString(curMSB.getColumnIndex("OutResut")).equals("33")) {
+            stillBirthInsert(curMSB, 1);
+        }
+        if (curMSB.getString(curMSB.getColumnIndex("OutResut")).equals("22")) {
+            stillBirthInsert(curMSB, 1);
+        }
+        if (curMSB.getString(curMSB.getColumnIndex("OutResut")).equals("21")) {
+            stillBirthInsert(curMSB, 2);
+        }
+        if (curMSB.getString(curMSB.getColumnIndex("OutResut")).equals("32")) {
+            stillBirthInsert(curMSB, 2);
+        }
+        if (curMSB.getString(curMSB.getColumnIndex("OutResut")).equals("31")) {
+            stillBirthInsert(curMSB, 3);
+        }
+        curMSB.close();
+    }
+
+    public void stillBirthInsert(Cursor curMSB,int count){
+
+        String Household = VILL + BARI + HH;
+
+        String msbSQL="";
+
+        for (int i=0; i<count; i++) {
+
+            String MSerial = C.ReturnSingleValue("Select (ifnull(max(cast(MSlNo as int)),80)) from Member_SB where vill||bari||hh='"+ Household + "'");
+            int serial=Integer.parseInt(MSerial)+1;
+
+            String Pno= VILL+BARI+HH+serial;
+
+            msbSQL = "Insert into Member_SB(UnCode, UnionName, Vill, VillageName, Bari, BariName, BariLoc, HH, MSlNo, PNo, Name, OutResut, BDate, AgeY, MoNo, MotPNo, MotName, FaNo, FatName, EnType, EnDate, ExType, ExDate, DeviceID, EntryUser, EnDt, Upload, modifyDate)Values(";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("UnCode")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("UnionName")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("Vill")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("VillageName")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("Bari")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("BariName")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("BariLoc")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("HH")) + "',";
+            msbSQL += "'" + serial + "',";
+            msbSQL += "'" + Pno + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("Name")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("OutResut")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("BDate")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("AgeY")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("MoNo")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("MotPNo")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("MotName")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("FaNo")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("FatName")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("EnType")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("EnDate")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("ExType")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("ExDate")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("DeviceID")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("EntryUser")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("EnDt")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("Upload")) + "',";
+            msbSQL += "'" + curMSB.getString(curMSB.getColumnIndex("modifyDate")) + "')";
+            C.Save(msbSQL);
+        }
     }
 
  //Data Transfer to Main Table

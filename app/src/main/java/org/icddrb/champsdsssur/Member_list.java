@@ -258,7 +258,7 @@ public class Member_list extends Activity {
                              EventDataTransfer(VILL, BARI, HH);
 
                              //Table Name: Member_SB
-//                             InsertMSB();
+                             InsertMSB();
 
                              C.Save("Delete from tmpHousehold where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
                              C.Save("Delete from tmpVisits where Vill||Bari||HH='" + (VILL + BARI + HH) + "'");
@@ -2752,7 +2752,7 @@ public class Member_list extends Activity {
         }
         FatSlMiss.close();
 
-        //Mother is available but father serial is missing for son/daughter
+        //Mother is available but Mother serial is missing for son/daughter
 
         SQLS  = "select m.MSlNo as sno,(case when m.pno is null or length(m.pno)=0 then 'pno' else m.pno end)as pno,m.name as name from tmpMember m inner join ";
         SQLS += " tmpMember h ";

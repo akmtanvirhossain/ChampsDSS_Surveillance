@@ -154,6 +154,7 @@ public class MainMenu extends Activity {
                                         tableList.add("Events");
                                         tableList.add("ChildCardRequest");
 //                                        tableList.add("DataCorrectionNote");
+                                        tableList.add("Member_SB");
 
                                         C.Sync_Upload(tableList, progDailog, progressHandler);
 

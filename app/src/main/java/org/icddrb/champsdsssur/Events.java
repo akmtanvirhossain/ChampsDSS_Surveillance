@@ -455,39 +455,39 @@
              {
                  //MS
                  if(MS.equals("30"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','63','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','63','80','99')"));
                  else if(MS.equals("31"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','42','43','44','49','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','42','43','44','49','56','57','80','99')"));
                  else if(MS.equals("33"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','42','43','44','49','56','57','80','99')"));
                  else
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','40','41','42','43','44','49','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','40','41','42','43','44','49','56','57','80','99')"));
              }
              else if(Sex.equals("2") & MAge >= 5)
              {
                  //MS
                  if(MS.equals("30"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57','63','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','42','43','44','56','57','63','80','99')"));
                      //married and pregnant
                  else if(MS.equals("31") & PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','43','44','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','40','41','43','44','56','57','80','99')"));
                      //married and not pregnant
                  else if(MS.equals("31") & !PS.equals("41"))
                      EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','31','42','43','44','56','57','80')"));
 
                  else if(MS.equals("32") & PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','43','44','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','40','41','43','44','56','57','80','99')"));
                  else if(MS.equals("32") & !PS.equals("41"))
                      EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','42','43','44','56','57','80')"));
 
                  else if(MS.equals("34") & PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','34','41','43','44','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','34','41','43','44','56','57','80','99')"));
                  else if(MS.equals("34") & !PS.equals("41"))
                      EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','34','42','43','44','56','57','80')"));
 
                      //widowed but pregnant
                  else if(MS.equals("33") & PS.equals("41"))
-                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','43','44','56','57','80')"));
+                     EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','41','43','44','56','57','80','99')"));
                      //widowed not pregnant
                  else if(MS.equals("33") & !PS.equals("41"))
                      EvType.setAdapter(C.getArrayAdapter("Select distinct '  'EV from EventCode union SELECT (EvType||'-'||EVName)Ev FROM EventCode where EvType not in('20','21','22','23','24','25','26','30','32','33','34','42','43','44','56','57','80')"));
@@ -819,7 +819,8 @@
 
                  }else if(EVCODE.equals("49")){
                      dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
-//                     dtpEvDate.setText(Global.DateNowDMY());
+                 }else if(EVCODE.equals("99")){
+                     dtpEvDate.setText(Global.DateConvertDMY(VDate.toString()));
                  }
                  //Migration out
                  else if(EVCODE.equals("51")){
@@ -960,7 +961,7 @@
                      formMember.setVisibility(View.GONE);
                  }
 
-                 if(EVCODE.equals("12") | EVCODE.equals("40") | EVCODE.equals("49"))
+                 if(EVCODE.equals("12") | EVCODE.equals("40") | EVCODE.equals("49") | EVCODE.equals("99"))
                  {
                      secEvDate.setVisibility(View.GONE);
                  }
@@ -1200,7 +1201,7 @@
                      adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                          public void onClick(DialogInterface dialog, int which) {
                              C.Save("Update tmpMember set PStat='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
-                             C.Save("Update tmpEvents set EvType='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             C.Save("Update tmpEvents set EvType='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) +"' and EvType='49' and Rnd='" + ROUNDNO + "'");
                              C.Save("delete from Events where vill||bari||hh='"+ (VILL + BARI + HH )  +"' and MslNo='"+ MSLNO +"' and EvType='49' and Rnd='" + ROUNDNO + "'");
                              DataSave();
                              finish();
@@ -1221,7 +1222,7 @@
                      adb.setPositiveButton("হ্যাঁ", new AlertDialog.OnClickListener() {
                          public void onClick(DialogInterface dialog, int which) {
                              C.Save("Update tmpMember set PStat='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
-                             C.Save("Update tmpEvents set EvType='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "'");
+                             C.Save("Update tmpEvents set EvType='" + Connection.SelectedSpinnerValue(spnEvType.getSelectedItem().toString(), "-") + "' where Vill||Bari||HH||MSlNo='" + (VILL + BARI + HH + MSLNO) + "' and EvType='40' and Rnd='" + ROUNDNO + "'");
                              C.Save("delete from Events where vill||bari||hh='"+ (VILL + BARI + HH )  +"' and MslNo='"+ MSLNO +"' and EvType='40' and Rnd='" + ROUNDNO + "'");
                              DataSave();
                              finish();
@@ -1324,7 +1325,7 @@
              String Agey = C.ReturnSingleValue("select AgeY from tmpMember where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
 
              Date evd;
-             if(ECode == 12 | ECode == 40 | ECode == 49)
+             if(ECode == 12 | ECode == 40 | ECode == 49 | ECode == 99)
                  evd = evdateformat.parse(Global.DateConvertDMY(VDate));
              else
                  evd = evdateformat.parse(dtpEvDate.getText().toString());
@@ -1397,7 +1398,7 @@
              if(EVTYPE.equals("12")|EVTYPE.equals("20")|EVTYPE.equals("21") |EVTYPE.equals("22") |EVTYPE.equals("23") |EVTYPE.equals("25"))
              {
                  String ED = "";
-                 if (EVTYPE.equals("12") | EVTYPE.equals("40") | EVTYPE.equals("49"))
+                 if (EVTYPE.equals("12") | EVTYPE.equals("40") | EVTYPE.equals("49") | EVTYPE.equals("99"))
                  {
                      ED = VDate;
                  }
@@ -1844,7 +1845,7 @@
              //----------------------------------------------------------------------------------------------------------------------------
              if (OLDNEWHH.equals("old"))
              {
-                 if ((ECode >= 12 & ECode <= 72))
+                 if ((ECode >= 12 & ECode <= 99 ))
                  {
                      int age = 0;
                      String PStat = "";
@@ -1952,7 +1953,7 @@
                              }
                          }
                      }
-                     if (ECode == 40 | ECode == 49)
+                     if (ECode == 40 | ECode == 49 | ECode == 99)
                      {
                          String PregStatus = C.ReturnSingleValue("select VStatus from tmpPregHis Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
 
@@ -1974,6 +1975,13 @@
                      {
                          if (PStat.equals("41")) {
                              Connection.MessageBox(Events.this, "সদস্য বর্তমানে গর্ভবতী, ইভেন্ট ৪০ প্রযোজ্য নয়।");
+                             return;
+                         }
+                     }
+                     if (ECode == 99)
+                     {
+                         if (PStat.equals("41")) {
+                             Connection.MessageBox(Events.this, "সদস্য বর্তমানে গর্ভবতী, ইভেন্ট 99 প্রযোজ্য নয়।");
                              return;
                          }
                      }
@@ -2479,6 +2487,9 @@
                      SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt=''";
                      SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
                  }else if (EVTYPE.equals("49") & !PregStatus.equals("41")) {
+                     SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt=''";
+                     SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
+                 }else if (EVTYPE.equals("99") & !PregStatus.equals("41")) {
                      SQL3 = "Update tmpMember set PStat='" + EVTYPE + "',LmpDt=''";
                      SQL3 += " Where  Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'";
                  }else if (EVTYPE.equals("41")) {

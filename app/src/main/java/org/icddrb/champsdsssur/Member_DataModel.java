@@ -69,9 +69,7 @@ import android.content.Context;
               _BDate = newValue;
          }
         private String _AgeY = "";
-        public String getAgeY(){
-              return _AgeY;
-         }
+        public String getAgeY(){return _AgeY;}
         public void setAgeY(String newValue){
               _AgeY = newValue;
          }

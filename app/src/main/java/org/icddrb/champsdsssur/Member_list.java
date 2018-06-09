@@ -49,6 +49,8 @@ import Common.Utility;
  import DataSync.Log;
  import Utility.*;
 
+ import static org.icddrb.champsdsssur.R.id.txtAgeY;
+
 public class Member_list extends Activity {
     boolean networkAvailable=false;
     Location currentLocation; 
@@ -2939,7 +2941,8 @@ public class Member_list extends Activity {
     private void MemberDataTransfer(String Vill, String Bari, String HH)
     {
         Member_DataModel d = new Member_DataModel();
-        String SQL = "Select * from tmpMember  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+//        String SQL = "Select * from tmpMember  Where Vill='"+ Vill +"' and Bari='"+ Bari +"' and HH='"+ HH +"'";
+        String SQL = "Select Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate,Cast(((julianday(date('now'))-julianday(BDate))/365.25) as int) as AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, EnType, EnDate, ExType, ExDate, NeedReview, PosMig, PosMigDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate from "+ TableName +"  Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"'";
         List<Member_DataModel> data = d.SelectAll(this, SQL);
         for(Member_DataModel item : data){
             Member_DataModel_Main objSave = new Member_DataModel_Main();

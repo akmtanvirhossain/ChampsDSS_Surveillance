@@ -2347,14 +2347,14 @@ public class Member_list extends Activity {
         SQLS = "SELECT M.MslNo as sno,M.NAME as name";
         SQLS += " FROM tmpMember M WHERE  M.VILL||M.BARI||M.HH='"+ Household +"' AND M.MS='31' AND cast((julianday(date('now'))-julianday(bdate))/365.25 as int)<50  ";
         SQLS += " AND M.SEX='2' AND ifnull(M.PSTAT,'0')<>'41' AND (EXTYPE IS NULL OR LENGTH(EXTYPE)=0) and (posmig IS NULL OR LENGTH(posmig)=0) AND NOT EXISTS";
-        SQLS += " (SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM tmpEvents WHERE vill||bari||HH=m.vill||m.bari||M.HH AND MSlNo=M.MSlNo AND EVTYPE IN('40','49') AND RND='"+ ROUNDNO +"'";
-        SQLS += " UNION SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM EVENTS WHERE EVTYPE IN('40','49') AND RND='"+ ROUNDNO +"' AND PNO=M.PNO)";
+        SQLS += " (SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM tmpEvents WHERE vill||bari||HH=m.vill||m.bari||M.HH AND MSlNo=M.MSlNo AND EVTYPE IN('40','49','99') AND RND='"+ ROUNDNO +"'";
+        SQLS += " UNION SELECT VILL,BARI,HH,MSlNo,PNO,EVTYPE,RND FROM EVENTS WHERE EVTYPE IN('40','49','99') AND RND='"+ ROUNDNO +"' AND PNO=M.PNO)";
 
         Cursor cur40 = C.ReadData(SQLS);
         cur40.moveToFirst();
         while(!cur40.isAfterLast())
         {
-            ErrMsg += "\n-> ইভেন্ট ৪০/৪৯ ঘটানো হয় নাই (সিরিয়াল নাম্বার= "+  cur40.getString(cur40.getColumnIndex("sno")) +" নাম= "+ cur40.getString(cur40.getColumnIndex("name")) +" ).";
+            ErrMsg += "\n-> ইভেন্ট ৪০/৪৯/৯৯ ঘটানো হয় নাই (সিরিয়াল নাম্বার= "+  cur40.getString(cur40.getColumnIndex("sno")) +" নাম= "+ cur40.getString(cur40.getColumnIndex("name")) +" ).";
 
             cur40.moveToNext();
         }

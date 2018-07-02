@@ -51,6 +51,7 @@ public class SettingForm extends Activity {
             spnCluster = (Spinner)findViewById(R.id.spnCluster);
             //spnBlock = (Spinner)findViewById(R.id.spnBlock);
             List<String> listCluster = new ArrayList<String>();
+            listCluster.add("All Cluster");
             for(int c=1;c<=15;c++){
                 listCluster.add(Global.Right("00"+String.valueOf(c),2));
             }
@@ -94,7 +95,9 @@ public class SettingForm extends Activity {
                         new Thread() {
                             public void run() {
                                 try {
-                                    C.RebuildDatabase(UserID, spnCluster.getSelectedItem().toString(), progDailog, progressHandler);
+                                    if (spnCluster.getSelectedItem().toString().equals("All Cluster"))
+                                    C.RebuildDatabase(UserID, "%", progDailog, progressHandler);
+                                    else C.RebuildDatabase(UserID, spnCluster.getSelectedItem().toString(), progDailog, progressHandler);
 
                                 } catch (Exception e) {
 

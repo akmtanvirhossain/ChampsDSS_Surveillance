@@ -1081,14 +1081,13 @@ public class Connection extends SQLiteOpenHelper {
             });
             TableName    = "Baris";
             SQLStr1 = "Select count(*)total " +
-                    " from Baris where Cluster='"+ Cluster +"'";
+                    " from Baris where Cluster like ('%"+ Cluster +"%')";
             total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr1));
             batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
             batchSize = batchSize==0?total:batchSize;
 
             SQLStr = "Select top "+ batchSize +" Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, '1' Upload, modifyDate " +
-                    " from Baris b where Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=b.Vill+b.Bari)";
+                    " from Baris b where Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=b.Vill+b.Bari)";
 
             VariableList = "Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari";
@@ -1107,7 +1106,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr  = "Select count(*)";
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
-            SQLStr += " where b.Cluster='"+ Cluster +"'";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%')";
 
             total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
             batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
@@ -1117,8 +1116,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " h.StartTime, h.EndTime, h.DeviceID, h.EntryUser, h.Lat, h.Lon, h.EnDt, '1' Upload, h.modifyDate";
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
-            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=h.Vill+h.Bari+h.HH)";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=h.Vill+h.Bari+h.HH)";
 
 
             VariableList = "Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
@@ -1139,7 +1137,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join SES s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
-            SQLStr += " where b.Cluster='"+ Cluster +"'";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%')";
             total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
             batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
             batchSize = batchSize==0?total:batchSize;
@@ -1150,8 +1148,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join SES s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
-            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.SESNo)";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.SESNo)";
 
             VariableList = "Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth, Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon, Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, SESNo";
@@ -1169,8 +1166,7 @@ public class Connection extends SQLiteOpenHelper {
             TableName    = "Member";
             SQLStr  = "Select count(*) from Baris b " +
                     "inner join Member m on b.Vill=m.vill and b.Bari=m.Bari " +
-                    "where b.Cluster='"+ Cluster +"' and " +
-                    "not exists(Select TableName from sync_management where TableName='Member' and UserId='"+ DeviceID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo)";
+                    "where b.Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='Member' and UserId='"+ DeviceID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo)";
             total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
             batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
             batchSize = batchSize==0?total:batchSize;
@@ -1179,7 +1175,7 @@ public class Connection extends SQLiteOpenHelper {
                     "from Baris b " +
                     "inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari " +
                     "inner join Member m on h.Vill=m.vill and h.Bari=m.Bari and h.hh=m.hh " +
-                    "where b.Cluster='"+ Cluster +"' and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo)";
+                    "where b.Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo)";
 
             VariableList = "Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, EnType, EnDate, ExType, ExDate, NeedReview, PosMig, PosMigDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo";
@@ -1200,7 +1196,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join PregHis s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
-            SQLStr += " where b.Cluster='"+ Cluster +"'";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%')";
 
             total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
             batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
@@ -1212,8 +1208,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join PregHis s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
-            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.MSlNo)";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.MSlNo)";
 
             VariableList = "Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo, SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut, CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo";
@@ -1233,7 +1228,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join Visits s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
-            SQLStr += " where b.Cluster='"+ Cluster +"'";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%')";
             total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
             batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
             batchSize = batchSize==0?total:batchSize;
@@ -1242,8 +1237,7 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr += " from Baris b";
             SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
             SQLStr += " inner join Visits s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
-            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.Rnd)";
+            SQLStr += " where b.Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.Rnd)";
 
             VariableList = "Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, Rnd";
@@ -1261,7 +1255,7 @@ public class Connection extends SQLiteOpenHelper {
             TableName    = "Events";
             SQLStr  = "Select count(*) from Events e " +
                     "inner join Baris b on e.Vill=b.Vill and e.Bari=b.Bari " +
-                    " where b.Cluster='"+ Cluster +"'";
+                    " where b.Cluster like ('%"+ Cluster +"%')";
             total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
             batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
             batchSize = batchSize==0?total:batchSize;
@@ -1269,13 +1263,219 @@ public class Connection extends SQLiteOpenHelper {
             SQLStr  = "Select top "+ batchSize +" e.Vill, e.Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd," +
                     " e.StartTime, e.EndTime, e.DeviceID, e.EntryUser, e.Lat, e.Lon, e.EnDt, '1' Upload, e.modifyDate from Events e " +
                     "inner join Baris b on e.Vill=b.Vill and e.Bari=b.Bari " +
-                    " where b.Cluster='"+ Cluster +"' and" +
-                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=e.Vill+e.Bari+e.HH+e.MSlNo+e.EvType+e.EvDate+e.Rnd)";
+                    " where b.Cluster like ('%"+ Cluster +"%') and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=e.Vill+e.Bari+e.HH+e.MSlNo+e.EvType+e.EvDate+e.Rnd)";
 
             VariableList = "Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
             UniqueField  = "Vill, Bari, HH, MSlNo, EvType, EvDate, Rnd";
             //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQLStr, TableName, VariableList, UniqueField,DeviceID);
             Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
+
+//
+//            //Baris
+//            //--------------------------------------------------------------------------------------
+//            progHandler.post(new Runnable() {
+//                public void run() {
+//                    progDialog.setProgress(5);
+//                    progDialog.setMessage("Downloading Bari Data ...");
+//                }
+//            });
+//            TableName    = "Baris";
+//            SQLStr1 = "Select count(*)total " +
+//                    " from Baris where Cluster='"+ Cluster +"'";
+//            total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr1));
+//            batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
+//            batchSize = batchSize==0?total:batchSize;
+//
+//            SQLStr = "Select top "+ batchSize +" Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, '1' Upload, modifyDate " +
+//                    " from Baris b where Cluster='"+ Cluster +"' and" +
+//                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=b.Vill+b.Bari)";
+//
+//            VariableList = "Vill, Bari, Cluster, Block, BariName, BariLoc, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+//            UniqueField  = "Vill, Bari";
+//            Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
+//
+//            //Household
+//            //--------------------------------------------------------------------------------------
+//            progHandler.post(new Runnable() {
+//                public void run() {
+//                    progDialog.setProgress(10);
+//                    progDialog.setMessage("Downloading Household Data ...");
+//                }
+//            });
+//            TableName    = "Household";
+//
+//            SQLStr  = "Select count(*)";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " where b.Cluster='"+ Cluster +"'";
+//
+//            total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
+//            batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
+//            batchSize = batchSize==0?total:batchSize;
+//
+//            SQLStr  = "Select top "+ batchSize +" h.Vill, h.Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd,";
+//            SQLStr += " h.StartTime, h.EndTime, h.DeviceID, h.EntryUser, h.Lat, h.Lon, h.EnDt, '1' Upload, h.modifyDate";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
+//                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=h.Vill+h.Bari+h.HH)";
+//
+//
+//            VariableList = "Vill, Bari, HH, Religion, MobileNo1, MobileNo2, HHHead, TotMem, TotRWo, EnType, EnDate, ExType, ExDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+//            UniqueField  = "Vill, Bari, HH";
+//            //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+//            Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
+//
+//            //SES
+//            //--------------------------------------------------------------------------------------
+//            progHandler.post(new Runnable() {
+//                public void run() {
+//                    progDialog.setProgress(30);
+//                    progDialog.setMessage("Downloading SES Data ...");
+//                }
+//            });
+//            TableName    = "SES";
+//            SQLStr  = " Select count(*)";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " inner join SES s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+//            SQLStr += " where b.Cluster='"+ Cluster +"'";
+//            total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
+//            batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
+//            batchSize = batchSize==0?total:batchSize;
+//
+//            SQLStr  = " Select top "+ batchSize +" s.Vill, s.Bari, s.HH, SESNo, VDate, VStatus, VStatusOth, s.Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth,";
+//            SQLStr += " Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon,";
+//            SQLStr += " Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, s.StartTime, s.EndTime, s.DeviceID, s.EntryUser, s.Lat, s.Lon, s.EnDt, '1' Upload, s.modifyDate";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " inner join SES s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+//            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
+//                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.SESNo)";
+//
+//            VariableList = "Vill, Bari, HH, SESNo, VDate, VStatus, VStatusOth, Rnd, WSDrink, WSDrinkOth, WSCook, WSCookOth, WSWash, WSWashOth, Latrine, LatrineOth, Electricity, Radio, TV, Mobile, Telephone, Refrige, Watch, ElecFan, RickVan, Bicycle, MotCycle, Computer, Buffalo, Bull, Goat, Chicken, Pigeon, Roof, RoofOth, Wall, WallOth, Floor, FloorOth, Homestead, HomesteadOth, OthLand, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+//            UniqueField  = "Vill, Bari, HH, SESNo";
+//            //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+//            Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
+//
+//            //Member
+//            //--------------------------------------------------------------------------------------
+//            progHandler.post(new Runnable() {
+//                public void run() {
+//                    progDialog.setProgress(40);
+//                    progDialog.setMessage("Downloading Member Data ...");
+//                }
+//            });
+//            TableName    = "Member";
+//            SQLStr  = "Select count(*) from Baris b " +
+//                    "inner join Member m on b.Vill=m.vill and b.Bari=m.Bari " +
+//                    "where b.Cluster='"+ Cluster +"' and " +
+//                    "not exists(Select TableName from sync_management where TableName='Member' and UserId='"+ DeviceID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo)";
+//            total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
+//            batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
+//            batchSize = batchSize==0?total:batchSize;
+//
+//            SQLStr  = "Select top "+ batchSize +" m.Vill, m.Bari, m.HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, m.EnType, m.EnDate, m.ExType, m.ExDate, NeedReview, PosMig, PosMigDate, m.StartTime, m.EndTime, m.DeviceID, m.EntryUser, m.Lat, m.Lon, m.EnDt, '1' Upload, m.modifyDate " +
+//                    "from Baris b " +
+//                    "inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari " +
+//                    "inner join Member m on h.Vill=m.vill and h.Bari=m.Bari and h.hh=m.hh " +
+//                    "where b.Cluster='"+ Cluster +"' and not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=m.Vill+m.Bari+m.HH+m.MSlNo)";
+//
+//            VariableList = "Vill, Bari, HH, MSlNo, PNo, Name, Rth, Sex, BDate, AgeY, MoNo, FaNo, Edu, MS, Ocp, Sp1, Sp2, Sp3, Sp4, Pstat, LmpDt, EnType, EnDate, ExType, ExDate, NeedReview, PosMig, PosMigDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+//            UniqueField  = "Vill, Bari, HH, MSlNo";
+//
+//            Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
+//
+//
+//            //PregHis
+//            //--------------------------------------------------------------------------------------
+//            progHandler.post(new Runnable() {
+//                public void run() {
+//                    progDialog.setProgress(70);
+//                    progDialog.setMessage("Downloading Pregnancy History Data ...");
+//                }
+//            });
+//            TableName    = "PregHis";
+//            SQLStr  = " Select count(*)";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " inner join PregHis s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+//            SQLStr += " where b.Cluster='"+ Cluster +"'";
+//
+//            total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
+//            batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
+//            batchSize = batchSize==0?total:batchSize;
+//
+//            SQLStr  = " Select top "+ batchSize +" s.Vill, s.Bari, s.HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo, SonLivWWo, DaugLivWWo,";
+//            SQLStr += " ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut, CurPreg, LMPDate, s.StartTime, s.EndTime, s.DeviceID,";
+//            SQLStr += " s.EntryUser, s.Lat, s.Lon, s.EnDt, '1' Upload, s.modifyDate";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " inner join PregHis s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+//            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
+//                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.MSlNo)";
+//
+//            VariableList = "Vill, Bari, HH, MSlNo, PNo, VDate, VStatus, VStatusOth, MarriageStatus, MarMon, MarYear, MarDK, GaveBirth, ChildLivWWo, SonLivWWo, DaugLivWWo, ChldLivOut, SonLivOut, DaugLivOut, ChldDie, BoyDied, GirlDied, NotLivBrth, TotLB, TotPregOut, CurPreg, LMPDate, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+//            UniqueField  = "Vill, Bari, HH, MSlNo";
+//            //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+//            Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
+//
+//            //Visits
+//            //--------------------------------------------------------------------------------------
+//            progHandler.post(new Runnable() {
+//                public void run() {
+//                    progDialog.setProgress(80);
+//                    progDialog.setMessage("Downloading Visits Data ...");
+//                }
+//            });
+//            TableName    = "Visits";
+//            SQLStr  = " Select count(*)";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " inner join Visits s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+//            SQLStr += " where b.Cluster='"+ Cluster +"'";
+//            total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
+//            batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
+//            batchSize = batchSize==0?total:batchSize;
+//
+//            SQLStr  = " Select top "+ batchSize +" s.Vill, s.Bari, s.HH, VDate, VStatus, VStatusOth, VisitNo, Resp, s.Rnd, s.StartTime, s.EndTime, s.DeviceID, s.EntryUser, s.Lat, s.Lon, s.EnDt, '1' Upload, s.modifyDate";
+//            SQLStr += " from Baris b";
+//            SQLStr += " inner join Household h on b.Vill=h.Vill and b.Bari=h.Bari";
+//            SQLStr += " inner join Visits s on h.Vill=s.vill and h.Bari=s.Bari and h.hh=s.hh";
+//            SQLStr += " where b.Cluster='"+ Cluster +"' and" +
+//                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=s.Vill+s.Bari+s.HH+s.Rnd)";
+//
+//            VariableList = "Vill, Bari, HH, VDate, VStatus, VStatusOth, VisitNo, Resp, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+//            UniqueField  = "Vill, Bari, HH, Rnd";
+//            //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+//            Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
+//
+//            //Events
+//            //--------------------------------------------------------------------------------------
+//            progHandler.post(new Runnable() {
+//                public void run() {
+//                    progDialog.setProgress(95);
+//                    progDialog.setMessage("Downloading Events Data ...");
+//                }
+//            });
+//            TableName    = "Events";
+//            SQLStr  = "Select count(*) from Events e " +
+//                    "inner join Baris b on e.Vill=b.Vill and e.Bari=b.Bari " +
+//                    " where b.Cluster='"+ Cluster +"'";
+//            total = Integer.valueOf(ReturnResult("ReturnSingleValue",SQLStr));
+//            batchSize = Integer.valueOf(ReturnSingleValue("select ifnull(batchsize,0)batchsize from DatabaseTab where TableName='" + TableName + "'"));
+//            batchSize = batchSize==0?total:batchSize;
+//
+//            SQLStr  = "Select top "+ batchSize +" e.Vill, e.Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd," +
+//                    " e.StartTime, e.EndTime, e.DeviceID, e.EntryUser, e.Lat, e.Lon, e.EnDt, '1' Upload, e.modifyDate from Events e " +
+//                    "inner join Baris b on e.Vill=b.Vill and e.Bari=b.Bari " +
+//                    " where b.Cluster='"+ Cluster +"' and" +
+//                    " not exists(Select TableName from sync_management where TableName='"+ TableName +"' and UserId='"+ DeviceID +"' and UniqueId=e.Vill+e.Bari+e.HH+e.MSlNo+e.EvType+e.EvDate+e.Rnd)";
+//
+//            VariableList = "Vill, Bari, HH, MSlNo, PNo, EvType, EvDate, Info1, Info2, Info3, Info4, VDate, Rnd, StartTime, EndTime, DeviceID, EntryUser, Lat, Lon, EnDt, Upload, modifyDate";
+//            UniqueField  = "Vill, Bari, HH, MSlNo, EvType, EvDate, Rnd";
+//            //Res = DownloadJSON_Update_Sync_Management_InsertOnly(SQLStr, TableName, VariableList, UniqueField,DeviceID);
+//            Sync_Download_Rebuild_Batch(SQLStr, TableName, VariableList, UniqueField,DeviceID,total,batchSize);
 
             //Code List
             //--------------------------------------------------------------------------------------

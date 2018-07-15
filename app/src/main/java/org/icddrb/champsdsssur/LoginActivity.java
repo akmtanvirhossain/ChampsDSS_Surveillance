@@ -64,7 +64,7 @@ public class LoginActivity extends Activity {
 
             //Need to update date every time whenever shared updated system
             //*********************************************************************
-            SystemUpdateDT = "27062018";  //Format: DDMMYYYY
+            SystemUpdateDT = "15072018";  //Format: DDMMYYYY
             lblSystemDate.setText("Version: 1.0, Built on:"+ SystemUpdateDT);
 
             if(ProjectSetting.InterviewType.equals(ProjectSetting.QAInterview)){
@@ -126,7 +126,7 @@ public class LoginActivity extends Activity {
                 //startService(syncService);
             }
             //**************************************************************************************
-            uid.setAdapter(C.getArrayAdapter("select UserId||'-'||UserName User from DataCollector order by UserName"));
+            uid.setAdapter(C.getArrayAdapter("select UserId||'-'||UserName User from DataCollector where Active='1' order by UserName"));
             String[] CL = uid.getSelectedItem().toString().split("-");
             uid.setSelection(Global.SpinnerItemPosition(uid,CL[0].length(),C.ReturnSingleValue("Select UserId from LastLogin")));
 

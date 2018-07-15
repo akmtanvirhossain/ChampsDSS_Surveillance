@@ -1895,7 +1895,7 @@
 
                          if(ExitDate_difference < 0)
                          {
-                             Connection.MessageBox(Events.this, " সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             Connection.MessageBox(Events.this, " সদস্যের খানা থেকে বের হবার তারিখ অবশ্যই খানায় ঢোকার তারিখ  " + endate + "  এর সমান অথবা বেশী হতে হবে ।");
                              return;
                          }
 
@@ -1904,7 +1904,7 @@
 
                          if(ExitDate_difference1 < 0)
                          {
-                             Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই জন্ম তারিখ  " + bdate + "  এর সমান অথবা বেশী হতে হবে ।");
+                             Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হবার তারিখ অবশ্যই জন্ম তারিখ  " + bdate + "  এর সমান অথবা বেশী হতে হবে ।");
                              return;
                          }
 
@@ -1917,7 +1917,7 @@
                          if (!Event1.equals("12") & !Event1.equals("54"))
                          {
                              if (ExitDate_difference3 < 0) {
-                                 Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হয়ার তারিখ অবশ্যই ইভেন্ট তারিখ  " + EventDate + "  এর সমান অথবা বেশী হতে হবে ।");
+                                 Connection.MessageBox(Events.this, "সদস্যের খানা থেকে বের হবার তারিখ অবশ্যই ইভেন্ট তারিখ  " + EventDate + "  এর সমান অথবা বেশী হতে হবে ।");
                                  return;
                              }
                          }
@@ -1964,7 +1964,7 @@
                              Connection.MessageBox(Events.this, "সদস্য অবশ্যই বিবাহিত হতে হবে ।");
                              return;
                          } else if (age < 10 | age > 49) {
-                             Connection.MessageBox(Events.this, "সদস্যের বয়স ১০ এর কম অথবা ৪৯ এর বেশী হলে ইভেন্ট ৪০/৪৯ প্রযোজ্য নয় ।");
+                             Connection.MessageBox(Events.this, "সদস্যের বয়স ১০ এর কম অথবা ৪৯ এর বেশী হলে ইভেন্ট ৪০/৪৯/৯৯ প্রযোজ্য নয় ।");
                              return;
                          }else if (ECode ==40 & PregStatus.equals("3")) {
                              Connection.MessageBox(Events.this, "সদস্যের গর্ভের ইতিহাসে সাক্ষাৎকারের ফলাফল  "+PregStatus+"  এবং ইভেন্ট ৪০ সামঞ্জস্যপূর্ণ নয় ।");
@@ -1999,8 +1999,8 @@
                              Connection.MessageBox(Events.this, "সদস্য অবশ্যই বিবাহিত হতে হবে।");
                              return;
                          }
-                         if (age < 10) {
-                             Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১০ বছরের বেশী হতে হবে।");
+                         if (age < 12) {
+                             Connection.MessageBox(Events.this, "সদস্যের বয়স অবশ্যই ১২ বছর বা তার বেশী হতে হবে।");
                              return;
                          }
                          if (PregStatus.equals("3")) {

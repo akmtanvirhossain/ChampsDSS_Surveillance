@@ -2770,6 +2770,23 @@ public class Member_list extends Activity {
         }
         MotSlMiss.close();
 
+        //Child Date of birth is lessthen mother merrage date
+
+//        SQLS  = "select m.MSlNo as sno,(case when m.pno is null or length(m.pno)=0 then 'pno' else m.pno end)as pno,m.name as name from tmpMember m inner join ";
+//        SQLS += " tmpPregHis h ";
+//        SQLS += " on m.PNo=h.PNo";
+//        SQLS += " left outer join tmpMember c on m.vill=c.vill and m.bari=c.bari and m.hh=c.hh and m.MSlNo=c.MoNo";
+//        SQLS += " where h.VStatus='1' and h.MarYear not in('9999') and h.MarMon not in('99') and length(m.extype)=0 and length(c.extype)=0 and c.BDate<h.MarYear||'-'||h.MarMon||'-15' and m.Pstat<>'49'";
+//
+//        Cursor CBdateMerrDate = C.ReadData(SQLS);
+//        CBdateMerrDate.moveToFirst();
+//        while(!CBdateMerrDate.isAfterLast())
+//        {
+//            ErrMsg += "\n-> মায়ের বিয়ের তারিখ সন্তানের জন্মতারিখের পরে ,সন্তানের জন্ম তারিখ এবং মায়ের বিয়ের তারিখ চেক করুন  (সিরিয়াল নাম্বার= "+  CBdateMerrDate.getString(CBdateMerrDate.getColumnIndex("sno")) +" নাম= "+ CBdateMerrDate.getString(CBdateMerrDate.getColumnIndex("name")) +" ).";
+//            CBdateMerrDate.moveToNext();
+//        }
+//        CBdateMerrDate.close();
+
         return ErrMsg;
     }
     public void InsertMSB()

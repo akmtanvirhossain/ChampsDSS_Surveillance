@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scrollbars="vertical">
+
+    <LinearLayout
+        android:id="@+id/secListRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5sp"
+        android:paddingTop="5sp">
+
+        <TextView
+            android:id="@+id/Bari"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/HH"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/MSlNo"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="190sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/PNo"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/OutResut"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/BDate"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/MoNo"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/MotPNo"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/MotName"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/FaNo"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+        <TextView
+            android:id="@+id/FatName"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+
+    </LinearLayout>
+</LinearLayout>

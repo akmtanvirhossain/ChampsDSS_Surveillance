@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:scrollbars="vertical">
+
+    <LinearLayout
+        android:id="@+id/secListRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#F3F3F3"
+        android:orientation="horizontal"
+        android:paddingBottom="5px"
+        android:paddingTop="8px">
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:gravity="center"
+            android:text="সিরিয়াল"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="190sp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="নাম"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="স্থায়ী নাম্বার"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="গর্ভের ফলাফল"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="প্রসবের তারিখ"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="মায়ের সিরিয়াল"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="মায়ের স্থায়ী নাম্বার"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="মায়ের নাম"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="বাবার সিরিয়াল"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="বাবার নাম"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</LinearLayout>

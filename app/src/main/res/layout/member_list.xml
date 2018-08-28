@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"  android:layout_height="wrap_content" android:scrollbars="vertical"
     android:orientation="vertical">
     <LinearLayout android:layout_width="fill_parent" android:layout_height="50sp" android:orientation="horizontal" android:background="@color/pageHeadingBack">
@@ -57,68 +58,96 @@
         <EditText android:id="@+id/txtRnd" android:maxLength="3" android:layout_width="60sp" android:visibility="gone" android:inputType="number" android:layout_marginLeft="10sp" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" android:gravity="center" />
     </LinearLayout>
     <View android:layout_height="1dip" android:layout_width="fill_parent" android:layout_marginBottom="5sp" android:background="#CCCCCC" />
-    <LinearLayout android:id="@+id/secVill" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
 
-        <TextView android:id="@+id/VlblVill" android:text="খানা নম্বর" android:layout_width="120sp" android:layout_height="wrap_content" android:textSize="25sp" />
+    <LinearLayout
+        android:id="@+id/secVill"
+        style="@style/rowStyle1"
+        android:layout_width="fill_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/VlblVill"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:text="খানা নম্বর"
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/txtVill"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="40sp"
+            android:layout_marginRight="40sp"
+            android:layout_weight="0.06"
+            android:inputType="text"
+            android:maxLength="11"
+            android:text="1234567890"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txtBari"
+            style="@style/customEdit"
+            android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10sp"
             android:inputType="text"
-            android:maxLength="11"
-            android:textSize="25sp" android:gravity="center_horizontal" />
-        <EditText android:id="@+id/txtBari" android:maxLength="4" android:layout_width="60sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="10sp" android:textSize="20sp" android:visibility="gone" />
-        <EditText android:id="@+id/txtHH" android:maxLength="2" android:layout_width="50sp" android:inputType="text" android:layout_height="wrap_content" style="@style/customEdit" android:layout_marginRight="20sp" android:textSize="20sp" android:visibility="gone"/>
+            android:maxLength="4"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/txtHH"
+            style="@style/customEdit"
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20sp"
+            android:inputType="text"
+            android:maxLength="2"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
         <TextView
+            android:id="@+id/textView10"
             android:layout_width="130sp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_column="0"
             android:text=""
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="100sp"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:text="গ্রামের নাম"
-            android:textSize="16sp" />
+            android:textSize="12sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/lblVillName"
-            android:visibility="gone"
             android:layout_width="200sp"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:gravity="left"
-            android:textSize="17sp" />
-
-        <Button
-            android:id="@+id/btnErrorCheck"
-            android:layout_width="20sp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5sp"
-            android:layout_marginLeft="0sp"
-            android:layout_marginRight="0sp"
-            android:layout_marginTop="5sp"
-            android:layout_weight="0.59"
-            android:background="@drawable/button_style"
-            android:text="অসামঞ্জস্য তথ্য"
-            android:textSize="16sp" />
+            android:textSize="17sp"
+            android:visibility="gone" />
 
     </LinearLayout>
-    <View android:id="@+id/lineVill" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />
 
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle1">
+    <!--<View android:id="@+id/lineVill" android:layout_height="1dip" android:layout_width="fill_parent" android:background="#CCCCCC" />-->
 
-        <TextView android:text="বাড়ির নাম"
-            android:layout_column="0"
+    <LinearLayout
+        style="@style/rowStyle1"
+        android:layout_width="fill_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal">
+
+        <TextView
             android:layout_width="100sp"
-            android:textSize="16sp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:text="বাড়ির নাম"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lblBariName"
@@ -128,7 +157,13 @@
             android:gravity="left"
             android:textSize="17sp" />
 
-        <TextView android:id="@+id/VlblHHHead" android:text="খানা প্রধান" android:layout_column="0" android:layout_width="100sp" android:textSize="16sp" android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/VlblHHHead"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:text="খানা প্রধান"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lblHHHead"
@@ -145,7 +180,62 @@
         android:layout_height="1dip"
         android:background="#CCCCCC" />
 
-    <LinearLayout android:id="@+id/secMenu" android:weightSum="5" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" style="@style/rowStyle0">
+    <LinearLayout
+        style="@style/rowStyle0"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnSB"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5sp"
+            android:layout_marginLeft="0sp"
+            android:layout_marginRight="0sp"
+            android:layout_marginTop="5sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_style"
+            android:text="মৃত জন্মের তালিকা"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/lblBlank"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_weight="0.10"
+            android:gravity="left"
+            android:textSize="17sp" />
+        <!--android:visibility="gone" />-->
+
+        <Button
+            android:id="@+id/btnErrorCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5sp"
+            android:layout_marginLeft="0sp"
+            android:layout_marginRight="0sp"
+            android:layout_marginTop="5sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_style"
+            android:text="অসামঞ্জস্য তথ্য"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dip"-->
+        <!--android:background="#CCCCCC" />-->
+
+    <LinearLayout
+        android:id="@+id/secMenu"
+        style="@style/rowStyle0"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="5">
 
         <Button
             android:id="@+id/btnMemberName"
@@ -190,25 +280,25 @@
             android:id="@+id/cmdEvList"
             android:layout_width="20sp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10sp"
             android:layout_marginBottom="5sp"
+            android:layout_marginLeft="10sp"
             android:layout_marginTop="5sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_style"
             android:paddingLeft="10dp"
             android:text="ঘটনার তালিকা"
-            android:background="@drawable/button_style"
-            android:layout_weight="1"
             android:textSize="16sp" />
 
         <Button
             android:id="@+id/cmdVisitList"
             android:layout_width="20sp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10sp"
             android:layout_marginBottom="5sp"
+            android:layout_marginLeft="10sp"
             android:layout_marginTop="5sp"
             android:layout_weight="1"
-            android:text="পরিদর্শন তালিকা"
             android:background="@drawable/button_style"
+            android:text="পরিদর্শন তালিকা"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -271,57 +361,73 @@
                             android:dividerHeight="1px"
                             android:scrollbars="vertical"></ListView>
                     </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/rowStyle0"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F3F3F3"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/VlblReview" android:text="R-তথ্য পর্যালোচনা প্রয়োজন" android:layout_column="0" android:layout_width="250sp" android:textColor="#006699" android:textSize="20sp" android:layout_height="wrap_content" android:visibility="invisible"/>
+                        <TextView android:id="@+id/VlblCCard" android:text="C-শিশু কার্ড প্রয়োজন" android:layout_column="0" android:layout_width="250sp" android:textSize="20sp" android:textColor="#ff7702" android:layout_height="wrap_content" android:visibility="invisible"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dip"
+                        android:background="#00CD00" />
                 </LinearLayout>
+
+
             </ScrollView>
         </LinearLayout>
     </HorizontalScrollView>
 
-    <LinearLayout
-        style="@style/rowStyle0"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#F3F3F3"
-        android:orientation="horizontal">
-        <TextView android:id="@+id/VlblReview" android:text="R-তথ্য পর্যালোচনা প্রয়োজন" android:layout_column="0" android:layout_width="250sp" android:textColor="#006699" android:textSize="20sp" android:layout_height="wrap_content" android:visibility="invisible"/>
-        <TextView android:id="@+id/VlblCCard" android:text="C-শিশু কার্ড প্রয়োজন" android:layout_column="0" android:layout_width="250sp" android:textSize="20sp" android:textColor="#ff7702" android:layout_height="wrap_content" android:visibility="invisible"/>
-
-        <!--<Button-->
-        <!--android:id="@+id/cmdCardRequest"-->
-        <!--android:layout_width="20sp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginLeft="10sp"-->
-        <!--android:layout_marginBottom="5sp"-->
-        <!--android:layout_marginTop="5sp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="শিশু কার্ড"-->
-        <!--android:background="@drawable/button_style"-->
-        <!--android:textSize="16sp" />-->
-
-        <!--<RadioGroup-->
-        <!--android:id="@+id/roMemberOption" android:layout_column="0" android:layout_span="4"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" android:orientation="horizontal">-->
-
-        <!--<RadioButton-->
-        <!--android:id="@+id/roActiveMember"-->
-        <!--android:layout_width="wrap_content"-->
+    <!--<LinearLayout-->
+        <!--style="@style/rowStyle0"-->
+        <!--android:layout_width="fill_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:text="Active Members"-->
-        <!--android:checked="true" />-->
+        <!--android:background="#F3F3F3"-->
+        <!--android:orientation="horizontal">-->
+        <!--<TextView android:id="@+id/VlblReview" android:text="R-তথ্য পর্যালোচনা প্রয়োজন" android:layout_column="0" android:layout_width="250sp" android:textColor="#006699" android:textSize="20sp" android:layout_height="wrap_content" android:visibility="invisible"/>-->
+        <!--<TextView android:id="@+id/VlblCCard" android:text="C-শিশু কার্ড প্রয়োজন" android:layout_column="0" android:layout_width="250sp" android:textSize="20sp" android:textColor="#ff7702" android:layout_height="wrap_content" android:visibility="invisible"/>-->
 
-        <!--<RadioButton-->
-        <!--android:id="@+id/roAllMember"-->
-        <!--android:layout_width="200sp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="All Members" />-->
-        <!--</RadioGroup>-->
+        <!--&lt;!&ndash;<Button&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/cmdCardRequest"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="20sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginLeft="10sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginBottom="5sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginTop="5sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="শিশু কার্ড"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@drawable/button_style"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textSize="16sp" />&ndash;&gt;-->
 
-    </LinearLayout>
+        <!--&lt;!&ndash;<RadioGroup&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/roMemberOption" android:layout_column="0" android:layout_span="4"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content" android:orientation="horizontal">&ndash;&gt;-->
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="2dip"
-        android:background="#00CD00" />
+        <!--&lt;!&ndash;<RadioButton&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/roActiveMember"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="Active Members"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:checked="true" />&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<RadioButton&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/roAllMember"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="200sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="All Members" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</RadioGroup>&ndash;&gt;-->
+
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="2dip"-->
+        <!--android:background="#00CD00" />-->
 
 
 </LinearLayout>

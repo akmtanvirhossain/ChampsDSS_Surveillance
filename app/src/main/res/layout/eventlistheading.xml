@@ -83,9 +83,18 @@
 		android:layout_height="40sp"/>
 	</LinearLayout>
 	<LinearLayout
+		android:layout_width="120sp"
+		android:layout_height="wrap_content">
+		<TextView android:layout_column="9"
+			android:text="Info-5"
+			android:layout_width="120sp" android:textSize="18sp"
+			android:gravity="center"
+			android:layout_height="40sp"/>
+	</LinearLayout>
+	<LinearLayout
 		android:layout_width="70sp"
 		android:layout_height="wrap_content">
-	<TextView android:layout_column="9"
+	<TextView android:layout_column="10"
 		android:text="Round"
 		android:layout_width="70sp" android:textSize="18sp"
 		android:gravity="center"

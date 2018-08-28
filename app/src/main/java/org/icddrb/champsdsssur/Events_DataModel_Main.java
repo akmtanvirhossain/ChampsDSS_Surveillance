@@ -80,13 +80,19 @@ public class Events_DataModel_Main {
        public void setInfo3(String newValue){
              _Info3 = newValue;
         }
+
        private String _Info4 = "";
        public String getInfo4(){
              return _Info4;
         }
-       public void setInfo4(String newValue){
-             _Info4 = newValue;
+       public void setInfo4(String newValue){ _Info4 = newValue;  }
+
+       private String _Info5 = "";
+       public String getInfo5(){
+            return _Info5;
         }
+       public void setInfo5(String newValue){ _Info5 = newValue;  }
+
        private String _VDate = "";
        public String getVDate(){
              return _VDate;
@@ -190,9 +196,9 @@ public class Events_DataModel_Main {
         try
         {
             if(C.Existence("Select * from "+ TableName +"  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' and EvType='"+ _EvType +"' and EvDate='"+ _EvDate +"' and Rnd='"+ _Rnd +"' "))
-                SQL = "Update "+ TableName +" Set Upload='2',modifyDate='" + _modifyDate + "' ,Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',EvType = '"+ _EvType +"',EvDate = '"+ _EvDate +"',Info1 = '"+ _Info1 +"',Info2 = '"+ _Info2 +"',Info3 = '"+ _Info3 +"',Info4 = '"+ _Info4 +"',VDate = '"+ _VDate +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' and EvType='"+ _EvType +"' and EvDate='"+ _EvDate +"' and Rnd='"+ _Rnd +"'";
+                SQL = "Update "+ TableName +" Set Upload='2',modifyDate='" + _modifyDate + "' ,Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',EvType = '"+ _EvType +"',EvDate = '"+ _EvDate +"',Info1 = '"+ _Info1 +"',Info2 = '"+ _Info2 +"',Info3 = '"+ _Info3 +"',Info4 = '"+ _Info4 +"',Info5 = '"+ _Info5 +"',VDate = '"+ _VDate +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' and EvType='"+ _EvType +"' and EvDate='"+ _EvDate +"' and Rnd='"+ _Rnd +"'";
             else
-                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,EvType,EvDate,Info1,Info2,Info3,Info4,VDate,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload,modifyDate)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _EvType +"', '"+ _EvDate +"', '"+ _Info1 +"', '"+ _Info2 +"', '"+ _Info3 +"', '"+ _Info4 +"', '"+ _VDate +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"', '"+ _modifyDate +"')";
+                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,EvType,EvDate,Info1,Info2,Info3,Info4,Info5,VDate,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload,modifyDate)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _EvType +"', '"+ _EvDate +"', '"+ _Info1 +"', '"+ _Info2 +"', '"+ _Info3 +"', '"+ _Info4 +"', '"+ _Info5 +"', '"+ _VDate +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"', '"+ _modifyDate +"')";
         }
         catch(Exception  e)
         {
@@ -210,7 +216,7 @@ public class Events_DataModel_Main {
            String SQL = "";
            try
              {
-                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,EvType,EvDate,Info1,Info2,Info3,Info4,VDate,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload,modifyDate)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _EvType +"', '"+ _EvDate +"', '"+ _Info1 +"', '"+ _Info2 +"', '"+ _Info3 +"', '"+ _Info4 +"', '"+ _VDate +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"', '"+ _modifyDate +"')";
+                SQL = "Insert into "+ TableName +" (Vill,Bari,HH,MSlNo,PNo,EvType,EvDate,Info1,Info2,Info3,Info4,Info5,VDate,Rnd,StartTime,EndTime,DeviceID,EntryUser,Lat,Lon,EnDt,Upload,modifyDate)Values('"+ _Vill +"', '"+ _Bari +"', '"+ _HH +"', '"+ _MSlNo +"', '"+ _PNo +"', '"+ _EvType +"', '"+ _EvDate +"', '"+ _Info1 +"', '"+ _Info2 +"', '"+ _Info3 +"', '"+ _Info4 +"', '"+ _Info5 +"', '"+ _VDate +"', '"+ _Rnd +"', '"+ _StartTime +"', '"+ _EndTime +"', '"+ _DeviceID +"', '"+ _EntryUser +"', '"+ _Lat +"', '"+ _Lon +"', '"+ _EnDt +"', '"+ _Upload +"', '"+ _modifyDate +"')";
                 C.Save(SQL);
                 C.close();
              }
@@ -228,7 +234,7 @@ public class Events_DataModel_Main {
            String SQL = "";
            try
              {
-                SQL = "Update "+ TableName +" Set Upload='2',modifyDate='" + _modifyDate + "' ,Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',EvType = '"+ _EvType +"',EvDate = '"+ _EvDate +"',Info1 = '"+ _Info1 +"',Info2 = '"+ _Info2 +"',Info3 = '"+ _Info3 +"',Info4 = '"+ _Info4 +"',VDate = '"+ _VDate +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' and EvType='"+ _EvType +"' and EvDate='"+ _EvDate +"' and Rnd='"+ _Rnd +"'";
+                SQL = "Update "+ TableName +" Set Upload='2',modifyDate='" + _modifyDate + "' ,Vill = '"+ _Vill +"',Bari = '"+ _Bari +"',HH = '"+ _HH +"',MSlNo = '"+ _MSlNo +"',PNo = '"+ _PNo +"',EvType = '"+ _EvType +"',EvDate = '"+ _EvDate +"',Info1 = '"+ _Info1 +"',Info2 = '"+ _Info2 +"',Info3 = '"+ _Info3 +"',Info4 = '"+ _Info4 +"',Info5 = '"+ _Info5 +"',VDate = '"+ _VDate +"',Rnd = '"+ _Rnd +"'  Where Vill='"+ _Vill +"' and Bari='"+ _Bari +"' and HH='"+ _HH +"' and MSlNo='"+ _MSlNo +"' and EvType='"+ _EvType +"' and EvDate='"+ _EvDate +"' and Rnd='"+ _Rnd +"'";
                 C.Save(SQL);
                 C.close();
              }
@@ -262,6 +268,7 @@ public class Events_DataModel_Main {
                d._Info2 = cur.getString(cur.getColumnIndex("Info2"));
                d._Info3 = cur.getString(cur.getColumnIndex("Info3"));
                d._Info4 = cur.getString(cur.getColumnIndex("Info4"));
+               d._Info5 = cur.getString(cur.getColumnIndex("Info5"));
                d._VDate = cur.getString(cur.getColumnIndex("VDate"));
                d._Rnd = cur.getString(cur.getColumnIndex("Rnd"));
 

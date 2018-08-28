@@ -116,6 +116,7 @@ public class Member_list extends Activity {
     Button btncanceltran;
     Button btnprocess;
     Button btnNote;
+    Button btnSB;
 
     MySharedPreferences sp;
 
@@ -447,9 +448,26 @@ public class Member_list extends Activity {
 
          });
 
+         btnSB = (Button) findViewById(R.id.btnSB);
+         btnSB.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent f1 = new Intent(getApplicationContext(),Member_list.class);
+                 IDbundle.putString("Vill", VILL);
+                 IDbundle.putString("Bari", BARI);
+                 IDbundle.putString("HH", HH);
+                 IDbundle.putString("roundno",ROUNDNO);
+                 IDbundle.putString("OldNew", "new");
+                 f1.putExtras(IDbundle);
+                 startActivityForResult(f1, 1);
+             }
+
+         });
+
          Button cmdEvList = (Button)findViewById(R.id.cmdEvList);
          Button cmdVisitList = (Button)findViewById(R.id.cmdVisitList);
          Button btnErrorCheck = (Button)findViewById(R.id.btnErrorCheck);
+         Button btnSB = (Button)findViewById(R.id.btnSB);
 
 //         final RadioGroup roMemberOption =(RadioGroup)findViewById(R.id.roMemberOption);
 //         roMemberOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -488,6 +506,11 @@ public class Member_list extends Activity {
 
              }
          });
+         btnSB.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View arg0) {
+                 SBList(VILL,BARI,HH);
+             }
+         });
 
          txtVill.setEnabled(false);
          txtBari.setEnabled(false);
@@ -514,6 +537,75 @@ public class Member_list extends Activity {
      }
  }
 
+    private void SBList(final String Vill, final String Bari, final String HH)
+    {
+        try
+        {
+            final Dialog dialog = new Dialog(Member_list.this);
+
+            dialog .requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.member_sb);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(true);
+
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+
+            wlp.gravity = Gravity.TOP;
+            wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            window.setAttributes(wlp);
+
+            final ListView evlist = (ListView)dialog.findViewById(R.id.LstSB);
+            View header = getLayoutInflater().inflate(R.layout.memberheading_sb, null);
+            evlist.addHeaderView(header);
+            Cursor cur = C.ReadData("select D.mslno,d.name,d.pno,d.outresut,d.bdate,d.mono,d.motpno,d.motname,d.fano,d.fatname from Member_SB D Where d.Vill='"+ Vill +"' and d.Bari='"+ Bari +"' and d.HH='"+ HH +"'");
+
+            cur.moveToFirst();
+            evmylist.clear();
+            eList = null;
+            evlist.setAdapter(null);
+
+            while(!cur.isAfterLast())
+            {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("mslno", cur.getString(cur.getColumnIndex("MSlNo")));
+                map.put("name", cur.getString(cur.getColumnIndex("Name")));
+                map.put("pno", cur.getString(cur.getColumnIndex("PNo")));
+                map.put("outresut", cur.getString(cur.getColumnIndex("OutResut")));
+//                map.put("bdate", cur.getString(cur.getColumnIndex("BDate")));
+                map.put("bdate", Global.DateConvertDMY(cur.getString(cur.getColumnIndex("BDate"))));
+                map.put("mono", cur.getString(cur.getColumnIndex("MoNo")));
+                map.put("motpno", cur.getString(cur.getColumnIndex("MotPNo")));
+                map.put("motname", cur.getString(cur.getColumnIndex("MotName")));
+                map.put("fano", cur.getString(cur.getColumnIndex("FaNo")));
+                map.put("fatname", cur.getString(cur.getColumnIndex("FatName")));
+
+                evmylist.add(map);
+
+                eList = new SimpleAdapter(Member_list.this, evmylist, R.layout.member_row_sb,
+                        new String[] {"mslno","name","pno","outresut","bdate","mono","motpno","motname","fano","fatname"},
+                        new int[] {R.id.MSlNo,R.id.Name,R.id.PNo,R.id.OutResut,R.id.BDate,R.id.MoNo,R.id.MotPNo,R.id.MotName,R.id.FaNo,R.id.FatName});
+                evlist.setAdapter(eList);
+//                evlist.setAdapter(new ErrorListAdapter(this,dialog,evlist));
+                cur.moveToNext();
+            }
+            cur.close();
+
+            Button cmdSBListClose = (Button)dialog.findViewById(R.id.cmdSBClose);
+            cmdSBListClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+        catch(Exception  e)
+        {
+            Connection.MessageBox(Member_list.this, e.getMessage());
+            return;
+        }
+    }
     //***************************************************************************************************************************
     private void ErrorList(final String Vill, final String Bari, final String HH)
     {
@@ -792,11 +884,11 @@ public class Member_list extends Activity {
 
         if(Status.equals("current"))
         {
-            cur1 = C.ReadData("select Vill,Bari,HH,mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from tmpEvents where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
+            cur1 = C.ReadData("select Vill,Bari,HH,mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,ifnull(info5,'')info5,Rnd from tmpEvents where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
         }
         else if(Status.equals("all"))
         {
-            cur1 = C.ReadData("select Vill,Bari,HH,mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,Rnd from Events where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
+            cur1 = C.ReadData("select Vill,Bari,HH,mslno,pno as pno,evtype,evdate,ifnull(info1,'')info1,ifnull(info2,'')info2,ifnull(info3,'')info3,ifnull(info4,'')info4,ifnull(info5,'')info5,Rnd from Events where Vill||Bari||HH='"+ Household +"' order by   MslNo,Rnd,evtype");
         }
 
         if(cur1.getCount()==0)
@@ -826,6 +918,7 @@ public class Member_list extends Activity {
             map.put("info2", cur1.getString(cur1.getColumnIndex("info2")));
             map.put("info3", cur1.getString(cur1.getColumnIndex("info3")));
             map.put("info4", cur1.getString(cur1.getColumnIndex("info4")));
+            map.put("info5", cur1.getString(cur1.getColumnIndex("info5")));
             map.put("rnd", cur1.getString(cur1.getColumnIndex("Rnd")));
             map.put("status", Status);
             evmylist.add(map);
@@ -880,6 +973,7 @@ public class Member_list extends Activity {
             TextView e_info2=(TextView)convertView.findViewById(R.id.e_info2);
             TextView e_info3=(TextView)convertView.findViewById(R.id.e_info3);
             TextView e_info4=(TextView)convertView.findViewById(R.id.e_info4);
+            TextView e_info5=(TextView)convertView.findViewById(R.id.e_info5);
             TextView e_round=(TextView)convertView.findViewById(R.id.e_round);
 
             e_MslNo.setText(o.get("mslno").toString());
@@ -889,6 +983,7 @@ public class Member_list extends Activity {
             e_info2.setText(o.get("info2").toString());
             e_info3.setText(o.get("info3").toString());
             e_info4.setText(o.get("info4").toString().trim().length()==0?o.get("info4").toString():Global.DateConvertDMY(o.get("info4").toString()));
+            e_info5.setText(o.get("info5").toString());
             e_round.setText(o.get("rnd"));
 
             Button cmdEvListDel = (Button)convertView.findViewById(R.id.cmdEvListDel);
@@ -3138,6 +3233,7 @@ public class Member_list extends Activity {
             objSave.setInfo2(item.getInfo2());
             objSave.setInfo3(item.getInfo3());
             objSave.setInfo4(item.getInfo4());
+            objSave.setInfo5(item.getInfo5());
             objSave.setVDate(item.getVDate());
             objSave.setRnd(item.getRnd());
             objSave.setEnDt(item.getEnDt());

@@ -129,6 +129,7 @@
          Spinner spnInfo2;
          Spinner spnInfo3;
          Spinner spnInfo4;
+         Spinner spnInfo5;
          LinearLayout secInfo2;
          View lineInfo2;
          TextView VlblInfo2;
@@ -142,6 +143,12 @@
          View lineInfo4;
          TextView VlblInfo4;
          EditText txtInfo4;
+
+         LinearLayout secInfo5;
+         View lineInfo5;
+         TextView VlblInfo5;
+         EditText txtInfo5;
+
          LinearLayout secVDate;
          View lineVDate;
          TextView VlblVDate;
@@ -219,6 +226,7 @@
      View lineSp3;
      TextView VlblSp3;
      Spinner spnSp3;
+
      LinearLayout secSp4;
      View lineSp4;
      TextView VlblSp4;
@@ -336,6 +344,77 @@
          spnInfo2 = (Spinner)findViewById(R.id.spnInfo2);
          spnInfo3 = (Spinner)findViewById(R.id.spnInfo3);
          spnInfo4 = (Spinner)findViewById(R.id.spnInfo4);
+         spnInfo5 = (Spinner)findViewById(R.id.spnInfo5);
+
+         spnInfo1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 String EVCODE = spnEvType.getSelectedItem().toString().length()==0 ? "" : spnEvType.getSelectedItem().toString().split("-")[0];
+                 String[] Info1 = spnInfo1.getSelectedItem().toString().split("-");
+
+                 if( EVCODE.equals("42") & (Info1[0].equals("01") | (Info1[0].equals("02") | (Info1[0].equals("")))))
+                 {
+//                     dtpEvDate.setText("");
+                     secInfo1.setVisibility(View.VISIBLE);
+                     txtInfo1.setVisibility(View.GONE);
+                     VlblInfo1.setText("গর্ভের ফলাফল");
+
+                     secInfo2.setVisibility(View.VISIBLE);
+                     txtInfo2.setVisibility(View.GONE);
+                     spnInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo2.setText("ফলাফলের স্থান");
+                     spnInfo2.setAdapter(C.getArrayAdapter("Select '' Union Select Code||'-'||Place from POP"));
+
+                     secInfo3.setVisibility(View.VISIBLE);
+                     txtInfo3.setVisibility(View.GONE);
+                     spnInfo3.setVisibility(View.VISIBLE);
+                     VlblInfo3.setText("সহায়তাকারী");
+                     spnInfo3.setAdapter(C.getArrayAdapter("Select '' Union Select Code||'-'||Atten from POA"));
+
+                     secInfo4.setVisibility(View.GONE);
+                     txtInfo4.setVisibility(View.GONE);
+                     txtInfo4.setText(C.ReturnSingleValue("select LMPDt from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MslNo='"+ MSLNO +"'"));
+                     spnInfo4.setVisibility(View.VISIBLE);
+
+                     secInfo5.setVisibility(View.GONE);
+                     txtInfo5.setVisibility(View.GONE);
+                     spnInfo5.setVisibility(View.GONE);
+                 }
+                 else if( EVCODE.equals("42") & (!Info1[0].equals("01") | (!Info1[0].equals("02") | (!Info1[0].equals("")))))
+                 {
+                     secInfo1.setVisibility(View.VISIBLE);
+                     txtInfo1.setVisibility(View.GONE);
+                     VlblInfo1.setText("গর্ভের ফলাফল");
+
+                     secInfo2.setVisibility(View.VISIBLE);
+                     txtInfo2.setVisibility(View.GONE);
+                     spnInfo2.setVisibility(View.VISIBLE);
+                     VlblInfo2.setText("ফলাফলের স্থান");
+                     spnInfo2.setAdapter(C.getArrayAdapter("Select '' Union Select Code||'-'||Place from POP"));
+
+                     secInfo3.setVisibility(View.VISIBLE);
+                     txtInfo3.setVisibility(View.GONE);
+                     spnInfo3.setVisibility(View.VISIBLE);
+                     VlblInfo3.setText("সহায়তাকারী");
+                     spnInfo3.setAdapter(C.getArrayAdapter("Select '' Union Select Code||'-'||Atten from POA"));
+
+                     secInfo4.setVisibility(View.GONE);
+                     txtInfo4.setVisibility(View.GONE);
+                     txtInfo4.setText(C.ReturnSingleValue("select LMPDt from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MslNo='"+ MSLNO +"'"));
+                     spnInfo4.setVisibility(View.VISIBLE);
+
+                     secInfo5.setVisibility(View.VISIBLE);
+                     txtInfo5.setVisibility(View.GONE);
+                     spnInfo5.setVisibility(View.VISIBLE);
+                     VlblInfo5.setText("প্রসব পদ্ধতি");
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
+
+             }
+         });
 
          secVill=(LinearLayout)findViewById(R.id.secVill);
          lineVill=(View)findViewById(R.id.lineVill);
@@ -374,6 +453,20 @@
          VlblEvType=(TextView) findViewById(R.id.VlblEvType);
          spnEvType=(Spinner) findViewById(R.id.spnEvType);
          final Spinner EvType = (Spinner)findViewById(R.id.spnEvType);
+
+         secInfo5=(LinearLayout)findViewById(R.id.secInfo5);
+         lineInfo5=(View)findViewById(R.id.lineInfo5);
+         VlblInfo5=(TextView) findViewById(R.id.VlblInfo5);
+         spnInfo5=(Spinner) findViewById(R.id.spnInfo5);
+         List<String> listMODE = new ArrayList<String>();
+
+         listMODE.add("");
+         listMODE.add("01-নরমাল ডেলিভারি");
+         listMODE.add("02-সিজারিয়ান ডেলিভারি");
+
+         ArrayAdapter<String> adptrMODE= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listMODE);
+         spnInfo5.setAdapter(adptrMODE);
+
 
          String Sex = "";
          String MS  = "";
@@ -578,6 +671,12 @@
          lineInfo4=(View)findViewById(R.id.lineInfo4);
          VlblInfo4=(TextView) findViewById(R.id.VlblInfo4);
          txtInfo4=(EditText) findViewById(R.id.txtInfo4);
+
+         secInfo5=(LinearLayout)findViewById(R.id.secInfo5);
+         lineInfo5=(View)findViewById(R.id.lineInfo5);
+         VlblInfo5=(TextView) findViewById(R.id.VlblInfo5);
+         txtInfo5=(EditText) findViewById(R.id.txtInfo5);
+
          secVDate=(LinearLayout)findViewById(R.id.secVDate);
          lineVDate=(View)findViewById(R.id.lineVDate);
          VlblVDate=(TextView) findViewById(R.id.VlblVDate);
@@ -633,6 +732,9 @@
                  secInfo4.setVisibility(View.GONE);
                  txtInfo4.setText("");
                  spnInfo4.setSelection(0);
+                 secInfo5.setVisibility(View.GONE);
+                 txtInfo5.setText("");
+                 spnInfo5.setSelection(0);
 
                  String VDate  = C.ReturnSingleValue("select VDate from tmpVisits Where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH + "' and Rnd='"+ ROUNDNO +"'");
 
@@ -834,6 +936,11 @@
 //                     dtpEvDate.setText(Global.DateNowDMY());
                  }else if(EVCODE.equals("55")){
                      dtpEvDate.setText("");
+                     secInfo1.setVisibility(View.VISIBLE);
+                     txtInfo1.setVisibility(View.GONE);
+                     spnInfo1.setVisibility(View.VISIBLE);
+                     VlblInfo1.setText("মারা যাবার স্থান");
+                     spnInfo1.setAdapter(C.getArrayAdapter("Select '' Union Select Code||'-'||Place from POP"));
                  }
                  //Mothers Serial Number
                  else if(EVCODE.equals("61"))
@@ -1298,10 +1405,27 @@
                      Connection.MessageBox(Events.this, "ফলাফলের স্থান খালি রাখা যাবেনা");
                      spnInfo2.requestFocus();
                      return;
-                 } else if (spnInfo3.getSelectedItemPosition()==0  & spnInfo3.isShown())
+                 }else if (spnInfo3.getSelectedItemPosition()==0  & spnInfo3.isShown())
                  {
                      Connection.MessageBox(Events.this, "উপস্থিত ছিলেন খালি রাখা যাবেনা");
                      spnInfo3.requestFocus();
+                     return;
+                 }
+                 String[] Info1 = spnInfo1.getSelectedItem().toString().split("-");
+                 if (!Info1[0].equals("01") & !Info1[0].equals("02")) {
+                  if (spnInfo5.getSelectedItemPosition() == 0 & spnInfo5.isShown()) {
+                         Connection.MessageBox(Events.this, "প্রসব পদ্ধতি খালি রাখা যাবেনা");
+                         spnInfo5.requestFocus();
+                         return;
+                     }
+                 }
+             }
+             if(EV.equals("55"))
+             {
+                 if (spnInfo1.getSelectedItemPosition()==0  & spnInfo1.isShown())
+                 {
+                     Connection.MessageBox(Events.this, "মারা যাবার স্থান খালি রাখা যাবেনা");
+                     spnInfo1.requestFocus();
                      return;
                  }
              }
@@ -1922,9 +2046,10 @@
                              }
                          }
                      }
-                     String Event1 = C.ReturnSingleValue("select EvType from tmpEvents Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
+                     String EnrType = C.ReturnSingleValue("select EnType from tmpMember Where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH + "' and MSlNo='" + MSLNO + "'");
 
-                     if (!Event1.equals("22") & !Event1.equals("23")) {
+                     if (!EnrType.equals("22") & !EnrType.equals("23"))
+                     {
                          if ((ECode >= 31 & ECode <= 34)) {
                              String EvDate1 = Global.DateConvertYMD(dtpEvDate.getText().toString());
                              int ExitDate_difference = Global.DateDifferenceDays(Global.DateConvertDMY(EvDate1.toString()), Global.DateConvertDMY(endate.toString()));
@@ -2397,7 +2522,11 @@
                      objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
                      objSave.setInfo3(spnInfo3.getSelectedItem().toString().split("-")[0]);
                      objSave.setInfo4(txtInfo4.getText().toString());
-                 } else if (EVT.equals("61")) {
+                     objSave.setInfo5(spnInfo5.getSelectedItem().toString().split("-")[0]);
+
+                 } else if (EVT.equals("55")) {
+                     objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
+                 }else if (EVT.equals("61")) {
                      objSave.setInfo1(spnInfo1.getSelectedItem().toString().split("-")[0]);
                      objSave.setInfo2(spnInfo2.getSelectedItem().toString().split("-")[0]);
                      objSave.setInfo3(txtInfo3.getText().toString());

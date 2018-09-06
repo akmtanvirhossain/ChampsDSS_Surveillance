@@ -2132,6 +2132,7 @@
                              Connection.MessageBox(Events.this, "সদস্যের গর্ভের ইতিহাসে সাক্ষাৎকারের ফলাফল  "+PregStatus+"  এবং ইভেন্ট ৪১ সামঞ্জস্যপূর্ণ নয় ।");
                              return;
                          }
+
                          //(Temporary Table) check the information is available or not
                          String OutType = C.ReturnSingleValue("select Info1 from tmpEvents Where vill||Bari||hh='"+ Household +"' and MSlNo='"+ MSLNO +"' and EvType='42' and Rnd='"+ ROUNDNO +"'");
 

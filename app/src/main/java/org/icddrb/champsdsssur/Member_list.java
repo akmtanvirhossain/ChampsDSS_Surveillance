@@ -1872,9 +1872,12 @@ public class Member_list extends Activity {
          final TextView ExDate = (TextView)convertView.findViewById(R.id.ExDate);
          final TextView PosMig = (TextView)convertView.findViewById(R.id.PosMig);
          final TextView PosMigDate = (TextView)convertView.findViewById(R.id.PosMigDate);
-         final TextView btnScreening = (TextView)convertView.findViewById(R.id.btnScreening);
+         //final TextView btnScreening = (TextView)convertView.findViewById(R.id.btnScreening);
 
          final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
+
+         final LinearLayout secPregnancySurv = (LinearLayout)convertView.findViewById(R.id.secPregnancySurv);
+         final Button btnScreening = (Button)convertView.findViewById(R.id.btnScreening);
 
          final HashMap<String, String> o = (HashMap<String, String>) dataAdap.getItem(position);
          Vill.setText(o.get("Vill"));
@@ -1917,15 +1920,24 @@ public class Member_list extends Activity {
              Name.setTextColor(Color.BLACK);
              delMember.setVisibility(View.INVISIBLE);
          }*/
+
          ImageView review = (ImageView)convertView.findViewById(R.id.review);
-         ImageView card = (ImageView)convertView.findViewById(R.id.card);
+         ImageView card   = (ImageView)convertView.findViewById(R.id.card);
 
          final TextView lblReview = (TextView) findViewById(R.id.VlblReview);
          final TextView lblcard = (TextView) findViewById(R.id.VlblCCard);
 
-         if(o.get("Pstat").equals("41"))
-         {
+         ImageView imgPreg = (ImageView)convertView.findViewById(R.id.imgPreg);
+
+         if(o.get("Pstat").equals("41")) {
+             imgPreg.setVisibility(View.VISIBLE);
+             secPregnancySurv.setVisibility(View.VISIBLE);
              btnScreening.setVisibility(View.VISIBLE);
+         }
+         else {
+             imgPreg.setVisibility(View.INVISIBLE);
+             secPregnancySurv.setVisibility(View.GONE);
+             btnScreening.setVisibility(View.GONE);
          }
 
 
@@ -2132,11 +2144,7 @@ public class Member_list extends Activity {
              }
          });
 
-         ImageView imgPreg = (ImageView)convertView.findViewById(R.id.imgPreg);
-         if(o.get("Pstat").equals("41"))
-             imgPreg.setVisibility(View.VISIBLE);
-         else
-             imgPreg.setVisibility(View.INVISIBLE);
+
 
          return convertView;
 

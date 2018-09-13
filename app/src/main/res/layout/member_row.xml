@@ -8,32 +8,7 @@
         android:orientation="horizontal"
         android:paddingBottom="5sp"
         android:paddingTop="5sp">
-
-        <ImageView
-            android:id="@+id/review"
-            android:layout_width="25sp"
-            android:layout_height="45sp"
-            android:background="#FF006699"
-            android:src="@drawable/review"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/card"
-            android:layout_width="25sp"
-            android:layout_height="45sp"
-            android:background="#ff7702"
-            android:src="@drawable/card"
-            android:visibility="invisible" />
-
-        <ImageButton
-            android:id="@+id/delMember"
-            android:layout_width="50sp"
-            android:layout_height="45sp"
-            android:layout_marginLeft="0sp"
-            android:background="#ffffff"
-            android:src="@drawable/discard" />
-
-        <TextView
+       <TextView
             android:id="@+id/Vill"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
@@ -61,6 +36,30 @@
             android:visibility="gone" />
 
         <ImageView
+            android:id="@+id/review"
+            android:layout_width="25sp"
+            android:layout_height="45sp"
+            android:background="#FF006699"
+            android:src="@drawable/review"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/card"
+            android:layout_width="25sp"
+            android:layout_height="45sp"
+            android:background="#ff7702"
+            android:src="@drawable/card"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/delMember"
+            android:layout_width="50sp"
+            android:layout_height="45sp"
+            android:layout_marginLeft="0sp"
+            android:background="#ffffff"
+            android:src="@drawable/discard" />
+
+        <ImageView
             android:id="@+id/imgPreg"
             android:layout_width="50sp"
             android:layout_height="45sp"
@@ -75,8 +74,15 @@
             android:gravity="center"
             android:paddingBottom="10sp"
             android:paddingTop="10sp" />
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="190sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingBottom="10sp"
+            android:paddingTop="10sp" />
+<!--        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -97,7 +103,7 @@
                 android:visibility="gone"
                 android:text="স্ক্রিনিং ফরম"
                 android:textSize="16sp"/>
-        </LinearLayout>
+        </LinearLayout>-->
 
         <!--<TextView-->
         <!--android:id="@+id/Name"-->
@@ -305,5 +311,17 @@
             android:gravity="center"
             android:paddingBottom="10sp"
             android:paddingTop="10sp" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/secPregnancySurv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btnScreening"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible" android:background="@drawable/button_style"
+            android:text=" প্রেগন্যান্সি এনরোলমেন্ট " android:layout_marginLeft="100dp"
+            android:textSize="16sp"/>
     </LinearLayout>
 </LinearLayout>

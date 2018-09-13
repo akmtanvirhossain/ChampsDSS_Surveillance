@@ -145,6 +145,7 @@ public class MainMenu extends Activity {
                                         String r = C.ExecuteCommandOnServer("Insert into UploadMonitor(DeviceID)Values('"+ DEVICEID +"')");
 
                                         List<String> tableList = new ArrayList<String>();
+                                        tableList.add("Member");
                                         tableList.add("Baris");
                                         tableList.add("Household");
                                         tableList.add("Visits");

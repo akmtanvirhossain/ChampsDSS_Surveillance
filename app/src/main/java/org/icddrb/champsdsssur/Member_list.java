@@ -108,6 +108,7 @@ public class Member_list extends Activity {
     static String ROUNDNO = "";
     static String CLUSTER = "";
     static String BLOCK   = "";
+    static String PregnancyID ="";
 
     Button btnErrorCheck;
     Button btnMemberName;
@@ -117,6 +118,7 @@ public class Member_list extends Activity {
     Button btnprocess;
     Button btnNote;
     Button btnSB;
+    Button btnScreening;
 
     MySharedPreferences sp;
 
@@ -464,10 +466,27 @@ public class Member_list extends Activity {
 
          });
 
+//         btnScreening = (Button) findViewById(R.id.btnScreening);
+//         btnScreening.setOnClickListener(new View.OnClickListener() {
+//             @Override
+//             public void onClick(View v) {
+//                 Intent f1 = new Intent(getApplicationContext(),PregScreening.class);
+//                 IDbundle.putString("Vill", VILL);
+//                 IDbundle.putString("Bari", BARI);
+//                 IDbundle.putString("HH", HH);
+//                 IDbundle.putString("roundno",ROUNDNO);
+//                 IDbundle.putString("OldNew", "new");
+//                 IDbundle.putString("Pregnancyid",PregnancyID);
+//                 f1.putExtras(IDbundle);
+//                 startActivityForResult(f1, 1);
+//             }
+//         });
+
          Button cmdEvList = (Button)findViewById(R.id.cmdEvList);
          Button cmdVisitList = (Button)findViewById(R.id.cmdVisitList);
          Button btnErrorCheck = (Button)findViewById(R.id.btnErrorCheck);
          Button btnSB = (Button)findViewById(R.id.btnSB);
+//         Button btnScreening = (Button)findViewById(R.id.btnScreening);
 
 //         final RadioGroup roMemberOption =(RadioGroup)findViewById(R.id.roMemberOption);
 //         roMemberOption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -1603,6 +1622,23 @@ public class Member_list extends Activity {
         else{
             btnErrorCheck.setBackgroundResource(R.drawable.button_style);
         }
+
+//        PregScreening Form Status---------------------------------------------
+//        String EventType= C.ReturnSingleValue("Select Pstat from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO +"'and Pstat='41'");
+//        String EventDate= C.ReturnSingleValue("Select LmpDt from tmpMember where Vill='"+ VILL +"' and Bari='"+ BARI +"' and HH='"+ HH +"' and MSlNo='"+ MSLNO +"'and Pstat='41'");
+//
+//        if (C.Existence("Select InfoSource from PregScreening where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EventType +"' and EvDate='"+ EventDate +"'")){
+//            btnScreening.setBackgroundResource(R.drawable.button_style_green);
+//            btnScreening.setTextColor(Color.BLACK);
+//        }
+//        else{
+//            btnScreening.setBackgroundResource(R.drawable.button_style);
+//        }
+//
+//        if (C.Existence("Select InfoSource from PregScreening where Vill='" + VILL + "' and Bari='" + BARI + "' and HH='" + HH +"' and MSlNo='"+ MSLNO +"' and EvType='"+ EventType +"' and EvDate='"+ EventDate +"'")){
+//            btnScreening.setBackgroundResource(R.drawable.button_style_blue);
+//            btnScreening.setTextColor(Color.WHITE);
+//        }
     }
  private void DataSearch(String Vill, String Bari, String HH )
      {
@@ -1836,6 +1872,7 @@ public class Member_list extends Activity {
          final TextView ExDate = (TextView)convertView.findViewById(R.id.ExDate);
          final TextView PosMig = (TextView)convertView.findViewById(R.id.PosMig);
          final TextView PosMigDate = (TextView)convertView.findViewById(R.id.PosMigDate);
+         final TextView btnScreening = (TextView)convertView.findViewById(R.id.btnScreening);
 
          final ImageButton delMember = (ImageButton) convertView.findViewById(R.id.delMember);
 
@@ -1885,6 +1922,12 @@ public class Member_list extends Activity {
 
          final TextView lblReview = (TextView) findViewById(R.id.VlblReview);
          final TextView lblcard = (TextView) findViewById(R.id.VlblCCard);
+
+         if(o.get("Pstat").equals("41"))
+         {
+             btnScreening.setVisibility(View.VISIBLE);
+         }
+
 
          delMember.setVisibility(View.INVISIBLE);
          if (o.get("Rth").length() == 0)
@@ -2054,6 +2097,22 @@ public class Member_list extends Activity {
             }
           });
 
+         btnScreening.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 IDbundle.putString("Vill", o.get("Vill"));
+                 IDbundle.putString("Bari", o.get("Bari"));
+                 IDbundle.putString("HH", o.get("HH"));
+                 IDbundle.putString("MSlNo", o.get("MSlNo"));
+                 IDbundle.putString("roundno",ROUNDNO);
+                 IDbundle.putString("pno",o.get("PNo"));
+                 IDbundle.putString("name",o.get("Name"));
+
+                 Intent f1 = new Intent(getApplicationContext(),PregScreening.class);
+                 f1.putExtras(IDbundle);
+                 startActivityForResult(f1, 1);
+             }
+         });
 
          delMember.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {

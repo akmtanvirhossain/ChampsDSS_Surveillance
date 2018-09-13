@@ -69,8 +69,9 @@
         <activity android:name="org.icddrb.champsdsssur.PregHis" />
         <activity android:name="org.icddrb.champsdsssur.PregHis_list" />
         <activity android:name="org.icddrb.champsdsssur.Events" />
-        <activity
-            android:name="org.icddrb.champsdsssur.Baris"
+        <activity android:name="org.icddrb.champsdsssur.PregScreening" />
+
+        <activity android:name="org.icddrb.champsdsssur.Baris"
             android:label="Bari Form"
             android:theme="@style/CustomThemeActivity" />
         <activity android:name="org.icddrb.champsdsssur.Household_Visit" />
@@ -78,6 +79,7 @@
         <activity android:name=".Events_NewMem" />
         <activity android:name=".SettingForm_QA" />
         <activity android:name=".MainMenu_QA" />
+
 
         <service android:name="org.icddrb.champsdsssur.GPSService" android:process=":gps_service" />
         <action android:name="gps_data"/>

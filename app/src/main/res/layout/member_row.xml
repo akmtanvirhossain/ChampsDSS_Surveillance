@@ -76,14 +76,37 @@
             android:paddingBottom="10sp"
             android:paddingTop="10sp" />
 
-        <TextView
-            android:id="@+id/Name"
-            android:layout_width="190sp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:paddingBottom="10sp"
-            android:paddingTop="10sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Name"
+                android:layout_width="190sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingBottom="10sp"
+                android:paddingTop="10sp" />
+
+            <Button
+                android:id="@+id/btnScreening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="স্ক্রিনিং ফরম"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/Name"-->
+        <!--android:layout_width="190sp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="left"-->
+        <!--android:paddingBottom="10sp"-->
+        <!--android:paddingTop="10sp" />-->
 
         <TextView
             android:id="@+id/PNo"
